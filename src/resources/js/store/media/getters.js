@@ -3,8 +3,8 @@ export default {
     return {
       autoplay: false,
       poster: state.data.thumbnail,
-      height: state.data.properties.height,
-      width: state.data.properties.width,
+      height: state.data.properties.height || 720,
+      width: state.data.properties.width || 1280,
       manifest: state.data.stream_url,
       download: state.data.download || false
     }

@@ -16,7 +16,7 @@ class MediaResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'original_name' => $this->file_name,
-            'status' => $this->status ?? 'private',
+            'status' => $this->status,
             'mimetype' => $this->mime_type,
             'description' => $this->description,
             'thumbnail' => $this->thumbnail,

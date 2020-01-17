@@ -4,7 +4,7 @@ main(v-if="options.manifest" :key="id" ref="fullscreen" @mousemove="showHideCont
     ref="videoElement"
     playsinline
     :poster="options.poster || ''"
-    :style="{ width: options.width + 'px' || '1280px' }"
+    :style="{ width: options.width + 'px' }"
     @canplay="autoplay()"
     @click="togglePlay()"
     @dblclick="toggleFullscreen()"
