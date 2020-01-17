@@ -1,0 +1,416 @@
+@import "~bulma/sass/utilities/_all";
+
+// Initial
+$scheme-main: $black;
+$scheme-main-bis: $black-bis;
+$scheme-main-ter: $black-ter;
+
+$background: $black;
+
+$border: $black-bis;
+$border-hover: $grey-darker;
+
+$text: $grey;
+$text-light: $grey;
+$text-strong: $grey;
+
+$link: $grey-light;
+$link-visited: $grey-light;
+
+$link-hover: $white-ter;
+$link-hover-border: transparent;
+
+$link-focus: $grey-light;
+$link-focus-border: transparent;
+
+$link-active: $grey-light;
+$link-active-border: transparent;
+
+// Typography
+$family-primary: 'Roboto', sans-serif;
+$family-secondary: 'Noto Sans', sans-serif;
+$family-sans-serif: $family-primary;
+
+$size-1: 2.5rem;
+$size-2: 2rem;
+$size-3: 1.75rem;
+$size-4: 1.5rem;
+$size-5: 1.25rem;
+$size-6: 1rem;
+$size-7: 0.975rem;
+$size-8: 0.95rem;
+$size-9: 0.925rem;
+
+$sizes: $size-1 $size-2 $size-3 $size-4 $size-5 $size-6 $size-7 $size-8 $size-9;
+
+$size-small: $size-7;
+$size-normal: $size-6;
+$size-medium: $size-5;
+$size-large: $size-4;
+
+$weight-light: 400;
+$weight-normal: 500;
+$weight-medium: 600;
+$weight-semibold: 700;
+$weight-bold: 800;
+
+$small-font-size: $size-8;
+
+// Miscellaneous
+$radius: 3px;
+$radius-small: 1px;
+$radius-large: 6px;
+
+// Generic
+$body-background-color: $black-bis;
+$body-line-height: 1.4;
+$body-overflow-y: auto;
+$body-size: 14px;
+
+$hr-background-color: $black-ter;
+
+// Section
+$section-padding: 0.75rem 3rem;
+$section-padding-medium: 1.5rem 3rem;
+$section-padding-large: 2.25rem 3rem;
+
+// Hero
+$hero-body-padding: 1.5rem 3rem;
+$hero-body-padding-small: 0.75rem 3rem;
+$hero-body-padding-medium: 3rem 3rem;
+$hero-body-padding-large: 6rem 3rem;
+
+// Footer
+$footer-background-color: $black-bis;
+$footer-padding: 1.5rem 3rem;
+
+// Title
+$title-color: $white;
+$title-family: $family-primary;
+$title-size: $size-5;
+$title-weight: $weight-medium;
+$title-line-height: 1.4;
+
+$subtitle-color: $text;
+$subtitle-family: $family-primary;
+$subtitle-size: $size-6;
+$subtitle-weight: $weight-normal;
+$subtitle-line-height: 1.4;
+
+// Control
+$control-radius: $radius;
+$control-radius-small: $radius-small;
+
+$label-color: $text;
+$label-weight: $weight-normal;
+$help-size: $size-7;
+
+// Notifications
+$notification-radius: $radius;
+
+// Message
+$message-radius: $radius;
+$message-header-radius: $radius;
+$message-body-radius: $radius;
+
+// Input
+$input-color: $white-ter;
+$input-background-color: $black-ter;
+$input-border-color: $black-ter;
+$input-shadow: none;
+$input-placeholder-color: $text;
+
+$input-hover-border-color: $black-ter;
+$input-hover-color: $white-ter;
+
+$input-focus-color: $white-ter;
+$input-focus-border-color: transparent;
+$input-focus-box-shadow-size: none;
+$input-focus-box-shadow-color: none;
+
+$input-disabled-color: $grey-dark;
+$input-disabled-background-color: $black-bis;
+$input-disabled-border-color: $black-ter;
+$input-disabled-placeholder-color: $grey-dark;
+
+$input-arrow: $white-ter;
+
+$input-icon-color: $grey;
+$input-icon-active-color: $white-ter;
+
+$input-radius: $radius;
+
+// Button
+$button-color: $text;
+$button-background-color: $black-ter;
+$button-border-color: $black-ter;
+
+$button-hover-color: $white-ter;
+$button-hover-border-color: $black-ter;
+
+$button-focus-color: $text;
+$button-focus-border-color: transparent;
+$button-focus-box-shadow-size: none;
+$button-focus-box-shadow-color: none;
+
+$button-active-color: $white-ter;
+$button-active-border-color: transparent;
+
+$button-text-color: $text;
+$button-text-hover-background-color: transparent;
+$button-text-hover-color: $white-ter;
+
+$button-disabled-background-color: $black-bis;
+$button-disabled-border-color: $black;
+$button-disabled-shadow: none;
+$button-disabled-opacity: 0.25;
+
+$button-static-color: $text;
+$button-static-background-color: $black-ter;
+$button-static-border-color: $black;
+
+// Dropdown
+$dropdown-menu-min-width: 12rem;
+
+$dropdown-content-background-color: $black-ter;
+$dropdown-content-arrow: $white-ter;
+$dropdown-content-radius: 0;
+$dropdown-content-z: 30;
+
+$dropdown-item-color: $text;
+
+$dropdown-item-hover-color: $text;
+$dropdown-item-hover-background-color: transparent;
+
+$dropdown-item-active-color: $primary;
+$dropdown-item-active-background-color: $black-bis;
+
+$dropdown-divider-background-color: $border;
+
+// Navbar
+$navbar-background-color: $black;
+$navbar-box-shadow-size: 0;
+$navbar-box-shadow-color: transparent;
+$navbar-height: 4.25rem;
+$navbar-padding-vertical: 0;
+$navbar-padding-horizontal: 0;
+
+$navbar-item-color: $text;
+$navbar-item-hover-color: $white;
+$navbar-item-hover-background-color: transparent;
+$navbar-item-active-color: $white;
+$navbar-item-active-background-color: transparent;
+
+$navbar-dropdown-background-color: $white;
+$navbar-dropdown-border-top: 0;
+$navbar-dropdown-arrow: $white;
+$navbar-dropdown-radius: 0;
+
+$navbar-dropdown-item-active-color: $white;
+$navbar-dropdown-item-active-background-color: transparent;
+$navbar-dropdown-item-hover-color: $primary;
+$navbar-dropdown-item-hover-background-color: $light;
+
+// Box
+$box-color: $white-ter;
+$box-background-color: transparent;
+$box-radius: $radius;
+$box-shadow: none;
+$box-padding: 1.5rem;
+$box-link-hover-shadow: none;
+$box-link-active-shadow: none;
+
+// Card
+$card-color: $white-bis;
+$card-background-color: $black-ter;
+
+$card-footer-border-top: 1px solid $border;
+
+// Modal
+$modal-content-width: 400px;
+
+$modal-card-head-background-color: $black-bis;
+$modal-card-head-radius: $radius;
+
+$modal-card-title-color: $white-ter;
+$modal-card-title-line-height: 1.4;
+$modal-card-title-size: $size-5;
+
+$modal-card-body-background-color: $black-bis;
+$modal-card-body-padding: 0 20px;
+
+$modal-card-foot-radius: $radius;
+
+// Tag
+$tag-background-color: $black-ter;
+$tag-color: $white-ter;
+$tag-radius: 0;
+
+// Slider
+$slider-radius: 0;
+
+$slider-track-background: $grey-lighter;
+$slider-track-radius: 0;
+
+$slider-thumb-border: 0;
+
+// Carousel
+$carousel-arrow-background: transparent;
+$carousel-arrow-color: $white;
+
+// Import Buefy
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+// Focus
+::-moz-focus-inner {
+  border: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+// Section
+.section.is-medium {
+  padding: $section-padding-medium;
+}
+
+.section.is-large {
+  padding: $section-padding-large;
+}
+
+// Title
+.heading {
+  color: $text;
+  font-size: $size-9;
+  font-weight: $weight-normal;
+  margin-bottom: 1.5rem;
+}
+
+// Field
+.field {
+  .control:not(:last-child) {
+    margin-right: 1px !important;
+  }
+}
+
+// Input
+.input,
+.select,
+.button,
+.textarea {
+  font-weight: $weight-normal;
+  text-decoration: none !important;
+  resize: none;
+
+  .icon {
+    font-size: $size-5;
+  }
+
+  .icon.is-small {
+    font-size: $size-5;
+  }
+}
+
+// Tags
+.tags {
+  .tag {
+    color: $white-ter !important;
+    font-size: $size-9;
+    height: 2.25rem;
+  }
+}
+
+// Card
+.card {
+  .card-image {
+    height: 160px;
+
+    img,
+    video {
+      height: 160px;
+      object-fit: fill;
+      width: 100%;
+    }
+  }
+
+  .tags {
+    margin-top: -1rem !important;
+
+    .tag {
+      height: 2rem;
+    }
+  }
+}
+
+// Media
+.media {
+  .media-left {
+    .image {
+      height: auto !important;
+    }
+  }
+
+  .media-content {
+    min-width: 0;
+    overflow-x: initial !important;
+  }
+
+  .tags {
+    margin-top: -0.75rem !important;
+  }
+}
+
+// Dropdown
+.dropdown-item {
+  font-size: $size-normal;
+  padding: 0.375rem 1.75rem;
+}
+
+.dropdown-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+// Navbar
+html,
+body.has-navbar-fixed-top {
+  padding-top: 0;
+}
+
+.navbar {
+  .navbar-item {
+    font-size: $size-8;
+    font-weight: $weight-medium;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+
+  .navbar-link {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .navbar-item.divider {
+    background-color: $grey-darker;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 1rem 0;
+    width: 1px;
+  }
+}
+
+// Carousel
+.carousel-arrow {
+  .icon {
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+
+    &:hover {
+      border: 0;
+      cursor: pointer;
+    }
+  }
+}

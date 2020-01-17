@@ -1,0 +1,14 @@
+parameters:
+  sets:
+    - 'laravel60'
+  autoload_paths:
+    - 'vendor/autoload.php'
+  exclude_paths:
+    - '/*/bootstrap/*'
+    - '/*/config/*'
+    - '/*/database/*'
+    - '/*/node_modules/*'
+    - '/*/public/*'
+    - '/*/storage/*'
+    - '/*/vendor/*'
+  php_version_features: '7.4'
