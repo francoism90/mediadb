@@ -15,7 +15,7 @@ MediaDB is very much in development and is not yet suitable for production purpo
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ngx_brotli](https://github.com/google/ngx_brotli)
-- [Laravel](https://laravel.com/docs/6.x) development environment
+- [Laravel](https://laravel.com/docs/6.x) development environment with MySQL/MariaDB, Redis and Supervisor
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing
 
@@ -25,7 +25,9 @@ MediaDB is very much in development and is not yet suitable for production purpo
 
 See `doc/nginx` for configuration examples.
 
-### Laravel
+#### Laravel
+
+See `doc/supervisor` for configuration examples.
 
 ```bash
 cd /path/to/html
@@ -46,7 +48,7 @@ npm install
 npm run dev
 ```
 
-It is advisable to view all configuration files and change them when necessary, especially `config/vod.php` and `config/filesystems.php`.
+It is advisable to view all configuration files and change them when necessary, especially `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
 
 ### Production
 
