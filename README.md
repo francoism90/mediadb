@@ -32,6 +32,8 @@ See `doc/supervisor` for configuration examples.
 ```bash
 cd /path/to/html
 composer install
+php artisan migrate
+php artisan db:seed
 php artisan key:generate
 php artisan jwt:secret
 php artisan storage:link
@@ -43,12 +45,15 @@ php artisan elastic:update-mapping "App\Models\Media"
 php artisan elastic:update-mapping "App\Models\User"
 ```
 
+It is advisable to view all configuration files and change them when necessary, especially `.env`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
+
+##### Compile Assets
+
 ```bash
+cd /path/to/html
 npm install
 npm run dev
 ```
-
-It is advisable to view all configuration files and change them when necessary, especially `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
 
 ### Production
 
@@ -82,6 +87,6 @@ npm run prod
 php artisan optimize
 ```
 
-Optimize modules:
+##### Modules
 
 - https://github.com/kaltura/nginx-vod-module#performance-recommendations
