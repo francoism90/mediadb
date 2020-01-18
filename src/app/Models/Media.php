@@ -151,8 +151,8 @@ class Media extends BaseMedia implements ViewableContract
         return self::getSecureExpireLink(
             $this->getStreamJsonUrl(),
             config('vod.secret'),
-            3600,
-            $this->id,
+            config('vod.expire'),
+            $this->getRouteKey(),
             request()->ip()
         );
     }

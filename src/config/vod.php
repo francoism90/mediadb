@@ -26,5 +26,7 @@ return [
 
     'iv' => env('VOD_IV'),
 
-    'secret' => env('VOD_SECRET')
+    'secret' => env('VOD_SECRET'),
+
+    'expire' => env('VOD_EXPIRE', 60 * 60 * 8),
 ];

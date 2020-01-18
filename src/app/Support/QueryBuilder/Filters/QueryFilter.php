@@ -5,6 +5,7 @@ namespace App\Support\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class QueryFilter implements Filter
@@ -15,6 +16,7 @@ class QueryFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         $input = $this->sanitize((string) $value);
+        $input = $this->match($value);
 
         $models = $this->getQueryModels($query->getModel(), $input);
 
@@ -41,6 +43,46 @@ class QueryFilter implements Filter
         );
 
         return preg_replace('/\s+/', ' ', trim($str));
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    private function match(string $str = ''): string
+    {
+        $query = [];
+
+        // Get all quoted words
+        preg_match('/".*?"/', $str, $quoted);
+
+        foreach ($quoted as $part) {
+            $query[] = $part;
+        }
+
+        // Process each word
+        foreach (explode(' ', $str) as $part) {
+            $strAfter = Str::after($part, $part[0]);
+
+            if ($this->startsWithOperator($part) && ctype_alnum($strAfter)) {
+                $query[] = $part;
+            } elseif (ctype_alnum($part)) {
+                $query[] = "*{$part}*";
+            }
+        }
+
+        return implode(' ', $query);
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return bool
+     */
+    private function startsWithOperator(string $str): bool
+    {
+        return Str::startsWith($str, ['+', '-', '@', '<', '>', '~', '*']);
     }
 
     /**
