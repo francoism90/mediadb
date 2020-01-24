@@ -1,34 +1,46 @@
 @import "~bulma/sass/utilities/_all";
 
+// Colors
+$black:  hsl(0, 0%, 4%);
+$black-bis: hsl(225, 4.7%, 16.9%);
+$black-ter: hsl(210, 2.6%, 14.9%);
+
+$grey-darker: hsl(0, 1.6%, 12.4%);
+$grey-dark:  hsl(222.9, 5.6%, 24.5%);
+$grey: hsl(230, 3.9%, 30.2%);
+$grey-light: hsl(240, 3.2%, 42.5%);
+$grey-lighter: hsl(232.5, 3.4%, 46.7%);
+$grey-lightest: hsl(240, 6.2%, 68.2%);
+
 // Initial
-$scheme-main: $black;
+$scheme-main: $black-bis;
 $scheme-main-bis: $black-bis;
 $scheme-main-ter: $black-ter;
 
-$background: $black;
+$background: $scheme-main;
 
-$border: $black-bis;
-$border-hover: $grey-darker;
+$border: $grey-dark;
+$border-hover: $grey-dark;
 
-$text: $grey;
-$text-light: $grey;
+$text: $grey-lightest;
+$text-light: $grey-lighter;
 $text-strong: $grey;
 
-$link: $grey-light;
-$link-visited: $grey-light;
+$link: $text;
+$link-visited: $text;
 
 $link-hover: $white-ter;
 $link-hover-border: transparent;
 
-$link-focus: $grey-light;
+$link-focus: $text;
 $link-focus-border: transparent;
 
-$link-active: $grey-light;
+$link-active: $text;
 $link-active-border: transparent;
 
 // Typography
-$family-primary: 'Roboto', sans-serif;
-$family-secondary: 'Noto Sans', sans-serif;
+$family-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+$family-secondary: $family-primary;
 $family-sans-serif: $family-primary;
 
 $size-1: 2.5rem;
@@ -48,13 +60,17 @@ $size-normal: $size-6;
 $size-medium: $size-5;
 $size-large: $size-4;
 
-$weight-light: 400;
-$weight-normal: 500;
-$weight-medium: 600;
-$weight-semibold: 700;
-$weight-bold: 800;
+$weight-light: 500;
+$weight-normal: 600;
+$weight-medium: 700;
+$weight-semibold: 800;
+$weight-bold: 900;
 
 $small-font-size: $size-8;
+
+// Responsiveness
+$widescreen-enabled: true;
+$fullhd-enabled: false;
 
 // Miscellaneous
 $radius: 3px;
@@ -62,40 +78,40 @@ $radius-small: 1px;
 $radius-large: 6px;
 
 // Generic
-$body-background-color: $black-bis;
+$body-background-color: $scheme-main;
 $body-line-height: 1.4;
 $body-overflow-y: auto;
 $body-size: 14px;
 
-$hr-background-color: $black-ter;
+$hr-background-color: $border;
 
 // Section
-$section-padding: 0.75rem 3rem;
-$section-padding-medium: 1.5rem 3rem;
-$section-padding-large: 2.25rem 3rem;
+$section-padding: 1rem 2rem;
+$section-padding-medium: 2rem 2rem;
+$section-padding-large: 4rem 2rem;
 
 // Hero
-$hero-body-padding: 1.5rem 3rem;
-$hero-body-padding-small: 0.75rem 3rem;
-$hero-body-padding-medium: 3rem 3rem;
-$hero-body-padding-large: 6rem 3rem;
+$hero-body-padding: 1rem 2rem;
+$hero-body-padding-small: 0.75rem 2rem;
+$hero-body-padding-medium: 3rem 2rem;
+$hero-body-padding-large: 6rem 2rem;
 
 // Footer
 $footer-background-color: $black-bis;
-$footer-padding: 1.5rem 3rem;
+$footer-padding: 1.5rem 2rem;
 
 // Title
-$title-color: $white;
+$title-color: $text;
 $title-family: $family-primary;
 $title-size: $size-5;
-$title-weight: $weight-medium;
-$title-line-height: 1.4;
+$title-weight: $weight-normal;
+$title-line-height: $body-line-height;
 
-$subtitle-color: $text;
+$subtitle-color: $grey-lighter;
 $subtitle-family: $family-primary;
 $subtitle-size: $size-6;
-$subtitle-weight: $weight-normal;
-$subtitle-line-height: 1.4;
+$subtitle-weight: $weight-light;
+$subtitle-line-height: $body-line-height;
 
 // Control
 $control-radius: $radius;
@@ -142,11 +158,11 @@ $input-radius: $radius;
 
 // Button
 $button-color: $text;
-$button-background-color: $black-ter;
-$button-border-color: $black-ter;
+$button-background-color: $grey-dark;
+$button-border-color: $grey-dark;
 
 $button-hover-color: $white-ter;
-$button-hover-border-color: $black-ter;
+$button-hover-border-color: $grey-dark;
 
 $button-focus-color: $text;
 $button-focus-border-color: transparent;
@@ -173,9 +189,8 @@ $button-static-border-color: $black;
 $dropdown-menu-min-width: 12rem;
 
 $dropdown-content-background-color: $black-ter;
-$dropdown-content-arrow: $white-ter;
-$dropdown-content-radius: 0;
-$dropdown-content-z: 30;
+$dropdown-content-arrow: $text;
+$dropdown-content-radius: $radius;
 
 $dropdown-item-color: $text;
 
@@ -188,10 +203,8 @@ $dropdown-item-active-background-color: $black-bis;
 $dropdown-divider-background-color: $border;
 
 // Navbar
-$navbar-background-color: $black;
-$navbar-box-shadow-size: 0;
-$navbar-box-shadow-color: transparent;
-$navbar-height: 4.25rem;
+$navbar-background-color: $black-ter;
+$navbar-height: 4.95rem;
 $navbar-padding-vertical: 0;
 $navbar-padding-horizontal: 0;
 
@@ -203,7 +216,7 @@ $navbar-item-active-background-color: transparent;
 
 $navbar-dropdown-background-color: $white;
 $navbar-dropdown-border-top: 0;
-$navbar-dropdown-arrow: $white;
+$navbar-dropdown-arrow: $text;
 $navbar-dropdown-radius: 0;
 
 $navbar-dropdown-item-active-color: $white;
@@ -221,30 +234,34 @@ $box-link-hover-shadow: none;
 $box-link-active-shadow: none;
 
 // Card
-$card-color: $white-bis;
-$card-background-color: $black-ter;
+$card-color: $text;
+$card-background-color: transparent;
+$card-shadow: none;
 
-$card-footer-border-top: 1px solid $border;
+$card-content-padding: 1rem 0;
 
 // Modal
 $modal-content-width: 400px;
 
 $modal-card-head-background-color: $black-bis;
+$modal-card-head-border-bottom: 0;
+$modal-card-head-padding: 20px;
 $modal-card-head-radius: $radius;
 
 $modal-card-title-color: $white-ter;
-$modal-card-title-line-height: 1.4;
+$modal-card-title-line-height: $body-line-height;
 $modal-card-title-size: $size-5;
 
 $modal-card-body-background-color: $black-bis;
 $modal-card-body-padding: 0 20px;
 
 $modal-card-foot-radius: $radius;
+$modal-card-foot-border-top: 0;
 
 // Tag
-$tag-background-color: $black-ter;
-$tag-color: $white-ter;
-$tag-radius: 0;
+$tag-background-color: transparent;
+$tag-color: $grey-lighter;
+$tag-radius: $radius;
 
 // Slider
 $slider-radius: 0;
@@ -254,163 +271,6 @@ $slider-track-radius: 0;
 
 $slider-thumb-border: 0;
 
-// Carousel
-$carousel-arrow-background: transparent;
-$carousel-arrow-color: $white;
-
 // Import Buefy
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
-
-// Focus
-::-moz-focus-inner {
-  border: 0;
-}
-
-:focus {
-  outline: none;
-}
-
-// Section
-.section.is-medium {
-  padding: $section-padding-medium;
-}
-
-.section.is-large {
-  padding: $section-padding-large;
-}
-
-// Title
-.heading {
-  color: $text;
-  font-size: $size-9;
-  font-weight: $weight-normal;
-  margin-bottom: 1.5rem;
-}
-
-// Field
-.field {
-  .control:not(:last-child) {
-    margin-right: 1px !important;
-  }
-}
-
-// Input
-.input,
-.select,
-.button,
-.textarea {
-  font-weight: $weight-normal;
-  text-decoration: none !important;
-  resize: none;
-
-  .icon {
-    font-size: $size-5;
-  }
-
-  .icon.is-small {
-    font-size: $size-5;
-  }
-}
-
-// Tags
-.tags {
-  .tag {
-    color: $white-ter !important;
-    font-size: $size-9;
-    height: 2.25rem;
-  }
-}
-
-// Card
-.card {
-  .card-image {
-    height: 160px;
-
-    img,
-    video {
-      height: 160px;
-      object-fit: fill;
-      width: 100%;
-    }
-  }
-
-  .tags {
-    margin-top: -1rem !important;
-
-    .tag {
-      height: 2rem;
-    }
-  }
-}
-
-// Media
-.media {
-  .media-left {
-    .image {
-      height: auto !important;
-    }
-  }
-
-  .media-content {
-    min-width: 0;
-    overflow-x: initial !important;
-  }
-
-  .tags {
-    margin-top: -0.75rem !important;
-  }
-}
-
-// Dropdown
-.dropdown-item {
-  font-size: $size-normal;
-  padding: 0.375rem 1.75rem;
-}
-
-.dropdown-content {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-// Navbar
-html,
-body.has-navbar-fixed-top {
-  padding-top: 0;
-}
-
-.navbar {
-  .navbar-item {
-    font-size: $size-8;
-    font-weight: $weight-medium;
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
-  }
-
-  .navbar-link {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .navbar-item.divider {
-    background-color: $grey-darker;
-    padding-left: 0;
-    padding-right: 0;
-    margin: 1rem 0;
-    width: 1px;
-  }
-}
-
-// Carousel
-.carousel-arrow {
-  .icon {
-    border: 0;
-    border-radius: 0;
-    outline: 0;
-
-    &:hover {
-      border: 0;
-      cursor: pointer;
-    }
-  }
-}

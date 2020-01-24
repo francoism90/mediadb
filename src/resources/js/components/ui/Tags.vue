@@ -3,7 +3,6 @@ b-taglist
   b-tag(
     v-for="item in items"
     :key="item.id"
-    :size="size"
     :type="getTypeClass(item.type)"
   ) {{ item.name }}
 </template>
@@ -13,11 +12,6 @@ export default {
   props: {
     items: {
       type: Array,
-      default: null
-    },
-
-    size: {
-      type: String,
       default: null
     }
   },

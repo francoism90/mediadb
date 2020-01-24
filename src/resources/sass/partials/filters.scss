@@ -1,12 +1,13 @@
 .filters {
   .level {
-    margin-top: 0.75rem;
+    margin: 1rem;
     margin-bottom: 1.5rem;
   }
 
-  @include from($desktop) {
+  @include from($tablet) {
     .level {
       margin-left: -0.75rem;
+      margin-right: -0.75rem;
     }
   }
 }

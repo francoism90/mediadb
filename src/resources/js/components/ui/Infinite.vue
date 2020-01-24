@@ -1,34 +1,25 @@
 <template lang="pug">
-section
+section(:key="module.id")
+  filters(v-if="hasFilters" :key="identifier" :id="module.id")
+
   div(class="columns is-variable is-multiline")
     div(class="column" :class="customClass" v-for="(item, index) in items" :key="index")
-      card(:data="item" :paginate-id="id")
+      card(:data="item" :module-id="module.id")
 
   infinite-loading(:identifier="identifier" @infinite="infiniteHandler")
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
-
 export default {
   components: {
-    Card: () => import(/* webpackChunkName: "card" */ '@/components/ui/Card')
+    Card: () => import(/* webpackChunkName: "card" */ '@/components/ui/Card'),
+    Filters: () => import(/* webpackChunkName: "infinite-filters" */ '@/components/ui/InfiniteFilters')
   },
 
   props: {
-    id: {
-      type: [Number, String],
-      required: true
-    },
-
-    dispatcher: {
-      type: String,
-      required: true
-    },
-
-    params: {
+    module: {
       type: Object,
-      default: null
+      required: true
     },
 
     customClass: {
@@ -37,14 +28,20 @@ export default {
         is-full-mobile
         is-half-tablet
         is-one-third-desktop
-        is-one-quarter-widescreen
-        is-one-fifth-fullhd
+        is-one-third-widescreen
+        is-one-third-fullhd
       `
+    },
+
+    hasFilters: {
+      type: Boolean,
+      default: true
     }
   },
 
   data () {
     return {
+      items: [],
       identifier: +new Date(),
       filterChange: [
         'resetPaginate'
@@ -53,20 +50,20 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      items: 'paginateData'
-    })
+    paginate () {
+      return this.$store.state.paginate[this.module.id]
+    }
   },
 
   created () {
-    this.setPaginateId(this.id)
-    this.setPaginateParams(this.params)
+    this.items = this.paginate.data
   },
 
   mounted () {
-    this.$store.subscribe((mutation, state) => {
-      if (this.filterChange.includes(mutation.type)) {
-        if (state.paginateId === this.id) {
+    this.$store.subscribeAction((action) => {
+      if (this.filterChange.includes(action.type)) {
+        if (action.payload.id === this.module.id) {
+          this.items = []
           this.identifier += 1
         }
       }
@@ -74,19 +71,12 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'paginate'
-    ]),
-
-    ...mapMutations([
-      'setPaginateId',
-      'setPaginateParams'
-    ]),
-
     async infiniteHandler ($state) {
-      const { meta } = await this.paginate(this.dispatcher)
+      const { meta } = await this.$store.dispatch('paginate', this.module.id)
 
-      if (meta.current_page < meta.last_page) {
+      if (meta && meta.current_page <= meta.last_page) {
+        this.items = this.paginate.data
+
         return $state.loaded()
       }
 

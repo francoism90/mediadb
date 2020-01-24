@@ -1,0 +1,28 @@
+.search {
+  main {
+    padding-top: 1rem;
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+
+  .search-form {
+    .label {
+      color: $white-ter;
+    }
+
+    .input {
+      padding: 0.25rem 0;
+      border: 0;
+      border-bottom: 2px solid $grey-light;
+      background: none;
+      border-radius: 0;
+      color: $white-ter;
+    }
+  }
+
+  .search-results {
+    .hero-body {
+      padding: 0 0 1rem;
+    }
+  }
+}

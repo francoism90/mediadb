@@ -38,6 +38,21 @@ const routes = [
             component: () => import(/* webpackChunkName: "user-video" */ './views/user/Video.vue')
           }
         ]
+      },
+      {
+        path: '/collections',
+        name: 'collections',
+        component: () => import(/* webpackChunkName: "user-feed" */ './views/user/Feed.vue')
+      },
+      {
+        path: '/subscriptions',
+        name: 'subscriptions',
+        component: () => import(/* webpackChunkName: "user-feed" */ './views/user/Feed.vue')
+      },
+      {
+        path: '/upload',
+        name: 'upload',
+        component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue')
       }
     ]
   },

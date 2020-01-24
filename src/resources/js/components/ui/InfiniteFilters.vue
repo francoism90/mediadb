@@ -1,12 +1,13 @@
 <template lang="pug">
-section(class="filters")
-  nav(:key="id" class="level")
+section(:key="id" class="filters")
+  nav(class="level")
     div(class="level-left")
       div(class="level-item")
-          b-dropdown(v-model="sortFilter" aria-role="list")
+          b-dropdown(v-model="sort" aria-role="list")
             b-button(
               slot="trigger"
               type="is-text"
+              :class="{ 'is-active': hasSort }"
               icon-right="chevron-down"
             ) {{ sortLabel }}
 
@@ -17,49 +18,40 @@ section(class="filters")
               aria-role="listitem"
             ) {{ sorter.label }}
 
-      template(v-if="filtersOpen")
-        div(class="level-item")
-          b-dropdown(
-            v-for="type in tagTypes"
-            :key="type.key"
-            v-if="tagType(type.key).length"
-            v-model="tagFilter"
-            multiple
-            aria-role="list"
-          )
-            b-button(
-              slot="trigger"
-              type="is-text"
-              :class="{ 'is-dark': tagTypeActive(type.key) }"
-              icon-right="chevron-down"
-            ) {{ type.label }}
+          b-button(v-if="hasSort || hasTags" class="is-hidden-desktop" type="is-text" icon-right="filter-remove" @click="resetFilters()")
+          b-button(v-else class="is-hidden-desktop" type="is-text" icon-right="refresh" @click="forceReload()")
 
-            b-dropdown-item(
-              v-for="tag in tagType(type.key)"
-              :key="tag.id"
-              :value="tag.id"
-              aria-role="listitem"
-            ) {{ tag.name }}
-
-    div(class="level-right")
       div(class="level-item")
-        b-field
-          b-input(
-            v-debounce:600ms="resetPaginate"
-            v-model.lazy="queryFilter"
-            type="search"
-            icon="magnify"
-            class="query"
-            placeholder="Search"
-          )
+        b-dropdown(
+          v-for="type in types"
+          :key="type.key"
+          v-if="tagType(type.key).length"
+          v-model="tags"
+          multiple
+          aria-role="list"
+        )
+          b-button(
+            slot="trigger"
+            type="is-text"
+            :class="{ 'is-active': tagTypeActive(type.key) }"
+            icon-right="chevron-down"
+          ) {{ type.label }}
 
-          p(class="control")
-            b-tooltip(label="Toggle Filters" type="is-dark" position="is-bottom")
-              b-button(@click="filtersOpen = !filtersOpen" icon-right="filter")
+          b-dropdown-item(
+            v-for="tag in tagType(type.key)"
+            :key="tag.id"
+            :value="tag.id"
+            aria-role="listitem"
+          ) {{ tag.name }}
+
+    div(class="level-right is-hidden-touch")
+      div(class="level-item")
+        b-button(v-if="hasSort || hasTags" type="is-text" icon-right="filter-remove" @click="resetFilters()")
+        b-button(v-else type="is-text" icon-right="refresh" @click="forceReload()")
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   props: {
@@ -69,75 +61,50 @@ export default {
     }
   },
 
-  data () {
-    return {
-      filtersOpen: false,
-      tagTypes: [
-        {
-          key: 'Genre',
-          label: 'Genres'
-        },
-        {
-          key: 'Person',
-          label: 'Persons'
-        },
-        {
-          key: 'Language',
-          label: 'Languages'
-        }
-      ]
-    }
-  },
-
   computed: {
     ...mapGetters({
-      meta: 'paginateMeta',
-      parameters: 'paginateParams',
       tagType: 'tags/type'
     }),
 
     ...mapState({
-      sorters: state => state.paginateSorters
+      sorters: state => state.sorters,
+      types: state => state.tags.types
     }),
 
-    sortFilter: {
+    paginate () {
+      return this.$store.state.paginate[this.id]
+    },
+
+    sort: {
       get () {
-        return this.parameters.sort || this.sorters[0].key
+        return this.paginate.props.sort || this.sorters[0].key
       },
 
       set (value) {
-        this.setPaginateParams({ sort: value })
-        this.resetPaginate()
+        this.resetPaginate({ id: this.id, props: { sort: value } })
       }
     },
 
-    tagFilter: {
+    tags: {
       get () {
-        return this.parameters.tags || []
+        return this.paginate.props.tags || []
       },
 
       set (value) {
-        this.setPaginateParams({ tags: value })
-        this.resetPaginate()
+        this.resetPaginate({ id: this.id, props: { tags: value } })
       }
     },
 
-    queryFilter: {
-      get () {
-        return this.parameters.query || null
-      },
-
-      set (value) {
-        this.setPaginateParams({ sort: null, query: value })
-      }
+    hasSort () {
+      return this.sort !== this.sorters[0].key
     },
 
-    sortActive () {
-      return this.sortFilter !== this.sorters[0].key
+    hasTags () {
+      return this.tags.length
     },
 
     sortLabel () {
-      return this.sorters.find(x => x.key === this.sortFilter).label
+      return this.sorters.find(x => x.key === this.sort).label
     }
   },
 
@@ -147,19 +114,29 @@ export default {
 
   methods: {
     ...mapActions({
-      fetchTags: 'tags/filtered'
+      fetchTags: 'tags/filtered',
+      resetPaginate: 'resetPaginate'
     }),
 
-    ...mapMutations([
-      'resetPaginate',
-      'setPaginateParams'
-    ]),
+    forceReload () {
+      const start = this.paginate.props.initialized
+      const end = new Date()
+      const secs = Math.floor((end - start) / 1000 % 60)
+
+      if (secs > 1) {
+        this.resetPaginate({ id: this.id, props: { initialized: new Date() } })
+      }
+    },
+
+    resetFilters () {
+      this.resetPaginate({ id: this.id, props: { sort: null, tags: null } })
+    },
 
     tagTypeActive (type) {
-      const tags = this.tagType(type)
+      const tagsOfType = this.tagType(type)
 
-      for (const tag of tags) {
-        if (this.tagFilter.includes(tag.id)) {
+      for (const tag of tagsOfType) {
+        if (this.tags.includes(tag.id)) {
           return true
         }
       }

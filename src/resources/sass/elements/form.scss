@@ -1,0 +1,22 @@
+.input,
+.select,
+.button,
+.textarea {
+  font-weight: $weight-normal;
+  text-decoration: none !important;
+  resize: none;
+
+  .icon {
+    font-size: $size-5;
+  }
+
+  .icon.is-small {
+    font-size: $size-5;
+  }
+}
+
+.field {
+  .control:not(:last-child) {
+    margin-right: 1px !important;
+  }
+}

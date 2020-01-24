@@ -1,5 +1,19 @@
 export default {
   data: [],
   meta: {},
-  active: []
+  active: [],
+  types: [
+    {
+      key: 'Genre',
+      label: 'Genres'
+    },
+    {
+      key: 'Person',
+      label: 'Persons'
+    },
+    {
+      key: 'Language',
+      label: 'Languages'
+    }
+  ]
 }

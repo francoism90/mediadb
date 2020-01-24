@@ -15,9 +15,16 @@ class QueryFilter implements Filter
         // Array's should not be processed
         $value = is_array($value) ? implode(' ', $value) : $value;
 
+        // Sanitize input
         $input = $this->sanitize((string) $value);
-        $input = $this->match($value);
+        $input = $this->process($value);
 
+        // Return empty record on invalid input
+        if (!$input || $input === 'null' || $input === '*') {
+            return $query->where('id', 0);
+        }
+
+        // Get queried models
         $models = $this->getQueryModels($query->getModel(), $input);
 
         $ids = $models->pluck('id')->toArray();
@@ -50,7 +57,7 @@ class QueryFilter implements Filter
      *
      * @return string
      */
-    private function match(string $str = ''): string
+    private function process(string $str = ''): string
     {
         $query = [];
 

@@ -1,25 +1,30 @@
 <template lang="pug">
 section(class="section")
-  div(class="container-fluid")
-    filters(:id="id")
-    infinite(:id="id" :dispatcher="dispatcher" :params="params")
+  div(class="container")
+    infinite(:module="paginate")
 </template>
 
 <script>
 export default {
   components: {
-    Filters: () => import(/* webpackChunkName: "filters" */ '@/components/ui/InfiniteFilters'),
     Infinite: () => import(/* webpackChunkName: "infinite" */ '@/components/ui/Infinite')
   },
 
   data () {
     return {
-      id: 'feed',
-      dispatcher: 'media/fetch',
-      params: {
-        include: 'model,tags'
+      paginate: {
+        id: 'feed',
+        props: {
+          dispatcher: 'media/fetch',
+          include: 'model,tags',
+          sort: 'recommended'
+        }
       }
     }
+  },
+
+  created () {
+    this.$store.dispatch('createPaginate', this.paginate)
   }
 }
 </script>

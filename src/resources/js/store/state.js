@@ -1,9 +1,15 @@
 export default {
-  paginateData: {},
-  paginateMeta: {},
-  paginateId: null,
-  paginateParams: {},
-  paginateSorters: [
+  modal: {},
+  paginate: {},
+  paginateDefaults: {
+    data: [],
+    meta: {},
+    props: {
+      initialized: new Date(),
+      page: 1
+    }
+  },
+  sorters: [
     {
       key: 'recommended',
       label: 'Recommended for You'

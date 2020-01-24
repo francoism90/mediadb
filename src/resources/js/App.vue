@@ -2,8 +2,8 @@
 div(id="app" v-if="$auth.ready()")
   template(v-if="$auth.check()")
     app-header
+    app-widget
     router-view
-    back-to-top
     app-footer
 
   template(v-else)
@@ -13,7 +13,7 @@ div(id="app" v-if="$auth.ready()")
 <script>
 export default {
   metaInfo: {
-    title: 'Browse',
+    title: '',
     titleTemplate: '%s | MediaDB',
     htmlAttrs: {
       lang: 'en'
@@ -23,7 +23,7 @@ export default {
   components: {
     AppHeader: () => import(/* webpackChunkName: "app-header" */ '@/components/layout/AppHeader'),
     AppFooter: () => import(/* webpackChunkName: "app-footer" */ '@/components/layout/AppFooter'),
-    BackToTop: () => import(/* webpackChunkName: "app-to-top" */ '@/components/ui/BackToTop')
+    AppWidget: () => import(/* webpackChunkName: "app-widget" */ '@/components/layout/AppWidget')
   }
 }
 </script>

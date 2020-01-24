@@ -1,0 +1,12 @@
+.media {
+  .media-left {
+    .image {
+      height: auto !important;
+    }
+  }
+
+  .media-content {
+    min-width: 0;
+    overflow-x: initial !important;
+  }
+}

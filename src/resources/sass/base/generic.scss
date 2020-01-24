@@ -1,0 +1,12 @@
+html,
+body {
+  font-feature-settings: "liga", "tnum", "case", "calt", "zero", "ss01", "ss03", "locl";
+}
+
+::-moz-focus-inner {
+  border: 0;
+}
+
+:focus {
+  outline: none;
+}

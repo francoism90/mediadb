@@ -6,7 +6,6 @@ import Buefy from 'buefy'
 import InfiniteLoading from 'vue-infinite-loading'
 import Moment from 'moment'
 import VueAuth from '@websanova/vue-auth'
-import VueDebounce from 'vue-debounce'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 
@@ -61,7 +60,6 @@ Vue.prototype.$eventHub = new Vue()
  */
 
 Vue.use(Buefy)
-Vue.use(VueDebounce)
 
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
@@ -81,8 +79,7 @@ Vue.use(InfiniteLoading, {
  * Register UI components
  */
 
-require('typeface-roboto')
-require('typeface-noto-sans')
+require('typeface-inter')
 
 /**
  * Register Filters

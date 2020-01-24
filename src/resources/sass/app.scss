@@ -3,7 +3,11 @@
 // Import vendors
 @import "vendor/bulma.scss";
 
-// Import partials
+// Import styles
+@import "base/_all.scss";
+@import "components/_all.scss";
+@import "elements/_all.scss";
+@import "layout/_all.scss";
 @import "partials/_all.scss";
 
 // Import fonts

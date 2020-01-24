@@ -1,11 +1,11 @@
-import { filter } from 'lodash'
+import { filter, find } from 'lodash'
 
 export default {
   active: (state) => {
     return state.active
   },
 
-  type: (state) => (key) => {
-    return filter(state.data, ['type', key])
+  type: (state) => (type) => {
+    return filter(state.data, ['type', type])
   }
 }

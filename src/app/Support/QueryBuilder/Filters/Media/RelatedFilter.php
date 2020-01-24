@@ -38,6 +38,8 @@ class RelatedFilter implements Filter
         return [
             $media->relatedName(),
             $media->relatedTags(),
+            $media->relatedUserModel(),
+            $media->relatedRandom(),
         ];
     }
 }

@@ -121,7 +121,6 @@ export default {
   async mounted () {
     await this.fetchTags()
 
-    // Needed to filter later
     this.filteredTags = this.tagItems
 
     if (this.data.relationships.tags.length) {
@@ -150,15 +149,16 @@ export default {
     },
 
     async update () {
-      // Attach tags to body
+      // Attach selected tags to body
       this.body.tags = this.tags || []
 
       await this.submit('media/update', this.body)
 
       if (this.isValid()) {
-        this.$parent.close()
+        // Refresh model
+        this.get(this.data.id)
 
-        return this.$router.go(0)
+        this.$parent.close()
       }
     },
 
@@ -176,9 +176,8 @@ export default {
     async confirmDelete () {
       await this.delete(this.data.id)
 
+      this.$router.push({ name: 'home' })
       this.$parent.close()
-
-      window.location.href = '/'
     }
   }
 }

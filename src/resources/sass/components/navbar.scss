@@ -1,0 +1,53 @@
+body.has-navbar-fixed-top {
+  padding-top: 0;
+}
+
+.navbar {
+  .container {
+    .navbar-brand,
+    .navbar-end {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
+
+  @include from($navbar-breakpoint) {
+    .container {
+      .navbar-brand {
+        margin-left: -1rem;
+      }
+
+      .navbar-menu {
+        margin-right: -1rem;
+      }
+    }
+  }
+
+  .navbar-touch {
+    margin-left: auto;
+  }
+
+  .navbar-item {
+    font-size: $size-6;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .navbar-link {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .divider {
+    background-color: $border;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 1.65rem 1rem;
+    width: 1px;
+    cursor: initial;
+  }
+
+  .navbar-search {
+    padding-right: 0;
+  }
+}

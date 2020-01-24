@@ -1,18 +1,9 @@
 <template lang="pug">
 section(v-if="data.id")
   player(:id="data.id" :options="videoOptions")
-
-  section(class="section is-large")
-    div(class="container-fluid")
-      div(class="columns is-variable is-8")
-        div(class="column")
-          hero(:data="data" :user-data="userData")
-          actions(:data="data" :meta="meta" :user-data="userData")
-          related(:data="data" :user-data="userData")
-
-        div(class="column next")
-          user(:data="data" :user-data="userData")
-          collections(:data="data" :user-data="userData")
+  hero(:data="data" :user-data="userData")
+  info(:data="data" :meta="meta" :user-data="userData")
+  next(:data="data" :user-data="userData")
 </template>
 
 <script>
@@ -28,12 +19,10 @@ export default {
   },
 
   components: {
-    Actions: () => import(/* webpackChunkName: "video-actions" */ '@/components/video/Actions'),
-    Collections: () => import(/* webpackChunkName: "vide-collections" */ '@/components/video/Collections'),
     Hero: () => import(/* webpackChunkName: "video-hero" */ '@/components/video/Hero'),
-    Player: () => import(/* webpackChunkName: "player-instance" */ '@/components/player/Instance'),
-    Related: () => import(/* webpackChunkName: "video-related" */ '@/components/video/Related'),
-    User: () => import(/* webpackChunkName: "video-user" */ '@/components/video/User')
+    Info: () => import(/* webpackChunkName: "video-info" */ '@/components/video/Info'),
+    Next: () => import(/* webpackChunkName: "video-next" */ '@/components/video/Next'),
+    Player: () => import(/* webpackChunkName: "player-instance" */ '@/components/player/Instance')
   },
 
   props: {

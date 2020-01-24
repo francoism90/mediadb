@@ -1,9 +1,16 @@
-.media-actions {
-  .level {
-    margin-bottom: 0;
+.media-info {
+  margin-top: -0.75rem;
+
+  .media-subscribe {
+    border-top: 1px solid $border;
+    padding: 1rem 0;
   }
 
-  .tags {
-    margin-top: 0.5rem;
+  .media-description {
+    border-bottom: 1px solid $border;
+
+    p {
+      padding-bottom: 1rem;
+    }
   }
 }

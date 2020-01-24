@@ -20,7 +20,6 @@ nav(class="controls")
 
     div(Class="level-right")
       div(class="level-item")
-        b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="download" @click.native="callback('download')")
         b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="settings" @click.native="callback('toggle-fullscreen')")
         b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="arrow-expand" @click.native="callback('toggle-fullscreen')")
 </template>
