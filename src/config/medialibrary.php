@@ -72,7 +72,7 @@ return [
      * When urls to files get generated, this class will be called. Leave empty
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => '\App\Support\MediaLibrary\LocalUrlGenerator',
+    'url_generator' => App\Support\MediaLibrary\LocalUrlGenerator::class,
 
     /*
      * The class that contains the strategy for determining a media file's path.
@@ -136,7 +136,7 @@ return [
      * The path where to store temporary files while performing image conversions.
      * If set to null, storage_path('medialibrary/temp') will be used.
      */
-    'temporary_directory_path' => '/tmp/medialibrary',
+    'temporary_directory_path' => null,
 
     /*
      * Here you can override the class names of the jobs used by this package. Make sure

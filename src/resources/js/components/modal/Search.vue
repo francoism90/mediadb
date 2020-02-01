@@ -1,24 +1,25 @@
 <template lang="pug">
-main
-  section(class="section search-form")
-    b-field(grouped position="is-right" :addons="false")
-      b-button(type="is-text" icon-right="close" size="is-large" @click="$store.dispatch('destroyModal')")
+div(class="container")
+  section(class="section has-text-right")
+    b-button(type="is-text" class="is-paddingless" icon-right="close" size="is-large" @click="$store.dispatch('destroyModal')")
 
-    b-field(label="Search")
-      b-input(
-        ref="search"
-        v-model.trim="query"
-        :has-counter="false"
-        custom-class="has-text-weight-medium is-size-2"
-        expanded
-        minlength="1"
-        maxlength="255"
-        name="query"
-        placeholder="Enter keywords"
-        type="search"
-      )
+  section(class="section")
+    form
+      b-field(label="Search")
+        b-input(
+          ref="search"
+          v-model.trim="query"
+          :has-counter="false"
+          custom-class="has-text-weight-medium is-size-2"
+          expanded
+          minlength="1"
+          maxlength="255"
+          name="query"
+          placeholder="Enter keywords"
+          type="search"
+        )
 
-  section(class="section search-results")
+  section(class="section")
     infinite(:module="mediaPaginate" :custom-class="mediaPaginate.customClass" :has-filters="false")
 </template>
 
@@ -34,6 +35,7 @@ export default {
     return {
       mediaPaginate: {
         id: 'search',
+        type: 'media',
         props: {
           dispatcher: 'media/fetch',
           include: 'model,tags',
@@ -69,8 +71,8 @@ export default {
     }
   },
 
-  created () {
-    this.$store.dispatch('createPaginate', this.mediaPaginate)
+  async created () {
+    await this.$store.dispatch('createPaginate', this.mediaPaginate)
   },
 
   mounted () {

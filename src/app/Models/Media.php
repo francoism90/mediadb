@@ -99,6 +99,14 @@ class Media extends BaseMedia implements ViewableContract
     }
 
     /**
+     * @return hasManyJson
+     */
+    public function collections()
+    {
+        return $this->hasManyJson('App\Models\Media', 'custom_properties->media_ids');
+    }
+
+    /**
      * @return string
      */
     public function getThumbnailAttribute(): string

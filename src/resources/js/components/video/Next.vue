@@ -1,7 +1,7 @@
 <template lang="pug">
 section(:key="data.id" class="section")
   div(class="container")
-    h1(class="title is-uppercase is-6") Up Next
+    h1(class="subtitle is-uppercase is-9") Up Next
     infinite(:module="paginate" :custom-class="paginate.customClass" :has-filters="false")
 </template>
 
@@ -27,11 +27,11 @@ export default {
     return {
       paginate: {
         id: 'related',
+        type: 'media',
         props: {
           dispatcher: 'media/fetch',
           include: 'model,tags',
           related: this.data.id,
-          size: 6,
           sort: null
         },
         customClass: `
@@ -45,8 +45,8 @@ export default {
     }
   },
 
-  created () {
-    this.$store.dispatch('createPaginate', this.paginate)
+  async created () {
+    await this.$store.dispatch('createPaginate', this.paginate)
   }
 }
 </script>

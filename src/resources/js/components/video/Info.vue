@@ -15,19 +15,19 @@ section(class="section media-info")
           p(class="title is-7") Save
 
       div(class="level-item has-text-centered")
-        a(@click="callback('download')")
+        a(@click.prevent="callback('download')")
           p(class="heading")
             b-icon(icon="download")
           p(class="title is-7") Download
 
       div(class="level-item has-text-centered is-hidden-mobile")
-        a(@click="callback('create-thumbnail')")
+        a(@click.prevent="callback('create-thumbnail')")
           p(class="heading")
             b-icon(icon="image")
           p(class="title is-7") Snapshot
 
       div(class="level-item has-text-centered")
-        a(@click="openManager()")
+        a(@click.prevent="contextHandler()" v-shortkey="['ctrl', 'e']" @shortkey="contextHandler()")
           p(class="heading")
             b-icon(icon="file-document-box")
           p(class="title is-7") Edit
@@ -57,6 +57,8 @@ section(class="section media-info")
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   props: {
     data: {
@@ -80,26 +82,26 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters([
+      'itemContextMenu',
+      'itemRoute'
+    ])
+  },
+
   methods: {
+    ...mapActions([
+      'modal'
+    ]),
+
     callback (event) {
       this.$eventHub.$emit(this.data.id, event)
     },
 
-    openManager () {
-      const modalComponent = () => import(
-        /* webpackChunkName: "media-manager" */ '@/components/media/Manager'
-      )
+    contextHandler () {
+      const itemProps = this.itemContextMenu(this.data, 'media')
 
-      this.$buefy.modal.open({
-        component: modalComponent,
-        parent: this,
-        props: {
-          data: this.data,
-          userData: this.data
-        },
-        hasModalCard: true,
-        trapFocus: true
-      })
+      this.modal(itemProps)
     }
   }
 }

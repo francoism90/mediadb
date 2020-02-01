@@ -36,8 +36,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     ];
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -138,6 +136,14 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
             ->height(320)
             ->extractVideoFrameAtSecond($media->getCustomProperty('snapshot', 10))
             ->performOnCollections('videos');
+    }
+
+    /**
+     * @return hasMany
+     */
+    public function collections()
+    {
+        return $this->hasMany('App\Models\Collection')->orderBy('name');
     }
 
     /**

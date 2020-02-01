@@ -1,0 +1,37 @@
+$black:  hsl(0, 0%, 4%);
+$black-bis: hsl(225, 4.7%, 16.9%); // --dark-background
+$black-ter: hsl(210, 2.6%, 14.9%); // --dark-header
+
+$grey-darker: hsl(0, 1.6%, 12.4%);
+$grey-dark:  hsl(222.9, 5.6%, 24.5%); // --dark-background-secondary
+$grey: hsl(230, 3.9%, 30.2%); // --dark-border-color
+$grey-light: hsl(240, 3.2%, 42.5%);
+$grey-lighter: hsl(232.5, 3.4%, 46.7%); // --dark-color-secondary
+$grey-lightest: hsl(240, 6.2%, 68.2%); // --dark-color
+
+$family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+$family-monospace: monospace;
+$render-mode: optimizeLegibility;
+
+$size-1: 2.625rem;
+$size-2: 2rem;
+$size-3: 1.75rem;
+$size-4: 1.625rem;
+$size-5: 1.375rem;
+$size-6: 1.125rem;
+$size-7: 1rem;
+$size-8: 0.975rem;
+$size-9: 0.9rem;
+
+$weight-light: 500;
+$weight-normal: 600;
+$weight-medium: 700;
+$weight-semibold: 800;
+$weight-bold: 900;
+
+$widescreen-enabled: true;
+$fullhd-enabled: false;
+
+$radius-small: 1px;
+$radius: 3px;
+$radius-large: 5px;

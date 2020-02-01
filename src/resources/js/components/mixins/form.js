@@ -5,26 +5,27 @@ export const formHandler = {
     return {
       errorMessage: null,
       formErrors: {},
-      statusCode: 200,
+      response: null,
       validStatuses: [200, 201]
     }
   },
 
   methods: {
     async submit (key, params = null) {
-      this.formErrors = {}
       this.errorMessage = null
-      this.statusCode = 200
+      this.formErrors = {}
+      this.response = null
 
       try {
-        return await this.$store.dispatch(key, params)
+        this.response = await this.$store.dispatch(key, params)
       } catch (error) {
         const { data } = error.response
 
         this.errorMessage = data.message
         this.formErrors = data.errors
-        this.statusCode = data.statusCode
       }
+
+      return { success: this.isSuccess(), data: this.response }
     },
 
     error (field) {
@@ -39,8 +40,12 @@ export const formHandler = {
       return this.error(field) ? errorClass : ''
     },
 
-    isValid () {
-      return isEmpty(this.formErrors) && this.validStatuses.includes(this.statusCode)
+    isSuccess () {
+      if (!isEmpty(this.errorMessage) || !isEmpty(this.formErrors) || isEmpty(this.response)) {
+        return false
+      }
+
+      return this.validStatuses.includes(this.response.status)
     }
   }
 }

@@ -1,17 +1,10 @@
-import uniqBy from 'lodash/uniqBy'
+import Vue from 'vue'
 
 export default {
-  resetTags (state) {
-    state.data = []
-    state.meta = {}
-  },
-
   setTags (state, payload) {
-    state.data = Object.assign([], this.data, payload.data)
-    state.meta = Object.assign({}, this.meta, payload.meta)
-  },
+    const { data, meta } = payload
 
-  setActiveTags (state, tags) {
-    state.active = uniqBy(tags, 'id')
+    Vue.set(state, 'data', data)
+    Vue.set(state, 'meta', meta)
   }
 }

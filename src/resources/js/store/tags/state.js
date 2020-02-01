@@ -1,8 +1,7 @@
 export default {
   data: [],
   meta: {},
-  active: [],
-  types: [
+  taggers: [
     {
       key: 'Genre',
       label: 'Genres'

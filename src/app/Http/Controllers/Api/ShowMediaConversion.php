@@ -21,7 +21,7 @@ class ShowMediaConversion extends Controller
 
         switch ($conversion) {
             case 'preview':
-                $basename = pathinfo($media->file_name, PATHINFO_FILENAME)."-$conversion.mp4";
+                $basename = pathinfo($media->file_name, PATHINFO_FILENAME)."-{$conversion}.mp4";
                 $path = "{$root}/conversions/{$basename}";
                 break;
             default:

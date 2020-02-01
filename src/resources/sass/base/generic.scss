@@ -1,3 +1,20 @@
+$body-background-color: $scheme-main;
+$body-overflow-x: hidden;
+$body-overflow-y: auto;
+$body-size: 14px;
+
+$body-color: $text;
+$body-font-size: 1rem;
+$body-weight: $weight-normal;
+$body-line-height: 1.54;
+
+$small-font-size: $size-8;
+
+$hr-background-color: $border;
+
+$strong-color: $text-strong;
+$strong-weight: $weight-medium;
+
 html,
 body {
   font-feature-settings: "liga", "tnum", "case", "calt", "zero", "ss01", "ss03", "locl";

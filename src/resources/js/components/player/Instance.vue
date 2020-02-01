@@ -1,118 +1,90 @@
 <template lang="pug">
-main(v-if="options.manifest" :key="id" ref="fullscreen" @mousemove="showHideControls()" @mouseleave="showHideControls()" :style="{ cursor: mouseActive ? 'auto' : 'none' }" class="player" :class="{ 'is-fullscreen': isFullscreen }")
+main(v-if="id" :key="id" ref="fullscreen" @mousemove="showControls" @mouseleave="hideControls" :class="[customClass, fullscreenClass]" :style="styles" v-shortkey="playerShortkeys" @shortkey="playerCallback")
   video(
     ref="videoElement"
     playsinline
-    :poster="options.poster || ''"
-    :style="{ width: options.width + 'px' }"
-    @canplay="autoplay()"
-    @click="togglePlay()"
-    @dblclick="toggleFullscreen()"
-    @ended="playerEvent()"
-    @loadedmetadata="playerEvent()"
-    @pause="playerEvent()"
-    @play="playerEvent()"
-    @progress="playerEvent()"
-    @timeupdate="playerEvent()"
+    crossorigin
+    :poster="poster"
+    :style="ratio"
+    :preload="preload"
+    @canplay="playable"
+    @click="togglePlay"
+    @dblclick="toggleFullscreen"
+    @ended="playerEvent"
+    @loadedmetadata="playerEvent"
+    @pause="playerEvent"
+    @play="playerEvent"
+    @progress="playerEvent"
+    @timeupdate="playerEvent"
   )
 
   transition(name="fade")
     keep-alive
-      play(v-show="mouseActive" :id="id")
-      controls(v-show="mouseActive" :id="id")
+      controls(v-show="controlsActive" :id="id" :elements="hasControls")
 </template>
 
 <script>
 import { fullscreenHandler, playerHandler } from '@/components/mixins'
 
 export default {
+  timers: {
+    hideControls: { time: 3000, autostart: true }
+  },
+
   components: {
     Controls: () => import(/* webpackChunkName: "player-controls" */ '@/components/player/Controls')
   },
 
   mixins: [fullscreenHandler, playerHandler],
 
+  props: {
+    customClass: {
+      type: Object,
+      default: function () {
+        return { player: true }
+      }
+    },
+
+    hasControls: {
+      type: Array,
+      default: function () {
+        return [
+          'slider',
+          'togglePlay',
+          'fastRewind',
+          'fastForward',
+          'currentTime',
+          'settings',
+          'toggleFullscreen'
+        ]
+      }
+    }
+  },
+
   data () {
     return {
-      mouseActive: true,
-      mouseTimer: null
+      controlsActive: true
     }
   },
 
   computed: {
-    player () {
-      return this.$refs.videoElement
+    fullscreenClass () {
+      return { 'is-fullscreen': this.isFullscreen }
+    },
+
+    styles () {
+      return { cursor: this.controlsActive ? 'auto' : 'none' }
     }
   },
 
-  mounted () {
-    this.eventListener()
-  },
-
   methods: {
-    showHideControls () {
-      clearTimeout(this.mouseTimer)
-
-      this.mouseActive = true
-
-      if (this.options.keepControls) {
-        return
-      }
-
-      this.mouseTimer = setTimeout(() => {
-        this.mouseActive = false
-      }, this.options.transactionTime || 2500)
+    hideControls () {
+      this.controlsActive = false
     },
 
-    eventListener () {
-      this.$eventHub.$on(this.id, (event) => {
-        try {
-          const key = typeof event === 'object' ? event.key : event
-
-          switch (key) {
-            case 'toggle-play':
-              this.togglePlay()
-              break
-
-            case 'toggle-fullscreen':
-              this.toggleFullscreen()
-              break
-
-            case 'fast-rewind':
-              this.player.currentTime -= 10
-              break
-
-            case 'fast-foward':
-              this.player.currentTime += 10
-              break
-
-            case 'current-time':
-              this.player.currentTime = event.time
-              break
-
-            case 'create-thumbnail':
-              this.$store.dispatch('media/update', {
-                id: this.id,
-                snapshot: this.player.currentTime
-              })
-
-              this.$buefy.notification.open({
-                duration: 5000,
-                message: 'The thumbnail will be updated as soon as possible!',
-                type: 'is-success',
-                position: 'is-top',
-                queue: false
-              })
-              break
-
-            case 'download':
-              this.player.pause()
-
-              window.location.href = this.options.download
-              break
-          }
-        } catch (e) {}
-      })
+    showControls () {
+      this.controlsActive = true
+      this.$timer.restart('hideControls')
     }
   }
 }

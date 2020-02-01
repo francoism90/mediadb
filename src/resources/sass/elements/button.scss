@@ -1,0 +1,37 @@
+$button-color: $text;
+$button-background-color: $grey-dark;
+
+$button-border-color: transparent;
+$button-border-width: $control-border-width;
+
+$button-hover-color: $white-ter;
+$button-hover-border-color: transparent;
+
+$button-padding-vertical: calc(0.5rem - #{$button-border-width});
+$button-padding-horizontal: 0.75rem;
+
+$button-focus-color: $text;
+$button-focus-border-color: transparent;
+$button-focus-box-shadow-size: none;
+$button-focus-box-shadow-color: none;
+
+$button-active-color: $white-ter;
+$button-active-border-color: transparent;
+
+$button-text-color: $text;
+$button-text-hover-background-color: transparent;
+$button-text-hover-color: $white-ter;
+
+$button-disabled-background-color: $black-bis;
+$button-disabled-border-color: transparent;
+$button-disabled-shadow: none;
+$button-disabled-opacity: 0.25;
+
+$button-static-color: $text;
+$button-static-background-color: $black-ter;
+$button-static-border-color: transparent;
+
+.button {
+  font-weight: $weight-normal;
+  text-decoration: none !important;
+}

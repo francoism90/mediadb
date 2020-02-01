@@ -1,10 +1,11 @@
 <template lang="pug">
-nav(class="controls")
+nav(:key="id" class="controls")
   b-slider(
+    v-show="showElement('slider')"
     rounded
     lazy
     type="is-primary"
-    :value="Number(durationPct)"
+    :value="Number(durationPct())"
     :tooltip="false"
     :style="{ background: `linear-gradient(90deg, hsl(0, 0%, 86%) ${bufferedPct()}%, hsla(0, 0%, 71%, 0.6) ${bufferRemainingPct()}%)` }"
     @change="setCurrentTime"
@@ -13,22 +14,31 @@ nav(class="controls")
   div(class="level is-mobile")
     div(class="level-left")
       div(class="level-item")
-        b-button(size="is-normal" type="is-text" class="has-text-white" :icon-right="paused ? 'play' : 'pause'" @click.native="callback('toggle-play')")
-        b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="rewind-10" @click.native="callback('fast-rewind')")
-        b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="fast-forward-10" @click.native="callback('fast-foward')")
-        b-button(size="is-normal" type="is-text" class="has-text-white") {{ Number(current) | timestamp }} / {{ Number(duration) | timestamp }}
+        b-button(v-show="showElement('togglePlay')" size="is-normal" type="is-text" class="has-text-white" :icon-right="paused ? 'play' : 'pause'" @click.native="callback('toggle-play')")
+        b-button(v-show="showElement('fastRewind')" size="is-normal" type="is-text" class="has-text-white" icon-right="rewind-10" @click.native="callback('fast-rewind')")
+        b-button(v-show="showElement('fastForward')" size="is-normal" type="is-text" class="has-text-white" icon-right="fast-forward-10" @click.native="callback('fast-foward')")
+        b-button(v-show="showElement('currentTime')" size="is-normal" type="is-text" class="has-text-white") {{ Number(current) | timestamp }} / {{ Number(duration) | timestamp }}
 
     div(Class="level-right")
       div(class="level-item")
-        b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="settings" @click.native="callback('toggle-fullscreen')")
-        b-button(size="is-normal" type="is-text" class="has-text-white" icon-right="arrow-expand" @click.native="callback('toggle-fullscreen')")
+        b-button(v-show="showElement('settings')" size="is-normal" type="is-text" class="has-text-white" icon-right="settings" @click.native="callback('toggle-fullscreen')")
+        b-button(v-show="showElement('toggleFullscreen')"  size="is-normal" type="is-text" class="has-text-white" :icon-right="isFullscreen ? 'arrow-collapse' : 'arrow-expand'" @click.native="callback('toggle-fullscreen')")
 </template>
 
 <script>
+import { fullscreenHandler } from '@/components/mixins'
+
 export default {
+  mixins: [fullscreenHandler],
+
   props: {
     id: {
       type: String,
+      required: true
+    },
+
+    elements: {
+      type: Array,
       required: true
     }
   },
@@ -38,8 +48,9 @@ export default {
       buffered: null,
       current: 0,
       duration: 0,
-      paused: false,
-      ready: false
+      paused: true,
+      muted: false,
+      readyState: 0
     }
   },
 
@@ -47,21 +58,26 @@ export default {
     this.$eventHub.$on(this.id, (event) => {
       Object.assign(this.$data, {
         buffered: event.buffered || this.buffered,
-        current: event.currentTime || this.current,
+        current: event.current || this.current,
         duration: event.duration || this.duration,
-        paused: event.paused || false,
-        ready: event.readyState > 2 || false
+        paused: event.paused,
+        muted: event.muted,
+        readyState: event.readyState || this.readyState
       })
     })
   },
 
   methods: {
+    showElement (key) {
+      return this.elements.includes(key)
+    },
+
     callback (event) {
       this.$eventHub.$emit(this.id, event)
     },
 
     bufferedPct () {
-      if (!this.ready) {
+      if (this.readyState < 1 || !this.buffered.length) {
         return 0
       }
 
@@ -78,7 +94,7 @@ export default {
     },
 
     durationPct () {
-      return ((this.current / this.duration) * 100).toFixed(1)
+      return ((this.current / this.duration) * 100)
     },
 
     setCurrentTime (pct) {

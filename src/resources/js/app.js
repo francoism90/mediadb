@@ -5,9 +5,12 @@ import Axios from 'axios'
 import Buefy from 'buefy'
 import InfiniteLoading from 'vue-infinite-loading'
 import Moment from 'moment'
+import Shortkey from 'vue-shortkey'
+import Vue2TouchEvents from 'vue2-touch-events'
 import VueAuth from '@websanova/vue-auth'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
+import VueTimers from 'vue-timers'
 
 import App from './App.vue'
 import routes from './routes'
@@ -56,33 +59,30 @@ Vue.router = router
 Vue.prototype.$eventHub = new Vue()
 
 /**
- * Register Plugins
+ * Register plugins
  */
 
 Vue.use(Buefy)
+
+Vue.use(InfiniteLoading, {
+  props: { spinner: 'waveDots' },
+  slots: { noMore: '', noResults: '' }
+})
+
+Vue.use(Shortkey, {
+  prevent: ['input', 'textarea']
+})
 
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
 
-Vue.use(InfiniteLoading, {
-  props: {
-    spinner: 'waveDots'
-  },
-  slots: {
-    noMore: '',
-    noResults: ''
-  }
-})
+Vue.use(VueTimers)
+
+Vue.use(Vue2TouchEvents)
 
 /**
- * Register UI components
- */
-
-require('typeface-inter')
-
-/**
- * Register Filters
+ * Register filters
  */
 
 Vue.filter('approximate', function (value) {

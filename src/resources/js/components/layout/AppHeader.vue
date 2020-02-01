@@ -28,7 +28,7 @@ b-navbar(fixed-top wrapper-class="container")
       exact
     ) {{ item.label }}
 
-    b-navbar-item(class="divider is-hidden-touch")
+    b-navbar-item(class="divider is-hidden-touch" tag="div")
     b-navbar-item(@click="openSearch()" class="navbar-search is-hidden-touch")
       b-icon(icon="magnify")
 </template>

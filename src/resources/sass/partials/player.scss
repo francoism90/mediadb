@@ -6,25 +6,7 @@
   video {
     display: block;
     margin: 0 auto;
-    height: auto;
-    width: 100%;
-    max-width: 1152px;
-    max-height: 670px;
-
-    @include until($widescreen) {
-      max-width: 960px;
-      max-height: 640px;
-    }
-
-    @include until($desktop) {
-      max-width: 769px;
-      max-height: 420px;
-    }
-
-    @include until($tablet) {
-      max-width: 100%;
-      max-height: 320px;
-    }
+    object-fit: fill;
   }
 
   .controls {
@@ -48,10 +30,34 @@
   }
 }
 
+.player.is-responsive {
+  video {
+    max-width: 1152px;
+    min-height: 480px;
+    max-height: 640px;
+
+    @include until($widescreen) {
+      max-width: $widescreen;
+    }
+
+    @include until($desktop) {
+      max-width: $desktop;
+      max-height: 480px;
+    }
+
+    @include until($tablet) {
+      max-width: 100%;
+      min-height: 240px;
+      max-height: 240px;
+    }
+  }
+}
+
 .player.is-fullscreen {
   video {
     height: 100% !important;
     width: 100% !important;
+    object-fit: contain !important;
     min-height: 100% !important;
     max-height: 100% !important;
     max-width: 100% !important;

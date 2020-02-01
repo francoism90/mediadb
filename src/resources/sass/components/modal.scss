@@ -1,0 +1,24 @@
+$modal-content-width: 640px;
+
+$modal-card-head-background-color: $black-bis;
+$modal-card-head-border-bottom: 0;
+$modal-card-head-padding: 20px;
+$modal-card-head-radius: $radius;
+
+$modal-card-title-color: $white-ter;
+$modal-card-title-line-height: $body-line-height;
+$modal-card-title-size: $size-5;
+
+$modal-card-body-background-color: $black-bis;
+$modal-card-body-padding: 0 20px;
+
+$modal-card-foot-radius: $radius;
+$modal-card-foot-border-top: 0;
+
+.modal.is-full-screen {
+  @include from($tablet) {
+    .container {
+      padding-top: 1rem;
+    }
+  }
+}

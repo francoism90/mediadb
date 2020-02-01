@@ -1,5 +1,14 @@
-.card {
-  .card-image {
+$card-color: $text;
+$card-background-color: transparent;
+$card-shadow: none;
+
+$card-content-background-color: transparent;
+$card-content-padding: 1rem 0;
+
+.card-image {
+  height: 192px;
+
+  .image {
     height: 192px;
 
     img,
@@ -10,10 +19,8 @@
       border-radius: $radius;
     }
   }
+}
 
-  .card-content {
-    a {
-      color: inherit;
-    }
-  }
+.card-content a {
+  color: inherit;
 }

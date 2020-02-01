@@ -1,5 +1,28 @@
-body.has-navbar-fixed-top {
-  padding-top: 0;
+$navbar-background-color: $black-ter;
+$navbar-height: 4.95rem;
+$navbar-padding-vertical: 0;
+$navbar-padding-horizontal: 0;
+
+$navbar-item-color: $text;
+$navbar-item-hover-color: $white;
+$navbar-item-hover-background-color: transparent;
+$navbar-item-active-color: $white;
+$navbar-item-active-background-color: transparent;
+
+$navbar-dropdown-background-color: $white;
+$navbar-dropdown-border-top: 0;
+$navbar-dropdown-arrow: $text;
+$navbar-dropdown-radius: 0;
+
+$navbar-dropdown-item-active-color: $white;
+$navbar-dropdown-item-active-background-color: transparent;
+$navbar-dropdown-item-hover-color: $primary;
+$navbar-dropdown-item-hover-background-color: $light;
+
+$navbar-breakpoint: $desktop;
+
+html.has-navbar-fixed-top {
+  padding-top: 0 !important;
 }
 
 .navbar {
@@ -28,7 +51,6 @@ body.has-navbar-fixed-top {
   }
 
   .navbar-item {
-    font-size: $size-6;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -44,7 +66,6 @@ body.has-navbar-fixed-top {
     padding-right: 0;
     margin: 1.65rem 1rem;
     width: 1px;
-    cursor: initial;
   }
 
   .navbar-search {

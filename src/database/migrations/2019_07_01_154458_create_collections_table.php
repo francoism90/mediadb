@@ -13,6 +13,7 @@ class CreateCollectionsTable extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('slug')->unique();
             $table->string('name')->index();
             $table->bigInteger('user_id')->index();
             $table->longText('description')->nullable();

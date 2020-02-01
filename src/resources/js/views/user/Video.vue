@@ -1,6 +1,6 @@
 <template lang="pug">
 section(v-if="data.id")
-  player(:id="data.id" :options="videoOptions")
+  player(:id="data.id" :custom-class="{ 'player': true, 'is-responsive': true }" :options="videoOptions")
   hero(:data="data" :user-data="userData")
   info(:data="data" :meta="meta" :user-data="userData")
   next(:data="data" :user-data="userData")

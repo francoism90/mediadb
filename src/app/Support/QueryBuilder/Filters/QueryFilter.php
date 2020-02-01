@@ -20,7 +20,7 @@ class QueryFilter implements Filter
         $input = $this->process($value);
 
         // Return empty record on invalid input
-        if (!$input || $input === 'null' || $input === '*') {
+        if (!$input || 'null' === $input || '*' === $input) {
             return $query->where('id', 0);
         }
 

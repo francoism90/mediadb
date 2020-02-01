@@ -1,0 +1,17 @@
+$steps-maker-default-color: $text;
+$steps-default-color: $text;
+
+.b-steps .steps + .step-content {
+  padding: 3rem 0 0 !important;
+}
+
+.step-navigation {
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 2px solid $border;
+
+  .buttons {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+}

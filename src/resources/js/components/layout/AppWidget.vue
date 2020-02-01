@@ -1,6 +1,6 @@
 <template lang="pug">
 section
-  back-to-top
+  to-top
 
   b-modal(
       :active.sync="modal.active || false"
@@ -8,17 +8,19 @@ section
       :custom-class="modal.class || null"
       :full-screen="modal.fullscreen || false"
       :animation="modal.animation || 'fade'"
-      aria-modal
-      aria-role="dialog"
+      :aria-role="modal.role || null"
+      :has-modal-card="modal.card || false"
+      :width="modal.width || 960"
       trap-focus
     )
-      component(v-bind:is="modal.component || false")
+      component(:is="modal.component" v-bind="modal.props || {}")
 </template>
 
 <script>
 export default {
   components: {
-    BackToTop: () => import(/* webpackChunkName: "back-to-top" */ '@/components/ui/BackToTop'),
+    ToTop: () => import(/* webpackChunkName: "top" */ '@/components/ui/Top'),
+    ModalMedia: () => import(/* webpackChunkName: "modal-search" */ '@/components/modal/Media'),
     ModalSearch: () => import(/* webpackChunkName: "modal-search" */ '@/components/modal/Search')
   },
 

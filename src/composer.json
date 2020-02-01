@@ -16,6 +16,7 @@
         "laravel/telescope": "^2.1",
         "laravel/tinker": "^2.0",
         "php-ffmpeg/php-ffmpeg": "^0.14.0",
+        "spatie/laravel-cors": "^1.6",
         "spatie/laravel-json-api-paginate": "^1.5",
         "spatie/laravel-medialibrary": "^7.12",
         "spatie/laravel-model-status": "^1.9",
@@ -25,7 +26,7 @@
         "spatie/laravel-tags": "^2.4",
         "spatie/temporary-directory": "^1.2",
         "staudenmeir/eloquent-json-relations": "^1.3",
-        "tymon/jwt-auth": "1.0.0-rc.5",
+        "tymon/jwt-auth": "1.0.0-rc.5.1",
         "vinkla/hashids": "^7.0"
     },
     "require-dev": {

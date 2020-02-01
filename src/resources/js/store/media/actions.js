@@ -11,24 +11,30 @@ export default {
         'filter[tags]': isArray(params.tags) ? params.tags.join() : null,
         sort: isString(params.sort) ? params.sort : null,
         'page[number]': isInteger(params.page) ? params.page : 1,
-        'page[size]': isInteger(params.size) ? params.size : 3
+        'page[size]': isInteger(params.size) ? params.size : 9
       }
     })
 
     return response.data
   },
 
-  async get ({ commit, state }, id) {
+  async find ({ state }, id) {
+    const response = await Vue.axios.get('media/' + id)
+
+    return response.data
+  },
+
+  async get ({ commit, dispatch, state }, id) {
     if (state.data.id !== id) {
       commit('destroyPaginate', 'related', { root: true })
       commit('setMedia', { data: {}, meta: {} })
     }
 
-    const response = await Vue.axios.get('media/' + id)
+    const response = await dispatch('find', id)
 
-    commit('setMedia', response.data)
+    commit('setMedia', response)
 
-    return response.data
+    return response
   },
 
   async update ({ dispatch }, model) {
@@ -36,7 +42,7 @@ export default {
 
     dispatch('resetPaginates', null, { root: true })
 
-    return response.data
+    return response
   },
 
   async delete ({ dispatch }, id) {
@@ -44,6 +50,6 @@ export default {
 
     dispatch('resetPaginates', null, { root: true })
 
-    return response.data
+    return response
   }
 }

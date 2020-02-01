@@ -1,11 +1,5 @@
 .search {
-  main {
-    padding-top: 1rem;
-    max-width: 1152px;
-    margin: 0 auto;
-  }
-
-  .search-form {
+  form {
     .label {
       color: $white-ter;
     }
@@ -20,9 +14,7 @@
     }
   }
 
-  .search-results {
-    .hero-body {
-      padding: 0 0 1rem;
-    }
+  .hero-body {
+    padding: 0 0 1rem;
   }
 }

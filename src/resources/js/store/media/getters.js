@@ -1,7 +1,7 @@
 export default {
   videoOptions: (state) => {
     return {
-      autoplay: false,
+      autoplay: true,
       poster: state.data.thumbnail,
       height: state.data.properties.height || 720,
       width: state.data.properties.width || 1280,

@@ -11,6 +11,7 @@ export default {
     const { id } = payload
 
     if (state.paginate[id] !== undefined) {
+      payload.props.initialized = new Date()
       payload.props.page = 1
 
       commit('resetPaginate', id)
