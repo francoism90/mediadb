@@ -24,13 +24,13 @@ MediaDB is very much in development and is not yet suitable for production purpo
 
 For the time being please consult the upstream documentation of used packages in `composer.json` for possible other missing dependencies or recommendations.
 
-### Install
+## Install
 
-#### nginx
+### Nginx
 
 See `doc/nginx` for configuration examples.
 
-#### Laravel
+### Laravel
 
 See `doc/supervisor` for configuration examples.
 
@@ -52,7 +52,7 @@ php artisan elastic:update-mapping "App\Models\User"
 
 It is advisable to view all configuration files and change them when necessary, especially `.env`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
 
-##### Compile Assets
+#### Compile Assets
 
 ```bash
 cd /path/to/html
@@ -60,9 +60,7 @@ npm install
 npm run dev
 ```
 
-### Production
-
-#### Generate VOD key and IV
+### Generating VOD key + IV
 
 ```bash
 dd if=/dev/urandom bs=1 count=32 2> /dev/null | xxd -p -c32
@@ -74,7 +72,7 @@ VOD_KEY=
 VOD_IV=
 ```
 
-#### Set VOD secure link
+### Set VOD secure link
 
 ```bash
 "$secure_link_expires$arg_id$remote_addr my-secret";
@@ -84,14 +82,26 @@ VOD_IV=
 VOD_SECRET=
 ```
 
-#### Optimize
+## Upgrade
+
+### Elasticsearch
+
+```bash
+php artisan elastic:update-index "App\Support\Scout\MediaIndexConfigurator"
+php artisan elastic:update-index "App\Support\Scout\UserIndexConfigurator"
+php artisan elastic:update-mapping "App\Models\Media"
+php artisan elastic:update-mapping "App\Models\User"
+```
+
+## Optimize
 
 ```bash
 composer install --optimize-autoloader --no-dev
+npm install
 npm run prod
 php artisan optimize
 ```
 
-##### Modules
+### Modules
 
-- https://github.com/kaltura/nginx-vod-module#performance-recommendations
+- <https://github.com/kaltura/nginx-vod-module#performance-recommendations>
