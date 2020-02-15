@@ -1,8 +1,21 @@
 const getShakaOptions = () => {
   return {
-    bufferingGoal: 30,
-    jumpLargeGaps: true,
-    rebufferingGoal: 15
+    retryParameters: {
+      timeout: 0,
+      maxAttempts: 15,
+      baseDelay: 400,
+      backoffFactor: 2,
+      fuzzFactor: 0.5
+    },
+    streaming: {
+      rebufferingGoal: 10,
+      bufferingGoal: 240,
+      bufferBehind: 90,
+      ignoreTextStreamFailures: true,
+      alwaysStreamText: true,
+      jumpLargeGaps: true,
+      stallEnabled: true
+    }
   }
 }
 

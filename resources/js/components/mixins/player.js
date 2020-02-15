@@ -5,9 +5,12 @@ export const playerEventHandler = {
         'ended',
         'loadedmetadata',
         'pause',
+        'play',
         'playing',
         'progress',
         'seeked',
+        'seeking',
+        'suspend',
         'timeupdate',
         'waiting'
       ]
@@ -38,14 +41,17 @@ export const playerEventHandler = {
           this.setMedia({ buffered: this.player.buffered })
           break
         case 'seeked':
+        case 'seeking':
         case 'timeupdate':
           this.setMedia({ currentTime: this.player.currentTime })
           break
         case 'ended':
         case 'pause':
+        case 'suspend':
         case 'waiting':
           this.setMedia({ playing: false })
           break
+        case 'play':
         case 'playing':
           this.setMedia({ playing: true })
           break

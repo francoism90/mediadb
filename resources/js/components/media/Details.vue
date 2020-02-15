@@ -16,8 +16,8 @@ section
         v-model="tags"
         class="is-clearfix"
         :data="tagsFiltered"
-        maxtags="10"
-        maxlength="150"
+        maxtags="15"
+        maxlength="175"
         autocomplete
         placeholder="Add a tag"
         field="name"

@@ -17,10 +17,8 @@ class TrendingSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $direction = $descending ? 'DESC' : 'ASC';
-
         return $query->withCount(['views' => function ($query) {
             $query->withinPeriod(Period::pastDays(3))->uniqueVisitor();
-        }])->orderBy('views_count', $direction);
+        }])->orderBy('views_count', 'DESC');
     }
 }

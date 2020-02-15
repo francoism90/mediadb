@@ -50,7 +50,7 @@
     "pug-plain-loader": "^1.0.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "^8.0.2",
-    "stylelint": "^13.1.0",
+    "stylelint": "^13.2.0",
     "stylelint-config-standard": "^20.0.0",
     "vue": "^2.6.11",
     "vue-eslint-parser": "^7.0.0",

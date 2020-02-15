@@ -30,12 +30,12 @@ class MediaController extends Controller
         $query = QueryBuilder::for(Media::class)
             ->allowedIncludes(['model', 'tags'])
             ->allowedSorts([
-                AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc'),
-                AllowedSort::custom('popular-month', new PopularMonthSorter())->defaultDirection('desc'),
-                AllowedSort::custom('popular-week', new PopularWeekSorter())->defaultDirection('desc'),
-                AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
-                AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
-                AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
+                AllowedSort::custom('recommended', new RecommendedSorter()),
+                AllowedSort::custom('popular-month', new PopularMonthSorter()),
+                AllowedSort::custom('popular-week', new PopularWeekSorter()),
+                AllowedSort::custom('recent', new RecentSorter()),
+                AllowedSort::custom('trending', new TrendingSorter()),
+                AllowedSort::custom('views', new MostViewsSorter()),
             ])
             ->allowedFilters([
                 AllowedFilter::custom('related', new RelatedFilter()),

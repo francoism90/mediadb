@@ -16,8 +16,6 @@ class RecentSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $direction = $descending ? 'DESC' : 'ASC';
-
-        return $query->orderBy('created_at', $direction);
+        return $query->orderBy('created_at', 'DESC');
     }
 }

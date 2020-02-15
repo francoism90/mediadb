@@ -9,7 +9,7 @@ main(:key="item.id" ref="fullscreen" v-shortkey="getKeyBindings" @shortkey="keyH
     :muted="muted"
     :height="height"
     :width="width"
-    @canplayer="playerCallback({ type: 'togglePlay' })"
+    @canplay="playerCallback({ type: 'togglePlay' })"
     @click.prevent="playerCallback({ type: 'togglePlay' })"
     @dblclick.prevent="toggleFullscreen"
   )
