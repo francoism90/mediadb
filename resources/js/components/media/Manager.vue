@@ -43,7 +43,7 @@ export default {
       items: [
         {
           title: 'Details',
-          description: 'Update the name, tags, description and collections.',
+          description: 'Update the name, tags and description.',
           component: 'Details'
         },
         {

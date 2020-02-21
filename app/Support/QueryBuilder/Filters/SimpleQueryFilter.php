@@ -11,14 +11,9 @@ use Spatie\QueryBuilder\Filters\Filter;
 class SimpleQueryFilter implements Filter
 {
     /**
-     * @var Model
-     */
-    protected $model;
-
-    /**
      * @var string
      */
-    protected ?string $searchQuery = null;
+    protected ?string $queryStr = null;
 
     /**
      * @param Builder      $query
@@ -31,18 +26,17 @@ class SimpleQueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $this->setSearchQuery((string) $value);
+        $this->setQueryString((string) $value);
 
-        if (!$this->searchQuery || '*' === $this->searchQuery) {
+        // Invalid queries
+        if (!$this->queryStr || '*' === $this->queryStr) {
             return $query->where('id', 0);
         }
 
-        // Get requested model
-        $this->model = $query->getModel();
-
         // Get all models
-        $models = $this->getQueryModels();
+        $models = $this->getQueryModels($query->getModel());
 
+        // Return results
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
@@ -55,10 +49,10 @@ class SimpleQueryFilter implements Filter
      *
      * @return void
      */
-    private function setSearchQuery(string $str = ''): void
+    private function setQueryString(string $str = ''): void
     {
         // Keep ASCII > 127
-        $this->searchQuery = filter_var(
+        $this->queryStr = filter_var(
             $str,
             FILTER_SANITIZE_STRING,
             FILTER_FLAG_NO_ENCODE_QUOTES |
@@ -66,15 +60,23 @@ class SimpleQueryFilter implements Filter
         );
 
         // Remove whitespace
-        $this->searchQuery = preg_replace('/\s+/', ' ', trim($this->searchQuery));
+        $this->trimQueryString();
+    }
+
+    /**
+     * @return void
+     */
+    private function trimQueryString(): void
+    {
+        $this->queryStr = preg_replace('/\s+/', ' ', trim($this->queryStr));
     }
 
     /**
      * @return Collection
      */
-    private function getQueryModels(): Collection
+    private function getQueryModels(Model $model)
     {
-        return $this->model->search($this->searchQuery)
+        return $model->search($this->queryStr)
             ->select(['name', 'description'])
             ->collapse('id')
             ->from(0)

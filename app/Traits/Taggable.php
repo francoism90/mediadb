@@ -30,9 +30,10 @@ trait Taggable
             return $this->syncTags(null);
         }
 
+        // Sync with types
         $collect = self::getTagsTypeMapped($tags);
 
-        foreach (['Genre', 'Language', 'Person'] as $type) {
+        foreach (['category', 'language', 'people'] as $type) {
             $tags = $collect->has($type) ? $collect->get($type)->unique()->toArray() : [];
 
             $this->syncTagsWithType($tags, $type);

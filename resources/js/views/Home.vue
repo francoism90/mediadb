@@ -10,7 +10,7 @@ import paginateModule from '@/store/modules/paginate'
 
 export default {
   components: {
-    Filters: () => import(/* webpackChunkName: "modal" */ '@/components/filters/Level'),
+    Filters: () => import(/* webpackChunkName: "filters" */ '@/components/filters/Level'),
     Infinite: () => import(/* webpackChunkName: "infinite" */ '@/components/ui/Infinite')
   },
 
@@ -19,7 +19,7 @@ export default {
       apiRoute: {
         path: 'media',
         params: {
-          include: 'tags,model',
+          include: 'model,tags',
           sort: 'recommended'
         }
       }

@@ -145,7 +145,7 @@ class Media extends BaseMedia implements ViewableContract
      */
     public function getViewsAttribute(): int
     {
-        return views($this)->unique()->count();
+        return views($this)->remember()->unique()->count();
     }
 
     /**

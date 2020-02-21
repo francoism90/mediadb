@@ -17,8 +17,11 @@ class PopularMonthSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        return $query->withCount(['views' => function ($query) {
-            $query->withinPeriod(Period::pastMonths(1))->uniqueVisitor();
+        $viewableType = get_class($query->getModel());
+
+        return $query->withCount(['views' => function ($query) use ($viewableType) {
+            $query->where('viewable_type', $viewableType)
+                  ->withinPeriod(Period::pastMonths(1))->uniqueVisitor();
         }])->orderBy('views_count', 'DESC');
     }
 }

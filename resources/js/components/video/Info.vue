@@ -11,20 +11,14 @@ section(class="section media-info")
       div(class="level-item has-text-centered")
         a
           p(class="heading")
-            b-icon(icon="plus")
-          p(class="title is-7") Save
+            b-icon(icon="flag")
+          p(class="title is-7") Report
 
       div(class="level-item has-text-centered")
         a(@click.prevent="callback({ type: 'download' })")
           p(class="heading")
             b-icon(icon="download")
           p(class="title is-7") Download
-
-      div(class="level-item has-text-centered")
-        a
-          p(class="heading")
-            b-icon(icon="flag")
-          p(class="title is-7") Report
 
       div(class="level-item has-text-centered")
         a(@click.prevent="openContextMenu(data, 'media')")

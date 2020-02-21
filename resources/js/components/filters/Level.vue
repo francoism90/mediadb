@@ -1,15 +1,32 @@
 <template lang="pug">
 nav(class="level")
   div(class="level-left")
-    div(class="level-item")
-      b-dropdown(v-model="sortFilter" aria-role="list")
+    div(v-if="filters" class="level-item")
+      b-dropdown(v-model="filterModel" aria-role="list")
         b-button(
           slot="trigger"
           type="is-text"
           size="is-normal"
           class="sorters"
           icon-right="chevron-down"
-        ) {{ sortFilterLabel }}
+        ) {{ filterModelLabel }}
+
+        b-dropdown-item(
+          v-for="filter in filters"
+          :key="filter.key"
+          :value="filter.key"
+          aria-role="listitem"
+        ) {{ filter.label }}
+
+    div(v-if="sorters" class="level-item")
+      b-dropdown(v-model="sortModel" aria-role="list")
+        b-button(
+          slot="trigger"
+          type="is-text"
+          size="is-normal"
+          class="sorters"
+          icon-right="chevron-down"
+        ) {{ sortModelLabel }}
 
         b-dropdown-item(
           v-for="sorter in sorters"
@@ -46,6 +63,16 @@ export default {
       required: true
     },
 
+    filter: {
+      type: String,
+      default: null
+    },
+
+    filters: {
+      type: Array,
+      default: null
+    },
+
     sorters: {
       type: Array,
       default: () => {
@@ -66,7 +93,17 @@ export default {
       return this.$store.state[this.namespace]
     },
 
-    sortFilter: {
+    filterModel: {
+      get () {
+        return this.state.params[this.filter] || this.filters[0].key
+      },
+
+      set (value) {
+        this.setFilter({ params: { [this.filter]: value } })
+      }
+    },
+
+    sortModel: {
       get () {
         return this.state.params.sort || this.sorters[0].key
       },
@@ -76,12 +113,12 @@ export default {
       }
     },
 
-    sortFilterActive () {
-      return this.filterSort !== this.sorters[0].key
+    filterModelLabel () {
+      return this.filters.find(x => x.key === this.filterModel).label
     },
 
-    sortFilterLabel () {
-      return this.sorters.find(x => x.key === this.sortFilter).label
+    sortModelLabel () {
+      return this.sorters.find(x => x.key === this.sortModel).label
     },
 
     queryFilter: {
@@ -108,6 +145,7 @@ export default {
     resetFilter () {
       this.$store.dispatch(this.namespace + '/reset', {
         params: {
+          [this.filter]: null,
           'filter[query]': null,
           sort: this.sorters[0].key
         }

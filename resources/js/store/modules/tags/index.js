@@ -1,5 +1,3 @@
-import { defaultState } from './helpers'
-
 import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
@@ -7,7 +5,12 @@ import mutations from './mutations'
 export default {
   namespaced: true,
   state () {
-    return defaultState
+    return {
+      data: [],
+      meta: {},
+      filtered: [],
+      selected: []
+    }
   },
   mutations,
   actions,

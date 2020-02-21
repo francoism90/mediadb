@@ -18,8 +18,6 @@ section
 </template>
 
 <script>
-import modalModule from '@/store/modules/modal'
-
 export default {
   components: {
     Media: () => import(/* webpackChunkName: "media-manager" */ '@/components/media/Manager'),
@@ -29,12 +27,6 @@ export default {
   computed: {
     modal () {
       return this.$store.state.modal
-    }
-  },
-
-  created () {
-    if (!this.$store.state.modal) {
-      this.$store.registerModule('modal', modalModule)
     }
   },
 

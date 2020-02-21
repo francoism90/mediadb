@@ -6,10 +6,12 @@ import getters from './getters'
 import mutations from './mutations'
 import state from './state'
 
+import modal from './modules/modal'
+
 Vue.use(Vuex)
 
 const modules = {
-  //
+  modal
 }
 
 const store = new Vuex.Store({

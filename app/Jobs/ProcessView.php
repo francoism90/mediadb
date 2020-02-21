@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ class ProcessView implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 90;
+    public $timeout = 60;
 
     /**
      * @var Model
@@ -43,13 +44,20 @@ class ProcessView implements ShouldQueue
     public $collection;
 
     /**
+     * @var Carbon|null
+     */
+    public $cooldown;
+
+    /**
      * Create a new job instance.
      */
-    public function __construct(Model $viewable, Collection $visitor, string $collection = null)
-    {
+    public function __construct(
+        Model $viewable, Collection $visitor, string $collection = null, $cooldown = null
+    ) {
         $this->viewable = $viewable;
         $this->visitor = $visitor;
         $this->collection = $collection;
+        $this->cooldown = $cooldown;
     }
 
     /**
@@ -59,9 +67,9 @@ class ProcessView implements ShouldQueue
     {
         views($this->viewable)
             ->collection($this->collection)
-            ->overrideIpAddress($this->visitor->get('ipAddress', '127.0.0.1'))
-            ->overrideVisitor($this->visitor->get('visitorId', 0))
-            ->delayInSession(now()->addDays(1))
+            ->useIpAddress($this->visitor->get('ipAddress', '127.0.0.1'))
+            ->useVisitor($this->visitor->get('visitorId', 0))
+            ->delayInSession($this->cooldown ?? now()->addHour())
             ->record();
     }
 }

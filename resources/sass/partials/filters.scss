@@ -20,6 +20,7 @@
     -webkit-column-gap: 0.75rem;
     column-count: 4;
     column-gap: 0.75rem;
+    line-height: 1.84;
     width: 100%;
 
     @include until($widescreen) {

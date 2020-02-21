@@ -15,14 +15,6 @@ class Tag extends TagModel implements ViewableContract
     /**
      * @return morphedByMany
      */
-    public function collections()
-    {
-        return $this->morphedByMany(Collection::class, 'taggable', 'taggables');
-    }
-
-    /**
-     * @return morphedByMany
-     */
     public function media()
     {
         return $this->morphedByMany(Media::class, 'taggable', 'taggables');

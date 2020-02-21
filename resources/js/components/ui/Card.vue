@@ -16,7 +16,7 @@ a(class="card")
 export default {
   components: {
     Preview: () => import(/* webpackChunkName: "preview" */ '@/components/ui/Preview'),
-    Tags: () => import(/* webpackChunkName: "tags" */ '@/components/ui/Tags')
+    Tags: () => import(/* webpackChunkName: "taglist" */ '@/components/ui/Taglist')
   },
 
   props: {

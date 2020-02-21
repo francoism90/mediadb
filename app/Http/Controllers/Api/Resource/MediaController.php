@@ -9,6 +9,7 @@ use App\Http\Resources\MediaResource;
 use App\Models\Media;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
+use App\Support\QueryBuilder\Filters\ViewedAtFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
 use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
@@ -29,17 +30,18 @@ class MediaController extends Controller
     {
         $query = QueryBuilder::for(Media::class)
             ->allowedIncludes(['model', 'tags'])
-            ->allowedSorts([
-                AllowedSort::custom('recommended', new RecommendedSorter()),
-                AllowedSort::custom('popular-month', new PopularMonthSorter()),
-                AllowedSort::custom('popular-week', new PopularWeekSorter()),
-                AllowedSort::custom('recent', new RecentSorter()),
-                AllowedSort::custom('trending', new TrendingSorter()),
-                AllowedSort::custom('views', new MostViewsSorter()),
-            ])
             ->allowedFilters([
                 AllowedFilter::custom('related', new RelatedFilter()),
                 AllowedFilter::custom('query', new QueryFilter()),
+                AllowedFilter::custom('viewed_at', new ViewedAtFilter()),
+            ])
+            ->allowedSorts([
+                AllowedSort::custom('popular-month', new PopularMonthSorter()),
+                AllowedSort::custom('popular-week', new PopularWeekSorter()),
+                AllowedSort::custom('recent', new RecentSorter()),
+                AllowedSort::custom('recommended', new RecommendedSorter()),
+                AllowedSort::custom('trending', new TrendingSorter()),
+                AllowedSort::custom('views', new MostViewsSorter()),
             ])
             ->jsonPaginate();
 
@@ -78,8 +80,13 @@ class MediaController extends Controller
      */
     public function show(Media $media)
     {
-        $media->recordView('media');
+        // Track for stats
+        $media->recordView('media', now()->addWeek());
 
+        // Track the user view history
+        $media->recordView('user-history', now()->addDay());
+
+        // Return the stream_url
         return (new MediaResource($media->load(['model', 'tags'])))
             ->additional([
                 'data' => [

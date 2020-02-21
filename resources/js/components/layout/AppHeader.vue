@@ -32,19 +32,19 @@ export default {
     return {
       items: [
         {
-          label: 'Browse',
-          route: 'home'
-        },
-        {
-          label: 'Collections',
+          label: 'Favorites',
           route: 'upload'
         },
         {
-          label: 'Subscriptions',
+          label: 'Watchlist',
           route: 'upload'
         },
         {
-          label: 'Upload Content',
+          label: 'Viewing Activity',
+          route: 'history'
+        },
+        {
+          label: 'Upload Video',
           route: 'upload'
         }
       ]

@@ -1,4 +1,4 @@
-import { get, isEmpty, uniqBy } from 'lodash'
+import { get, isEmpty } from 'lodash'
 
 export const formErrorHandler = {
   data () {
@@ -46,36 +46,6 @@ export const formErrorHandler = {
       }
 
       return this.validStatuses.includes(this.response.status)
-    }
-  }
-}
-
-export const formTagsHandler = {
-  data () {
-    return {
-      tagsSelected: [],
-      tagsFiltered: [],
-      tagsItems: []
-    }
-  },
-
-  methods: {
-    setTagItems (tags) {
-      this.tagsItems = tags
-      this.tagsFiltered = tags
-    },
-
-    setSelectedTags (tags) {
-      this.tagsSelected = tags.length ? uniqBy(tags, 'id') : []
-    },
-
-    getFilteredTags (text) {
-      this.tagsFiltered = this.tagsItems.filter((option) => {
-        return option.name
-          .toString()
-          .toLowerCase()
-          .indexOf(text.toLowerCase()) >= 0
-      })
     }
   }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
+use App\Traits\Hashidable;
 use Illuminate\Contracts\Validation\Rule;
-use Vinkla\Hashids\Facades\Hashids;
 
 class IsValidHashable implements Rule
 {
@@ -25,9 +25,7 @@ class IsValidHashable implements Rule
      */
     public function passes($attribute, $value)
     {
-        $id = Hashids::connection($this->model)->decode($value)[0];
-
-        return $this->model::exists($id);
+        return Hashidable::getModelByKey($value, $this->model)->exists();
     }
 
     /**

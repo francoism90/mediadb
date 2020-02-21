@@ -17,6 +17,7 @@ class TagController extends Controller
             ->defaultSort('order_column')
             ->allowedFilters([
                 AllowedFilter::custom('query', new SimpleQueryFilter()),
+                'type',
             ])
             ->paginate(Tag::count());
 

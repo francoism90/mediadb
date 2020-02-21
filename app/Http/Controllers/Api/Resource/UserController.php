@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Filters\TaggedFilter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -20,13 +19,12 @@ class UserController extends Controller
     {
         $query = QueryBuilder::for(User::class)
             ->allowedIncludes('tags')
+            ->allowedFilters([
+                AllowedFilter::custom('query', new QueryFilter()),
+            ])
             ->allowedSorts([
                 AllowedSort::field('name'),
                 AllowedSort::field('created_at'),
-            ])
-            ->allowedFilters([
-                AllowedFilter::custom('query', new QueryFilter()),
-                AllowedFilter::custom('tags', new TaggedFilter()),
             ])
             ->jsonPaginate();
 

@@ -12,19 +12,9 @@ use Spatie\QueryBuilder\Filters\Filter;
 class QueryFilter implements Filter
 {
     /**
-     * @var Model
-     */
-    protected $model;
-
-    /**
      * @var string
      */
-    protected ?string $searchQuery = null;
-
-    /**
-     * @var string
-     */
-    protected ?array $searchTags = [];
+    protected ?string $queryStr = null;
 
     /**
      * @param Builder      $query
@@ -37,25 +27,20 @@ class QueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $this->setSearchQuery((string) $value);
+        $this->setQueryString((string) $value);
 
-        if (!$this->searchQuery || '*' === $this->searchQuery) {
+        // Invalid queries
+        if (!$this->queryStr || '*' === $this->queryStr) {
             return $query->where('id', 0);
         }
 
-        // Get requested model
-        $this->model = $query->getModel();
-
-        // Set all tags
-        $this->setAllTags();
-
         // Merge all models
-        $models = collect();
+        $models = $this->getModelsByTags($query->getModel());
+        $models = $models->merge(
+            $this->getQueryModels($query->getModel())
+        );
 
-        foreach ($this->getSearchCollections() as $collection) {
-            $models = $models->merge($collection);
-        }
-
+        // Return results
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
@@ -64,25 +49,14 @@ class QueryFilter implements Filter
     }
 
     /**
-     * @return array
-     */
-    private function getSearchCollections(): array
-    {
-        return [
-            $this->getQueryModels(),
-            $this->getTagsModels(),
-        ];
-    }
-
-    /**
      * @param string $str
      *
      * @return void
      */
-    private function setSearchQuery(string $str = ''): void
+    private function setQueryString(string $str = ''): void
     {
         // Keep ASCII > 127
-        $this->searchQuery = filter_var(
+        $this->queryStr = filter_var(
             $str,
             FILTER_SANITIZE_STRING,
             FILTER_FLAG_NO_ENCODE_QUOTES |
@@ -90,15 +64,15 @@ class QueryFilter implements Filter
         );
 
         // Remove whitespace
-        $this->trimSearchQuery();
+        $this->trimQueryString();
     }
 
     /**
      * @return void
      */
-    private function trimSearchQuery(): void
+    private function trimQueryString(): void
     {
-        $this->searchQuery = preg_replace('/\s+/', ' ', trim($this->searchQuery));
+        $this->queryStr = preg_replace('/\s+/', ' ', trim($this->queryStr));
     }
 
     /**
@@ -106,53 +80,46 @@ class QueryFilter implements Filter
      *
      * @return void
      */
-    private function replaceQueryInput(array $matches = []): void
+    private function replaceInQueryString(array $replace = []): void
     {
-        $this->searchQuery = str_replace($matches, ' ', $this->searchQuery);
+        $this->queryStr = str_replace($replace, ' ', $this->queryStr);
 
-        $this->trimSearchQuery();
-    }
-
-    /**
-     * @return self
-     */
-    private function setAllTags(): self
-    {
-        // https://stackoverflow.com/a/35498078
-        preg_match_all('/#([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u', $this->searchQuery, $matches);
-
-        $this->replaceQueryInput($matches[0] ?? []);
-        $this->searchTags = array_unique($matches[1]) ?? [];
-
-        return $this;
+        $this->trimQueryString();
     }
 
     /**
      * @return Collection
      */
-    private function getQueryModels()
+    private function getModelsByTags(Model $model)
     {
-        return $this->model->search($this->searchQuery)
+        // https://stackoverflow.com/a/35498078
+        preg_match_all('/#([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u', $this->queryStr, $matches);
+
+        // Remove tags from query (if any)
+        $this->replaceInQueryString($matches[0] ?? []);
+
+        // Get all matches
+        $tagSlugs = array_unique($matches[1]) ?? false;
+
+        if (!$tagSlugs) {
+            return collect();
+        }
+
+        $tags = Tag::withSlugTranslated($tagSlugs)->get();
+
+        return $model->withAllTagsOfAnyType($tags)->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    private function getQueryModels(Model $model)
+    {
+        return $model->search($this->queryStr)
             ->select(['name', 'description'])
             ->collapse('id')
             ->from(0)
             ->take(10000)
             ->get();
-    }
-
-    /**
-     * @return Collection
-     */
-    private function getTagsModels()
-    {
-        if (!$this->searchTags) {
-            return collect();
-        }
-
-        $tags = Tag::withSlugTranslated(
-            $this->searchTags
-        )->get();
-
-        return $this->model->withAllTagsOfAnyType($tags)->get();
     }
 }

@@ -11,7 +11,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 
@@ -41,11 +40,6 @@ return [
     */
 
     'connections' => [
-        Collection::class => [
-            'salt' => 'zcbi7z6k7nfwiz3eor4749idrkat9d6t',
-            'length' => '12',
-        ],
-
         Media::class => [
             'salt' => 'tmuuf2cz3we4agp64fojxbo5vy4nf4tz',
             'length' => '12',

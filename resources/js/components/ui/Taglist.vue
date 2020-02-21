@@ -19,9 +19,9 @@ export default {
   data () {
     return {
       typeClass: {
-        genre: 'is-dark',
+        category: 'is-dark',
         language: 'is-link',
-        person: 'is-primary'
+        people: 'is-primary'
       }
     }
   },

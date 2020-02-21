@@ -139,14 +139,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     }
 
     /**
-     * @return hasMany
-     */
-    public function collections()
-    {
-        return $this->hasMany('App\Models\Collection')->orderBy('name');
-    }
-
-    /**
      * @return string
      */
     public function getThumbnailAttribute(): string
@@ -160,6 +152,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
      */
     public function getViewsAttribute(): int
     {
-        return views($this)->unique()->count();
+        return views($this)->remember()->unique()->count();
     }
 }

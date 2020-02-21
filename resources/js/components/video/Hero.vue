@@ -13,7 +13,7 @@ section(class="hero is-small")
 <script>
 export default {
   components: {
-    Tags: () => import(/* webpackChunkName: "tags" */ '@/components/ui/Tags')
+    Tags: () => import(/* webpackChunkName: "taglist" */ '@/components/ui/Taglist')
   },
 
   props: {

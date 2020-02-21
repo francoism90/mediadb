@@ -1,5 +1,5 @@
 <template lang="pug">
-section
+section()
   form(class="column is-paddingless is-two-thirds-tablet")
     b-field(label="Name" :type="fieldType('name')" :message="firstError('name')")
       b-input(
@@ -16,12 +16,12 @@ section
         v-model="tags"
         class="is-clearfix"
         :data="tagsFiltered"
-        maxtags="15"
-        maxlength="175"
+        maxtags="25"
+        maxlength="255"
         autocomplete
         placeholder="Add a tag"
         field="name"
-        @typing="getFilteredTags"
+        @typing="setTagsFiltered"
       )
         template(v-slot:default="props")
           span {{ props.option.name }}
@@ -42,11 +42,12 @@ section
 </template>
 
 <script>
-import paginateModule from '@/store/modules/paginate'
-import { formErrorHandler, formTagsHandler } from '@/components/mixins/form'
+import { formErrorHandler } from '@/components/mixins/form'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+import tagsModule from '@/store/modules/tags'
 
 export default {
-  mixins: [formErrorHandler, formTagsHandler],
+  mixins: [formErrorHandler],
 
   props: {
     item: {
@@ -66,13 +67,18 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      tagsFiltered: 'taginput/getFiltered',
+      tagsSelected: 'taginput/getSelected'
+    }),
+
     tags: {
       get () {
         return this.tagsSelected
       },
 
       set (value) {
-        this.setSelectedTags(value)
+        this.setTagsSelected(value)
       }
     }
   },
@@ -86,25 +92,30 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      fetchTags: 'taginput/fetch'
+    }),
+
+    ...mapMutations({
+      setTagsFiltered: 'taginput/setFiltered',
+      setTagsSelected: 'taginput/setSelected'
+    }),
+
     async prepareTags () {
       if (!this.$store.state.taginput) {
-        this.$store.registerModule('taginput', paginateModule)
+        this.$store.registerModule('taginput', tagsModule)
       }
 
-      await this.$store.dispatch('taginput/fetch', {
-        path: 'tags',
-        params: { 'page[size]': 0 }
-      })
+      await this.fetchTags({ path: 'tags' })
 
-      this.setTagItems(this.$store.state.taginput.data)
-      this.setSelectedTags(this.item.relationships.tags || [])
+      this.setTagsSelected(this.item.relationships.tags || [])
     },
 
     async update () {
       // Attach tags model
       this.body.tags = this.tags
 
-      const { success } = await this.submit('manager/update', {
+      const { success = false } = await this.submit('manager/update', {
         path: 'media/' + this.item.id,
         body: this.body
       })
