@@ -41,7 +41,9 @@ trait Hashidable
      */
     public static function getDecodedKey(string $key, string $connection = null)
     {
-        return self::getHashidsConnection($connection)->decode($key)[0];
+        $decoded = self::getHashidsConnection($connection)->decode($key);
+
+        return $decoded[0] ?? null;
     }
 
     /**

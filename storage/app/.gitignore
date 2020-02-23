@@ -2,4 +2,7 @@
 !public/
 !images/
 !media/
+!streams/
+!tmp/
+!uploads/
 !.gitignore

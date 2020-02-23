@@ -1,32 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Assets;
 
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
 
-class ShowMediaConversion extends Controller
+class PreviewController extends Controller
 {
     /**
-     * @param Media  $media
-     * @param User   $user
-     * @param string $conversion
+     * @param Media $media
+     * @param User  $user
      *
      * @return mixed
      */
-    public function __invoke(Media $media, User $user, string $conversion = '')
+    public function __invoke(Media $media, User $user)
     {
         $root = dirname($media->getPath());
 
-        switch ($conversion) {
-            case 'preview':
-                $basename = pathinfo($media->file_name, PATHINFO_FILENAME)."-{$conversion}.mp4";
-                $path = "{$root}/conversions/{$basename}";
-                break;
-            default:
-                $path = $media->getPath($conversion);
-        }
+        $basename = pathinfo($media->file_name, PATHINFO_FILENAME).'-preview.mp4';
+        $path = "{$root}/conversions/{$basename}";
 
         if (!$path || !file_exists($path)) {
             abort(404);

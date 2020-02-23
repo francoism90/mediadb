@@ -90,7 +90,7 @@ class MediaController extends Controller
         return (new MediaResource($media->load(['model', 'tags'])))
             ->additional([
                 'data' => [
-                    'stream_url' => $media->stream_url,
+                    'stream' => $media->stream_url,
                     'download' => $media->download_url,
                 ],
             ]);

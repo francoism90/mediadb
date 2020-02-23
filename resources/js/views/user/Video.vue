@@ -52,8 +52,8 @@ export default {
         download: this.data.download || false,
         height: this.data.properties.height || '720',
         width: this.data.properties.width || '1280',
-        poster: this.data.thumbnail || '',
-        source: this.data.stream_url || '',
+        poster: this.data.placeholder || '',
+        source: this.data.stream || '',
         type: 'manifest'
       }
     }

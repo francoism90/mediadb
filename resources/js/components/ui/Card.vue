@@ -29,7 +29,7 @@ export default {
   computed: {
     videoOptions () {
       return {
-        poster: this.data.thumbnail,
+        poster: this.data.placeholder,
         source: this.data.preview,
         mimetype: 'video/mp4'
       }

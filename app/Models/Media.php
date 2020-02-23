@@ -117,30 +117,6 @@ class Media extends BaseMedia implements ViewableContract
     }
 
     /**
-     * @return string
-     */
-    public function getThumbnailAttribute(): string
-    {
-        if (!$this->hasGeneratedConversion('thumbnail')) {
-            return asset('storage/images/placeholders/empty.png');
-        }
-
-        return $this->getAssetUrlAttribute('thumbnail');
-    }
-
-    /**
-     * @return string
-     */
-    public function getPreviewAttribute(): string
-    {
-        if (!$this->hasGeneratedConversion('preview')) {
-            return asset('storage/images/placeholders/blank.mp4');
-        }
-
-        return $this->getAssetUrlAttribute('preview');
-    }
-
-    /**
      * @return int
      */
     public function getViewsAttribute(): int
@@ -151,14 +127,43 @@ class Media extends BaseMedia implements ViewableContract
     /**
      * @return string
      */
-    public function getAssetUrlAttribute(string $conversion = null): string
+    public function getPlaceholderUrlAttribute(): string
     {
-        return URL::signedRoute('api.asset.show', [
+        if (!$this->hasGeneratedConversion('thumbnail')) {
+            return asset('storage/images/placeholders/empty.png');
+        }
+
+        return URL::signedRoute('api.asset.placeholder', [
             'media' => $this,
             'user' => auth()->user(),
-            'type' => $conversion,
             'version' => $this->updated_at->timestamp,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreviewUrlAttribute(): string
+    {
+        if (!$this->hasGeneratedConversion('preview')) {
+            return asset('storage/images/placeholders/blank.mp4');
+        }
+
+        return URL::signedRoute('api.asset.preview', [
+            'media' => $this,
+            'user' => auth()->user(),
+            'version' => $this->updated_at->timestamp,
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDownloadUrlAttribute(): string
+    {
+        return $this->getTemporaryUrl(
+            Carbon::now()->addHours(4)
+        );
     }
 
     /**
@@ -167,7 +172,7 @@ class Media extends BaseMedia implements ViewableContract
     public function getStreamUrlAttribute(): string
     {
         return self::getSecureExpireLink(
-            $this->getStreamJsonUrl(),
+            $this->getStreamUrl(),
             config('vod.secret'),
             config('vod.expire'),
             $this->getRouteKey(),
@@ -178,10 +183,14 @@ class Media extends BaseMedia implements ViewableContract
     /**
      * @return string
      */
-    public function getDownloadUrlAttribute(): string
+    public function getStreamThumbUrlAttribute(int $offset = 1000, string $resize = 'w150-h100'): string
     {
-        return $this->getTemporaryUrl(
-            Carbon::now()->addHours(4)
+        return self::getSecureExpireLink(
+            $this->getStreamUrl('thumb', "thumb-{$offset}-{$resize}.jpg"),
+            config('vod.secret'),
+            config('vod.expire'),
+            $this->getRouteKey(),
+            request()->ip()
         );
     }
 }

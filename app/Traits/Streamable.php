@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 trait Streamable
@@ -10,13 +11,53 @@ trait Streamable
     /**
      * @return string
      */
-    public function getStreamJsonUrl(): string
+    public function getStreamUrl(string $path = 'dash', string $uri = 'manifest.mpd'): string
     {
-        // Write json for upstream vod
-        Storage::disk('streams')
-            ->put($this->getStreamJsonName(), $this->getStreamJsonContents());
+        // Write json contents for upstream
+        $this->writeStreamJson();
 
-        return $this->getStreamManifestUrl();
+        // Create the signed url
+        $signedUrl = $this->getStreamSignedUrl($uri);
+
+        // add PKCS#7 padding
+        $pad = 16 - (strlen($signedUrl) % 16);
+        $signedUrl .= str_repeat(chr($pad), $pad);
+
+        // Encrypt url
+        $encrypted = $this->getStreamUrlEncrypted($signedUrl);
+
+        // Base64 encode
+        $encoded = rtrim(strtr(base64_encode($encrypted), '+/', '-_'), '=');
+
+        return config('vod.url')."/{$path}/{$encoded}";
+    }
+
+    /**
+     * @return bool
+     */
+    private function writeStreamJson(int $expires = 300): bool
+    {
+        $key = str_replace('.json', '', $this->getStreamJsonName());
+
+        if (!Storage::disk('streams')->exists($this->getStreamJsonName())) {
+            Cache::forget($key);
+        }
+
+        return Cache::remember($key, $expires, function () {
+            return Storage::disk('streams')->put(
+                $this->getStreamJsonName(), $this->getStreamJsonContents()
+            );
+        });
+    }
+
+    /**
+     * @return string
+     */
+    private function getStreamJsonName(): string
+    {
+        $userId = auth()->user()->id ?? 0;
+
+        return "{$this->table}_{$this->id}_{$userId}.json";
     }
 
     /**
@@ -48,37 +89,20 @@ trait Streamable
     /**
      * @return string
      */
-    private function getStreamManifestUrl(): string
-    {
-        $signedUrl = $this->getStreamSignedUrl();
-
-        // add PKCS#7 padding
-        $pad = 16 - (strlen($signedUrl) % 16);
-        $signedUrl .= str_repeat(chr($pad), $pad);
-
-        // Encrypt url
-        $encrypted = $this->getStreamUrlEncrypted($signedUrl);
-
-        // Base64 encode
-        $encoded = rtrim(strtr(base64_encode($encrypted), '+/', '-_'), '=');
-
-        return $this->getStreamBaseUrl().$encoded;
-    }
-
-    /**
-     * @return string
-     */
-    private function getStreamSignedUrl(): string
+    private function getStreamSignedUrl(string $uri): string
     {
         if (!function_exists('openssl_encrypt')) {
             throw new Exception('openssl_encrypt is required');
         }
 
+        // e.g. example.json/manifest.mpd
+        $path = $this->getStreamJsonName().'/'.$uri;
+
         $hash = substr(
-            md5($this->getStreamManifestPath(), true), 0, $this->getStreamHashSize()
+            md5($path, true), 0, $this->getStreamHashSize()
         );
 
-        return $hash.$this->getStreamManifestPath();
+        return $hash.$path;
     }
 
     /**
@@ -95,32 +119,6 @@ trait Streamable
             OPENSSL_RAW_DATA | OPENSSL_NO_PADDING,
             $this->getStreamIV()
         );
-    }
-
-    /**
-     * @return string
-     */
-    private function getStreamBaseUrl(): string
-    {
-        return config('vod.url').'/';
-    }
-
-    /**
-     * @return string
-     */
-    private function getStreamManifestPath(): string
-    {
-        return $this->getStreamJsonName().'/manifest.mpd';
-    }
-
-    /**
-     * @return string
-     */
-    private function getStreamJsonName(): string
-    {
-        $userId = auth()->user()->id ?? 0;
-
-        return "{$this->table}_{$this->id}_{$userId}.json";
     }
 
     /**

@@ -30,7 +30,7 @@ class LocalUrlGenerator extends BaseUrlGenerator
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return URL::temporarySignedRoute(
-            'api.asset.show',
+            'api.asset.download',
             $expiration,
             [
                 $this->media,
