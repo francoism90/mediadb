@@ -20,7 +20,8 @@ export default {
       muted: false,
       playing: false,
       poster: null,
-      preload: 'metadata'
+      preload: 'metadata',
+      thumbnail: null
     }
   },
   mutations,

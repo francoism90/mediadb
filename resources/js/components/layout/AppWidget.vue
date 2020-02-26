@@ -21,7 +21,7 @@ section
 export default {
   components: {
     Media: () => import(/* webpackChunkName: "media-manager" */ '@/components/media/Manager'),
-    Tags: () => import(/* webpackChunkName: "media-manager" */ '@/components/filters/Tags')
+    Tags: () => import(/* webpackChunkName: "filters-tags" */ '@/components/filters/Tags')
   },
 
   computed: {

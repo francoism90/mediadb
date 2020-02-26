@@ -22,10 +22,10 @@ $button-text-color: $text;
 $button-text-hover-background-color: transparent;
 $button-text-hover-color: $white-ter;
 
-$button-disabled-background-color: $black-bis;
+$button-disabled-background-color: $grey-dark;
 $button-disabled-border-color: transparent;
 $button-disabled-shadow: none;
-$button-disabled-opacity: 0.25;
+$button-disabled-opacity: 0.5;
 
 $button-static-color: $text;
 $button-static-background-color: $black-ter;
@@ -34,4 +34,8 @@ $button-static-border-color: transparent;
 .button {
   font-weight: $weight-normal;
   text-decoration: none !important;
+
+  .icon.is-small {
+    font-size: 1.175rem;
+  }
 }

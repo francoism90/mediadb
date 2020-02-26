@@ -57,7 +57,6 @@ export default {
 
   data () {
     return {
-      items: [],
       identifier: +new Date()
     }
   },

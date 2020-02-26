@@ -183,13 +183,13 @@ class Media extends BaseMedia implements ViewableContract
     /**
      * @return string
      */
-    public function getStreamThumbUrlAttribute(int $offset = 1000, string $resize = 'w150-h100'): string
+    public function getStreamThumbUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
     {
         return self::getSecureExpireLink(
             $this->getStreamUrl('thumb', "thumb-{$offset}-{$resize}.jpg"),
             config('vod.secret'),
             config('vod.expire'),
-            $this->getRouteKey(),
+            $this->getRouteKey()."_thumb_{$offset}",
             request()->ip()
         );
     }

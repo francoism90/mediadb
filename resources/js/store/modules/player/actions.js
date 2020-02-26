@@ -16,8 +16,16 @@ const callback = ({ commit }, params = {}) => {
   commit('setCallback', params)
 }
 
+const thumbnail = async ({ commit, state }, time = 1000) => {
+  const response = await Vue.axios.get(`asset/thumbnail/${state.item.id}/${time}`)
+  const { meta = {} } = response.data
+
+  commit('setMedia', { thumbnail: meta.thumbnail })
+}
+
 export default {
+  callback,
   create,
   push,
-  callback
+  thumbnail
 }

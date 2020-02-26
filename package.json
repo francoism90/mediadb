@@ -18,7 +18,7 @@
     "@websanova/vue-auth": "^2.21.16-beta",
     "approximate-number": "^2.0.0",
     "axios": "^0.19",
-    "buefy": "^0.8.12",
+    "buefy": "^0.8.11",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "pug": "^2.0.4",

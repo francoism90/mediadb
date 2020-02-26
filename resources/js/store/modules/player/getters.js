@@ -28,7 +28,12 @@ const getKeyBindings = () => {
   }
 }
 
+const getThumbnail = (state) => {
+  return state.thumbnail
+}
+
 export default {
   getShakaOptions,
-  getKeyBindings
+  getKeyBindings,
+  getThumbnail
 }

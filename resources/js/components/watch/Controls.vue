@@ -1,14 +1,17 @@
 <template lang="pug">
 nav(class="controls")
-  b-slider(
-    rounded
-    lazy
-    type="is-primary"
-    :value="durationPct"
-    :tooltip="false"
-    :style="{ background: `linear-gradient(90deg, hsl(0, 0%, 86%) ${bufferedPct}%, hsla(0, 0%, 71%, 0.6) ${bufferRemainingPct}%)` }"
-    @change="setCurrentTime"
-  )
+  div(ref="slider" @mousemove="onSeekerHover" @mouseleave="onSeekerLeave")
+    thumbnail(v-if="showThumb" :key="thumbnail.time" :data="thumbnail")
+    b-slider(
+      ref="seeker"
+      rounded
+      lazy
+      type="is-primary"
+      :value="Number(durationPct)"
+      :tooltip="false"
+      :style="{ background: `linear-gradient(90deg, hsl(0, 0%, 86%) ${bufferedPct}%, hsla(0, 0%, 71%, 0.6) ${bufferRemainingPct}%)` }"
+      @change="setCurrentTime"
+    )
 
   div(class="level is-mobile")
     div(class="level-left")
@@ -66,6 +69,17 @@ nav(class="controls")
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  components: {
+    Thumbnail: () => import(/* webpackChunkName: "watch-thumbnail" */ '@/components/watch/Thumbnail')
+  },
+
+  data () {
+    return {
+      showThumb: false,
+      thumbnail: {}
+    }
+  },
+
   computed: {
     ...mapState('watch', [
       'buffered',
@@ -94,7 +108,7 @@ export default {
     },
 
     durationPct () {
-      return Math.round((this.currentTime / this.duration) * 100)
+      return Number((this.currentTime / this.duration) * 100).toFixed(3)
     }
   },
 
@@ -103,8 +117,33 @@ export default {
       'callback'
     ]),
 
-    setCurrentTime (pct) {
-      this.callback({ type: 'currentTime', value: this.duration * (pct / 100) })
+    getTimeByPct (percent = 0) {
+      return this.duration * (percent / 100)
+    },
+
+    setCurrentTime (percent) {
+      this.callback({ type: 'currentTime', value: this.getTimeByPct(percent) })
+    },
+
+    onSeekerHover (event) {
+      const sliderWidth = this.$refs.slider.clientWidth
+      const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left
+      const position = event.clientX - sliderOffsetLeft
+      const percent = (position) / sliderWidth * 100
+      const time = Math.ceil((this.duration * percent) * 10)
+
+      this.thumbnail = {
+        label: this.getTimeByPct(percent),
+        percent: percent,
+        position: position,
+        time: time
+      }
+
+      this.showThumb = true
+    },
+
+    onSeekerLeave () {
+      this.showThumb = false
     }
   }
 }

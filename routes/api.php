@@ -34,6 +34,6 @@ Route::middleware('api')->name('api.')->namespace('Api')->group(function () {
         Route::middleware('signed')->get('download/{media}/{user}/{version?}', ['uses' => 'DownloadController', 'as' => 'download']);
         Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder']);
         Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview']);
-        Route::middleware('jwt.auth')->get('thumbnail/{media}/{user}/{version?}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail']);
+        Route::middleware('jwt.auth')->get('thumbnail/{media}/{offset}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail'])->where('offset', '[0-9]+');
     });
 });

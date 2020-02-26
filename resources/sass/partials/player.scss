@@ -28,6 +28,19 @@
       }
     }
   }
+
+  .tooltip {
+    position: relative;
+    height: 100px;
+    width: 160px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    span {
+      align-self: flex-end;
+      padding: 0.25rem 0.5rem;
+    }
+  }
 }
 
 .player.is-responsive {

@@ -4,6 +4,15 @@ namespace App\Traits;
 
 trait Securable
 {
+    /**
+     * @param string $url
+     * @param string $secret
+     * @param int    $ttl
+     * @param string $id
+     * @param string $ip
+     *
+     * @return string
+     */
     public static function getSecureExpireLink(
         string $url, string $secret, int $ttl, string $id, string $ip
     ) {
