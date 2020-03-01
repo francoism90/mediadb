@@ -19,6 +19,7 @@ class MediaIndexConfigurator extends IndexConfigurator
                     'tokenizer' => 'autocomplete',
                     'filter' => [
                         'lowercase',
+                        'trim',
                     ],
                 ],
                 'autocomplete_search' => [
@@ -28,7 +29,7 @@ class MediaIndexConfigurator extends IndexConfigurator
             'tokenizer' => [
                 'autocomplete' => [
                     'type' => 'edge_ngram',
-                    'min_gram' => 2,
+                    'min_gram' => 1,
                     'max_gram' => 10,
                     'token_chars' => [
                         'letter',

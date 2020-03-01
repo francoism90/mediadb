@@ -32,7 +32,7 @@ section(class="section media-info")
           article(class="media")
             figure(class="media-left")
               p(class="image is-64x64")
-                img(:src="userData.thumbnail")
+                img(:src="userData.thumbnail" loading="lazy" :alt="userData.name")
 
             div(class="media-content")
               p

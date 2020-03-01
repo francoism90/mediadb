@@ -10,7 +10,7 @@ import paginateModule from '@/store/modules/paginate'
 
 export default {
   components: {
-    Infinite: () => import(/* webpackChunkName: "infinite" */ '@/components/ui/Infinite')
+    Infinite: () => import(/* webpackChunkName: "infinite" */ '@/components/paginate/Infinite')
   },
 
   props: {

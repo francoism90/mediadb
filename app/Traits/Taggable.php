@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Tag;
 use Illuminate\Support\Collection;
 
 trait Taggable
@@ -14,7 +15,7 @@ trait Taggable
     public static function getTagsTypeMapped(array $tags = []): Collection
     {
         return collect($tags)->mapToGroups(function ($item) {
-            return [$item['type'] => $item['name']];
+            return [$item['type'] ?? 'default' => $item['name']];
         });
     }
 
@@ -30,13 +31,29 @@ trait Taggable
             return $this->syncTags(null);
         }
 
-        // Sync with types
+        // Sync with types (if any)
         $collect = self::getTagsTypeMapped($tags);
 
-        foreach (['category', 'language', 'people'] as $type) {
+        foreach (['default', 'category', 'language', 'people'] as $type) {
             $tags = $collect->has($type) ? $collect->get($type)->unique()->toArray() : [];
 
-            $this->syncTagsWithType($tags, $type);
+            $this->syncTagsWithType($tags, 'default' === $type ? null : $type);
         }
+
+        // Order tags by name
+        $this->setTagsOrderByName();
+    }
+
+    /**
+     * @return void
+     */
+    public function setTagsOrderByName()
+    {
+        $tags = Tag::pluck('name', 'id')->toArray();
+
+        // Sort case-insensitive
+        natcasesort($tags);
+
+        Tag::setNewOrder(array_keys($tags));
     }
 }

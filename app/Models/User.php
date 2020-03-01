@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
+use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -21,6 +23,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
 {
     use HasMediaTrait;
     use Notifiable;
+    use Randomable;
     use Searchable;
     use Sluggable;
     use SluggableScopeHelpers;
@@ -66,13 +69,24 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     /**
      * @var array
      */
+    protected $searchRules = [
+        MultiMatchRule::class,
+    ];
+
+    /**
+     * @var array
+     */
     protected $mapping = [
         'properties' => [
             'name' => [
                 'type' => 'text',
+                'analyzer' => 'autocomplete',
+                'search_analyzer' => 'autocomplete_search',
             ],
             'description' => [
                 'type' => 'text',
+                'analyzer' => 'autocomplete',
+                'search_analyzer' => 'autocomplete_search',
             ],
         ],
     ];
@@ -110,6 +124,14 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     }
 
     /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only(['id', 'name', 'description']);
+    }
+
+    /**
      * @return string
      */
     public function getRouteKeyName()
@@ -139,11 +161,18 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     }
 
     /**
+     * @return hasMany
+     */
+    public function collections()
+    {
+        return $this->hasMany('App\Models\Collection');
+    }
+
+    /**
      * @return string
      */
     public function getThumbnailAttribute(): string
     {
-        // TODO: Replace with actual profile avatar
         return asset('storage/images/placeholders/empty.png');
     }
 

@@ -4,7 +4,7 @@ namespace App\Support\Scout\Rules;
 
 use ScoutElastic\SearchRule;
 
-class SimpleQueryMatchRule extends SearchRule
+class SimpleMatchRule extends SearchRule
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class SimpleQueryMatchRule extends SearchRule
             'must' => [
                 'simple_query_string' => [
                     'query' => $this->builder->query,
-                    'fields' => ['name^5', 'description'],
+                    'fields' => ['name'],
                     'flags' => 'PHRASE|AND|PRECEDENCE|PREFIX|WHITESPACE',
                 ],
             ],

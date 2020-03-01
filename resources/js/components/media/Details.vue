@@ -16,12 +16,31 @@ section()
         v-model="tags"
         class="is-clearfix"
         :data="tagsFiltered"
+        maxtags="15"
+        maxlength="255"
+        autocomplete
+        placeholder="Add tag"
+        field="name"
+        :allow-new="true"
+        :loading="tagsLoading"
+        @typing="fetchTags"
+      )
+        template(v-slot:default="props")
+          span {{ props.option.name }}
+
+    b-field(label="Collections" :type="fieldType('collect')" :message="firstError('collect')")
+      b-taginput(
+        v-model="collect"
+        class="is-clearfix"
+        :data="collectFiltered"
         maxtags="25"
         maxlength="255"
         autocomplete
-        placeholder="Add a tag"
+        placeholder="Add collection"
         field="name"
-        @typing="setTagsFiltered"
+        :allow-new="true"
+        :loading="collectLoading"
+        @typing="fetchCollect"
       )
         template(v-slot:default="props")
           span {{ props.option.name }}
@@ -43,8 +62,9 @@ section()
 
 <script>
 import { formErrorHandler } from '@/components/mixins/form'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
-import tagsModule from '@/store/modules/tags'
+import { mapGetters } from 'vuex'
+import debounce from 'lodash/debounce'
+import paginateModule from '@/store/modules/paginate'
 
 export default {
   mixins: [formErrorHandler],
@@ -61,6 +81,7 @@ export default {
       body: {
         name: this.item.name,
         description: this.item.description,
+        collect: [],
         tags: []
       }
     }
@@ -68,9 +89,23 @@ export default {
 
   computed: {
     ...mapGetters({
-      tagsFiltered: 'taginput/getFiltered',
+      collectFiltered: 'collectinput/getData',
+      collectLoading: 'collectinput/isLoading',
+      collectSelected: 'collectinput/getSelected',
+      tagsFiltered: 'taginput/getData',
+      tagsLoading: 'taginput/isLoading',
       tagsSelected: 'taginput/getSelected'
     }),
+
+    collect: {
+      get () {
+        return this.collectSelected
+      },
+
+      set (value) {
+        this.$store.commit('collectinput/setSelected', value)
+      }
+    },
 
     tags: {
       get () {
@@ -78,41 +113,68 @@ export default {
       },
 
       set (value) {
-        this.setTagsSelected(value)
+        this.$store.commit('taginput/setSelected', value)
       }
     }
   },
 
   created () {
+    this.prepareCollect()
     this.prepareTags()
   },
 
   beforeDestroy () {
+    this.$store.unregisterModule('collectinput')
     this.$store.unregisterModule('taginput')
   },
 
   methods: {
-    ...mapActions({
-      fetchTags: 'taginput/fetch'
-    }),
-
-    ...mapMutations({
-      setTagsFiltered: 'taginput/setFiltered',
-      setTagsSelected: 'taginput/setSelected'
-    }),
-
-    async prepareTags () {
-      if (!this.$store.state.taginput) {
-        this.$store.registerModule('taginput', tagsModule)
+    prepareCollect () {
+      if (!this.$store.state.collectinput) {
+        this.$store.registerModule('collectinput', paginateModule)
       }
 
-      await this.fetchTags({ path: 'tags' })
-
-      this.setTagsSelected(this.item.relationships.tags || [])
+      this.$store.dispatch('collectinput/create', {
+        path: 'collect',
+        params: { 'filter[type]': 'user' }
+      })
+      this.$store.commit('collectinput/setSelected', this.item.usercollect || [])
     },
 
+    prepareTags () {
+      if (!this.$store.state.taginput) {
+        this.$store.registerModule('taginput', paginateModule)
+      }
+
+      this.$store.dispatch('taginput/create', { path: 'tags' })
+      this.$store.commit('taginput/setSelected', this.item.relationships.tags || [])
+    },
+
+    fetchCollect: debounce(async function (name) {
+      this.$store.dispatch('collectinput/reset', {
+        params: {
+          'filter[query]': name,
+          'page[size]': 25
+        }
+      })
+
+      await this.$store.dispatch('collectinput/fetch')
+    }, 400),
+
+    fetchTags: debounce(async function (name) {
+      this.$store.dispatch('taginput/reset', {
+        params: {
+          'filter[query]': name,
+          'page[size]': 25
+        }
+      })
+
+      await this.$store.dispatch('taginput/fetch')
+    }, 400),
+
     async update () {
-      // Attach tags model
+      // Add final selections to body
+      this.body.collect = this.collect
       this.body.tags = this.tags
 
       const { success = false } = await this.submit('manager/update', {
@@ -121,7 +183,7 @@ export default {
       })
 
       if (success) {
-        await this.$store.dispatch('manager/fetch', { path: 'media/' + this.item.id })
+        await this.$store.dispatch('manager/refresh')
 
         this.$buefy.toast.open({
           message: `${this.body.name} was successfully updated.`,

@@ -24,14 +24,10 @@ class SimpleQueryFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
+        // Convert arrays to string
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         $this->setQueryString((string) $value);
-
-        // Invalid queries
-        if (!$this->queryStr || '*' === $this->queryStr) {
-            return $query->where('id', 0);
-        }
 
         // Get all models
         $models = $this->getQueryModels($query->getModel());
@@ -39,6 +35,9 @@ class SimpleQueryFilter implements Filter
         // Return results
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
+
+        // Remove any current OrderBy
+        $query->getQuery()->orders = null;
 
         return $query->whereIn('id', $ids)
                      ->orderByRaw(DB::raw("FIELD(id, $idsOrder)"));
@@ -77,7 +76,7 @@ class SimpleQueryFilter implements Filter
     private function getQueryModels(Model $model)
     {
         return $model->search($this->queryStr)
-            ->select(['name', 'description'])
+            ->select(['name'])
             ->collapse('id')
             ->from(0)
             ->take(10000)

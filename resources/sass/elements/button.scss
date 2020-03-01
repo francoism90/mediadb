@@ -39,3 +39,7 @@ $button-static-border-color: transparent;
     font-size: 1.175rem;
   }
 }
+
+.button.is-text {
+  border-width: 0 !important;
+}

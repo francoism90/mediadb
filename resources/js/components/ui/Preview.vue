@@ -2,7 +2,7 @@
 figure(class="image" @mouseover="togglePreview" @mouseout="togglePreview" v-touch:swipe.left="togglePreview")
   video(
     ref="videoElement"
-    preload="auto"
+    preload="metadata"
     playsinline
     crossorigin
     loop

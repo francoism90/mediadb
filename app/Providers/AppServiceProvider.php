@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
+use App\Observers\CollectionObserver;
 use App\Observers\MediaObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Collection::observe(CollectionObserver::class);
         Media::observe(MediaObserver::class);
         Tag::observe(TagObserver::class);
         User::observe(UserObserver::class);

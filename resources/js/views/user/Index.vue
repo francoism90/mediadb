@@ -1,29 +1,34 @@
 <template lang="pug">
-router-view(v-if="ready" :user-data="data" :user-meta="meta")
+router-view(v-if="data.id" :user-data="data" :user-meta="meta")
 </template>
 
 <script>
 import modelModule from '@/store/modules/model'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('user', [
-      'ready',
-      'data',
-      'meta'
-    ])
+    ...mapGetters('user', {
+      data: 'getData',
+      meta: 'getMeta'
+    })
   },
 
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.fetch({ path: 'user/' + to.params.user })
+      vm.fetch({
+        path: 'user',
+        params: { 'filter[id]': to.params.user }
+      })
       next()
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.fetch({ path: 'user/' + to.params.user })
+    this.fetch({
+      path: 'user',
+      params: { 'filter[id]': to.params.user }
+    })
     next()
   },
 

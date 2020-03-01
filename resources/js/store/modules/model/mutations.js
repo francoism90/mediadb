@@ -1,8 +1,14 @@
 import Vue from 'vue'
 
 export default {
-  setInitialized (state, payload) {
-    state.ready = payload
+  setApiRoute (state, payload) {
+    const { path = null, params = {} } = payload
+
+    const currentParams = state.params || {}
+    const finalParams = { ...currentParams, ...params }
+
+    state.path = path || state.path
+    state.params = finalParams
   },
 
   setItem (state, payload) {

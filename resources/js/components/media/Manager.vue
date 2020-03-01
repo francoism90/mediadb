@@ -1,5 +1,5 @@
 <template lang="pug">
-modal(v-if="ready" :key="data.id")
+modal(v-if="data.id" :key="data.id")
   h1(class="title is-4") {{ data.name }}
   h2(class="subtitle")
     | <router-link v-if="data.relationships.user" :to="{ name: 'user-view', params: { user: data.relationships.user.id } }">{{ data.relationships.user.name }}</router-link> •
@@ -20,14 +20,14 @@ modal(v-if="ready" :key="data.id")
 
 <script>
 import modelModule from '@/store/modules/model'
-import { mapActions, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Modal: () => import(/* webpackChunkName: "modal" */ '@/components/ui/Modal'),
     Details: () => import(/* webpackChunkName: "media-details" */ '@/components/media/Details'),
-    Visibility: () => import(/* webpackChunkName: "media-details" */ '@/components/media/Visibility'),
-    Advanced: () => import(/* webpackChunkName: "media-details" */ '@/components/media/Advanced')
+    Visibility: () => import(/* webpackChunkName: "media-visibility" */ '@/components/media/Visibility'),
+    Advanced: () => import(/* webpackChunkName: "media-advanced" */ '@/components/media/Advanced')
   },
 
   props: {
@@ -43,7 +43,7 @@ export default {
       items: [
         {
           title: 'Details',
-          description: 'Update the name, tags and description.',
+          description: 'Update the name, tags, description and collections.',
           component: 'Details'
         },
         {
@@ -66,18 +66,18 @@ export default {
   },
 
   computed: {
-    ...mapState('manager', [
-      'ready',
-      'data'
-    ])
+    ...mapGetters('manager', {
+      data: 'getData',
+      meta: 'getMeta'
+    })
   },
 
-  async created () {
+  created () {
     if (!this.$store.state.manager) {
       this.$store.registerModule('manager', modelModule)
     }
 
-    await this.fetch({ path: 'media/' + this.id })
+    this.fetch()
   },
 
   beforeDestroy () {
@@ -85,9 +85,16 @@ export default {
   },
 
   methods: {
-    ...mapActions('manager', [
-      'fetch'
-    ])
+    async fetch () {
+      await this.$store.dispatch('manager/fetch', {
+        path: 'media',
+        params: {
+          append: 'collections',
+          include: 'model,tags',
+          'filter[id]': this.id
+        }
+      })
+    }
   }
 }
 </script>

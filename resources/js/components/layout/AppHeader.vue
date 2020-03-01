@@ -9,7 +9,7 @@ b-navbar(fixed-top wrapper-class="container")
         b-icon(slot="trigger" icon="menu")
 
         b-dropdown-item(
-          v-for="item in items"
+          v-for="item in menu"
           :key="item.label"
           aria-role="listitem"
           has-link
@@ -18,7 +18,7 @@ b-navbar(fixed-top wrapper-class="container")
 
   template(slot="end")
     b-navbar-item(
-      v-for="item in items"
+      v-for="item in menu"
       :key="item.label"
       tag="router-link"
       :to="{ name: item.route }"
@@ -27,28 +27,13 @@ b-navbar(fixed-top wrapper-class="container")
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data () {
-    return {
-      items: [
-        {
-          label: 'Favorites',
-          route: 'upload'
-        },
-        {
-          label: 'Watchlist',
-          route: 'upload'
-        },
-        {
-          label: 'Viewing Activity',
-          route: 'history'
-        },
-        {
-          label: 'Upload Video',
-          route: 'upload'
-        }
-      ]
-    }
+  computed: {
+    ...mapState([
+      'menu'
+    ])
   }
 }
 </script>

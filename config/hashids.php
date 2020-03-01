@@ -11,6 +11,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 
@@ -40,13 +41,18 @@ return [
     */
 
     'connections' => [
+        Collection::class => [
+            'salt' => 'fb226emj467sfsjni6dccw78gjj782sw',
+            'length' => '12',
+        ],
+
         Media::class => [
-            'salt' => 'tmuuf2cz3we4agp64fojxbo5vy4nf4tz',
+            'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
             'length' => '12',
         ],
 
         Tag::class => [
-            'salt' => '2adq6t9z6dzkvrhpwx97hzxo663ri4',
+            'salt' => 'bjcgme4mqsqu73qufnn9cd5penuaqkc2',
             'length' => '12',
         ],
     ],

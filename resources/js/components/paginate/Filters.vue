@@ -1,20 +1,19 @@
 <template lang="pug">
 div
-  b-dropdown(v-model="sortModel" aria-role="list")
+  b-dropdown(v-model="filter" aria-role="list")
     b-button(
       slot="trigger"
       type="is-text"
       size="is-normal"
-      class="sorters"
       icon-right="chevron-down"
-    ) {{ sortLabel }}
+    ) {{ label }}
 
     b-dropdown-item(
-      v-for="sorter in sorters"
-      :key="sorter.key"
-      :value="sorter.key"
+      v-for="item in items"
+      :key="item.key"
+      :value="item.key"
       aria-role="listitem"
-    ) {{ sorter.label }}
+    ) {{ item.label }}
 </template>
 
 <script>
@@ -25,7 +24,12 @@ export default {
       required: true
     },
 
-    sorters: {
+    field: {
+      type: String,
+      required: true
+    },
+
+    items: {
       type: Array,
       required: true
     }
@@ -36,20 +40,20 @@ export default {
       return this.$store.state[this.namespace]
     },
 
-    sortModel: {
+    filter: {
       get () {
-        return this.state.params.sort || this.sorters[0].key
+        return this.state.params[this.field] || this.items[0].key
       },
 
       set (value) {
         this.$store.dispatch(this.namespace + '/reset', {
-          params: { sort: value }
+          params: { [this.field]: value || null }
         })
       }
     },
 
-    sortLabel () {
-      return this.sorters.find(x => x.key === this.sortModel).label
+    label () {
+      return this.items.find(x => x.key === this.filter).label
     }
   }
 }

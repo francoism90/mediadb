@@ -4,6 +4,7 @@ export const contextHandler = {
       let contextMenu = false
 
       switch (type) {
+        // case 'collect':
         // case 'tags':
         case 'media':
           contextMenu = {
@@ -36,28 +37,37 @@ export const contextHandler = {
 export const routeHandler = {
   methods: {
     pushRoute (item, type = null) {
-      let route = false
-
       switch (type) {
-        // case 'tags':
+        case 'tag':
+          this.$store.dispatch(this.paginate + '/reset', {
+            params: {
+              'filter[query]': '#' + item.slug
+            }
+          })
+          break
         case 'media':
-          route = {
+          this.$router.push({
             name: 'user-video',
             params: {
               id: item.id,
               slug: item.slug,
               user: item.relationships.user.id
             }
-          }
+          })
+          break
+        case 'collect':
+          this.$router.push({
+            name: 'user-collect',
+            params: {
+              id: item.id,
+              slug: item.slug,
+              user: item.relationships.user.id
+            }
+          })
           break
       }
 
-      if (route) {
-        this.$router.push(route)
-        this.$store.dispatch('modal/close')
-      }
-
-      return route
+      this.$store.dispatch('modal/close')
     }
   }
 }

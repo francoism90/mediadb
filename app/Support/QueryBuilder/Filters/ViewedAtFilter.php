@@ -18,6 +18,7 @@ class ViewedAtFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
+        // Convert arrays to string
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         $model = get_class($query->getModel());

@@ -6,6 +6,7 @@ use App\Support\Scout\MediaIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
+use App\Traits\Resourceable;
 use App\Traits\Securable;
 use App\Traits\Streamable;
 use App\Traits\Taggable;
@@ -29,6 +30,7 @@ class Media extends BaseMedia implements ViewableContract
     use HasStatuses;
     use HasTags;
     use Randomable;
+    use Resourceable;
     use Searchable;
     use Sluggable;
     use Securable;
@@ -91,6 +93,14 @@ class Media extends BaseMedia implements ViewableContract
     }
 
     /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only(['id', 'name', 'description']);
+    }
+
+    /**
      * @return string
      */
     public static function getTagClassName(): string
@@ -113,7 +123,7 @@ class Media extends BaseMedia implements ViewableContract
      */
     public function collections()
     {
-        return $this->hasManyJson('App\Models\Media', 'custom_properties->media_ids');
+        return $this->hasManyJson('App\Models\Collection', 'custom_properties->media_ids');
     }
 
     /**
@@ -157,6 +167,14 @@ class Media extends BaseMedia implements ViewableContract
     }
 
     /**
+     * @return Collection
+     */
+    public function getUserCollectionsAttribute()
+    {
+        return $this->collections->where('user_id', auth()->user()->id ?? 0);
+    }
+
+    /**
      * @return string
      */
     public function getDownloadUrlAttribute(): string
@@ -192,5 +210,34 @@ class Media extends BaseMedia implements ViewableContract
             $this->getRouteKey()."_thumb_{$offset}",
             request()->ip()
         );
+    }
+
+    /**
+     * @param array $items
+     * @param User  $user
+     *
+     * @return void
+     */
+    public function syncCollections(array $items = [], User $user)
+    {
+        $attachTo = collect();
+
+        // Validate each requested collection
+        foreach ($items as $item) {
+            $collect = $user->collections()->firstOrCreate(
+                ['name' => $item['name'] ?? $item]
+            );
+
+            $attachTo->push($collect);
+        }
+
+        // Sync to user collections
+        foreach ($user->collections as $collection) {
+            if ($attachTo->firstWhere('id', $collection->id)) {
+                $collection->media()->attach($this->id)->save();
+            } else {
+                $collection->media()->detach($this->id)->save();
+            }
+        }
     }
 }

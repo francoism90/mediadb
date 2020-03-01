@@ -1,21 +1,22 @@
 .items {
-  .card-image {
-    height: 192px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
+  .card-content a {
+    color: inherit;
+  }
+
+  .card-image {
     .image {
-      height: 192px;
+      max-height: 192px;
 
       img,
       video {
-        height: 192px;
+        max-height: 192px;
         object-fit: fill;
         width: 100%;
         border-radius: $radius;
       }
     }
-  }
-
-  .card-content a {
-    color: inherit;
   }
 }

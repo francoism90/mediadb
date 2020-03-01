@@ -8,6 +8,7 @@ nav(class="controls")
       lazy
       type="is-primary"
       :value="Number(durationPct)"
+      :step="0.001"
       :tooltip="false"
       :style="{ background: `linear-gradient(90deg, hsl(0, 0%, 86%) ${bufferedPct}%, hsla(0, 0%, 71%, 0.6) ${bufferRemainingPct}%)` }"
       @change="setCurrentTime"
@@ -117,12 +118,12 @@ export default {
       'callback'
     ]),
 
-    getTimeByPct (percent = 0) {
-      return this.duration * (percent / 100)
-    },
-
     setCurrentTime (percent) {
       this.callback({ type: 'currentTime', value: this.getTimeByPct(percent) })
+    },
+
+    getTimeByPct (percent = 0) {
+      return this.duration * (percent / 100)
     },
 
     onSeekerHover (event) {
@@ -130,7 +131,7 @@ export default {
       const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left
       const position = event.clientX - sliderOffsetLeft
       const percent = (position) / sliderWidth * 100
-      const time = Math.ceil((this.duration * percent) * 10)
+      const time = Math.ceil((this.duration * percent) * 10) // needs ms
 
       this.thumbnail = {
         label: this.getTimeByPct(percent),

@@ -3,10 +3,15 @@ const getData = (state) => {
 }
 
 const getMeta = (state) => {
-  return state.eta
+  return state.meta
+}
+
+const isReady = (state) => {
+  return state.ready
 }
 
 export default {
   getData,
-  getMeta
+  getMeta,
+  isReady
 }

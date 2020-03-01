@@ -3,7 +3,7 @@ b-taglist
   b-tag(
     v-for="item in items"
     :key="item.id"
-    :type="getTypeClass(item.type)"
+    :type="getTypeClass(item.type || 'default')"
   ) {{ item.name }}
 </template>
 
@@ -20,6 +20,7 @@ export default {
     return {
       typeClass: {
         category: 'is-dark',
+        default: 'is-info',
         language: 'is-link',
         people: 'is-primary'
       }

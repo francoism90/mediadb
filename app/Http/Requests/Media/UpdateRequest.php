@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Media;
 
-use App\Rules\IsExistingTag;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -29,8 +28,10 @@ class UpdateRequest extends FormRequest
             'description' => 'nullable|string|min:1|max:2048',
             'snapshot' => 'nullable|numeric|min:0|max:14400',
             'status' => 'nullable|string|in:private,public',
+            'collect' => 'nullable|array',
+            'collect.*' => 'required|array',
             'tags' => 'nullable|array',
-            'tags.*' => ['required', new IsExistingTag()],
+            'tags.*' => 'required|array',
         ];
     }
 }

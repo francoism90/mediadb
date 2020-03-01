@@ -1,14 +1,14 @@
 import Vue from 'vue'
 
-const fetch = async ({ commit }, params = {}) => {
-  const { path = null, routeParams = {} } = params
+const fetch = ({ commit, dispatch }, route = {}) => {
+  commit('setApiRoute', route)
+  dispatch('refresh')
+}
 
-  commit('setInitialized', false)
-
-  const response = await Vue.axios.get(path, routeParams)
+const refresh = async ({ commit, state }) => {
+  const response = await Vue.axios.get(state.path, { params: state.params })
 
   commit('setItem', response.data)
-  commit('setInitialized', true)
 }
 
 const remove = async ({ state }, params = {}) => {
@@ -29,6 +29,7 @@ const update = async ({ state }, params = {}) => {
 
 export default {
   fetch,
+  refresh,
   remove,
   update
 }

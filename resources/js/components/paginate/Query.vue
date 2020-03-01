@@ -11,11 +11,8 @@ div
         placeholder="Filter items"
       )
 
-    p(class="control")
+    p(v-if="tags" class="control")
       b-button(@click.prevent="filterTags" icon-right="tag-multiple")
-
-    p(v-if="filtersActive()" class="control")
-      b-button(@click.prevent="resetFilters" icon-right="filter-remove")
 </template>
 
 <script>
@@ -29,13 +26,13 @@ export default {
     },
 
     filter: {
-      type: String,
+      type: Array,
       default: null
     },
 
-    sorters: {
-      type: Array,
-      default: null
+    tags: {
+      type: Boolean,
+      default: true
     },
 
     query: {
@@ -56,46 +53,23 @@ export default {
 
       set: debounce(function (value) {
         this.$store.dispatch(this.namespace + '/reset', {
-          params: { 'filter[query]': value, sort: null }
+          params: {
+            'filter[query]': value || null,
+            sort: null
+          }
         })
       }, 350)
     }
   },
 
   methods: {
-    filtersActive () {
-      return (
-        this.state.params[this.filter] ||
-        this.state.params['filter[query]'] ||
-        this.sortActive()
-      )
-    },
-
     filterTags () {
       this.$store.dispatch('modal/open', {
         component: 'Tags',
-        props: { namespace: this.namespace },
+        props: { paginate: this.namespace },
         escape: ['escape'],
         fullscreen: true
       })
-    },
-
-    resetFilters () {
-      this.$store.dispatch(this.namespace + '/reset', {
-        params: {
-          [this.filter]: null,
-          'filter[query]': null,
-          sort: this.sorters[0].key
-        }
-      })
-    },
-
-    sortActive () {
-      if (!this.state.params.sort || !this.sorters || !this.sorters.length) {
-        return false
-      }
-
-      return this.state.params.sort !== this.sorters[0].key
     }
   }
 }

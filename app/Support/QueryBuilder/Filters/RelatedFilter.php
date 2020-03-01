@@ -27,6 +27,9 @@ class RelatedFilter implements Filter
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
+        // Convert arrays to string
+        $value = is_array($value) ? implode(' ', $value) : $value;
+
         // Set models and search query
         $this->setSearchModels($query->getModel(), $value)
              ->setSearchQuery();
@@ -41,6 +44,9 @@ class RelatedFilter implements Filter
         // Return ordered models
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
+
+        // Remove any current OrderBy
+        $query->getQuery()->orders = null;
 
         return $query->whereIn('id', $ids)
                      ->orderByRaw(DB::raw("FIELD(id, $idsOrder)"));

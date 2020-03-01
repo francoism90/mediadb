@@ -35,7 +35,7 @@ See `doc/nginx` for configuration examples.
 See `doc/supervisor` for configuration examples.
 
 ```bash
-cd /path/to/html
+cd /path/to/project
 composer install
 php artisan migrate
 php artisan db:seed
@@ -44,9 +44,18 @@ php artisan jwt:secret
 php artisan storage:link
 php artisan horizon:install
 php artisan telescope:install
+```
+
+#### Indexes
+
+```bash
+php artisan elastic:create-index "App\Support\Scout\CollectionIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\MediaIndexConfigurator"
+php artisan elastic:create-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\UserIndexConfigurator"
+php artisan elastic:update-mapping "App\Models\Collection"
 php artisan elastic:update-mapping "App\Models\Media"
+php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
 ```
 
@@ -55,7 +64,7 @@ It is advisable to view all configuration files and change them when necessary, 
 #### Compile Assets
 
 ```bash
-cd /path/to/html
+cd /path/to/project
 npm install
 npm run dev
 ```
@@ -75,11 +84,11 @@ VOD_IV=
 ### Set VOD secure link
 
 ```bash
-"$secure_link_expires$arg_id$remote_addr my-secret";
+"$secure_link_expires$arg_id$remote_addr secret";
 ```
 
 ```env
-VOD_SECRET=
+VOD_SECRET=secret
 ```
 
 ## Upgrade
@@ -87,9 +96,13 @@ VOD_SECRET=
 ### Elasticsearch
 
 ```bash
+php artisan elastic:update-index "App\Support\Scout\CollectionIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\MediaIndexConfigurator"
+php artisan elastic:update-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\UserIndexConfigurator"
+php artisan elastic:update-mapping "App\Models\Collection"
 php artisan elastic:update-mapping "App\Models\Media"
+php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
 ```
 

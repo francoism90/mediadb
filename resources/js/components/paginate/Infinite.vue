@@ -1,6 +1,6 @@
 <template lang="pug">
 section(v-if="state.ready" :key="namespace" class="items")
-  div(class="columns is-variable is-multiline")
+  div(class="columns is-mobile is-variable is-multiline")
     div(
       class="column"
       :class="columnClass"
@@ -10,7 +10,7 @@ section(v-if="state.ready" :key="namespace" class="items")
       @contextmenu.prevent="openContextMenu(item, type)"
       v-touch:swipe.right="openContextMenuSwipe(item, type)"
     )
-      card(:data="item")
+      card(:data="item" :type="type")
 
   infinite-loading(:identifier="identifier" @infinite="infiniteHandler")
     span(slot="no-more")
@@ -22,7 +22,7 @@ import { contextHandler, routeHandler } from '@/components/mixins/model'
 
 export default {
   components: {
-    Card: () => import(/* webpackChunkName: "card" */ '@/components/ui/Card')
+    Card: () => import(/* webpackChunkName: "card" */ '@/components/paginate/Card')
   },
 
   mixins: [contextHandler, routeHandler],
@@ -38,9 +38,14 @@ export default {
       required: true
     },
 
-    type: {
+    paginate: {
       type: String,
       default: null
+    },
+
+    type: {
+      type: String,
+      required: true
     },
 
     columnClass: {

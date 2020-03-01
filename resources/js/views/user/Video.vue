@@ -1,5 +1,5 @@
 <template lang="pug">
-section(v-if="ready" :key="data.id")
+section(v-if="data.id" :key="data.id")
   player(:options="playerOptions")
   hero(:data="data")
   info(:data="data" :user-data="userData")
@@ -8,14 +8,12 @@ section(v-if="ready" :key="data.id")
 
 <script>
 import modelModule from '@/store/modules/model'
-import { mapActions, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   metaInfo () {
-    if (this.ready) {
-      return {
-        title: this.data.name
-      }
+    return {
+      title: this.data.name
     }
   },
 
@@ -27,6 +25,11 @@ export default {
   },
 
   props: {
+    id: {
+      type: String,
+      required: true
+    },
+
     userData: {
       type: Object,
       required: true
@@ -39,11 +42,10 @@ export default {
   },
 
   computed: {
-    ...mapState('video', [
-      'ready',
-      'data',
-      'meta'
-    ]),
+    ...mapGetters('video', {
+      data: 'getData',
+      meta: 'getMeta'
+    }),
 
     playerOptions () {
       return {
@@ -61,13 +63,13 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.fetch({ path: 'media/' + to.params.id })
+      vm.fetch(to.params.id)
       next()
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.fetch({ path: 'media/' + to.params.id })
+    this.fetch(to.params.id)
     next()
   },
 
@@ -82,9 +84,16 @@ export default {
   },
 
   methods: {
-    ...mapActions('video', [
-      'fetch'
-    ])
+    async fetch (id) {
+      await this.$store.dispatch('video/fetch', {
+        path: 'media',
+        params: {
+          append: 'download_url,stream_url',
+          include: 'tags',
+          'filter[id]': id
+        }
+      })
+    }
   }
 }
 </script>

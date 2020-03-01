@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state () {
     return {
-      ready: false,
+      path: null,
+      params: {},
       data: {},
       meta: {}
     }

@@ -68,6 +68,7 @@ Vue.use(VueTimers)
 
 Vue.use(Vue2TouchEvents, {
   touchHoldTolerance: 300,
+  swipeTolerance: 50,
   longTapTimeInterval: 300
 })
 
