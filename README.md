@@ -77,11 +77,11 @@ dd if=/dev/urandom bs=1 count=16 2> /dev/null | xxd -p -c32
 ```
 
 ```env
-VOD_KEY=
-VOD_IV=
+VOD_KEY=d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793
+VOD_IV=722d4f9191c53d5e934e13719d02cced
 ```
 
-### Set VOD secure link
+### Set VOD security
 
 ```bash
 "$secure_link_expires$arg_id$remote_addr secret";
@@ -89,6 +89,17 @@ VOD_IV=
 
 ```env
 VOD_SECRET=secret
+```
+
+### Set VOD server
+
+```bash
+vod_base_url "https://stream.dom";
+vod_segments_base_url "https://stream.dom";
+```
+
+```env
+VOD_URL=https://stream.dom
 ```
 
 ## Upgrade
