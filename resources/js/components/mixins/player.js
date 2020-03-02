@@ -83,6 +83,17 @@ export const playerCallbackHandler = {
         case 'currentTime':
           this.player.currentTime = payload.value
           break
+        case 'manager':
+          this.player.pause()
+
+          this.$store.dispatch('modal/open', {
+            component: 'Media',
+            class: 'manager',
+            escape: ['escape'],
+            fullscreen: true,
+            props: { id: this.item.id }
+          })
+          break
         case 'download':
           this.player.pause()
           window.location.href = this.options.download || ''

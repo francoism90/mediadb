@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div(class="filter")
   b-dropdown(v-model="filter" aria-role="list")
     b-button(
       slot="trigger"

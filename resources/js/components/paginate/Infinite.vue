@@ -6,11 +6,9 @@ section(v-if="state.ready" :key="namespace" class="items")
       :class="columnClass"
       v-for="(item, index) in state.data"
       :key="index"
-      @click.prevent="pushRoute(item, type)"
-      @contextmenu.prevent="openContextMenu(item, type)"
-      v-touch:swipe.right="openContextMenuSwipe(item, type)"
+      :is="component"
+      v-bind="{ data: item, namespace: namespace, paginate: paginate }"
     )
-      card(:data="item" :type="type")
 
   infinite-loading(:identifier="identifier" @infinite="infiniteHandler")
     span(slot="no-more")
@@ -18,14 +16,13 @@ section(v-if="state.ready" :key="namespace" class="items")
 </template>
 
 <script>
-import { contextHandler, routeHandler } from '@/components/mixins/model'
-
 export default {
   components: {
-    Card: () => import(/* webpackChunkName: "card" */ '@/components/paginate/Card')
+    Collection: () => import(/* webpackChunkName: "types-collect" */ '@/components/paginate/types/Collection'),
+    Media: () => import(/* webpackChunkName: "types-media" */ '@/components/paginate/types/Media'),
+    Profile: () => import(/* webpackChunkName: "types-profile" */ '@/components/paginate/types/Profile'),
+    Tagger: () => import(/* webpackChunkName: "types-tagger" */ '@/components/paginate/types/Tagger')
   },
-
-  mixins: [contextHandler, routeHandler],
 
   props: {
     namespace: {
@@ -43,7 +40,7 @@ export default {
       default: null
     },
 
-    type: {
+    component: {
       type: String,
       required: true
     },

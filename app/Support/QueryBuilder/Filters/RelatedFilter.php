@@ -97,7 +97,7 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    private function getRelatedModels(): Collection
+    private function getRelatedModels()
     {
         return $this->model
             ->search($this->searchQuery)
@@ -112,7 +112,7 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    private function getRelatedTags(): Collection
+    private function getRelatedTags()
     {
         return $this->model
             ->select('id')

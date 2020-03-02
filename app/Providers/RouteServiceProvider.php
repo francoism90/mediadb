@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -24,6 +25,10 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Route::bind('collect', function ($value, $route) {
+            return Collection::getModelByKey($value);
+        });
 
         Route::bind('media', function ($value, $route) {
             return Media::getModelByKey($value);

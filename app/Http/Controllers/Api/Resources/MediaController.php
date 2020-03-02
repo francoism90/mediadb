@@ -7,9 +7,10 @@ use App\Http\Requests\Media\StoreRequest;
 use App\Http\Requests\Media\UpdateRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
-use App\Support\QueryBuilder\Filters\CollectionFilter;
 use App\Support\QueryBuilder\Filters\HashidFilter;
-use App\Support\QueryBuilder\Filters\MediaTypeFilter;
+use App\Support\QueryBuilder\Filters\Media\CollectionFilter;
+use App\Support\QueryBuilder\Filters\Media\TypeFilter;
+use App\Support\QueryBuilder\Filters\Media\UserFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\ViewedAtFilter;
@@ -42,8 +43,9 @@ class MediaController extends Controller
                 AllowedFilter::custom('id', new HashidFilter())->ignore(null, '*'),
                 AllowedFilter::custom('collect', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
-                AllowedFilter::custom('type', new MediaTypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
+                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
+                AllowedFilter::custom('user', new UserFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
                 AllowedFilter::custom('viewed_at', new ViewedAtFilter())->ignore(null),
             ])
             ->allowedSorts([

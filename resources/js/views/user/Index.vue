@@ -4,7 +4,7 @@ router-view(v-if="data.id" :user-data="data" :user-meta="meta")
 
 <script>
 import modelModule from '@/store/modules/model'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -16,19 +16,13 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.fetch({
-        path: 'user',
-        params: { 'filter[id]': to.params.user }
-      })
+      vm.fetch(to.params.user)
       next()
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.fetch({
-      path: 'user',
-      params: { 'filter[id]': to.params.user }
-    })
+    this.fetch(to.params.user)
     next()
   },
 
@@ -38,14 +32,13 @@ export default {
     }
   },
 
-  beforeDestroy () {
-    this.$store.unregisterModule('user')
-  },
-
   methods: {
-    ...mapActions('user', [
-      'fetch'
-    ])
+    async fetch (id) {
+      await this.$store.dispatch('user/fetch', {
+        path: 'user',
+        params: { 'filter[id]': id }
+      })
+    }
   }
 }
 </script>

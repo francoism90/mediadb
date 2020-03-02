@@ -13,7 +13,7 @@ modal
     :api-route="apiRoute"
     :column-class="columnClass"
     :paginate="paginate"
-    type="tag"
+    component="Tagger"
   )
 </template>
 

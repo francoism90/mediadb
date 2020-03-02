@@ -1,6 +1,11 @@
 import Vue from 'vue'
+import defaultState from './state'
 
 export default {
+  resetState (state) {
+    state = Object.assign(state, defaultState())
+  },
+
   setApiRoute (state, payload) {
     const { path = null, params = {} } = payload
 
@@ -11,7 +16,7 @@ export default {
     state.params = finalParams
   },
 
-  setItem (state, payload) {
+  setModel (state, payload) {
     const { data = {}, meta = {} } = payload
 
     Vue.set(state, 'data', data)

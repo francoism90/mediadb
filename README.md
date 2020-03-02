@@ -81,25 +81,30 @@ VOD_KEY=d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793
 VOD_IV=722d4f9191c53d5e934e13719d02cced
 ```
 
-### Set VOD security
-
 ```bash
-"$secure_link_expires$arg_id$remote_addr secret";
+secure_token_encrypt_uri_key d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793;
+secure_token_encrypt_uri_iv 722d4f9191c53d5e934e13719d02cced;
 ```
+
+### Set VOD security
 
 ```env
 VOD_SECRET=secret
 ```
 
+```bash
+"$secure_link_expires$arg_id$remote_addr secret";
+```
+
 ### Set VOD server
+
+```env
+VOD_URL=https://stream.dom
+```
 
 ```bash
 vod_base_url "https://stream.dom";
 vod_segments_base_url "https://stream.dom";
-```
-
-```env
-VOD_URL=https://stream.dom
 ```
 
 ## Upgrade

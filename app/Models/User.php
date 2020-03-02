@@ -124,19 +124,19 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     }
 
     /**
-     * @return array
-     */
-    public function toSearchableArray(): array
-    {
-        return $this->only(['id', 'name', 'description']);
-    }
-
-    /**
      * @return string
      */
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only(['id', 'name', 'description']);
     }
 
     /**
@@ -174,13 +174,5 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     public function getThumbnailAttribute(): string
     {
         return asset('storage/images/placeholders/empty.png');
-    }
-
-    /**
-     * @return int
-     */
-    public function getViewsAttribute(): int
-    {
-        return views($this)->remember()->unique()->count();
     }
 }

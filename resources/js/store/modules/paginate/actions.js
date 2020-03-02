@@ -1,10 +1,11 @@
 import Vue from 'vue'
 
-const create = ({ commit, dispatch, state }, route = {}) => {
+const create = ({ commit, state }, route = {}) => {
   const { id = null } = route
 
   if (state.path === null || state.id !== id) {
-    dispatch('reset', route)
+    commit('resetState')
+    commit('setApiRoute', route)
   }
 
   commit('setInitialized', true)

@@ -9,7 +9,7 @@ section(class="section is-medium")
       div(class="level-right")
         query(:namespace="namespace" class="level-item")
 
-    infinite(:namespace="namespace" :api-route="apiRoute" type="media")
+    infinite(:namespace="namespace" :api-route="apiRoute" component="Media")
 </template>
 
 <script>

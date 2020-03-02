@@ -1,5 +1,5 @@
 const open = ({ commit }, params = {}) => {
-  commit('resetModal')
+  commit('resetState')
   commit('setModal', params)
   commit('setActive', true)
 }

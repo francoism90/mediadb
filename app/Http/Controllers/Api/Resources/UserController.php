@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Filters\User\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,10 +23,11 @@ class UserController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
         $query = QueryBuilder::for(User::class)
-            ->allowedIncludes('tags')
+            ->allowedIncludes('media')
             ->allowedFilters([
                 AllowedFilter::exact('id', 'slug')->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
+                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([
                 $defaultSort,

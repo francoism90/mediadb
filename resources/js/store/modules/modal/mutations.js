@@ -1,8 +1,8 @@
-import { defaultState } from './helpers'
+import defaultState from './state'
 
 export default {
-  resetModal (state) {
-    state = Object.assign({}, state, defaultState)
+  resetState (state) {
+    state = Object.assign(state, defaultState())
   },
 
   setActive (state, payload) {

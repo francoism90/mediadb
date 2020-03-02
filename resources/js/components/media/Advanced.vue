@@ -27,7 +27,7 @@ export default {
         message: 'Are you sure you want to delete this video?',
         type: 'is-danger',
         onConfirm: async () => {
-          const { success } = await this.submit('manager/remove', {
+          const { success } = await this.submit('media_manager/remove', {
             path: 'media/' + this.item.id
           })
 

@@ -26,7 +26,7 @@ export default {
   components: {
     Modal: () => import(/* webpackChunkName: "modal" */ '@/components/ui/Modal'),
     Details: () => import(/* webpackChunkName: "media-details" */ '@/components/media/Details'),
-    Visibility: () => import(/* webpackChunkName: "media-visibility" */ '@/components/media/Visibility'),
+    Elements: () => import(/* webpackChunkName: "media-elements" */ '@/components/media/Elements'),
     Advanced: () => import(/* webpackChunkName: "media-advanced" */ '@/components/media/Advanced')
   },
 
@@ -47,18 +47,13 @@ export default {
           component: 'Details'
         },
         {
-          title: 'Visibility',
-          description: 'Choose the visibility level.',
-          component: 'Visibility'
-        },
-        {
           title: 'Elements',
           description: 'Subtitles, recording date and location, license.',
-          component: 'Visibility'
+          component: 'Elements'
         },
         {
           title: 'Advanced',
-          description: 'Housekeeping, export, remove, archive.',
+          description: 'Visibility, export and remove.',
           component: 'Advanced'
         }
       ]
@@ -66,27 +61,23 @@ export default {
   },
 
   computed: {
-    ...mapGetters('manager', {
+    ...mapGetters('media_manager', {
       data: 'getData',
       meta: 'getMeta'
     })
   },
 
   created () {
-    if (!this.$store.state.manager) {
-      this.$store.registerModule('manager', modelModule)
+    if (!this.$store.state.media_manager) {
+      this.$store.registerModule('media_manager', modelModule)
     }
 
     this.fetch()
   },
 
-  beforeDestroy () {
-    this.$store.unregisterModule('manager')
-  },
-
   methods: {
     async fetch () {
-      await this.$store.dispatch('manager/fetch', {
+      await this.$store.dispatch('media_manager/fetch', {
         path: 'media',
         params: {
           append: 'collections',

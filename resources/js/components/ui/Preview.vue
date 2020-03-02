@@ -1,5 +1,5 @@
 <template lang="pug">
-figure(class="image" @mouseover="togglePreview" @mouseout="togglePreview" v-touch:swipe.left="togglePreview")
+figure(v-if="options.poster" class="image" @mouseover="togglePreview" @mouseout="togglePreview" v-touch:swipe.left="togglePreview")
   video(
     ref="videoElement"
     preload="metadata"
@@ -8,7 +8,7 @@ figure(class="image" @mouseover="togglePreview" @mouseout="togglePreview" v-touc
     loop
     muted
     disableRemotePlayback
-    :poster="options.poster || ''"
+    :poster="options.poster"
     @contextmenu.prevent
   )
     source(ref="videoSource" :src="options.source" :type="options.mimetype")

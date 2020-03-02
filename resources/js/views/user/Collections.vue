@@ -14,7 +14,7 @@ section(class="section is-medium")
       div(class="level-right")
         query(:namespace="namespace" class="level-item")
 
-    infinite(namespace="user_collect" :api-route="apiRoute" type="media")
+    infinite(namespace="user_collect" :api-route="apiRoute" component="Media")
 </template>
 
 <script>

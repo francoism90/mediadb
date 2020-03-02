@@ -24,7 +24,7 @@ Route::middleware('api')->name('api.')->namespace('Api')->group(function () {
 
     // Resources
     Route::middleware('jwt.auth')->name('resource.')->namespace('Resources')->group(function () {
-        Route::apiResource('collect', 'CollectionController')->only(['index', 'store', 'update', 'destroy']);
+        Route::apiResource('collect', 'CollectionController')->only(['index', 'update', 'destroy']);
         Route::apiResource('media', 'MediaController')->only(['index', 'store', 'update', 'destroy']);
         Route::apiResource('tags', 'TagController')->only(['index']);
         Route::apiResource('user', 'UserController')->only(['index']);

@@ -123,11 +123,6 @@ export default {
     this.prepareTags()
   },
 
-  beforeDestroy () {
-    this.$store.unregisterModule('collectinput')
-    this.$store.unregisterModule('taginput')
-  },
-
   methods: {
     prepareCollect () {
       if (!this.$store.state.collectinput) {
@@ -177,13 +172,13 @@ export default {
       this.body.collect = this.collect
       this.body.tags = this.tags
 
-      const { success = false } = await this.submit('manager/update', {
+      const { success = false } = await this.submit('media_manager/update', {
         path: 'media/' + this.item.id,
         body: this.body
       })
 
       if (success) {
-        await this.$store.dispatch('manager/refresh')
+        await this.$store.dispatch('media_manager/refresh')
 
         this.$buefy.toast.open({
           message: `${this.body.name} was successfully updated.`,

@@ -24,7 +24,6 @@ import playerModule from '@/store/modules/player'
 import { fullscreenHandler } from '@/components/mixins/fullscreen'
 import { formErrorHandler } from '@/components/mixins/form'
 import { playerCallbackHandler, playerEventHandler } from '@/components/mixins/player'
-import { contextHandler } from '@/components/mixins/model'
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 import { Player } from 'shaka-player'
 
@@ -38,7 +37,6 @@ export default {
   },
 
   mixins: [
-    contextHandler,
     formErrorHandler,
     fullscreenHandler,
     playerCallbackHandler,
@@ -97,6 +95,7 @@ export default {
 
   created () {
     if (!this.$store.state.watch) {
+      console.log('register')
       this.$store.registerModule('watch', playerModule)
     }
 
@@ -116,8 +115,6 @@ export default {
   async beforeDestroy () {
     await this.media.detach()
     await this.media.destroy()
-
-    this.$store.unregisterModule('watch')
   },
 
   methods: {
@@ -156,8 +153,8 @@ export default {
 
     keyHandler (event) {
       switch (event.srcKey) {
-        case 'contextMenu':
-          this.openContextMenu(this.item, 'media')
+        case 'manager':
+          this.playerCallback({ type: 'manager' })
           break
         case 'snapshot':
           this.createSnapshot()

@@ -36,7 +36,9 @@ $button-static-border-color: transparent;
   text-decoration: none !important;
 
   .icon.is-small {
-    font-size: 1.175rem;
+    height: 1rem !important;
+    width: 1.5rem !important;
+    font-size: 1.175rem !important;
   }
 }
 

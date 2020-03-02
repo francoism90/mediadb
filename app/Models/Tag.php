@@ -60,14 +60,6 @@ class Tag extends TagModel implements ViewableContract
     }
 
     /**
-     * @return int
-     */
-    public function getViewsAttribute(): int
-    {
-        return views($this)->unique()->count();
-    }
-
-    /**
      * @return string
      */
     public function getPlaceholderUrlAttribute(): string

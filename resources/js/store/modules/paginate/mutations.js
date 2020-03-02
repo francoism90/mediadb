@@ -1,7 +1,12 @@
 import Vue from 'vue'
-import { find, uniqBy } from 'lodash'
+import uniqBy from 'lodash/uniqBy'
+import defaultState from './state'
 
 export default {
+  resetState (state) {
+    state = Object.assign(state, defaultState())
+  },
+
   setInitialized (state, payload) {
     state.ready = payload
   },

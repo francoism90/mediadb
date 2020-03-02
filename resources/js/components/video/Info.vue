@@ -21,7 +21,7 @@ section(class="section media-info")
           p(class="title is-7") Download
 
       div(class="level-item has-text-centered")
-        a(@click.prevent="openContextMenu(data, 'media')")
+        a(@click.prevent="callback({ type: 'manager' })")
           p(class="heading")
             b-icon(icon="file-document-box")
           p(class="title is-7") Manage
@@ -32,7 +32,7 @@ section(class="section media-info")
           article(class="media")
             figure(class="media-left")
               p(class="image is-64x64")
-                img(:src="userData.thumbnail" loading="lazy" :alt="userData.name")
+                img(:src="userData.placeholder" loading="lazy" height="40" width="64" :alt="userData.name")
 
             div(class="media-content")
               p
@@ -51,12 +51,9 @@ section(class="section media-info")
 </template>
 
 <script>
-import { contextHandler } from '@/components/mixins/model'
 import { mapActions } from 'vuex'
 
 export default {
-  mixins: [contextHandler],
-
   props: {
     data: {
       type: Object,

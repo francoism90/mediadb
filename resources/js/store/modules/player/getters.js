@@ -21,7 +21,7 @@ const getShakaOptions = () => {
 
 const getKeyBindings = () => {
   return {
-    contextMenu: ['c'],
+    manager: ['c'],
     snapshot: ['s'],
     togglePlay: ['space'],
     toggleFullscreen: ['f']

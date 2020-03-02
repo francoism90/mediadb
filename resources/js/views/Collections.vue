@@ -9,7 +9,12 @@ section(class="section is-medium")
       div(class="level-right")
         query(:namespace="namespace" class="level-item")
 
-    infinite(:namespace="namespace" :api-route="apiRoute" :column-class="columnClass" type="collect")
+    infinite(
+      :namespace="namespace"
+      :api-route="apiRoute"
+      :column-class="columnClass"
+      component="Collection"
+    )
 </template>
 
 <script>
@@ -34,9 +39,7 @@ export default {
       apiRoute: {
         path: 'collect',
         params: {
-          include: 'tags,user',
-          sort: 'recommended',
-          'filter[type]': 'all'
+          include: 'tags,user'
         }
       },
       columnClass: `
@@ -55,7 +58,7 @@ export default {
         { key: 'popular-month', label: 'Popular this month' }
       ],
       types: [
-        { key: 'all', label: 'All Content' },
+        { key: '*', label: 'All Collections' },
         { key: 'user', label: 'My Collections' }
       ]
     }

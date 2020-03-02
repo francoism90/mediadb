@@ -1,3 +1,16 @@
+.filter {
+  @include from($tablet) {
+    .button.is-text {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .button.is-text:first-child {
+      padding-left: 0 !important;
+    }
+  }
+}
+
 .card.tags {
   .card-content {
     padding: 1.75rem 0;

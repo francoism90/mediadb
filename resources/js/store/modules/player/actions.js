@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 const create = ({ commit }, params = {}) => {
+  commit('resetState')
   commit('setMedia', params)
 }
 

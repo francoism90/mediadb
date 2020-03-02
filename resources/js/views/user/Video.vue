@@ -8,6 +8,7 @@ section(v-if="data.id" :key="data.id")
 
 <script>
 import modelModule from '@/store/modules/model'
+import paginateModule from '@/store/modules/paginate'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -77,10 +78,10 @@ export default {
     if (!this.$store.state.video) {
       this.$store.registerModule('video', modelModule)
     }
-  },
 
-  beforeDestroy () {
-    this.$store.unregisterModule('video')
+    if (!this.$store.state.related) {
+      this.$store.registerModule('related', paginateModule)
+    }
   },
 
   methods: {

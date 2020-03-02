@@ -14,7 +14,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->getRouteKey(),
             'name' => $this->name,
-            'thumbnail' => $this->thumbnail,
+            'placeholder' => $this->thumbnail,
             'media' => $this->media()->count(),
             'views' => $this->views,
             'created_at' => $this->created_at,

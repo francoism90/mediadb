@@ -1,14 +1,17 @@
 import Vue from 'vue'
 
 const fetch = ({ commit, dispatch }, route = {}) => {
+  commit('resetState')
   commit('setApiRoute', route)
+
+  // Get model data
   dispatch('refresh')
 }
 
 const refresh = async ({ commit, state }) => {
   const response = await Vue.axios.get(state.path, { params: state.params })
 
-  commit('setItem', response.data)
+  commit('setModel', response.data)
 }
 
 const remove = async ({ state }, params = {}) => {

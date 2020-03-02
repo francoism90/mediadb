@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
-use App\Support\QueryBuilder\Filters\TagTypeFilter;
+use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -21,8 +21,8 @@ class TagController extends Controller
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedFilters([
-                AllowedFilter::custom('type', new TagTypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*'),
+                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
             ])
             ->AllowedSorts([
                 $defaultSort,

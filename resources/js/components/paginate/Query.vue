@@ -1,15 +1,14 @@
 <template lang="pug">
 div
   b-field
-    p(class="control")
-      b-input(
-        v-model.trim="queryFilter"
-        type="search"
-        minlength="1"
-        maxlength="255"
-        :has-counter="false"
-        placeholder="Filter items"
-      )
+    b-input(
+      v-model.trim="queryFilter"
+      type="search"
+      minlength="1"
+      maxlength="255"
+      :has-counter="false"
+      placeholder="Filter items"
+    )
 
     p(v-if="tags" class="control")
       b-button(@click.prevent="filterTags" icon-right="tag-multiple")
