@@ -217,7 +217,7 @@ class Media extends BaseMedia implements ViewableContract
         // Validate each requested collection
         foreach ($items as $item) {
             $collect = $user->collections()->firstOrCreate(
-                ['name' => $item['name'] ?? $item]
+                ['name' => $item['name']]
             );
 
             $attachTo->push($collect);

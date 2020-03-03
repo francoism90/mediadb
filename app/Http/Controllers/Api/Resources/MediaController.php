@@ -99,24 +99,24 @@ class MediaController extends Controller
     public function update(UpdateRequest $request, Media $media)
     {
         $media->update([
-            'name' => $request->get('name', $media->name),
-            'description' => $request->get('description', $media->description),
+            'name' => $request->input('name', $media->name),
+            'description' => $request->input('description', $media->description),
         ]);
 
         if ($request->has('status')) {
-            $media->setStatus($request->status, 'user request');
+            $media->setStatus($request->input('status'), 'user request');
         }
 
         if ($request->has('tags')) {
-            $media->syncTagsWithTypes($request->tags);
+            $media->syncTagsWithTypes($request->input('tags'));
         }
 
         if ($request->has('collect')) {
-            $media->syncCollections($request->collect, Auth::user());
+            $media->syncCollections($request->input('collect'), Auth::user());
         }
 
         if ($request->has('snapshot')) {
-            $media->setCustomProperty('snapshot', $request->snapshot)->save();
+            $media->setCustomProperty('snapshot', $request->input('snapshot'))->save();
 
             Artisan::call('medialibrary:regenerate', [
                 '--ids' => $media->id,

@@ -5,7 +5,7 @@ a(class="card" @click.prevent="pushQuery")
       img(:src="data.placeholder" loading="lazy" :alt="data.name")
 
   div(class="card-content")
-    p(class="title") {{ data.name }}
+    p(class="title is-capitalized") {{ data.name }}
     p(class="subtitle")
 </template>
 

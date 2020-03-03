@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests\Collection;
 
+use App\Support\Sanitizer\SlugifyFilter;
 use Illuminate\Foundation\Http\FormRequest;
+use Waavi\Sanitizer\Laravel\SanitizesInput;
 
 class UpdateRequest extends FormRequest
 {
+    use SanitizesInput;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,6 +33,36 @@ class UpdateRequest extends FormRequest
             'status' => 'nullable|string|in:private,public',
             'tags' => 'nullable|array',
             'tags.*' => 'required|array',
+            'tags.*.id' => 'required|string|min:1|max:255',
+            'tags.*.name' => 'required|string|min:1|max:255',
+            'tags.*.type' => 'nullable|string|in:category,people,language',
+        ];
+    }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     *  @return array
+     */
+    public function filters()
+    {
+        return [
+            'name' => 'trim|strip_tags',
+            'description' => 'trim|strip_tags',
+            'status' => 'trim|escape|lowercase',
+            'tags.*.id' => 'trim|strip_tags',
+            'tags.*.name' => 'trim|strip_tags|slug',
+            'tags.*.type' => 'trim|strip_tags|slug',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function customFilters()
+    {
+        return [
+            'slug' => SlugifyFilter::class,
         ];
     }
 }

@@ -6,10 +6,9 @@ use App\Support\Scout\CollectionIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Securable;
-use App\Traits\Streamable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
+use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 use CyrildeWit\EloquentViewable\Viewable;
 use Illuminate\Database\Eloquent\Model;
@@ -26,8 +25,7 @@ class Collection extends Model implements ViewableContract
     use HasTags;
     use Randomable;
     use Searchable;
-    use Securable;
-    use Streamable;
+    use Sluggable;
     use Taggable;
     use Viewable;
     use ViewableHelpers;
@@ -78,6 +76,18 @@ class Collection extends Model implements ViewableContract
             ],
         ],
     ];
+
+    /**
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ],
+        ];
+    }
 
     /**
      * @return array

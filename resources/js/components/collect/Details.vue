@@ -125,7 +125,7 @@ export default {
         await this.$store.dispatch('collect_manager/refresh')
 
         this.$buefy.toast.open({
-          message: `${this.body.name} was successfully updated.`,
+          message: `${this.item.name} was successfully updated.`,
           type: 'is-success'
         })
       }

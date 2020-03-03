@@ -164,6 +164,7 @@ return [
          * Package Service Providers...
          */
         Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
+        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,5 +229,6 @@ return [
         /*
          * Package Aliases
          */
+        'Sanitizer' => Waavi\Sanitizer\Laravel\Facade::class,
     ],
 ];

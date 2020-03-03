@@ -13,6 +13,7 @@ class CollectionResource extends JsonResource
     {
         return [
             'id' => $this->getRouteKey(),
+            'slug' => $this->slug,
             'name' => $this->name,
             'placeholder' => $this->placeholder_url,
             'media' => $this->media()->count(),
