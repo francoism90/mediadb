@@ -34,6 +34,11 @@ export default {
       default: true
     },
 
+    tagType: {
+      type: String,
+      default: null
+    },
+
     query: {
       type: String,
       default: null
@@ -65,7 +70,7 @@ export default {
     filterTags () {
       this.$store.dispatch('modal/open', {
         component: 'Tags',
-        props: { paginate: this.namespace },
+        props: { paginate: this.namespace, type: this.tagType },
         escape: ['escape'],
         fullscreen: true
       })

@@ -6,9 +6,11 @@ section(v-if="state.ready" :key="namespace" class="items")
       :class="columnClass"
       v-for="(item, index) in state.data"
       :key="index"
-      :is="component"
-      v-bind="{ data: item, namespace: namespace, paginate: paginate }"
     )
+      div(
+        :is="component"
+        v-bind="{ api: apiRoute, data: item, namespace: namespace, paginate: paginate }"
+      )
 
   infinite-loading(:identifier="identifier" @infinite="infiniteHandler")
     span(slot="no-more")

@@ -16,6 +16,7 @@ trait Taggable
     {
         return collect($tags)->mapToGroups(function ($item) {
             $tag = Tag::findFromStringOfAnyType($item['name']);
+
             $type = $tag['type'] ?? $item['type'] ?? 'null';
             $name = $tag['name'] ?? $item['name'];
 

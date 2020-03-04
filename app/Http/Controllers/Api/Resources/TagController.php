@@ -20,6 +20,7 @@ class TagController extends Controller
         $defaultSort = AllowedSort::field('name', 'order_column');
 
         $query = QueryBuilder::for(Tag::class)
+            ->allowedAppends(['collect', 'media'])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),

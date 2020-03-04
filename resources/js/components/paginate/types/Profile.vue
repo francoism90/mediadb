@@ -2,7 +2,7 @@
 a(class="card" @click.prevent="pushRoute")
   div(class="card-image")
     figure(class="image")
-      img(:src="data.placeholder" loading="lazy" :alt="data.name")
+      img(:src="data.placeholder" loading="lazy" :alt="data.name" height="128")
 
   div(class="card-content")
     p(class="title") {{ data.name }}

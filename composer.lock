@@ -1584,16 +1584,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.17.1",
+            "version": "v6.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "32d1ed55dd46dcd706ff2e45bb7965be7320b87d"
+                "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/32d1ed55dd46dcd706ff2e45bb7965be7320b87d",
-                "reference": "32d1ed55dd46dcd706ff2e45bb7965be7320b87d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
+                "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
                 "shasum": ""
             },
             "require": {
@@ -1726,7 +1726,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-02-26T14:23:01+00:00"
+            "time": "2020-03-03T13:14:27+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -3966,25 +3966,25 @@
         },
         {
             "name": "spatie/laravel-model-status",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-model-status.git",
-                "reference": "0662de73482f4d749c055402a2d93c06f6cd3d1d"
+                "reference": "ddce7aa93ba09fe4c7ec3bdbc6d86d7f037f3299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-model-status/zipball/0662de73482f4d749c055402a2d93c06f6cd3d1d",
-                "reference": "0662de73482f4d749c055402a2d93c06f6cd3d1d",
+                "url": "https://api.github.com/repos/spatie/laravel-model-status/zipball/ddce7aa93ba09fe4c7ec3bdbc6d86d7f037f3299",
+                "reference": "ddce7aa93ba09fe4c7ec3bdbc6d86d7f037f3299",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.8.0|^6.0",
+                "illuminate/support": "~5.8.0|^6.0|^7.0",
                 "php": "^7.2"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.8.0|^4.0",
-                "phpunit/phpunit": "^8.0"
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0",
+                "phpunit/phpunit": "^8.0|^9.0"
             },
             "type": "library",
             "extra": {
@@ -4023,20 +4023,20 @@
                 "laravel-status",
                 "spatie"
             ],
-            "time": "2019-09-05T21:10:40+00:00"
+            "time": "2020-03-03T15:20:25+00:00"
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "3.10.0",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "e3a95d2a954b4608c256095db5c8c0c416bcb71e"
+                "reference": "e90ed6242a8fa29735529160b9c21cb77b233e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/e3a95d2a954b4608c256095db5c8c0c416bcb71e",
-                "reference": "e3a95d2a954b4608c256095db5c8c0c416bcb71e",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/e90ed6242a8fa29735529160b9c21cb77b233e7f",
+                "reference": "e90ed6242a8fa29735529160b9c21cb77b233e7f",
                 "shasum": ""
             },
             "require": {
@@ -4044,11 +4044,11 @@
                 "illuminate/container": "^5.8|^6.0|^7.0",
                 "illuminate/contracts": "^5.8|^6.0|^7.0",
                 "illuminate/database": "^5.8|^6.0|^7.0",
-                "php": "^7.2"
+                "php": "^7.2.5"
             },
             "require-dev": {
                 "orchestra/testbench": "^3.8|^4.0|^5.0",
-                "phpunit/phpunit": "^8.0",
+                "phpunit/phpunit": "^8.0|^9.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -4091,7 +4091,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2020-03-02T21:32:49+00:00"
+            "time": "2020-03-03T21:31:02+00:00"
         },
         {
             "name": "spatie/laravel-query-builder",

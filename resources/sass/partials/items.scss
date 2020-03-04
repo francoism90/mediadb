@@ -22,4 +22,18 @@
       }
     }
   }
+
+  .card-letter {
+    .card-content {
+      padding: 0.25rem 0;
+    }
+
+    .media-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+    }
+  }
 }

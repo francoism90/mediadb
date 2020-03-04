@@ -32,6 +32,11 @@ export default {
     paginate: {
       type: String,
       required: true
+    },
+
+    type: {
+      type: String,
+      default: null
     }
   },
 
@@ -39,14 +44,19 @@ export default {
     return {
       namespace: 'tags',
       apiRoute: {
-        path: 'tags'
+        id: this.type,
+        path: 'tags',
+        params: {
+          append: this.type,
+          'page[size]': 12
+        }
       },
       columnClass: `
-        is-half-mobile
+        is-full-mobile
         is-one-third-tablet
         is-one-quarter-desktop
-        is-one-quarter-widescreen
-        is-one-quarter-fullhd
+        is-one-fifth-widescreen
+        is-one-fifth-fullhd
       `,
       sorters: [
         { key: 'name', label: 'Alphabetically' },

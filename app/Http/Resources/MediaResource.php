@@ -26,10 +26,10 @@ class MediaResource extends JsonResource
             'properties' => $this->custom_properties,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'download' => $this->when($this->hasField('download_url'), $this->download_url),
-            'stream' => $this->when($this->hasField('stream_url'), $this->stream_url),
+            'download' => $this->when($this->hasAppend('download_url'), $this->download_url),
+            'stream' => $this->when($this->hasAppend('stream_url'), $this->stream_url),
             'usercollect' => $this->when(
-                $this->hasField('collections'),
+                $this->hasAppend('collections'),
                 CollectionResource::collection($this->user_collections)
             ),
             'relationships' => [

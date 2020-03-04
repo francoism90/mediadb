@@ -1,12 +1,15 @@
 <template lang="pug">
-a(class="card" @click.prevent="pushQuery")
-  div(class="card-image")
-    figure(class="image")
-      img(:src="data.placeholder" loading="lazy" :alt="data.name")
-
+a(class="card card-letter" @click.prevent="pushQuery")
   div(class="card-content")
-    p(class="title is-capitalized") {{ data.name }}
-    p(class="subtitle")
+    div(class="media")
+      div(class="media-left has-background-grey is-size-5")
+        span {{ data.name.charAt(0) }}
+
+      div(class="media-content")
+        p(class="title") {{ data.name }}
+        p(class="subtitle")
+          | <span v-if="data.collect >= 0">{{ Number(data.collect) | approximate }} items</span>
+          | <span v-else-if="data.media >= 0">{{ Number(data.media) | approximate }} items</span>
 </template>
 
 <script>

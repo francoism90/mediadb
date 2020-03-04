@@ -6,8 +6,10 @@ use App\Support\Scout\Rules\SimpleMatchRule;
 use App\Support\Scout\TagIndexConfigurator;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
+use App\Traits\Resourceable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 use CyrildeWit\EloquentViewable\Viewable;
+use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
 
@@ -15,6 +17,7 @@ class Tag extends TagModel implements ViewableContract
 {
     use Hashidable;
     use Randomable;
+    use Resourceable;
     use Searchable;
     use Viewable;
 
@@ -65,6 +68,19 @@ class Tag extends TagModel implements ViewableContract
     public function getPlaceholderUrlAttribute(): string
     {
         return asset('storage/images/placeholders/empty.png');
+    }
+
+    /**
+     * @return int
+     */
+    public function getTagCountByType($type = null): int
+    {
+        return DB::table('taggables')
+            ->where('tag_id', $this->id)
+            ->when($type, function ($query, $type) {
+                return $query->where('taggable_type', $type);
+            })
+            ->count();
     }
 
     /**

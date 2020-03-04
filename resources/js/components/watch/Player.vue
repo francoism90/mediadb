@@ -95,7 +95,6 @@ export default {
 
   created () {
     if (!this.$store.state.watch) {
-      console.log('register')
       this.$store.registerModule('watch', playerModule)
     }
 

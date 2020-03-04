@@ -17,10 +17,8 @@ trait Resourceable
      *
      * @return bool
      */
-    public function hasField(string $value): bool
+    public function hasAppend(string $value): bool
     {
-        $fields = array_keys($this->getAppends());
-
-        return in_array($value, $fields);
+        return in_array($value, $this->getAppends());
     }
 }

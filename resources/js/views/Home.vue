@@ -7,7 +7,7 @@ section(class="section is-medium")
         filters(:namespace="namespace" field="filter[type]" :items="types" class="level-item")
 
       div(class="level-right")
-        query(:namespace="namespace" class="level-item")
+        query(:namespace="namespace" tag-type="media" class="level-item")
 
     infinite(:namespace="namespace" :api-route="apiRoute" component="Media")
 </template>
