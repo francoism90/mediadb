@@ -32,9 +32,14 @@ Route::middleware('api')->name('api.')->namespace('Api')->group(function () {
 
     // Assets
     Route::middleware('doNotCacheResponse')->name('asset.')->prefix('asset')->namespace('Assets')->group(function () {
-        Route::middleware('signed')->get('download/{media}/{user}/{version?}', ['uses' => 'DownloadController', 'as' => 'download']);
-        Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder']);
-        Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview']);
+        Route::middleware('signed')->get('download/{media}/{user}/{version?}', ['uses' => 'DownloadController', 'as' => 'download'])->where('version', '[0-9]+');
+        Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder'])->where('version', '[0-9]+');
+        Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview'])->where('version', '[0-9]+');
         Route::middleware('jwt.auth')->get('thumbnail/{media}/{offset}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail'])->where('offset', '[0-9]+');
+    });
+
+    // Services
+    Route::middleware('doNotCacheResponse')->name('service.')->prefix('service')->namespace('Services')->group(function () {
+        Route::middleware('jwt.auth')->post('track', ['uses' => 'TrackController', 'as' => 'track']);
     });
 });

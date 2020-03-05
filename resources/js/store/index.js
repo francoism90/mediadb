@@ -7,11 +7,13 @@ import mutations from './mutations'
 import state from './state'
 
 import modal from './modules/modal'
+import model from './modules/model'
 
 Vue.use(Vuex)
 
 const modules = {
-  modal
+  modal,
+  model
 }
 
 const store = new Vuex.Store({

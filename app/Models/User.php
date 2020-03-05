@@ -175,4 +175,24 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
     {
         return asset('storage/images/placeholders/empty.png');
     }
+
+    /**
+     * @param array $items
+     *
+     * @return Collection
+     */
+    public function createCollections(array $items = [])
+    {
+        $collections = collect();
+
+        foreach ($items as $item) {
+            $model = $this->collections()->firstOrCreate(
+                ['name' => $item['name']]
+            );
+
+            $collections->push($model);
+        }
+
+        return $collections;
+    }
 }

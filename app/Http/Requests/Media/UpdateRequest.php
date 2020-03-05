@@ -29,14 +29,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|min:1|max:255',
-            'description' => 'nullable|string|min:1|max:2048',
+            'description' => 'nullable|string|min:0|max:1024',
             'status' => 'nullable|string|in:private,public',
             'snapshot' => 'nullable|numeric|min:0|max:14400',
-            'collect' => 'nullable|array',
+            'collect' => 'nullable|array|min:0|max:25',
             'collect.*' => 'required|array',
             'collect.*.id' => 'required|string|min:1|max:255',
             'collect.*.name' => 'required|string|min:1|max:255',
-            'tags' => 'nullable|array',
+            'tags' => 'nullable|array|min:0|max:15',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|string|min:1|max:255',
             'tags.*.name' => 'required|string|min:1|max:255',

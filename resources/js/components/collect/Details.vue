@@ -110,7 +110,7 @@ export default {
       })
 
       await this.$store.dispatch('taginput/fetch')
-    }, 400),
+    }, 350),
 
     async update () {
       // Add final selection to body

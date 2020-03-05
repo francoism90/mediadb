@@ -94,6 +94,14 @@ export default {
           'filter[id]': id
         }
       })
+
+      await this.$store.dispatch('model/create', {
+        path: 'service/track',
+        body: {
+          entity: 'media',
+          id: id
+        }
+      })
     }
   }
 }

@@ -154,7 +154,7 @@ export default {
       })
 
       await this.$store.dispatch('collectinput/fetch')
-    }, 400),
+    }, 350),
 
     fetchTags: debounce(async function (name) {
       this.$store.dispatch('taginput/reset', {
@@ -165,7 +165,7 @@ export default {
       })
 
       await this.$store.dispatch('taginput/fetch')
-    }, 400),
+    }, 350),
 
     async update () {
       // Add final selections to body

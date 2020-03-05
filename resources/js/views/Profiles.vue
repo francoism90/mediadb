@@ -23,7 +23,7 @@ import paginateModule from '@/store/modules/paginate'
 export default {
   metaInfo () {
     return {
-      title: 'profiles'
+      title: 'Profiles'
     }
   },
 

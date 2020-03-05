@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\Jobs\ProcessView;
-
 trait Viewable
 {
     /**
@@ -11,7 +9,11 @@ trait Viewable
      */
     public function getViewsAttribute(): int
     {
-        return views($this)->remember()->unique()->count();
+        return views($this)
+            ->remember()
+            ->collection('view_count')
+            ->unique()
+            ->count();
     }
 
     /**
@@ -20,13 +22,13 @@ trait Viewable
      *
      * @return void
      */
-    public function recordView(string $collection = null, $cooldown = null): void
+    public function recordView(string $collection = null, string $cooldown = null): void
     {
-        $visitor = collect([
-            'ipAddress' => request()->ip(),
-            'visitorId' => auth()->user()->id,
-        ]);
-
-        ProcessView::dispatch($this, $visitor, $collection, $cooldown);
+        views($this)
+            ->delayInSession($cooldown ?? now()->addHour())
+            ->overrideIpAddress(request()->ip())
+            ->overrideVisitor(auth()->user()->id ?? 0)
+            ->collection($collection)
+            ->record();
     }
 }

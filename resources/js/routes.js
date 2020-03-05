@@ -50,7 +50,7 @@ const routes = [
           {
             path: 'collection/:id/:slug?',
             name: 'user-collect',
-            component: () => import(/* webpackChunkName: "user-collect" */ './views/user/Collections.vue'),
+            component: () => import(/* webpackChunkName: "user-collect" */ './views/user/Collection.vue'),
             props: true
           },
           {

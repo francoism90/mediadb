@@ -1,5 +1,13 @@
 import Vue from 'vue'
 
+const create = async ({ state }, params = {}) => {
+  const { path = null, body = {} } = params
+
+  const response = await Vue.axios.post(path, body)
+
+  return response
+}
+
 const fetch = ({ commit, dispatch }, route = {}) => {
   commit('resetState')
   commit('setApiRoute', route)
@@ -31,6 +39,7 @@ const update = async ({ state }, params = {}) => {
 }
 
 export default {
+  create,
   fetch,
   refresh,
   remove,

@@ -29,9 +29,9 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|min:1|max:255',
-            'description' => 'nullable|string|min:1|max:2048',
+            'description' => 'nullable|string|min:0|max:1024',
             'status' => 'nullable|string|in:private,public',
-            'tags' => 'nullable|array',
+            'tags' => 'nullable|array|min:0|max:15',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|string|min:1|max:255',
             'tags.*.name' => 'required|string|min:1|max:255',

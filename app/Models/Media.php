@@ -212,22 +212,17 @@ class Media extends BaseMedia implements ViewableContract
      */
     public function syncCollections(array $items = [], User $user)
     {
-        $attachTo = collect();
+        // Add media to following collections
+        $attaches = $user->createCollections($items);
 
-        // Validate each requested collection
-        foreach ($items as $item) {
-            $collect = $user->collections()->firstOrCreate(
-                ['name' => $item['name']]
-            );
-
-            $attachTo->push($collect);
-        }
-
-        // Sync to user collections
+        // Sync collections
         foreach ($user->collections as $collection) {
-            if ($attachTo->firstWhere('id', $collection->id)) {
+            $hasMedia = $collection->media->firstWhere('id', $this->id);
+            $attach = $attaches->firstWhere('id', $collection->id);
+
+            if ($attach && !$hasMedia) {
                 $collection->media()->attach($this->id)->save();
-            } else {
+            } elseif (!$attach && $hasMedia) {
                 $collection->media()->detach($this->id)->save();
             }
         }

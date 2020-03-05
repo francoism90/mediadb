@@ -3880,16 +3880,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "7.19.0",
+            "version": "7.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "a7b75fe3730da8b6e0241629fa4c25c376e7863f"
+                "reference": "944f00a8e886abcb5e2166ae17660917a086368d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a7b75fe3730da8b6e0241629fa4c25c376e7863f",
-                "reference": "a7b75fe3730da8b6e0241629fa4c25c376e7863f",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/944f00a8e886abcb5e2166ae17660917a086368d",
+                "reference": "944f00a8e886abcb5e2166ae17660917a086368d",
                 "shasum": ""
             },
             "require": {
@@ -3962,7 +3962,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2020-03-03T07:52:30+00:00"
+            "time": "2020-03-04T19:00:40+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
@@ -4217,23 +4217,23 @@
         },
         {
             "name": "spatie/laravel-tags",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-tags.git",
-                "reference": "975347a4b03dd7ced4c64000a6210e67e8dd4e41"
+                "reference": "386a39d913ab7a6edf5efc3fe31a1ead7c717c8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/975347a4b03dd7ced4c64000a6210e67e8dd4e41",
-                "reference": "975347a4b03dd7ced4c64000a6210e67e8dd4e41",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/386a39d913ab7a6edf5efc3fe31a1ead7c717c8f",
+                "reference": "386a39d913ab7a6edf5efc3fe31a1ead7c717c8f",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "~5.8|^6.0|^7.0",
                 "php": "^7.2",
                 "spatie/eloquent-sortable": "^3.5",
-                "spatie/laravel-translatable": "^4.0"
+                "spatie/laravel-translatable": "^4.1"
             },
             "require-dev": {
                 "orchestra/testbench": "~3.8.0|^4.0|^5.0",
@@ -4270,7 +4270,7 @@
                 "laravel-tags",
                 "spatie"
             ],
-            "time": "2020-03-03T07:48:24+00:00"
+            "time": "2020-03-04T17:07:08+00:00"
         },
         {
             "name": "spatie/laravel-translatable",
