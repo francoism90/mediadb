@@ -40,7 +40,6 @@ composer install
 php artisan migrate
 php artisan db:seed
 php artisan key:generate
-php artisan jwt:secret
 php artisan storage:link
 php artisan horizon:install
 php artisan telescope:install
