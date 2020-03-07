@@ -14,7 +14,12 @@ export default {
   mixins: [formErrorHandler],
 
   props: {
-    item: {
+    data: {
+      type: Object,
+      required: true
+    },
+
+    meta: {
       type: Object,
       required: true
     }
@@ -23,17 +28,17 @@ export default {
   methods: {
     remove () {
       this.$buefy.dialog.confirm({
-        title: this.item.name,
+        title: this.data.name,
         message: 'Are you sure you want to delete this video?',
         type: 'is-danger',
         onConfirm: async () => {
           const { success } = await this.submit('media_manager/remove', {
-            path: 'media/' + this.item.id
+            path: 'media/' + this.data.id
           })
 
           if (success) {
             this.$buefy.toast.open({
-              message: `${this.item.name} was successfully deleted.`,
+              message: `${this.data.name} was successfully deleted.`,
               type: 'is-success'
             })
           }

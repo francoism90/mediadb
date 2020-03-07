@@ -2,9 +2,27 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Carbon;
+
 trait Viewable
 {
     /**
+     * @param string $collection
+     * @param Carbon $expireAt
+     *
+     * @return void
+     */
+    public function recordView(string $collection = null, Carbon $expireAt)
+    {
+        views($this)
+            ->collection($collection)
+            ->cooldown($expireAt)
+            ->record();
+    }
+
+    /**
+     * @param string $key
+     *
      * @return int
      */
     public function getViewsAttribute(): int
@@ -14,21 +32,5 @@ trait Viewable
             ->collection('view_count')
             ->unique()
             ->count();
-    }
-
-    /**
-     * @param string      $collection
-     * @param string|null $cooldown
-     *
-     * @return void
-     */
-    public function recordView(string $collection = null, string $cooldown = null): void
-    {
-        views($this)
-            ->delayInSession($cooldown ?? now()->addHour())
-            ->overrideIpAddress(request()->ip())
-            ->overrideVisitor(auth()->user()->id ?? 0)
-            ->collection($collection)
-            ->record();
     }
 }

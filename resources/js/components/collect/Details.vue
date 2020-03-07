@@ -53,7 +53,12 @@ export default {
   mixins: [formErrorHandler],
 
   props: {
-    item: {
+    data: {
+      type: Object,
+      required: true
+    },
+
+    meta: {
       type: Object,
       required: true
     }
@@ -62,8 +67,8 @@ export default {
   data () {
     return {
       body: {
-        name: this.item.name,
-        description: this.item.description,
+        name: this.data.name,
+        description: this.data.description,
         tags: []
       }
     }
@@ -98,7 +103,7 @@ export default {
       }
 
       this.$store.dispatch('taginput/create', { path: 'tags' })
-      this.$store.commit('taginput/setSelected', this.item.relationships.tags || [])
+      this.$store.commit('taginput/setSelected', this.data.relationships.tags || [])
     },
 
     fetchTags: debounce(async function (name) {
@@ -117,7 +122,7 @@ export default {
       this.body.tags = this.tags
 
       const { success = false } = await this.submit('collect_manager/update', {
-        path: 'collect/' + this.item.id,
+        path: 'collect/' + this.data.id,
         body: this.body
       })
 
@@ -125,7 +130,7 @@ export default {
         await this.$store.dispatch('collect_manager/refresh')
 
         this.$buefy.toast.open({
-          message: `${this.item.name} was successfully updated.`,
+          message: `${this.data.name} was successfully updated.`,
           type: 'is-success'
         })
       }

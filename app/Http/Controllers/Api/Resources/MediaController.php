@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Resources;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Media\StoreRequest;
 use App\Http\Requests\Media\UpdateRequest;
+use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
 use App\Support\QueryBuilder\Filters\HashidFilter;
@@ -20,7 +21,6 @@ use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -32,13 +32,12 @@ class MediaController extends Controller
     /**
      * @return MediaResource
      */
-    public function index(Request $request)
+    public function index()
     {
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
         $query = QueryBuilder::for(Media::class)
-            ->allowedAppends(['collections', 'download_url', 'stream_url'])
-            ->allowedIncludes(['collections', 'model', 'tags'])
+            ->allowedIncludes(['model', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('id', new HashidFilter())->ignore(null, '*'),
                 AllowedFilter::custom('collect', new CollectionFilter())->ignore(null, '*'),
@@ -56,13 +55,10 @@ class MediaController extends Controller
                 AllowedSort::custom('trending', new TrendingSorter()),
                 AllowedSort::custom('views', new MostViewsSorter()),
             ])
-            ->defaultSort($defaultSort);
+            ->defaultSort($defaultSort)
+            ->jsonPaginate();
 
-        if ($request->has('page.size')) {
-            return MediaResource::collection($query->jsonPaginate());
-        }
-
-        return new MediaResource($query->first());
+        return MediaResource::collection($query);
     }
 
     /**
@@ -88,6 +84,27 @@ class MediaController extends Controller
         }
 
         return MediaResource::collection($models);
+    }
+
+    /**
+     * @param Media $media
+     *
+     * @return MediaResource
+     */
+    public function show(Media $media)
+    {
+        // Tracking
+        $media->recordView('history', now()->addSeconds(30));
+        $media->recordView('view_count', now()->addYear());
+
+        return (new MediaResource($media->load(['model', 'tags'])))
+            ->additional([
+                'meta' => [
+                    'collections' => CollectionResource::collection($media->user_collections),
+                    'download_url' => $media->download_url,
+                    'stream_url' => $media->stream_url,
+                ],
+            ]);
     }
 
     /**

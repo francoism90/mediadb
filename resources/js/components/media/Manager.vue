@@ -2,7 +2,7 @@
 modal(v-if="data.id" :key="data.id")
   h1(class="title is-4") {{ data.name }}
   h2(class="subtitle")
-    | <router-link v-if="data.relationships.user" :to="{ name: 'user-view', params: { user: data.relationships.user.id } }">{{ data.relationships.user.name }}</router-link> •
+    | <router-link v-if="data.relationships.user" :to="{ name: 'channel-view', params: { channel: data.relationships.user.id } }">{{ data.relationships.user.name }}</router-link> •
     | {{ Number(data.properties.duration) | timestamp }} •
     | {{ Number(data.views) | approximate }} views
 
@@ -15,7 +15,7 @@ modal(v-if="data.id" :key="data.id")
         b-icon(:icon="props.open ? 'chevron-down' : 'chevron-up'")
 
     div(class="card-content")
-      div(class="content" :is="item.component" v-bind="{ item: data }")
+      div(class="content" :is="item.component" v-bind="{ data: data, meta: meta }")
 </template>
 
 <script>
@@ -78,12 +78,7 @@ export default {
   methods: {
     async fetch () {
       await this.$store.dispatch('media_manager/fetch', {
-        path: 'media',
-        params: {
-          append: 'collections',
-          include: 'model,tags',
-          'filter[id]': this.id
-        }
+        path: 'media/' + this.id
       })
     }
   }

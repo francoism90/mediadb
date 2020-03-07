@@ -21,7 +21,8 @@ class TrendingSorter implements Sort
 
         return $query->withCount(['views' => function ($query) use ($viewableType) {
             $query->where('viewable_type', $viewableType)
-                  ->withinPeriod(Period::pastDays(3))->uniqueVisitor();
+                  ->withinPeriod(Period::pastDays(3))
+                  ->distinct('visitor');
         }])->orderBy('views_count', 'DESC');
     }
 }

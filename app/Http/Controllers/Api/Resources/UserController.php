@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\User\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -18,7 +17,7 @@ class UserController extends Controller
     /**
      * @return UserResource
      */
-    public function index(Request $request)
+    public function index()
     {
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
@@ -34,12 +33,23 @@ class UserController extends Controller
                 AllowedSort::field('name'),
                 AllowedSort::field('created_at'),
             ])
-            ->defaultSort($defaultSort);
+            ->defaultSort($defaultSort)
+            ->jsonPaginate();
 
-        if ($request->has('page.size')) {
-            return UserResource::collection($query->jsonPaginate());
-        }
+        return UserResource::collection($query);
+    }
 
-        return new UserResource($query->first());
+    /**
+     * @param User $user
+     *
+     * @return UserResource
+     */
+    public function show(User $user)
+    {
+        // Tracking
+        $user->recordView('history', now()->addSeconds(30));
+        $user->recordView('view_count', now()->addYear());
+
+        return new UserResource($user);
     }
 }

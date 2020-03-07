@@ -1,6 +1,6 @@
 <template lang="pug">
-div(id="app" v-if="$auth.ready()")
-  template(v-if="$auth.check()")
+div(id="app")
+  template(v-if="isAuthenticated")
     app-widget
     app-header
     router-view
@@ -11,6 +11,8 @@ div(id="app" v-if="$auth.ready()")
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   metaInfo: {
     titleTemplate: (titleChunk) => {
@@ -25,6 +27,12 @@ export default {
     AppHeader: () => import(/* webpackChunkName: "app-header" */ '@/components/layout/AppHeader'),
     AppFooter: () => import(/* webpackChunkName: "app-footer" */ '@/components/layout/AppFooter'),
     AppWidget: () => import(/* webpackChunkName: "app-widget" */ '@/components/layout/AppWidget')
+  },
+
+  computed: {
+    ...mapGetters('user', [
+      'isAuthenticated'
+    ])
   }
 }
 </script>

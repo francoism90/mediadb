@@ -1,3 +1,4 @@
+
 const RouterView = {
   template: '<router-view></router-view>'
 }
@@ -6,57 +7,56 @@ const routes = [
   {
     path: '/',
     component: RouterView,
-    meta: {
-      auth: true
-    },
     children: [
       {
         path: 'login',
-        name: 'auth',
-        component: () => import(/* webpackChunkName: "auth" */ './views/Auth.vue'),
-        meta: {
-          auth: false
-        }
+        name: 'login',
+        component: () => import(/* webpackChunkName: "login" */ './views/auth/Login.vue')
       },
       {
         path: '',
         name: 'home',
-        component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+        component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
+        meta: { auth: true }
       },
       {
         path: '/collections',
         name: 'collections',
-        component: () => import(/* webpackChunkName: "collections" */ './views/Collections.vue')
+        component: () => import(/* webpackChunkName: "collections" */ './views/Collections.vue'),
+        meta: { auth: true }
       },
       {
         path: '/profiles',
         name: 'profiles',
-        component: () => import(/* webpackChunkName: "profiles" */ './views/Profiles.vue')
+        component: () => import(/* webpackChunkName: "profiles" */ './views/Profiles.vue'),
+        meta: { auth: true }
       },
       {
         path: '/upload',
         name: 'upload',
-        component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue')
+        component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue'),
+        meta: { auth: true }
       },
       {
-        path: ':user',
-        component: () => import(/* webpackChunkName: "user-index" */ './views/user/Index.vue'),
+        path: ':channel',
+        component: () => import(/* webpackChunkName: "channel-index" */ './views/channel/Index.vue'),
+        meta: { auth: true },
         children: [
           {
             path: '',
-            name: 'user-view',
-            component: () => import(/* webpackChunkName: "user-profile" */ './views/user/Profile.vue')
+            name: 'channel-view',
+            component: () => import(/* webpackChunkName: "channel-profile" */ './views/channel/Profile.vue')
           },
           {
             path: 'collection/:id/:slug?',
-            name: 'user-collect',
-            component: () => import(/* webpackChunkName: "user-collect" */ './views/user/Collection.vue'),
+            name: 'channel-collect',
+            component: () => import(/* webpackChunkName: "channel-collect" */ './views/channel/Collection.vue'),
             props: true
           },
           {
             path: 'video/:id/:slug?',
-            name: 'user-video',
-            component: () => import(/* webpackChunkName: "user-video" */ './views/user/Video.vue'),
+            name: 'channel-video',
+            component: () => import(/* webpackChunkName: "channel-video" */ './views/channel/Video.vue'),
             props: true
           }
         ]

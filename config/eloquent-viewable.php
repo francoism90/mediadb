@@ -32,7 +32,7 @@ return [
         /*
          * Here you may define the cache store that should be used.
          */
-        'store' => env('CACHE_DRIVER', 'redis'),
+        'store' => env('CACHE_DRIVER', 'file'),
 
         /*
          * Default lifetime of cached views count in minutes.
@@ -42,15 +42,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Configuration
+    | Cooldown Configuration
     |--------------------------------------------------------------------------
     */
 
-    'session' => [
+    'cooldown' => [
         /*
-         * Everthing will be stored under the following key.
+         * Everthing will be stored under the following key in the session.
          */
-        'key' => 'cyrildewit.eloquent-viewable.session',
+        'key' => 'cyrildewit.eloquent-viewable.cooldown',
     ],
 
     /*
@@ -74,7 +74,7 @@ return [
     | record views from visitors with the Do Not Track header.
     |
     */
-    'honor_dnt' => true,
+    'honor_dnt' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -98,6 +98,6 @@ return [
     */
 
     'ignored_ip_addresses' => [
-        '127.0.0.1',
+        // '127.0.0.1',
     ],
 ];

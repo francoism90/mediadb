@@ -2,7 +2,7 @@
 section(v-if="data.id" :key="data.id")
   player(:options="playerOptions")
   hero(:data="data")
-  info(:data="data" :user-data="userData")
+  info(:data="data" :channel-data="channelData")
   related(:data="data")
 </template>
 
@@ -31,12 +31,12 @@ export default {
       required: true
     },
 
-    userData: {
+    channelData: {
       type: Object,
       required: true
     },
 
-    userMeta: {
+    channelMeta: {
       type: Object,
       default: null
     }
@@ -52,11 +52,11 @@ export default {
       return {
         item: this.data,
         autoplay: true,
-        download: this.data.download || false,
+        download: this.meta.download_url || false,
         height: this.data.properties.height || '720',
         width: this.data.properties.width || '1280',
         poster: this.data.placeholder || '',
-        source: this.data.stream || '',
+        source: this.meta.stream_url || '',
         type: 'manifest'
       }
     }
@@ -87,20 +87,7 @@ export default {
   methods: {
     async fetch (id) {
       await this.$store.dispatch('video/fetch', {
-        path: 'media',
-        params: {
-          append: 'download_url,stream_url',
-          include: 'tags',
-          'filter[id]': id
-        }
-      })
-
-      await this.$store.dispatch('model/create', {
-        path: 'service/track',
-        body: {
-          entity: 'media',
-          id: id
-        }
+        path: 'media/' + id
       })
     }
   }

@@ -16,7 +16,6 @@ use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -26,7 +25,7 @@ class CollectionController extends Controller
     /**
      * @return CollectionResource
      */
-    public function index(Request $request)
+    public function index()
     {
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
@@ -46,13 +45,26 @@ class CollectionController extends Controller
                 AllowedSort::custom('trending', new TrendingSorter()),
                 AllowedSort::custom('views', new MostViewsSorter()),
             ])
-            ->defaultSort($defaultSort);
+            ->defaultSort($defaultSort)
+            ->jsonPaginate();
 
-        if ($request->has('page.size')) {
-            return CollectionResource::collection($query->jsonPaginate());
-        }
+        return CollectionResource::collection($query);
+    }
 
-        return new CollectionResource($query->first());
+    /**
+     * @param Collection $media
+     *
+     * @return CollectionResource
+     */
+    public function show(Collection $collect)
+    {
+        // Tracking
+        $collect->recordView('history', now()->addSeconds(30));
+        $collect->recordView('view_count', now()->addYear());
+
+        return new CollectionResource(
+            $collect->load(['tags'])
+        );
     }
 
     /**

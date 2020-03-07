@@ -1,5 +1,5 @@
 <template lang="pug">
-section(class="auth")
+section(v-if="!isAuthenticated" class="auth")
   main
     h1(class="title is-3") Log In
     div(class="box")
@@ -33,37 +33,34 @@ section(class="auth")
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
       body: {
-        username: null,
-        password: null
-      },
-      rememberMe: true,
-      fetchUser: true
+        email: null,
+        password: null,
+        remember: true
+      }
     }
   },
 
-  methods: {
-    login () {
-      const redirect = this.$auth.redirect()
+  computed: {
+    ...mapGetters('user', [
+      'isAuthenticated'
+    ])
+  },
 
-      this.$auth.login({
-        data: this.body,
-        rememberMe: this.rememberMe,
-        redirect: { name: redirect ? redirect.from.name : 'home' },
-        fetchUser: this.fetchUser,
-        error: function () {
-          this.$buefy.notification.open({
-            duration: 5000,
-            message: 'Incorrect e-mail address/password given.',
-            type: 'is-danger',
-            position: 'is-top',
-            queue: false
-          })
-        }
-      })
+  methods: {
+    async login () {
+      try {
+        await this.$store.dispatch('user/login', this.body)
+
+        this.$router.push(this.$route.query.redirect || '/')
+      } catch (e) {
+        alert(e || 'Unable to login. Please try again later.')
+      }
     }
   }
 }

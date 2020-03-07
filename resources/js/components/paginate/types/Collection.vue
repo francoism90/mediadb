@@ -7,7 +7,7 @@ a(class="card" @click.prevent="pushRoute" @contextmenu.prevent="contextMenu" v-t
   div(class="card-content")
     p(class="title") {{ data.name }}
     p(class="subtitle")
-      | <router-link v-if="data.relationships.user" :to="{ name: 'user-view', params: { user: data.relationships.user.id } }">{{ data.relationships.user.name }}</router-link> •
+      | <router-link v-if="data.relationships.user" :to="{ name: 'channel-view', params: { channel: data.relationships.user.id } }">{{ data.relationships.user.name }}</router-link> •
       | {{ Number(data.media) | approximate }} items •
       | {{ Number(data.views) | approximate }} views
     tags(v-if="data.relationships.tags.length" :items="data.relationships.tags")
@@ -29,11 +29,11 @@ export default {
   methods: {
     pushRoute () {
       this.$router.push({
-        name: 'user-collect',
+        name: 'channel-collect',
         params: {
           id: this.data.id,
           slug: this.data.slug,
-          user: this.data.relationships.user.id
+          channel: this.data.relationships.user.id
         }
       })
     },

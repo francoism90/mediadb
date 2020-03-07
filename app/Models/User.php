@@ -17,9 +17,8 @@ use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, HasMedia, ViewableContract
+class User extends Authenticatable implements HasMedia, ViewableContract
 {
     use HasMediaTrait;
     use Notifiable;
@@ -36,6 +35,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
      */
     protected $casts = [
         'custom_properties' => 'json',
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -51,7 +51,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia, ViewableCont
      * @var array
      */
     protected $hidden = [
-        'email_verified_at',
         'password',
         'remember_token',
     ];

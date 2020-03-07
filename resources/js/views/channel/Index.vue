@@ -1,5 +1,5 @@
 <template lang="pug">
-router-view(v-if="data.id" :user-data="data" :user-meta="meta")
+router-view(v-if="data.id" :channel-data="data" :channel-meta="meta")
 </template>
 
 <script>
@@ -8,7 +8,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('user', {
+    ...mapGetters('channel', {
       data: 'getData',
       meta: 'getMeta'
     })
@@ -16,27 +16,26 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.fetch(to.params.user)
+      vm.fetch(to.params.channel)
       next()
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.fetch(to.params.user)
+    this.fetch(to.params.channel)
     next()
   },
 
   created () {
-    if (!this.$store.state.user) {
-      this.$store.registerModule('user', modelModule)
+    if (!this.$store.state.channel) {
+      this.$store.registerModule('channel', modelModule)
     }
   },
 
   methods: {
     async fetch (id) {
-      await this.$store.dispatch('user/fetch', {
-        path: 'user',
-        params: { 'filter[id]': id }
+      await this.$store.dispatch('channel/fetch', {
+        path: 'user/' + id
       })
     }
   }

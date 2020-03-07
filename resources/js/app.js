@@ -1,19 +1,8 @@
-import Vue from 'vue'
-
-import Approx from 'approximate-number'
-import Axios from 'axios'
-import BackToTop from 'vue-backtotop'
-import Buefy from 'buefy'
-import InfiniteLoading from 'vue-infinite-loading'
-import Moment from 'moment'
-import Shortkey from 'vue-shortkey'
-import Vue2TouchEvents from 'vue2-touch-events'
-import VueAuth from '@websanova/vue-auth'
-import VueMeta from 'vue-meta'
-import VueRouter from 'vue-router'
-import VueTimers from 'vue-timers'
-
 import App from './App.vue'
+import Axios from 'axios'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
 import routes from './routes'
 import store from './store'
 
@@ -24,21 +13,25 @@ import store from './store'
 Vue.config.productionTip = false
 
 /**
- * Create axios instance
+ * ui
  */
 
-const token = document.head.querySelector('meta[name="csrf-token"]')
+require('./ui')
+
+/**
+ * Axios
+ */
 
 Vue.axios = Axios.create({
   baseURL: '/api/',
+  withCredentials: true,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN': token.content || ''
+    'X-Requested-With': 'XMLHttpRequest'
   }
 })
 
 /**
- * Create the router instance
+ * VueRouter
  */
 
 Vue.use(VueRouter)
@@ -52,66 +45,27 @@ const router = new VueRouter({
   }
 })
 
-Vue.router = router
+router.beforeEach(async (to, from, next) => {
+  // Fetch user info
+  await store.dispatch('user/fetch')
 
-/**
- * Register plugins
- */
+  // Needs auth
+  if (to.matched.some(record => record.meta.auth)) {
+    const isAuthenticated = store.getters['user/isAuthenticated']
 
-Vue.use(Buefy, {
-  defaultNoticeQueue: false,
-  defaultTrapFocus: true
-})
-
-Vue.use(BackToTop)
-Vue.use(VueTimers)
-
-Vue.use(Vue2TouchEvents, {
-  touchHoldTolerance: 300,
-  swipeTolerance: 50,
-  longTapTimeInterval: 300
-})
-
-Vue.use(InfiniteLoading, {
-  props: { spinner: 'spiral' }
-})
-
-Vue.use(VueMeta, {
-  refreshOnceOnNavigation: true
-})
-
-Vue.use(Shortkey, {
-  prevent: ['input', 'textarea']
-})
-
-/**
- * Register filters
- */
-
-Vue.filter('approximate', function (value) {
-  return Approx(value)
-})
-
-Vue.filter('timestamp', function (value) {
-  return Moment
-    .utc(value * 1000)
-    .format('HH:mm:ss')
-    .replace(/^0(?:0:0?)?/, '')
-})
-
-Vue.filter('datestamp', function (value) {
-  return Moment(value).format('D MMMM Y')
+    if (!isAuthenticated) {
+      next({ name: 'login', query: { redirect: to.fullPath } })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 /**
  * Create the Vue application instance
  */
-
-Vue.use(VueAuth, {
-  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
-  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
-  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js')
-})
 
 /* eslint-disable no-new */
 new Vue({

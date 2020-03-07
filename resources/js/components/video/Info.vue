@@ -32,11 +32,11 @@ section(class="section media-info")
           article(class="media")
             figure(class="media-left")
               p(class="image is-64x64")
-                img(:src="userData.placeholder" loading="lazy" height="40" width="64" :alt="userData.name")
+                img(:src="channelData.placeholder" loading="lazy" height="40" width="64" :alt="channelData.name")
 
             div(class="media-content")
               p
-                | <router-link :to="{ name: 'user-view', params: { user: userData.id }}">{{ userData.name }}</router-link><br>
+                | <router-link :to="{ name: 'channel-view', params: { channel: channelData.id }}">{{ channelData.name }}</router-link><br>
                 | <span class="is-inline-block">{{ Number(0) | approximate }} subscribers</span>
 
       div(class="level-right")
@@ -60,7 +60,7 @@ export default {
       required: true
     },
 
-    userData: {
+    channelData: {
       type: Object,
       required: true
     }

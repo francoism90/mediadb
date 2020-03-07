@@ -8,14 +8,13 @@ use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TagController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $defaultSort = AllowedSort::field('name', 'order_column');
 
@@ -29,12 +28,9 @@ class TagController extends Controller
                 $defaultSort,
                 AllowedSort::custom('recommended', new RecommendedSorter()),
             ])
-            ->defaultSort($defaultSort);
+            ->defaultSort($defaultSort)
+            ->jsonPaginate();
 
-        if ($request->has('page.size')) {
-            return TagResource::collection($query->jsonPaginate());
-        }
-
-        return new TagResource($query->first());
+        return TagResource::collection($query);
     }
 }

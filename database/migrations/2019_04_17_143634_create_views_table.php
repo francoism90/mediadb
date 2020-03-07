@@ -22,6 +22,8 @@ class CreateViewsTable extends Migration
 
     /**
      * Create a new migration instance.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -34,11 +36,13 @@ class CreateViewsTable extends Migration
 
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
         $this->schema->create($this->table, function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->morphs('viewable');
             $table->text('visitor')->nullable();
             $table->string('collection')->nullable();
@@ -48,6 +52,8 @@ class CreateViewsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

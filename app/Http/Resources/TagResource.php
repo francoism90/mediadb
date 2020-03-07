@@ -27,7 +27,6 @@ class TagResource extends JsonResource
                 $this->hasAppend('media'),
                 $this->getTagCountByType(Media::class)
             ),
-            'views' => $this->views,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

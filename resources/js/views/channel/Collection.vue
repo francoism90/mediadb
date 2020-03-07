@@ -3,7 +3,7 @@ section(class="section is-medium")
   div(class="container")
     h1(class="title is-4") {{ data.name }}
     h2(class="subtitle")
-      | <router-link :to="{ name: 'user-view', params: { user: userData.id } }">{{ userData.name }}</router-link> •
+      | <router-link :to="{ name: 'channel-view', params: { channel: channelData.id } }">{{ channelData.name }}</router-link> •
       | {{ Number(data.media) | approximate }} items •
       | {{ Number(data.views) | approximate }} views
 
@@ -14,7 +14,7 @@ section(class="section is-medium")
       div(class="level-right")
         query(:namespace="namespace" class="level-item")
 
-    infinite(namespace="user_collect" :api-route="apiRoute" component="Media")
+    infinite(namespace="channel_media" :api-route="apiRoute" component="Media")
 </template>
 
 <script>
@@ -41,12 +41,12 @@ export default {
       required: true
     },
 
-    userData: {
+    channelData: {
       type: Object,
       required: true
     },
 
-    userMeta: {
+    channelMeta: {
       type: Object,
       default: null
     }
@@ -54,7 +54,7 @@ export default {
 
   data () {
     return {
-      namespace: 'user_collect',
+      namespace: 'channel_media',
       apiRoute: {
         id: this.id,
         path: 'media',
@@ -75,7 +75,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('collect_model', {
+    ...mapGetters('collect', {
       data: 'getData'
     })
   },
@@ -93,31 +93,19 @@ export default {
   },
 
   created () {
-    if (!this.$store.state.user_collect) {
-      this.$store.registerModule('user_collect', paginateModule)
+    if (!this.$store.state.collect) {
+      this.$store.registerModule('collect', modelModule)
     }
 
-    if (!this.$store.state.collect_model) {
-      this.$store.registerModule('collect_model', modelModule)
+    if (!this.$store.state.channel_media) {
+      this.$store.registerModule('channel_media', paginateModule)
     }
   },
 
   methods: {
     async fetch (id) {
-      await this.$store.dispatch('collect_model/fetch', {
-        path: 'collect',
-        params: {
-          include: 'tags',
-          'filter[id]': id
-        }
-      })
-
-      await this.$store.dispatch('model/create', {
-        path: 'service/track',
-        body: {
-          entity: 'collect',
-          id: id
-        }
+      await this.$store.dispatch('collect/fetch', {
+        path: 'collect/' + id
       })
     }
   }

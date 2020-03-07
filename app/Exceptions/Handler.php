@@ -2,9 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use RuntimeException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +12,8 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [];
+    protected $dontReport = [
+    ];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
@@ -28,14 +28,14 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param \Exception $exception
+     * @param \Throwable $exception
+     *
+     * @return void
+     *
+     * @throws \Exception
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
-        if ($this->isConsoleMutexException($exception)) {
-            return;
-        }
-
         parent::report($exception);
     }
 
@@ -43,23 +43,14 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $exception
+     * @param \Throwable               $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
-    }
-
-    /**
-     * @param Exception $exception
-     *
-     * @return bool
-     */
-    protected function isConsoleMutexException(Exception $exception)
-    {
-        return ($exception instanceof RuntimeException)
-            && ('Command is running now!' === $exception->getMessage());
     }
 }

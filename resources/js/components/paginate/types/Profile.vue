@@ -27,9 +27,9 @@ export default {
   methods: {
     pushRoute () {
       this.$router.push({
-        name: 'user-view',
+        name: 'channel-view',
         params: {
-          user: this.data.id
+          channel: this.data.id
         }
       })
     }

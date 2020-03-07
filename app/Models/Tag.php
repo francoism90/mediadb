@@ -7,19 +7,16 @@ use App\Support\Scout\TagIndexConfigurator;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Resourceable;
-use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
-use CyrildeWit\EloquentViewable\Viewable;
 use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
 
-class Tag extends TagModel implements ViewableContract
+class Tag extends TagModel
 {
     use Hashidable;
     use Randomable;
     use Resourceable;
     use Searchable;
-    use Viewable;
 
     /**
      * @var string

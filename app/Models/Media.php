@@ -163,7 +163,10 @@ class Media extends BaseMedia implements ViewableContract
      */
     public function getUserCollectionsAttribute()
     {
-        return $this->collections->where('user_id', auth()->user()->id ?? 0);
+        // TODO: pluck id, name
+
+        return $this->collections
+                    ->where('user_id', auth()->user()->id ?? 0);
     }
 
     /**

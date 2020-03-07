@@ -1,11 +1,18 @@
 <template lang="pug">
 section(class="section is-medium")
   div(class="container")
-    h1(class="title is-4") {{ userData.name }}
+    h1(class="title is-4") {{ channelData.name }}
     h2(class="subtitle")
-      | Joined {{ String(userData.created_at) | datestamp }} •
-      | {{ Number(userData.media) | approximate }} uploads •
-      | {{ Number(userData.views) | approximate }} views
+      | Joined {{ String(channelData.created_at) | datestamp }} •
+      | {{ Number(channelData.media) | approximate }} uploads •
+      | {{ Number(channelData.views) | approximate }} views
+
+    nav(class="level")
+      div(class="level-left")
+        filters(:namespace="namespace" field="sort" :items="sorters" class="level-item")
+
+      div(class="level-right")
+        query(:namespace="namespace" class="level-item")
 
     infinite(namespace="user_media" :api-route="apiRoute" component="Media")
 </template>
@@ -16,7 +23,7 @@ import paginateModule from '@/store/modules/paginate'
 export default {
   metaInfo () {
     return {
-      title: this.userData.name
+      title: this.channelData.name
     }
   },
 
@@ -27,12 +34,12 @@ export default {
   },
 
   props: {
-    userData: {
+    channelData: {
       type: Object,
       required: true
     },
 
-    userMeta: {
+    channelMeta: {
       type: Object,
       default: null
     }
@@ -42,11 +49,11 @@ export default {
     return {
       namespace: 'user_media',
       apiRoute: {
-        id: this.userData.id,
+        id: this.channelData.id,
         path: 'media',
         params: {
           include: 'model,tags',
-          'filter[user]': this.userData.id
+          'filter[user]': this.channelData.id
         }
       },
       sorters: [

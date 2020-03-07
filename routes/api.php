@@ -13,21 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('api')->name('api.')->namespace('Api')->group(function () {
+Route::name('api.')->namespace('Api')->group(function () {
+    // API
+    Route::middleware('doNotCacheResponse')->group(function () {
+        Route::get('/', ['uses' => 'HomeController', 'as' => 'home']);
+    });
+
     // Auth
     Route::middleware('doNotCacheResponse')->name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
-        Route::post('login', ['uses' => 'AuthController@login', 'as' => 'login']);
-        Route::post('logout', ['uses' => 'AuthController@logout', 'as' => 'logout']);
-        Route::get('user', ['uses' => 'AuthController@user', 'as' => 'user']);
-        Route::get('refresh', ['uses' => 'AuthController@refresh', 'as' => 'refresh']);
+        Route::post('login', ['uses' => 'LoginController', 'as' => 'login']);
+        // Route::post('logout', ['uses' => 'AuthController@logout', 'as' => 'logout']);
+        Route::get('user', ['uses' => 'UserController', 'as' => 'user']);
     });
 
     // Resources
-    Route::middleware('jwt.auth')->name('resource.')->namespace('Resources')->group(function () {
-        Route::apiResource('collect', 'CollectionController')->only(['index', 'update', 'destroy']);
-        Route::apiResource('media', 'MediaController')->only(['index', 'store', 'update', 'destroy']);
-        Route::apiResource('tags', 'TagController')->only(['index']);
-        Route::apiResource('user', 'UserController')->only(['index']);
+    Route::middleware('auth:airlock')->name('resource.')->namespace('Resources')->group(function () {
+        Route::apiResource('collect', 'CollectionController')->only(['index', 'show', 'update', 'destroy']);
+        Route::apiResource('media', 'MediaController')->only(['index', 'store', 'show', 'update', 'destroy']);
+        Route::apiResource('tags', 'TagController')->only(['index', 'show']);
+        Route::apiResource('user', 'UserController')->only(['index', 'show']);
     });
 
     // Assets
@@ -36,10 +40,5 @@ Route::middleware('api')->name('api.')->namespace('Api')->group(function () {
         Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder'])->where('version', '[0-9]+');
         Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview'])->where('version', '[0-9]+');
         Route::middleware('jwt.auth')->get('thumbnail/{media}/{offset}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail'])->where('offset', '[0-9]+');
-    });
-
-    // Services
-    Route::middleware('doNotCacheResponse')->name('service.')->prefix('service')->namespace('Services')->group(function () {
-        Route::middleware('jwt.auth')->post('track', ['uses' => 'TrackController', 'as' => 'track']);
     });
 });

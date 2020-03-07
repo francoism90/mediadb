@@ -70,7 +70,12 @@ export default {
   mixins: [formErrorHandler],
 
   props: {
-    item: {
+    data: {
+      type: Object,
+      required: true
+    },
+
+    meta: {
       type: Object,
       required: true
     }
@@ -79,8 +84,8 @@ export default {
   data () {
     return {
       body: {
-        name: this.item.name,
-        description: this.item.description,
+        name: this.data.name,
+        description: this.data.description,
         collect: [],
         tags: []
       }
@@ -133,7 +138,8 @@ export default {
         path: 'collect',
         params: { 'filter[type]': 'user' }
       })
-      this.$store.commit('collectinput/setSelected', this.item.usercollect || [])
+
+      this.$store.commit('collectinput/setSelected', this.meta.collections || [])
     },
 
     prepareTags () {
@@ -142,7 +148,7 @@ export default {
       }
 
       this.$store.dispatch('taginput/create', { path: 'tags' })
-      this.$store.commit('taginput/setSelected', this.item.relationships.tags || [])
+      this.$store.commit('taginput/setSelected', this.data.relationships.tags || [])
     },
 
     fetchCollect: debounce(async function (name) {
@@ -173,7 +179,7 @@ export default {
       this.body.tags = this.tags
 
       const { success = false } = await this.submit('media_manager/update', {
-        path: 'media/' + this.item.id,
+        path: 'media/' + this.data.id,
         body: this.body
       })
 
@@ -181,7 +187,7 @@ export default {
         await this.$store.dispatch('media_manager/refresh')
 
         this.$buefy.toast.open({
-          message: `${this.item.name} was successfully updated.`,
+          message: `${this.data.name} was successfully updated.`,
           type: 'is-success'
         })
       }
