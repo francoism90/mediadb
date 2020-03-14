@@ -13,8 +13,8 @@ export default {
       route: 'profiles'
     },
     {
-      label: 'Upload Videos',
-      route: 'upload'
+      label: 'My Account',
+      route: 'account'
     }
   ]
 }

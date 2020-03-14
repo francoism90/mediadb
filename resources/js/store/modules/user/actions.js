@@ -22,7 +22,7 @@ const login = async ({ state }, payload = {}) => {
 
 const logout = async ({ commit }) => {
   // Try to logout
-  await Vue.axios.post('auth/logout')
+  await Vue.axios.get('auth/logout')
 
   // Reset state
   commit('resetState')

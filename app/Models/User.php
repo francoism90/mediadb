@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
+use App\Traits\Activityable;
 use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -21,6 +22,7 @@ use Spatie\MediaLibrary\Models\Media;
 class User extends Authenticatable implements HasMedia, ViewableContract
 {
     use HasMediaTrait;
+    use Activityable;
     use Notifiable;
     use Randomable;
     use Searchable;

@@ -94,7 +94,7 @@ class MediaController extends Controller
     public function show(Media $media)
     {
         // Tracking
-        $media->recordView('history', now()->addSeconds(30));
+        $media->recordActivity('show');
         $media->recordView('view_count', now()->addYear());
 
         return (new MediaResource($media->load(['model', 'tags'])))

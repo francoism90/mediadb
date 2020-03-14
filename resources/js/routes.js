@@ -32,9 +32,9 @@ const routes = [
         meta: { auth: true }
       },
       {
-        path: '/upload',
-        name: 'upload',
-        component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue'),
+        path: '/account',
+        name: 'account',
+        component: () => import(/* webpackChunkName: "account" */ './views/Account.vue'),
         meta: { auth: true }
       },
       {

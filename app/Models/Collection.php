@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Scout\CollectionIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
+use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Taggable;
@@ -23,6 +24,7 @@ class Collection extends Model implements ViewableContract
     use HasJsonRelationships;
     use HasStatuses;
     use HasTags;
+    use Activityable;
     use Randomable;
     use Searchable;
     use Sluggable;

@@ -59,7 +59,7 @@ class CollectionController extends Controller
     public function show(Collection $collect)
     {
         // Tracking
-        $collect->recordView('history', now()->addSeconds(30));
+        $collect->recordActivity('show');
         $collect->recordView('view_count', now()->addYear());
 
         return new CollectionResource(

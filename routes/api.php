@@ -21,16 +21,16 @@ Route::name('api.')->namespace('Api')->group(function () {
 
     // Auth
     Route::middleware('doNotCacheResponse')->name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
-        Route::post('login', ['uses' => 'LoginController', 'as' => 'login']);
-        // Route::post('logout', ['uses' => 'AuthController@logout', 'as' => 'logout']);
-        Route::get('user', ['uses' => 'UserController', 'as' => 'user']);
+        Route::middleware('guest')->post('login', ['uses' => 'AuthController@login', 'as' => 'login']);
+        Route::middleware('auth:airlock')->get('logout', ['uses' => 'AuthController@logout', 'as' => 'logout']);
+        Route::middleware('auth:airlock')->get('user', ['uses' => 'AuthController@me', 'as' => 'user']);
     });
 
     // Resources
     Route::middleware('auth:airlock')->name('resource.')->namespace('Resources')->group(function () {
         Route::apiResource('collect', 'CollectionController')->only(['index', 'show', 'update', 'destroy']);
         Route::apiResource('media', 'MediaController')->only(['index', 'store', 'show', 'update', 'destroy']);
-        Route::apiResource('tags', 'TagController')->only(['index', 'show']);
+        Route::apiResource('tags', 'TagController')->only(['index']);
         Route::apiResource('user', 'UserController')->only(['index', 'show']);
     });
 

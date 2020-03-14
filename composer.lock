@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4492bc8f713a841f1b79d9e5d9b74a3a",
+    "content-hash": "c070aed54a5a955a125831687df34b8e",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1127,16 +1127,16 @@
         },
         {
             "name": "fruitcake/laravel-cors",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "138ad34ba5f578283e94c5614f6c48a10bc3ac6a"
+                "reference": "0e0500133dbb6325266133dd72f040617c9cdbd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/138ad34ba5f578283e94c5614f6c48a10bc3ac6a",
-                "reference": "138ad34ba5f578283e94c5614f6c48a10bc3ac6a",
+                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/0e0500133dbb6325266133dd72f040617c9cdbd0",
+                "reference": "0e0500133dbb6325266133dd72f040617c9cdbd0",
                 "shasum": ""
             },
             "require": {
@@ -1191,7 +1191,13 @@
                 "crossdomain",
                 "laravel"
             ],
-            "time": "2020-02-21T13:24:15+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-03-11T21:05:07+00:00"
         },
         {
             "name": "graham-campbell/manager",
@@ -1821,23 +1827,23 @@
         },
         {
             "name": "laravel/airlock",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/airlock.git",
-                "reference": "3eae16b5691f0954c60b31726fe5a40ece4c7c47"
+                "reference": "9a66e767e203bbee83cd5fcda7ce265835468f84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/airlock/zipball/3eae16b5691f0954c60b31726fe5a40ece4c7c47",
-                "reference": "3eae16b5691f0954c60b31726fe5a40ece4c7c47",
+                "url": "https://api.github.com/repos/laravel/airlock/zipball/9a66e767e203bbee83cd5fcda7ce265835468f84",
+                "reference": "9a66e767e203bbee83cd5fcda7ce265835468f84",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/contracts": "^6.0|^7.0",
-                "illuminate/database": "^6.0|^7.0",
-                "illuminate/support": "^6.0|^7.0",
+                "illuminate/contracts": "^6.9|^7.0",
+                "illuminate/database": "^6.9|^7.0",
+                "illuminate/support": "^6.9|^7.0",
                 "php": "^7.2"
             },
             "require-dev": {
@@ -1877,20 +1883,20 @@
                 "auth",
                 "laravel"
             ],
-            "time": "2020-03-03T13:58:32+00:00"
+            "time": "2020-03-12T13:34:05+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v7.0.4",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b93848b43f1564521b3f0605f06a1b392391f6ff"
+                "reference": "b0328b500dfff44e75af103d57d81cdee83e5ce9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b93848b43f1564521b3f0605f06a1b392391f6ff",
-                "reference": "b93848b43f1564521b3f0605f06a1b392391f6ff",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b0328b500dfff44e75af103d57d81cdee83e5ce9",
+                "reference": "b0328b500dfff44e75af103d57d81cdee83e5ce9",
                 "shasum": ""
             },
             "require": {
@@ -1961,7 +1967,7 @@
                 "aws/aws-sdk-php": "^3.0",
                 "doctrine/dbal": "^2.6",
                 "filp/whoops": "^2.4",
-                "guzzlehttp/guzzle": "^6.3|^7.0",
+                "guzzlehttp/guzzle": "^6.3.1|^7.0",
                 "league/flysystem-cached-adapter": "^1.0",
                 "mockery/mockery": "^1.3.1",
                 "moontoast/math": "^1.1",
@@ -1981,7 +1987,7 @@
                 "ext-redis": "Required to use the Redis cache and queue drivers.",
                 "filp/whoops": "Required for friendly error pages in development (^2.4).",
                 "fzaninotto/faker": "Required to use the eloquent factory builder (^1.9.1).",
-                "guzzlehttp/guzzle": "Required to use the HTTP Client, Mailgun mail driver and the ping methods on schedules (^6.3|^7.0).",
+                "guzzlehttp/guzzle": "Required to use the HTTP Client, Mailgun mail driver and the ping methods on schedules (^6.3.1|^7.0).",
                 "laravel/tinker": "Required to use the tinker console command (^2.0).",
                 "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (^1.0).",
                 "league/flysystem-cached-adapter": "Required to use the Flysystem cache (^1.0).",
@@ -2028,7 +2034,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-03-04T22:37:20+00:00"
+            "time": "2020-03-12T13:06:49+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2426,16 +2432,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.64",
+            "version": "1.0.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
                 "shasum": ""
             },
             "require": {
@@ -2506,7 +2512,17 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-02-05T18:14:17+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-08T18:53:20+00:00"
         },
         {
             "name": "league/glide",
@@ -4003,6 +4019,88 @@
             "time": "2019-11-25T12:29:24+00:00"
         },
         {
+            "name": "spatie/laravel-activitylog",
+            "version": "3.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-activitylog.git",
+                "reference": "c73d0d2e728ff1cd7401cd0d7a5b0fd2cf5cb497"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/c73d0d2e728ff1cd7401cd0d7a5b0fd2cf5cb497",
+                "reference": "c73d0d2e728ff1cd7401cd0d7a5b0fd2cf5cb497",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^6.0|^7.0",
+                "illuminate/database": "^6.0|^7.0",
+                "illuminate/support": "^6.0|^7.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "orchestra/testbench": "^4.0|^5.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Activitylog\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A very simple activity logger to monitor the users of your website or application",
+            "homepage": "https://github.com/spatie/activitylog",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "spatie",
+                "user"
+            ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-03-13T12:09:13+00:00"
+        },
+        {
             "name": "spatie/laravel-json-api-paginate",
             "version": "1.7.0",
             "source": {
@@ -4059,16 +4157,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "7.19.2",
+            "version": "7.19.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "944f00a8e886abcb5e2166ae17660917a086368d"
+                "reference": "7d6b634e0967f7399e1c7cd7b02c8b7da6f80c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/944f00a8e886abcb5e2166ae17660917a086368d",
-                "reference": "944f00a8e886abcb5e2166ae17660917a086368d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/7d6b634e0967f7399e1c7cd7b02c8b7da6f80c2d",
+                "reference": "7d6b634e0967f7399e1c7cd7b02c8b7da6f80c2d",
                 "shasum": ""
             },
             "require": {
@@ -4141,7 +4239,13 @@
                 "media",
                 "spatie"
             ],
-            "time": "2020-03-04T19:00:40+00:00"
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-03-09T16:43:55+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
@@ -4453,16 +4557,16 @@
         },
         {
             "name": "spatie/laravel-translatable",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-translatable.git",
-                "reference": "0f69b268257b3f594450712a95cce6178bb0eb13"
+                "reference": "39da2d93138b36e5fe6b1e493cac0d1e6b06e534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/0f69b268257b3f594450712a95cce6178bb0eb13",
-                "reference": "0f69b268257b3f594450712a95cce6178bb0eb13",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/39da2d93138b36e5fe6b1e493cac0d1e6b06e534",
+                "reference": "39da2d93138b36e5fe6b1e493cac0d1e6b06e534",
                 "shasum": ""
             },
             "require": {
@@ -4521,7 +4625,13 @@
                 "spatie",
                 "translate"
             ],
-            "time": "2020-03-02T19:35:51+00:00"
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-03-11T09:56:26+00:00"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -6140,16 +6250,16 @@
         },
         {
             "name": "vinkla/hashids",
-            "version": "8.0.0",
+            "version": "8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vinkla/laravel-hashids.git",
-                "reference": "20266758a232ac62ee1f632d7eb2c3937d2c7fb9"
+                "reference": "ecf5534731dbd476e52859b3a6ab265f29ebade7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vinkla/laravel-hashids/zipball/20266758a232ac62ee1f632d7eb2c3937d2c7fb9",
-                "reference": "20266758a232ac62ee1f632d7eb2c3937d2c7fb9",
+                "url": "https://api.github.com/repos/vinkla/laravel-hashids/zipball/ecf5534731dbd476e52859b3a6ab265f29ebade7",
+                "reference": "ecf5534731dbd476e52859b3a6ab265f29ebade7",
                 "shasum": ""
             },
             "require": {
@@ -6157,19 +6267,19 @@
                 "hashids/hashids": "^4.0",
                 "illuminate/contracts": "^7.0",
                 "illuminate/support": "^7.0",
-                "php": "^7.4"
+                "php": "^7.2.5"
             },
             "require-dev": {
-                "graham-campbell/analyzer": "^2.4",
+                "graham-campbell/analyzer": "^3.0",
                 "graham-campbell/testbench": "^5.4",
                 "mockery/mockery": "^1.3",
-                "phpunit/phpunit": "^8.5",
+                "phpunit/phpunit": "^8.5 || ^9.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "8.0-dev"
+                    "dev-master": "8.1-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -6200,20 +6310,20 @@
                 "hashids",
                 "laravel"
             ],
-            "time": "2020-01-31T16:12:24+00:00"
+            "time": "2020-03-10T08:21:07+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "32bd5ca5a4170f88e27073353013d210a3354ae9"
+                "reference": "939dfda2d7267ac8fc53ac3d642b5de357554c39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/32bd5ca5a4170f88e27073353013d210a3354ae9",
-                "reference": "32bd5ca5a4170f88e27073353013d210a3354ae9",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/939dfda2d7267ac8fc53ac3d642b5de357554c39",
+                "reference": "939dfda2d7267ac8fc53ac3d642b5de357554c39",
                 "shasum": ""
             },
             "require": {
@@ -6262,20 +6372,26 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-03-01T23:56:01+00:00"
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-12T13:44:15+00:00"
         },
         {
             "name": "voku/portable-ascii",
-            "version": "1.4.9",
+            "version": "1.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "9fd2b224c71448b5f84aef9d499a1428d79776a2"
+                "reference": "240e93829a5f985fab0984a6e55ae5e26b78a334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/9fd2b224c71448b5f84aef9d499a1428d79776a2",
-                "reference": "9fd2b224c71448b5f84aef9d499a1428d79776a2",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/240e93829a5f985fab0984a6e55ae5e26b78a334",
+                "reference": "240e93829a5f985fab0984a6e55ae5e26b78a334",
                 "shasum": ""
             },
             "require": {
@@ -6311,27 +6427,44 @@
                 "clean",
                 "php"
             ],
-            "time": "2020-03-06T02:47:42+00:00"
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/moelleken",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/voku",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/voku",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/voku/portable-ascii",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-13T01:23:26+00:00"
         },
         {
             "name": "waavi/sanitizer",
-            "version": "dev-master",
+            "version": "1.0.16",
             "source": {
                 "type": "git",
-                "url": "https://github.com/francoism90/Sanitizer.git",
-                "reference": "7dc15cbd57eb7a88185086e238f0ea486290f3f6"
+                "url": "https://github.com/Waavi/Sanitizer.git",
+                "reference": "5fce6febebc9611d41c9687764272485814bcbee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/francoism90/Sanitizer/zipball/7dc15cbd57eb7a88185086e238f0ea486290f3f6",
-                "reference": "7dc15cbd57eb7a88185086e238f0ea486290f3f6",
+                "url": "https://api.github.com/repos/Waavi/Sanitizer/zipball/5fce6febebc9611d41c9687764272485814bcbee",
+                "reference": "5fce6febebc9611d41c9687764272485814bcbee",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.3|~6.0|^7.0",
-                "illuminate/validation": "~5.3|~6.0|^7.0",
-                "nesbot/carbon": "~1.0|~2.0",
-                "php": "^7.2"
+                "illuminate/support": "~5.3|~6.0|~7.0",
+                "illuminate/validation": "~5.3|~6.0|~7.0",
+                "nesbot/carbon": "~1.0|~2.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~6.0|~7.0|~8.0"
@@ -6352,16 +6485,7 @@
                     "Waavi\\Sanitizer\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "classmap": [
-                    "tests"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6381,10 +6505,7 @@
                 "sanitation",
                 "transform input"
             ],
-            "support": {
-                "source": "https://github.com/francoism90/Sanitizer/tree/master"
-            },
-            "time": "2020-03-06T09:44:19+00:00"
+            "time": "2020-03-09T18:08:11+00:00"
         }
     ],
     "packages-dev": [
@@ -6495,6 +6616,12 @@
                 "facade",
                 "flare",
                 "reporting"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/spatie",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-03-02T15:52:04+00:00"
         },
@@ -6887,16 +7014,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v4.1.2",
+            "version": "v4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "e81356da90969139c85709f8353e59f1e7d5e01c"
+                "reference": "a430bce33d1ad07f756ea6cae9afce9ef8670b42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/e81356da90969139c85709f8353e59f1e7d5e01c",
-                "reference": "e81356da90969139c85709f8353e59f1e7d5e01c",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/a430bce33d1ad07f756ea6cae9afce9ef8670b42",
+                "reference": "a430bce33d1ad07f756ea6cae9afce9ef8670b42",
                 "shasum": ""
             },
             "require": {
@@ -6953,7 +7080,21 @@
                 "php",
                 "symfony"
             ],
-            "time": "2020-03-03T18:17:47+00:00"
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-03-07T12:46:00+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -7673,6 +7814,12 @@
                 "highlight.php",
                 "syntax"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/allejo",
+                    "type": "github"
+                }
+            ],
             "time": "2020-03-02T05:59:21+00:00"
         },
         {
@@ -8381,13 +8528,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "waavi/sanitizer": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

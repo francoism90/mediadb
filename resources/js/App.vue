@@ -1,13 +1,14 @@
 <template lang="pug">
 div(id="app")
-  template(v-if="isAuthenticated")
-    app-widget
-    app-header
-    router-view
-    app-footer
+  template(v-if="isReady")
+    template(v-if="isAuthenticated")
+      app-widget
+      app-header
+      router-view
+      app-footer
 
-  template(v-else)
-    router-view
+    template(v-else)
+      router-view()
 </template>
 
 <script>
@@ -31,6 +32,7 @@ export default {
 
   computed: {
     ...mapGetters('user', [
+      'isReady',
       'isAuthenticated'
     ])
   }

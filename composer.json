@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "php-ffmpeg/php-ffmpeg": "^0.14.0",
+        "spatie/laravel-activitylog": "^3.11",
         "spatie/laravel-json-api-paginate": "^1.5",
         "spatie/laravel-medialibrary": "^7.12",
         "spatie/laravel-model-status": "^1.9",
@@ -30,7 +31,7 @@
         "spatie/temporary-directory": "^1.2",
         "staudenmeir/eloquent-json-relations": "^1.4",
         "vinkla/hashids": "^8.0",
-        "waavi/sanitizer": "dev-master"
+        "waavi/sanitizer": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -39,12 +40,6 @@
         "nunomaduro/collision": "^4.0",
         "phpunit/phpunit": "^8.5"
     },
-    "repositories": [
-      {
-          "type": "vcs",
-          "url": "https://github.com/francoism90/Sanitizer"
-      }
-    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

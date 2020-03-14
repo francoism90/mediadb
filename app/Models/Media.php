@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Scout\MediaIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
+use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Resourceable;
@@ -29,6 +30,7 @@ class Media extends BaseMedia implements ViewableContract
     use HasJsonRelationships;
     use HasStatuses;
     use HasTags;
+    use Activityable;
     use Randomable;
     use Resourceable;
     use Searchable;

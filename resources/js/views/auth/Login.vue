@@ -23,6 +23,7 @@ section(v-if="!isAuthenticated" class="auth")
             minlength="6"
             maxlength="50"
             name="password"
+            password-reveal
             placeholder="Your password",
             :has-counter="false"
             v-model.trim='body.password'

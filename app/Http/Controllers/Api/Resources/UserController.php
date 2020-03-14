@@ -47,7 +47,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         // Tracking
-        $user->recordView('history', now()->addSeconds(30));
+        $user->recordActivity('show');
         $user->recordView('view_count', now()->addYear());
 
         return new UserResource($user);
