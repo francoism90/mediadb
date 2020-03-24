@@ -11,6 +11,7 @@ use App\Observers\MediaObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Enforce HTTPS
+        // URL::forceScheme('https');
+
+        // Observers
         Collection::observe(CollectionObserver::class);
         Media::observe(MediaObserver::class);
         Tag::observe(TagObserver::class);

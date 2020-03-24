@@ -30,7 +30,7 @@ class TagIndexConfigurator extends IndexConfigurator
                 'autocomplete' => [
                     'type' => 'edge_ngram',
                     'min_gram' => 1,
-                    'max_gram' => 40,
+                    'max_gram' => 10,
                     'token_chars' => [
                         'letter',
                         'digit',

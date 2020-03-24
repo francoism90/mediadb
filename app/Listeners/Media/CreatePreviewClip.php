@@ -11,7 +11,7 @@ use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\MediaLibrary\Events\ConversionHasBeenCompleted;
+use Spatie\MediaLibrary\Conversions\Events\ConversionHasBeenCompleted;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 
 class CreatePreviewClip implements ShouldQueue
@@ -49,8 +49,8 @@ class CreatePreviewClip implements ShouldQueue
     public function __construct()
     {
         $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => config('medialibrary.ffmpeg_path'),
-            'ffprobe.binaries' => config('medialibrary.ffprobe_path'),
+            'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+            'ffprobe.binaries' => config('media-library.ffprobe_path'),
         ]);
     }
 

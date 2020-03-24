@@ -10,15 +10,15 @@ use App\Traits\Randomable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
-use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
-use CyrildeWit\EloquentViewable\Viewable;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
-class Collection extends Model implements ViewableContract
+class Collection extends Model implements Viewable
 {
     use Hashidable;
     use HasJsonRelationships;
@@ -29,7 +29,7 @@ class Collection extends Model implements ViewableContract
     use Searchable;
     use Sluggable;
     use Taggable;
-    use Viewable;
+    use InteractsWithViews;
     use ViewableHelpers;
 
     /**

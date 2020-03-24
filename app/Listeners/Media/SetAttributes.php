@@ -6,7 +6,7 @@ use Exception;
 use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe\DataMapping\Format;
 use FFMpeg\FFProbe\DataMapping\Stream;
-use Spatie\MediaLibrary\Events\MediaHasBeenAdded;
+use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAdded;
 
 class SetAttributes
 {
@@ -26,8 +26,8 @@ class SetAttributes
     public function __construct()
     {
         $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => config('medialibrary.ffmpeg_path'),
-            'ffprobe.binaries' => config('medialibrary.ffprobe_path'),
+            'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+            'ffprobe.binaries' => config('media-library.ffprobe_path'),
         ]);
     }
 

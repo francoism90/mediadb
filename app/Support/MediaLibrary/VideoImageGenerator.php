@@ -5,10 +5,10 @@ namespace App\Support\MediaLibrary;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\Conversion\Conversion;
-use Spatie\MediaLibrary\ImageGenerators\BaseGenerator;
+use Spatie\MediaLibrary\Conversions\Conversion;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\ImageGenerator;
 
-class VideoImageGenerator extends BaseGenerator
+class VideoImageGenerator extends ImageGenerator
 {
     /**
      * @param string     $path
@@ -21,8 +21,8 @@ class VideoImageGenerator extends BaseGenerator
         $imagePath = pathinfo($path, PATHINFO_DIRNAME).'/'.pathinfo($path, PATHINFO_FILENAME).'.jpg';
 
         $ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => config('medialibrary.ffmpeg_path'),
-            'ffprobe.binaries' => config('medialibrary.ffprobe_path'),
+            'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+            'ffprobe.binaries' => config('media-library.ffprobe_path'),
         ]);
 
         $video = $ffmpeg->open($path);

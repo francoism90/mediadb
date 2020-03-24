@@ -9,19 +9,18 @@ use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
-use CyrildeWit\EloquentViewable\Viewable;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use ScoutElastic\Searchable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\Models\Media;
 
-class User extends Authenticatable implements HasMedia, ViewableContract
+class User extends Authenticatable implements HasMedia, Viewable
 {
-    use HasMediaTrait;
     use Activityable;
     use Notifiable;
     use Randomable;
@@ -29,7 +28,8 @@ class User extends Authenticatable implements HasMedia, ViewableContract
     use Sluggable;
     use SluggableScopeHelpers;
     use SoftDeletes;
-    use Viewable;
+    use InteractsWithMedia;
+    use InteractsWithViews;
     use ViewableHelpers;
 
     /**
@@ -132,7 +132,7 @@ class User extends Authenticatable implements HasMedia, ViewableContract
     /**
      * @param Media $media
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions($media = null): void
     {
         $this->addMediaConversion('thumbnail')
             ->width(480)

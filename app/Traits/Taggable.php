@@ -15,12 +15,7 @@ trait Taggable
     public static function getTagsTypeMapped(array $tags = []): Collection
     {
         return collect($tags)->mapToGroups(function ($item) {
-            $tag = Tag::findFromStringOfAnyType($item['name']);
-
-            $type = $tag['type'] ?? $item['type'] ?? 'null';
-            $name = $tag['name'] ?? $item['name'];
-
-            return [$type => $name];
+            return [$item['type'] ?? null => $item['name']];
         });
     }
 
@@ -37,12 +32,12 @@ trait Taggable
         }
 
         // Sync with types (if any)
-        $collect = self::getTagsTypeMapped($tags);
+        $types = self::getTagsTypeMapped($tags);
 
-        foreach (['null', 'category', 'language', 'people'] as $type) {
-            $tags = $collect->has($type) ? $collect->get($type)->unique()->toArray() : [];
+        foreach ($types as $type => $name) {
+            $tags = $types->get($type)->unique()->toArray();
 
-            $this->syncTagsWithType($tags, 'null' === $type ? null : $type);
+            $this->syncTagsWithType($tags, $type);
         }
 
         // Order tags by name

@@ -5,8 +5,7 @@ namespace App\Support\MediaLibrary;
 use DateTimeInterface;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined;
-use Spatie\MediaLibrary\UrlGenerator\BaseUrlGenerator;
+use Spatie\MediaLibrary\Support\UrlGenerator\BaseUrlGenerator;
 
 class LocalUrlGenerator extends BaseUrlGenerator
 {
@@ -42,43 +41,19 @@ class LocalUrlGenerator extends BaseUrlGenerator
     /**
      * @return string
      */
+    public function getBaseMediaDirectoryUrl()
+    {
+        return $this->getDisk()->url('/');
+    }
+
+    /**
+     * @return string
+     */
     public function getPath(): string
     {
-        return $this->getStoragePath().'/'.$this->getPathRelativeToRoot();
-    }
+        $pathPrefix = $this->getDisk()->getAdapter()->getPathPrefix();
 
-    /**
-     * @return string
-     */
-    protected function getBaseMediaDirectoryUrl(): string
-    {
-        if ($diskUrl = $this->config->get("filesystems.disks.{$this->media->disk}.url")) {
-            return str_replace(url('/'), '', $diskUrl);
-        }
-
-        if (!Str::startsWith($this->getStoragePath(), public_path())) {
-            throw UrlCannotBeDetermined::mediaNotPubliclyAvailable($this->getStoragePath(), public_path());
-        }
-
-        return $this->getBaseMediaDirectory();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getBaseMediaDirectory(): string
-    {
-        return str_replace(public_path(), '', $this->getStoragePath());
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoragePath(): string
-    {
-        $diskRootPath = $this->config->get("filesystems.disks.{$this->media->disk}.root");
-
-        return realpath($diskRootPath);
+        return $pathPrefix.$this->getPathRelativeToRoot();
     }
 
     /**
@@ -86,6 +61,10 @@ class LocalUrlGenerator extends BaseUrlGenerator
      */
     public function getResponsiveImagesDirectoryUrl(): string
     {
-        return url($this->getBaseMediaDirectoryUrl().'/'.$this->pathGenerator->getPathForResponsiveImages($this->media)).'/';
+        $base = Str::finish($this->getBaseMediaDirectoryUrl(), '/');
+
+        $path = $this->pathGenerator->getPathForResponsiveImages($this->media);
+
+        return Str::finish(url($base.$path), '/');
     }
 }

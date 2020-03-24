@@ -15,16 +15,16 @@ use App\Traits\Viewable as ViewableHelpers;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
-use CyrildeWit\EloquentViewable\Viewable;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Support\Facades\URL;
 use ScoutElastic\Searchable;
-use Spatie\MediaLibrary\Models\Media as BaseMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
-class Media extends BaseMedia implements ViewableContract
+class Media extends BaseMedia implements Viewable
 {
     use Hashidable;
     use HasJsonRelationships;
@@ -39,7 +39,7 @@ class Media extends BaseMedia implements ViewableContract
     use SluggableScopeHelpers;
     use Streamable;
     use Taggable;
-    use Viewable;
+    use InteractsWithViews;
     use ViewableHelpers;
 
     /**
@@ -134,7 +134,7 @@ class Media extends BaseMedia implements ViewableContract
     public function getPlaceholderUrlAttribute(): string
     {
         if (!$this->hasGeneratedConversion('thumbnail')) {
-            return asset('storage/images/placeholders/empty.png');
+            return '';
         }
 
         return URL::signedRoute('api.asset.placeholder', [
@@ -150,7 +150,7 @@ class Media extends BaseMedia implements ViewableContract
     public function getPreviewUrlAttribute(): string
     {
         if (!$this->hasGeneratedConversion('preview')) {
-            return asset('storage/images/placeholders/blank.mp4');
+            return '';
         }
 
         return URL::signedRoute('api.asset.preview', [

@@ -8,7 +8,6 @@ use App\Http\Requests\Media\UpdateRequest;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
-use App\Support\QueryBuilder\Filters\HashidFilter;
 use App\Support\QueryBuilder\Filters\Media\CollectionFilter;
 use App\Support\QueryBuilder\Filters\Media\TypeFilter;
 use App\Support\QueryBuilder\Filters\Media\UserFilter;
@@ -39,7 +38,6 @@ class MediaController extends Controller
         $query = QueryBuilder::for(Media::class)
             ->allowedIncludes(['model', 'tags'])
             ->allowedFilters([
-                AllowedFilter::custom('id', new HashidFilter())->ignore(null, '*'),
                 AllowedFilter::custom('collect', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
@@ -100,7 +98,7 @@ class MediaController extends Controller
         return (new MediaResource($media->load(['model', 'tags'])))
             ->additional([
                 'meta' => [
-                    'collections' => CollectionResource::collection($media->user_collections),
+                    'collects' => CollectionResource::collection($media->user_collections),
                     'download_url' => $media->download_url,
                     'stream_url' => $media->stream_url,
                 ],
@@ -135,7 +133,7 @@ class MediaController extends Controller
         if ($request->has('snapshot')) {
             $media->setCustomProperty('snapshot', $request->input('snapshot'))->save();
 
-            Artisan::call('medialibrary:regenerate', [
+            Artisan::call('media-library:regenerate', [
                 '--ids' => $media->id,
                 '--force' => true,
             ]);

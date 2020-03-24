@@ -20,7 +20,6 @@ class CollectionResource extends JsonResource
             'views' => $this->views,
             'created_at' => $this->created_at,
             'relationships' => [
-                'media' => MediaResource::collection($this->whenLoaded('media')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
                 'user' => new UserResource($this->whenLoaded('user')),
             ],

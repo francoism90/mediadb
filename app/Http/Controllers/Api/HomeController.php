@@ -12,7 +12,8 @@ class HomeController extends Controller
     public function __invoke()
     {
         return response()->json([
-            'version' => 'v1',
+            'success' => true,
+            'message' => 'welcome',
         ]);
     }
 }

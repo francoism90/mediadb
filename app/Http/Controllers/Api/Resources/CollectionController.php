@@ -7,7 +7,6 @@ use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
-use App\Support\QueryBuilder\Filters\HashidFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\ViewedAtFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
@@ -30,9 +29,8 @@ class CollectionController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
         $query = QueryBuilder::for(Collection::class)
-            ->allowedIncludes(['media', 'tags', 'user'])
+            ->allowedIncludes(['tags', 'user'])
             ->allowedFilters([
-                AllowedFilter::custom('id', new HashidFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
                 AllowedFilter::custom('viewed_at', new ViewedAtFilter())->ignore(null),
@@ -63,7 +61,7 @@ class CollectionController extends Controller
         $collect->recordView('view_count', now()->addYear());
 
         return new CollectionResource(
-            $collect->load(['tags'])
+            $collect->load(['tags', 'user'])
         );
     }
 

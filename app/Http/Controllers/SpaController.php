@@ -6,6 +6,6 @@ class SpaController extends Controller
 {
     public function index()
     {
-        return view('app');
+        return response()->json();
     }
 }

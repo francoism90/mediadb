@@ -24,6 +24,10 @@ MediaDB is very much in development and is not yet suitable for production purpo
 
 For the time being please consult the upstream documentation of used packages in `composer.json` for possible other missing dependencies or recommendations.
 
+### Optional
+
+- <https://github.com/francoism90/mediadb-ui>
+
 ## Install
 
 ### Nginx
@@ -60,14 +64,6 @@ php artisan elastic:update-mapping "App\Models\User"
 
 It is advisable to view all configuration files and change them when necessary, especially `.env`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
 
-#### Compile Assets
-
-```bash
-cd /path/to/project
-npm install
-npm run dev
-```
-
 ### Generating VOD key + IV
 
 ```bash
@@ -95,15 +91,10 @@ VOD_SECRET=secret
 "$secure_link_expires$arg_id$remote_addr secret";
 ```
 
-### Set VOD server
-
-```env
-VOD_URL=https://stream.dom
-```
+### Set VOD path
 
 ```bash
-vod_base_url "https://stream.dom";
-vod_segments_base_url "https://stream.dom";
+set $base /path/to/project/storage/app/streams;
 ```
 
 ## Upgrade
@@ -125,8 +116,6 @@ php artisan elastic:update-mapping "App\Models\User"
 
 ```bash
 composer install --optimize-autoloader --no-dev
-npm install
-npm run prod
 php artisan optimize
 ```
 

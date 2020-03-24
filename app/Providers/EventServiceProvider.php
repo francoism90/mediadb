@@ -12,11 +12,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Spatie\MediaLibrary\Events\MediaHasBeenAdded' => [
+        'Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAdded' => [
             'App\Listeners\Media\SetAttributes',
         ],
 
-        'Spatie\MediaLibrary\Events\ConversionHasBeenCompleted' => [
+        'Spatie\MediaLibrary\Conversions\Events\ConversionHasBeenCompleted' => [
             'App\Listeners\Media\CreatePreviewClip',
         ],
     ];
@@ -27,5 +27,15 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+    }
+
+    /**
+     * Determine if events and listeners should be automatically discovered.
+     *
+     * @return bool
+     */
+    public function shouldDiscoverEvents()
+    {
+        return true;
     }
 }
