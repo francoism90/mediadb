@@ -39,8 +39,9 @@ class UpdateRequest extends FormRequest
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|string|min:1|max:255',
-            'tags.*.name' => 'required|string|min:1|max:255',
+            'tags.*.slug' => 'required|string|min:1|max:255',
             'tags.*.type' => 'nullable|string|in:category,people,language',
+            'tags.*.name' => 'required|string|min:1|max:255',
         ];
     }
 
@@ -57,8 +58,9 @@ class UpdateRequest extends FormRequest
             'collect.*.id' => 'trim|strip_tags',
             'collect.*.name' => 'trim|strip_tags',
             'tags.*.id' => 'trim|strip_tags',
-            'tags.*.name' => 'trim|strip_tags|slug',
+            'tags.*.slug' => 'trim|strip_tags|slug',
             'tags.*.type' => 'trim|strip_tags|slug',
+            'tags.*.name' => 'trim|strip_tags',
         ];
     }
 

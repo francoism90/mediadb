@@ -30,6 +30,8 @@ For the time being please consult the upstream documentation of used packages in
 
 ## Install
 
+Note: it is recommend to use `/srv/http/mediadb/api` (Laravel) and `/srv/http/mediadb/ui` (optional quasar UI) as paths (see `doc/nginx`).
+
 ### Nginx
 
 See `doc/nginx` for configuration examples.
@@ -39,7 +41,7 @@ See `doc/nginx` for configuration examples.
 See `doc/supervisor` for configuration examples.
 
 ```bash
-cd /path/to/project
+cd /srv/http/mediadb/api
 composer install
 php artisan migrate
 php artisan db:seed

@@ -4177,16 +4177,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.0.5",
+            "version": "8.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "64ca38faa3a2a9aaadcb5f75d7b2b04e424a8018"
+                "reference": "248d1634008d4c664f3cd66594a51a8e69230b1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/64ca38faa3a2a9aaadcb5f75d7b2b04e424a8018",
-                "reference": "64ca38faa3a2a9aaadcb5f75d7b2b04e424a8018",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/248d1634008d4c664f3cd66594a51a8e69230b1c",
+                "reference": "248d1634008d4c664f3cd66594a51a8e69230b1c",
                 "shasum": ""
             },
             "require": {
@@ -4269,7 +4269,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-03-24T16:00:48+00:00"
+            "time": "2020-03-25T07:46:59+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
@@ -6591,6 +6591,12 @@
                 "flare",
                 "reporting"
             ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/spatie",
+                    "type": "patreon"
+                }
+            ],
             "time": "2020-03-02T15:52:04+00:00"
         },
         {
@@ -7781,6 +7787,12 @@
                 "highlight.js",
                 "highlight.php",
                 "syntax"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/allejo",
+                    "type": "github"
+                }
             ],
             "time": "2020-03-02T05:59:21+00:00"
         },
