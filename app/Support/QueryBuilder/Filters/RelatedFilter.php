@@ -75,7 +75,7 @@ class RelatedFilter implements Filter
     private function setSearchQuery(): self
     {
         // https://stackoverflow.com/a/16427088
-        $this->searchQuery = preg_replace('~[^\p{L}\p{N}]++~u', ' ', $this->item->name);
+        $this->searchQuery = preg_replace('~[^\p{L}]++~u', ' ', $this->item->name);
 
         // Remove any whitespace
         $this->searchQuery = preg_replace('/\s+/', ' ', trim($this->searchQuery));
@@ -105,7 +105,7 @@ class RelatedFilter implements Filter
             ->where('id', '<>', $this->item->id)
             ->collapse('id')
             ->from(0)
-            ->take(12)
+            ->take(16)
             ->get();
     }
 
@@ -123,7 +123,7 @@ class RelatedFilter implements Filter
             ->inRandomOrder(
                 $this->model->getRandomSeed()
             )
-            ->take(12)
+            ->take(16)
             ->get();
     }
 }

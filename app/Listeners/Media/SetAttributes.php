@@ -38,9 +38,11 @@ class SetAttributes
     {
         $this->media = $event->media;
 
-        if ($this->hasValidMime('video')) {
-            $this->setVideoProperties();
+        if (!$this->hasValidMime('video')) {
+            throw new Exception('Invalid video mimetype.');
         }
+
+        $this->setVideoProperties();
     }
 
     /**

@@ -23,14 +23,25 @@ class CollectionIndexConfigurator extends IndexConfigurator
                     ],
                 ],
                 'autocomplete_search' => [
-                    'tokenizer' => 'lowercase',
+                    'type' => 'custom',
+                    'tokenizer' => 'whitespace',
+                    'filter' => [
+                        'lowercase',
+                        'ascii_folding',
+                    ],
+                ],
+            ],
+            'filter' => [
+                'ascii_folding' => [
+                    'type' => 'asciifolding',
+                    'preserve_original' => true,
                 ],
             ],
             'tokenizer' => [
                 'autocomplete' => [
                     'type' => 'edge_ngram',
                     'min_gram' => 1,
-                    'max_gram' => 10,
+                    'max_gram' => 20,
                     'token_chars' => [
                         'letter',
                         'digit',
