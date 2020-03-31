@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6d3e653cf846b9c4f7d3593e4f7da92",
+    "content-hash": "e175f1143d2b789117e60143f0721bdb",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -3115,16 +3115,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v0.14",
+            "version": "v0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "f9cc3d0c429fade5a144db674272eb8b48db8dce"
+                "reference": "984dbd046b6d8c285f9e7419fc7645f197513bfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/f9cc3d0c429fade5a144db674272eb8b48db8dce",
-                "reference": "f9cc3d0c429fade5a144db674272eb8b48db8dce",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/984dbd046b6d8c285f9e7419fc7645f197513bfa",
+                "reference": "984dbd046b6d8c285f9e7419fc7645f197513bfa",
                 "shasum": ""
             },
             "require": {
@@ -3135,9 +3135,9 @@
                 "php": "^5.3.9 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.36",
                 "sami/sami": "~1.0",
-                "silex/silex": "~1.0"
+                "silex/silex": "~1.0",
+                "symfony/phpunit-bridge": "^5.0.4"
             },
             "suggest": {
                 "php-ffmpeg/extras": "A compilation of common audio & video drivers for PHP-FFMpeg"
@@ -3195,7 +3195,7 @@
                 "video",
                 "video processing"
             ],
-            "time": "2019-02-26T17:04:09+00:00"
+            "time": "2020-03-23T09:32:09+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -4191,16 +4191,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.0.6",
+            "version": "8.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "248d1634008d4c664f3cd66594a51a8e69230b1c"
+                "reference": "d14dce6b170ee8345b286665848c50c91d54be4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/248d1634008d4c664f3cd66594a51a8e69230b1c",
-                "reference": "248d1634008d4c664f3cd66594a51a8e69230b1c",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/d14dce6b170ee8345b286665848c50c91d54be4d",
+                "reference": "d14dce6b170ee8345b286665848c50c91d54be4d",
                 "shasum": ""
             },
             "require": {
@@ -4283,7 +4283,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-03-25T07:46:59+00:00"
+            "time": "2020-03-30T09:11:38+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
@@ -6845,12 +6845,6 @@
                 "flare",
                 "reporting"
             ],
-            "funding": [
-                {
-                    "url": "https://www.patreon.com/spatie",
-                    "type": "patreon"
-                }
-            ],
             "time": "2020-03-02T15:52:04+00:00"
         },
         {
@@ -8041,12 +8035,6 @@
                 "highlight.js",
                 "highlight.php",
                 "syntax"
-            ],
-            "funding": [
-                {
-                    "url": "https://github.com/allejo",
-                    "type": "github"
-                }
             ],
             "time": "2020-03-02T05:59:21+00:00"
         },
