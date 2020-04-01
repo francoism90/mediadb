@@ -35,7 +35,7 @@ class UpdateRequest extends FormRequest
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|string|min:1|max:255',
             'tags.*.slug' => 'required|string|min:1|max:255',
-            'tags.*.type' => 'nullable|string|in:category,people,language',
+            'tags.*.type' => 'nullable|string|in:genre,language,person',
             'tags.*.name' => 'required|string|min:1|max:255',
         ];
     }

@@ -62,6 +62,8 @@ php artisan elastic:update-mapping "App\Models\Collection"
 php artisan elastic:update-mapping "App\Models\Media"
 php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
+php artisan scout:import "App\Models\Tag"
+php artisan scout:import "App\Models\User"
 ```
 
 It is advisable to view all configuration files and change them when necessary, especially `.env`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.

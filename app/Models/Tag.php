@@ -19,6 +19,13 @@ class Tag extends TagModel
     use Searchable;
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'custom_properties' => 'json',
+    ];
+
+    /**
      * @var string
      */
     protected $indexConfigurator = TagIndexConfigurator::class;

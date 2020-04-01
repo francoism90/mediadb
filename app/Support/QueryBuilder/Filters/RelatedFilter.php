@@ -91,6 +91,7 @@ class RelatedFilter implements Filter
         return [
             $this->getRelatedModels(),
             $this->getRelatedTags(),
+            $this->getRelatedRandom(),
         ];
     }
 
@@ -124,6 +125,21 @@ class RelatedFilter implements Filter
                 $this->model->getRandomSeed()
             )
             ->take(16)
+            ->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getRelatedRandom()
+    {
+        return $this->model
+            ->select('id')
+            ->whereKeyNot($this->item->id)
+            ->inRandomOrder(
+                $this->model->getRandomSeed()
+            )
+            ->take(8)
             ->get();
     }
 }

@@ -37,7 +37,7 @@ class Collection extends Model implements Viewable
      */
     protected $casts = [
         'custom_properties' => 'json',
-     ];
+    ];
 
     /**
      * @var array

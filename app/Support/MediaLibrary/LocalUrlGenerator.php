@@ -34,6 +34,7 @@ class LocalUrlGenerator extends BaseUrlGenerator
             [
                 $this->media,
                 auth()->user(),
+                $this->media->updated_at->timestamp,
             ]
         );
     }

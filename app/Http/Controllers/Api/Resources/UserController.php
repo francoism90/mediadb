@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Resources;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
 use App\Support\QueryBuilder\Filters\User\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -26,7 +26,7 @@ class UserController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('id', 'slug')->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
+                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([
                 $defaultSort,

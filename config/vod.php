@@ -6,7 +6,7 @@ return [
     | VOD URL
     |--------------------------------------------------------------------------
     |
-    | This URL is used for connecting to the main streaming server.
+    | The URL used for connecting to the main streaming server.
     |
     */
 
@@ -17,7 +17,7 @@ return [
     | VOD Secrets
     |--------------------------------------------------------------------------
     |
-    | Don't forget to set these in your .env file and be aware that they
+    | Don't forget to set these in your .env file and be aware that they must
     | match on the streaming server(s).
     |
     */
