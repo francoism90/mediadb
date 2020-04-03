@@ -122,16 +122,16 @@
         },
         {
             "name": "babenkoivan/scout-elasticsearch-driver",
-            "version": "v4.1.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/babenkoivan/scout-elasticsearch-driver.git",
-                "reference": "68446794dd4ea00a2c1a1216d1c53a63ee29c493"
+                "reference": "05d3fc61a0a0f0537bc415c269bdc216bb4f6670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/babenkoivan/scout-elasticsearch-driver/zipball/68446794dd4ea00a2c1a1216d1c53a63ee29c493",
-                "reference": "68446794dd4ea00a2c1a1216d1c53a63ee29c493",
+                "url": "https://api.github.com/repos/babenkoivan/scout-elasticsearch-driver/zipball/05d3fc61a0a0f0537bc415c269bdc216bb4f6670",
+                "reference": "05d3fc61a0a0f0537bc415c269bdc216bb4f6670",
                 "shasum": ""
             },
             "require": {
@@ -179,7 +179,7 @@
                 "scout",
                 "search"
             ],
-            "time": "2020-03-27T19:14:26+00:00"
+            "time": "2020-04-02T13:50:19+00:00"
         },
         {
             "name": "brick/math",
@@ -2023,16 +2023,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v4.2.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "0cde59362978591f33a0361098db634ab6c28866"
+                "reference": "fdfbd5b2f7bb1dfdf2e40518b263337c07b6b22c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/0cde59362978591f33a0361098db634ab6c28866",
-                "reference": "0cde59362978591f33a0361098db634ab6c28866",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/fdfbd5b2f7bb1dfdf2e40518b263337c07b6b22c",
+                "reference": "fdfbd5b2f7bb1dfdf2e40518b263337c07b6b22c",
                 "shasum": ""
             },
             "require": {
@@ -2092,7 +2092,7 @@
                 "laravel",
                 "queue"
             ],
-            "time": "2020-03-31T15:24:24+00:00"
+            "time": "2020-04-02T12:32:01+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2642,16 +2642,16 @@
         },
         {
             "name": "maennchen/zipstream-php",
-            "version": "1.2.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maennchen/ZipStream-PHP.git",
-                "reference": "6373eefe0b3274d7b702d81f2c99aa977ff97dc2"
+                "reference": "9ceee828f9620b2e5c075e551ec7ed8a7035ac95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/6373eefe0b3274d7b702d81f2c99aa977ff97dc2",
-                "reference": "6373eefe0b3274d7b702d81f2c99aa977ff97dc2",
+                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/9ceee828f9620b2e5c075e551ec7ed8a7035ac95",
+                "reference": "9ceee828f9620b2e5c075e551ec7ed8a7035ac95",
                 "shasum": ""
             },
             "require": {
@@ -2682,12 +2682,12 @@
                     "email": "pabs@pablotron.org"
                 },
                 {
-                    "name": "Jesse Donat",
-                    "email": "donatj@gmail.com"
-                },
-                {
                     "name": "Jonatan Männchen",
                     "email": "jonatan@maennchen.ch"
+                },
+                {
+                    "name": "Jesse Donat",
+                    "email": "donatj@gmail.com"
                 },
                 {
                     "name": "András Kolesár",
@@ -2699,7 +2699,7 @@
                 "stream",
                 "zip"
             ],
-            "time": "2019-07-17T11:01:58+00:00"
+            "time": "2020-02-23T01:48:39+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4252,16 +4252,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.0.7",
+            "version": "8.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "d14dce6b170ee8345b286665848c50c91d54be4d"
+                "reference": "c5adacdca1db44fff93f6699887191776546a9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/d14dce6b170ee8345b286665848c50c91d54be4d",
-                "reference": "d14dce6b170ee8345b286665848c50c91d54be4d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/c5adacdca1db44fff93f6699887191776546a9f6",
+                "reference": "c5adacdca1db44fff93f6699887191776546a9f6",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4273,7 @@
                 "illuminate/pipeline": "^6.18|^7.0",
                 "illuminate/support": "^6.18|^7.0",
                 "league/flysystem": "^1.0.64",
-                "maennchen/zipstream-php": "^1.0",
+                "maennchen/zipstream-php": "^1.0|^2.0",
                 "php": "^7.4",
                 "spatie/image": "^1.4.0",
                 "spatie/temporary-directory": "^1.1",
@@ -4342,9 +4342,13 @@
                 {
                     "url": "https://spatie.be/open-source/support-us",
                     "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
                 }
             ],
-            "time": "2020-03-30T09:11:38+00:00"
+            "time": "2020-04-02T09:47:42+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
