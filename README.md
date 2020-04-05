@@ -1,4 +1,4 @@
-# MediaDB
+# MediaDB (API)
 
 ## Build your own streaming service
 
@@ -17,8 +17,8 @@ MediaDB is very much in development and is not yet suitable for production purpo
 - [ngx_brotli](https://github.com/google/ngx_brotli)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
 - [PHP](https://php.net/) 7.2 or later, with exif and GD support.
-- [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v7/converting-images/optimizing-converted-images/)
-- [Laravel](https://laravel.com/docs/6.x) development environment with MySQL/MariaDB (with JSON support), Redis , Supervisor
+- [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
+- [Laravel](https://laravel.com/docs/7.x) environment with MySQL/MariaDB (with JSON support), Redis , Supervisor, etc.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing
 
@@ -30,7 +30,7 @@ For the time being please consult the upstream documentation of used packages in
 
 ## Install
 
-Note: it is recommend to use `/srv/http/mediadb/api` (Laravel) and `/srv/http/mediadb/ui` (optional quasar UI).
+Note: it is recommend to clone/install MediaDB projects to `/srv/http/mediadb/api` (mediadb-api) and `/srv/http/mediadb/ui` (mediadb-ui).
 
 ### Nginx
 
