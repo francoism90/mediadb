@@ -26,15 +26,23 @@ For the time being please consult the upstream documentation of used packages in
 
 ### Optional
 
-- <https://github.com/francoism90/mediadb-ui>
+- <https://github.com/francoism90/mediadb-ui> - Front-end for MediaDB written in Vue and Quasar.
 
 ## Install
 
-Note: it is recommend to use `/srv/http/mediadb/api` (Laravel) and `/srv/http/mediadb/ui` (optional quasar UI) as paths (see `doc/nginx`).
+Note: it is recommend to use `/srv/http/mediadb/api` (Laravel) and `/srv/http/mediadb/ui` (optional quasar UI).
 
 ### Nginx
 
 See `doc/nginx` for configuration examples.
+
+| Site             | Domain                         | Details                                                                                |
+|------------------|--------------------------------|----------------------------------------------------------------------------------------|
+| mediadb-api.conf | localhost:3000                 | API: generates JSON for vod-local, authentication, import videos, etc.                 |
+| mediadb-ui.conf  | mediadb.dom:443 mediadb.dom:80 | Front-end: accessible for user, browse library, etc.                                   |
+| vod-local.conf   | localhost:8081                 | VOD: JSON mappings files (full media paths, sequences, etc.).                          |
+| vod-mapped.conf  | localhost:1935                 | VOD: processes streaming (DASH), thumbnails and add security tokens.                   |
+| vod-stream.conf  | stream.dom:443 stream.dom:80   | VOD: accessible for user, validate security tokens, retrieve upstream vod-mapped data. |
 
 ### Laravel
 
@@ -98,7 +106,7 @@ VOD_SECRET=secret
 ### Set VOD path
 
 ```bash
-set $base /path/to/project/storage/app/streams;
+set $base /srv/http/mediadb/api/storage/app/streams;
 ```
 
 ## Upgrade
