@@ -7,6 +7,7 @@ use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
+use App\Support\QueryBuilder\Sorts\MediaSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -26,6 +27,7 @@ class TagController extends Controller
             ])
             ->AllowedSorts([
                 $defaultSort,
+                AllowedSort::custom('media', new MediaSorter()),
                 AllowedSort::custom('recommended', new RecommendedSorter()),
             ])
             ->defaultSort($defaultSort)

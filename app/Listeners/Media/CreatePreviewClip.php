@@ -61,14 +61,20 @@ class CreatePreviewClip implements ShouldQueue
     {
         $this->media = $event->media;
 
-        $this->tmp = (new TemporaryDirectory())->create();
-
-        if ($this->hasValidMime('video')) {
-            $this->createPreviewParts();
-            $this->savePreview();
+        if (!$this->hasValidMime('video')) {
+            throw new \Exception('Invalid mimetype given.');
         }
 
-        $this->tmp->delete();
+        $hasPreview = $this->media->hasGeneratedConversion('preview');
+
+        if (!$hasPreview) {
+            $this->tmp = (new TemporaryDirectory())->create();
+
+            $this->createPreviewParts();
+            $this->savePreview();
+
+            $this->tmp->delete();
+        }
 
         return true;
     }
