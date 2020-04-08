@@ -52,16 +52,45 @@ class Import extends Command
     /**
      * @return Finder
      */
-    private function getPathFiles(): Finder
+    protected function getPathFiles(): Finder
     {
+        // Make sure to only import valid media
+        $filter = function (\SplFileInfo $file) {
+            $mime = mime_content_type($file->getRealPath());
+
+            return in_array($mime, $this->supportedMimeTypes());
+        };
+
         return (new Finder())
             ->files()
             ->in($this->argument('path'))
             ->ignoreDotFiles(true)
             ->depth('== 0')
-            ->name([
-                '*.mp4', '*.m4v', '*.webm', '*.ogm', '*.ogv',
-            ])
+            ->name($this->supportedFileNames())
+            ->filter($filter)
             ->sortByName();
+    }
+
+    /**
+     * @return array
+     */
+    protected function supportedFileNames(): array
+    {
+        return [
+            '*.mp4', '*.m4v', '*.webm',
+            '*.ogg', '*.ogm', '*.ogv',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function supportedMimeTypes(): array
+    {
+        return [
+            'video/mp4', 'video/x-m4v', 'video/mp4v-es',
+            'video/x-ogg', 'video/x-ogm', 'video/x-ogm+ogg',
+            'video/x-theora', 'video/x-theora+ogg', 'video/webm',
+        ];
     }
 }
