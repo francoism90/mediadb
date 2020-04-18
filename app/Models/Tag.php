@@ -81,9 +81,7 @@ class Tag extends TagModel
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
-            ->when($type, function ($query, $type) {
-                return $query->where('taggable_type', $type);
-            })
+            ->when($type, fn ($query, $type) => $query->where('taggable_type', $type))
             ->count();
     }
 
@@ -97,16 +95,14 @@ class Tag extends TagModel
      */
     public function scopeWithSlugTranslated($query, array $tags = [], string $type = null, string $locale = null)
     {
-        $locale = $locale ?? app()->getLocale();
+        $useLocale = $locale ?? app()->getLocale();
 
         return $query
-            ->when($type, function ($query, $type) {
-                return $query->where('type', $type);
-            })
-            ->where(function ($query) use ($tags, $locale) {
-                foreach ($tags as $tag) {
-                    $query->orWhereJsonContains("slug->{$locale}", $tag);
-                }
-            });
+            ->when($type, fn ($query, $type) => $query->where('type', $type))
+                ->where(function ($query) use ($tags, $useLocale) {
+                    foreach ($tags as $tag) {
+                        $query->orWhereJsonContains("slug->{$useLocale}", $tag);
+                    }
+                });
     }
 }

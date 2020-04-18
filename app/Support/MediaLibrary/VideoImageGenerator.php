@@ -28,7 +28,7 @@ class VideoImageGenerator extends ImageGenerator
         $video = $ffmpeg->open($path);
         $duration = $ffmpeg->getFFProbe()->format($path)->get('duration');
 
-        $seconds = $conversion ? $conversion->getExtractVideoFrameAtSecond() : 0;
+        $seconds = null !== $conversion ? $conversion->getExtractVideoFrameAtSecond() : 0;
         $seconds = $duration < $seconds ? 0 : $seconds;
 
         $frame = $video->frame(TimeCode::fromSeconds($seconds));

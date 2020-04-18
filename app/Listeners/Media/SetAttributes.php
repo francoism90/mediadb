@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Media;
 
+use App\Models\Media;
 use Exception;
 use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe\DataMapping\Format;
@@ -10,6 +11,11 @@ use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAdded;
 
 class SetAttributes
 {
+    /**
+     * @var bool
+     */
+    public $deleteWhenMissingModels = true;
+
     /**
      * @var FFMpeg
      */

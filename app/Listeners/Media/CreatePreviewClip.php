@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Media;
 
+use App\Models\Media;
 use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
@@ -17,6 +18,11 @@ use Spatie\TemporaryDirectory\TemporaryDirectory;
 class CreatePreviewClip implements ShouldQueue
 {
     use InteractsWithQueue;
+
+    /**
+     * @var bool
+     */
+    public $deleteWhenMissingModels = true;
 
     /**
      * @var FFMpeg
@@ -110,6 +116,9 @@ class CreatePreviewClip implements ShouldQueue
         return $this;
     }
 
+    /**
+     * @return void
+     */
     private function savePreview(): void
     {
         $video = $this->getVideo();

@@ -14,9 +14,7 @@ trait Taggable
      */
     public static function getTagsTypeMapped(array $tags = []): Collection
     {
-        return collect($tags)->mapToGroups(function ($item) {
-            return [$item['type'] ?? null => $item['name']];
-        });
+        return collect($tags)->mapToGroups(fn ($item) => [$item['type'] ?? null => $item['name']]);
     }
 
     /**

@@ -1,0 +1,13 @@
+parameters:
+  autoload_paths:
+    - 'vendor/autoload.php'
+  sets:
+    - 'php74'
+    - 'code-quality'
+  exclude_paths:
+    - '/*/bootstrap/*'
+    - '/*/database/*'
+    - '/*/node_modules/*'
+    - '/*/public/*'
+    - '/*/storage/*'
+    - '/*/vendor/*'

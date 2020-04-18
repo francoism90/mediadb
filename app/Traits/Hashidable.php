@@ -63,25 +63,12 @@ trait Hashidable
      *
      * @return Model
      */
-    public static function getModelByKey(string $key, string $connection = null): Model
+    public static function findByHash(string $key, string $connection = null): Model
     {
         $key = self::getDecodedKey($key, $connection);
 
         $modelInstance = resolve($connection ?? get_called_class());
 
         return $modelInstance::findOrFail($key);
-    }
-
-    /**
-     * @param array       $items
-     * @param string|null $connection
-     *
-     * @return void
-     */
-    public static function getModelsByKey(array $items, string $connection = null)
-    {
-        return collect($items)->transform(function ($item) use ($connection) {
-            return self::getModelByKey($item, $connection);
-        });
     }
 }

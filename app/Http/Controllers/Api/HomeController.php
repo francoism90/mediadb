@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 
 class HomeController extends Controller
 {
     /**
-     * @return response
+     * @return JsonResponse
      */
     public function __invoke()
     {

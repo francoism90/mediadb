@@ -5,8 +5,8 @@ namespace App\Traits;
 trait Activityable
 {
     /**
-     * @param string $collection
-     * @param Carbon $expireAt
+     * @param string $log
+     * @param array  $properties
      *
      * @return void
      */

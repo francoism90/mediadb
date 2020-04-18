@@ -23,9 +23,7 @@ trait Randomable
             $ttl = parent::getRandomSeedLifetime();
         }
 
-        return Cache::remember(self::getRandomSeedKey($class), $ttl, function () {
-            return mt_rand(1000, 9500);
-        });
+        return Cache::remember(self::getRandomSeedKey($class), $ttl, fn () => mt_rand(1000, 9500));
     }
 
     /**

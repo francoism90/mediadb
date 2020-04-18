@@ -33,17 +33,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::bind('collect', function ($value, $route) {
-            return Collection::getModelByKey($value);
-        });
-
-        Route::bind('media', function ($value, $route) {
-            return Media::getModelByKey($value);
-        });
-
-        Route::bind('tag', function ($value, $route) {
-            return Tag::getModelByKey($value);
-        });
+        Route::bind('collect', fn ($value, $route) => Collection::findByHash($value));
+        Route::bind('media', fn ($value, $route) => Media::findByHash($value));
+        Route::bind('tag', fn ($value, $route) => Tag::findByHash($value));
     }
 
     /**

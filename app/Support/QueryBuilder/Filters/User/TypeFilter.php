@@ -13,13 +13,7 @@ class TypeFilter implements Filter
         // Convert arrays to string
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        // Requested filter
-        switch ($value) {
-            case 'user':
-                return $query->where('id', Auth::user()->id ?? 0);
-                break;
-            default:
-                return $query;
-        }
+        return $query
+            ->when('user' === $value, fn ($query) => $query->where('id', Auth::user()->id ?? 0));
     }
 }

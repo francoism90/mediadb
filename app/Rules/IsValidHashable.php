@@ -25,7 +25,7 @@ class IsValidHashable implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Hashidable::getModelByKey($value, $this->model)->exists();
+        return Hashidable::findByHash($value, $this->model)->exists();
     }
 
     /**

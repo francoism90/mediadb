@@ -14,8 +14,6 @@ class TypeFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         return $query
-            ->when('user' === $value, function ($query) {
-                return $query->where('user_id', Auth::user()->id ?? 0);
-            });
+            ->when('user' === $value, fn ($query) => $query->where('user_id', Auth::user()->id ?? 0));
     }
 }

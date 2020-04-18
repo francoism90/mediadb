@@ -15,7 +15,7 @@ class IsExistingTag implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Tag::getModelByKey($value['id'] ?? null)->exists();
+        return Tag::findByHash($value['id'] ?? null)->exists();
     }
 
     /**

@@ -14,7 +14,7 @@ class CollectionFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         // Media models
-        $ids = Collection::getModelByKey($value)->media->pluck('id')->toArray();
+        $ids = Collection::findByHash($value)->media->pluck('id')->toArray();
 
         return $query->whereIn('id', $ids);
     }

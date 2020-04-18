@@ -13,6 +13,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;

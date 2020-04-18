@@ -62,7 +62,7 @@ class RelatedFilter implements Filter
     {
         $this->model = $model;
 
-        $this->item = $model->getModelByKey($value);
+        $this->item = $model->findByHash($value);
 
         return $this;
     }

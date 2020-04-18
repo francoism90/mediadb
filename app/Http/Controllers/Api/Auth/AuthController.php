@@ -15,9 +15,9 @@ class AuthController extends Controller
     /**
      * @param Request $request
      *
-     * @return void
+     * @return UserResource
      */
-    public function me(Request $request)
+    public function me(Request $request): UserResource
     {
         return new UserResource(
             $request->user()

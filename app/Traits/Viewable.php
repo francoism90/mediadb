@@ -21,8 +21,6 @@ trait Viewable
     }
 
     /**
-     * @param string $key
-     *
      * @return int
      */
     public function getViewsAttribute(): int

@@ -43,11 +43,9 @@ trait Streamable
             Cache::forget($key);
         }
 
-        return Cache::remember($key, $expires, function () {
-            return Storage::disk('streams')->put(
-                $this->getStreamJsonName(), $this->getStreamJsonContents()
-            );
-        });
+        return Cache::remember($key, $expires, fn () => Storage::disk('streams')->put(
+                        $this->getStreamJsonName(), $this->getStreamJsonContents()
+                    ));
     }
 
     /**

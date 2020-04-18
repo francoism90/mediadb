@@ -15,6 +15,7 @@ use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
+use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -50,7 +51,7 @@ class CollectionController extends Controller
     }
 
     /**
-     * @param Collection $media
+     * @param Collection $collect
      *
      * @return CollectionResource
      */
@@ -92,7 +93,7 @@ class CollectionController extends Controller
     /**
      * @param Collection $collect
      *
-     * @return CollectionResource
+     * @return CollectionResource|JsonResponse
      */
     public function destroy(Collection $collect)
     {

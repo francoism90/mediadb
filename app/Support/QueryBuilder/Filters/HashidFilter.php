@@ -13,7 +13,7 @@ class HashidFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         // Find model
-        $model = $query->getModel()->getModelByKey($value);
+        $model = $query->getModel()->findByHash($value);
 
         return $query->where('id', $model->id);
     }
