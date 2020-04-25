@@ -54,9 +54,12 @@ class QueryFilter implements Filter
      */
     private function setQueryString(string $str = ''): void
     {
+        // Replace special chars
+        $this->queryStr = str_replace(['.', '_'], ' ', $str);
+
         // Keep ASCII > 127
         $this->queryStr = filter_var(
-            $str,
+            $this->queryStr,
             FILTER_SANITIZE_STRING,
             FILTER_FLAG_NO_ENCODE_QUOTES |
             FILTER_FLAG_STRIP_LOW
