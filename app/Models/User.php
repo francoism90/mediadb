@@ -11,7 +11,6 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use ScoutElastic\Searchable;
@@ -27,7 +26,6 @@ class User extends Authenticatable implements HasMedia, Viewable
     use Searchable;
     use Sluggable;
     use SluggableScopeHelpers;
-    use SoftDeletes;
     use InteractsWithMedia;
     use InteractsWithViews;
     use ViewableHelpers;

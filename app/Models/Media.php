@@ -165,10 +165,8 @@ class Media extends BaseMedia implements Viewable
      */
     public function getUserCollectionsAttribute()
     {
-        // TODO: pluck id, name
-
         return $this->collections
-                    ->where('user_id', auth()->user()->id ?? 0);
+            ->where('user_id', auth()->user()->id ?? 0);
     }
 
     /**
@@ -177,7 +175,9 @@ class Media extends BaseMedia implements Viewable
     public function getDownloadUrlAttribute(): string
     {
         return $this->getTemporaryUrl(
-            Carbon::now()->addHours(4)
+            Carbon::now()->addHours(
+                config('vod.expire')
+            )
         );
     }
 
@@ -198,7 +198,7 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return string
      */
-    public function getStreamThumbUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
+    public function getThumbUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
     {
         return self::getSecureExpireLink(
             $this->getStreamUrl('thumb', "thumb-{$offset}-{$resize}.jpg"),

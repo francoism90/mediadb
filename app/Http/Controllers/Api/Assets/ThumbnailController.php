@@ -19,7 +19,7 @@ class ThumbnailController extends Controller
         return (new MediaResource($media))
             ->additional([
                 'meta' => [
-                    'thumbnail' => $media->getStreamThumbUrlAttribute($offset),
+                    'thumbnail' => $media->getThumbUrlAttribute($offset),
                     'offset' => $offset,
                 ],
             ]);

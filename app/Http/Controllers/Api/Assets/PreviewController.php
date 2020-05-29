@@ -21,7 +21,7 @@ class PreviewController extends Controller
         $basename = pathinfo($media->file_name, PATHINFO_FILENAME).'-preview.mp4';
         $path = "{$root}/conversions/{$basename}";
 
-        if (!$path || !file_exists($path)) {
+        if (!file_exists($path)) {
             abort(404);
         }
 
