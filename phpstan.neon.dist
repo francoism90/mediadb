@@ -1,7 +1,17 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+  - ./vendor/nunomaduro/larastan/extension.neon
+
 parameters:
-    paths:
-        - app
-    level: 5
-    checkMissingIterableValueType: false
+  paths:
+      - app
+
+  # The level 8 is the highest level
+  level: 5
+
+  ignoreErrors:
+      - '#Unsafe usage of new static#'
+
+  excludes_analyse:
+      - ./*/*/FileToBeExcluded.php
+
+  checkMissingIterableValueType: false

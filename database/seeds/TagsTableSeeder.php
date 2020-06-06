@@ -52,36 +52,33 @@ class TagsTableSeeder extends Seeder
     {
         // Genres
         foreach ($this->genres as $genre) {
-            // Generate slug
-            $slug = Str::slug($genre, '-');
+            $slug = Str::slug($genre);
 
             DB::table('tags')->insert([
-                'slug' => $this->getJsonByLocal($slug),
-                'name' => $this->getJsonByLocal($genre),
+                'slug' => $this->getJsonByLocale($slug),
+                'name' => $this->getJsonByLocale($genre),
                 'type' => 'genre',
             ]);
         }
 
         // Languages
         foreach ($this->languages as $language) {
-            // Generate slug
-            $slug = Str::slug($language, '-');
+            $slug = Str::slug($language);
 
             DB::table('tags')->insert([
-                'slug' => $this->getJsonByLocal($slug),
-                'name' => $this->getJsonByLocal($language),
+                'slug' => $this->getJsonByLocale($slug),
+                'name' => $this->getJsonByLocale($language),
                 'type' => 'language',
             ]);
         }
 
         // People
         foreach ($this->people as $person) {
-            // Generate slug
-            $slug = Str::slug($person, '-');
+            $slug = Str::slug($person);
 
             DB::table('tags')->insert([
-                'slug' => $this->getJsonByLocal($slug),
-                'name' => $this->getJsonByLocal($person),
+                'slug' => $this->getJsonByLocale($slug),
+                'name' => $this->getJsonByLocale($person),
                 'type' => 'person',
             ]);
         }
@@ -92,10 +89,10 @@ class TagsTableSeeder extends Seeder
      *
      * @return string
      */
-    private function getJsonByLocal(string $value, string $local = 'en'): string
+    private function getJsonByLocale(string $value, string $locale = 'en'): string
     {
         return json_encode(
-            [$local => $value],
+            [$locale => $value],
             JSON_FORCE_OBJECT |
             JSON_UNESCAPED_SLASHES |
             JSON_UNESCAPED_UNICODE
