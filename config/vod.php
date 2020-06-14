@@ -29,4 +29,39 @@ return [
     'secret' => env('VOD_SECRET'),
 
     'expire' => env('VOD_EXPIRE', 60 * 60 * 8),
+
+    /*
+    |--------------------------------------------------------------------------
+    | VOD Streaming
+    |--------------------------------------------------------------------------
+    |
+    | Formats allowed to be imported and used for VOD streaming.
+    |
+    */
+
+    'extensions' => [
+        'm4v',
+        'mp4',
+        'ogm',
+        'ogv',
+        'ogx',
+        'vp8',
+        'vp9',
+        'webm',
+    ],
+
+    'mimetypes' => [
+        'video/mp4',
+        'video/mp4v-es',
+        'video/ogg',
+        'video/vp8',
+        'video/vp9',
+        'video/webm',
+        'video/x-m4v',
+        'video/x-ogg',
+        'video/x-ogm',
+        'video/x-ogm+ogg',
+        'video/x-theora',
+        'video/x-theora+ogg',
+    ],
 ];

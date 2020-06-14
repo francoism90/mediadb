@@ -12,13 +12,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAdded' => [
-            'App\Listeners\Media\SetAttributes',
-        ],
-
-        'Spatie\MediaLibrary\Conversions\Events\ConversionHasBeenCompleted' => [
-            'App\Listeners\Media\CreatePreviewClip',
-        ],
     ];
 
     /**

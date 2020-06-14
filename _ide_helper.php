@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.14.1 on 2020-06-06 15:12:32.
+ * Generated for Laravel 7.15.0 on 2020-06-13 17:36:09.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -17647,7 +17647,7 @@ namespace  {
          *
          * @param callable $callback
          *
-         * @return \Illuminate\Database\Query\Builder
+         * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
         public static function tap($callback)
@@ -17983,8 +17983,8 @@ namespace  {
         /**
          * Add a subselect expression to the query.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string                                             $as
+         * @param \Closure|$this|string $query
+         * @param string $as
          *
          * @return \Illuminate\Database\Query\Builder
          *

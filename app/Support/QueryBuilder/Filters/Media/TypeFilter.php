@@ -16,6 +16,7 @@ class TypeFilter implements Filter
 
         return $query
             ->when('user' === $value, fn ($query) => $query->where('model_type', User::class)
-            ->where('model_id', Auth::user()->id ?? 0));
+                ->where('model_id', Auth::user()->id ?? 0)
+            );
     }
 }

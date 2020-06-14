@@ -35,7 +35,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     });
 
     // Assets
-    Route::middleware('doNotCacheResponse')->name('asset.')->prefix('asset')->namespace('Assets')->group(function () {
+    Route::middleware('doNotCacheResponse')->name('asset.')->prefix('asset')->namespace('Media')->group(function () {
         Route::middleware('signed')->get('download/{media}/{user}/{version?}', ['uses' => 'DownloadController', 'as' => 'download'])->where('version', '[0-9]+');
         Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder'])->where('version', '[0-9]+');
         Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview'])->where('version', '[0-9]+');

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Assets;
+namespace App\Http\Controllers\Api\Media;
 
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
 
-class PreviewController extends Controller
+class PlaceholderController extends Controller
 {
     /**
      * @param Media $media
@@ -16,18 +16,16 @@ class PreviewController extends Controller
      */
     public function __invoke(Media $media, User $user)
     {
-        $root = dirname($media->getPath());
+        $path = $media->getPath('thumbnail');
 
-        $basename = pathinfo($media->file_name, PATHINFO_FILENAME).'-preview.mp4';
-        $path = "{$root}/conversions/{$basename}";
-
-        if (!file_exists($path)) {
+        if (!$path || !file_exists($path)) {
             abort(404);
         }
 
         $type = mime_content_type($path);
 
         // Internal redirect path
+        $root = dirname($path);
         $asset = str_replace($root, '', $path);
 
         header("X-Assets-Root: {$root}");

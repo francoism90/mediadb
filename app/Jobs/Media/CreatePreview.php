@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Media;
+namespace App\Jobs\Media;
 
 use App\Models\Media;
 use FFMpeg\Coordinate\Dimension;
@@ -10,19 +10,31 @@ use FFMpeg\Filters\Audio\SimpleFilter;
 use FFMpeg\Filters\Video\ResizeFilter;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\MediaLibrary\Conversions\Events\ConversionHasBeenCompleted;
+use Illuminate\Queue\SerializesModels;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 
-class CreatePreviewClip implements ShouldQueue
+class CreatePreview implements ShouldQueue
 {
+    use Dispatchable;
     use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var bool
      */
     public $deleteWhenMissingModels = true;
+
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 120;
 
     /**
      * @var FFMpeg
@@ -42,57 +54,46 @@ class CreatePreviewClip implements ShouldQueue
     /**
      * @var array
      */
-    protected $collection;
+    protected $parts;
 
     /**
-     * @var int
+     * Create a new job instance.
+     *
+     * @return void
      */
-    public $timeout = 240;
-
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
+    public function __construct(Media $media)
     {
-        $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
-            'ffprobe.binaries' => config('media-library.ffprobe_path'),
-        ]);
+        $this->media = $media->fresh()->withoutRelations();
     }
 
     /**
      * Execute the job.
+     *
+     * @return void
      */
-    public function handle(ConversionHasBeenCompleted $event)
+    public function handle()
     {
-        $this->media = $event->media;
+        $this->ffmpeg = FFMpeg::create([
+                'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+                'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            ]);
 
-        if (!$this->hasValidMime('video')) {
-            throw new \Exception('Invalid mimetype given.');
-        }
+        $this->tmp = (new TemporaryDirectory())->create();
 
-        $hasPreview = $this->media->hasGeneratedConversion('preview');
+        $this->prepareVideoClips();
+        $this->performConversion();
 
-        if (!$hasPreview) {
-            $this->tmp = (new TemporaryDirectory())->create();
-
-            $this->createPreviewParts();
-            $this->savePreview();
-
-            $this->tmp->delete();
-        }
-
-        return true;
+        $this->tmp->delete();
     }
 
     /**
      * @return self
      */
-    private function createPreviewParts(): self
+    protected function prepareVideoClips(): self
     {
-        $ranges = $this->getRanges();
+        $ranges = $this->getClipsRanges();
 
-        $parts = [1, 3, 5, 7];
+        $parts = $this->media->getCustomProperty('clips', [1, 3, 5, 7]);
 
         foreach ($parts as $part) {
             $path = $this->tmp->path("{$part}.mp4");
@@ -110,7 +111,7 @@ class CreatePreviewClip implements ShouldQueue
 
             $clip->save($format, $path);
 
-            $this->collection[] = $path;
+            $this->parts[] = $path;
         }
 
         return $this;
@@ -119,15 +120,16 @@ class CreatePreviewClip implements ShouldQueue
     /**
      * @return void
      */
-    private function savePreview(): void
+    protected function performConversion(): void
     {
         $video = $this->getVideo();
-        $video->concat($this->collection)
+
+        $video->concat($this->parts)
               ->saveFromSameCodecs($this->tmp->path('preview.mp4'), true);
 
         copy(
             $this->tmp->path('preview.mp4'),
-            $this->getRootPath().'/conversions/'.$this->getPreviewName()
+            $this->getRootPath().'/conversions/'.$this->getFinalFileName()
         );
 
         $this->media->markAsConversionGenerated('preview', true);
@@ -136,7 +138,7 @@ class CreatePreviewClip implements ShouldQueue
     /**
      * @return string
      */
-    private function getRootPath(): string
+    protected function getRootPath(): string
     {
         return dirname($this->media->getPath());
     }
@@ -144,20 +146,18 @@ class CreatePreviewClip implements ShouldQueue
     /**
      * @return string
      */
-    private function getPreviewName(): string
+    protected function getFinalFileName(): string
     {
         return pathinfo($this->media->file_name, PATHINFO_FILENAME).'-preview.mp4';
     }
 
     /**
-     * @param int $divider
-     *
      * @return array
      */
-    private function getRanges(int $divider = 8): array
+    protected function getClipsRanges(): array
     {
-        $duration = $this->media->getCustomProperty('duration');
-        $steps = $duration / $divider;
+        $duration = $this->media->getCustomProperty('duration', 10);
+        $steps = $duration / $this->media->getCustomProperty('divider', 8);
 
         return range(0, $duration, $steps);
     }
@@ -165,16 +165,8 @@ class CreatePreviewClip implements ShouldQueue
     /**
      * @return Video
      */
-    private function getVideo(): Video
+    protected function getVideo(): Video
     {
         return $this->ffmpeg->open($this->media->getPath());
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasValidMime(string $type): bool
-    {
-        return false !== strpos($this->media->mime_type, $type);
     }
 }

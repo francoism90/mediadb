@@ -20,7 +20,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $description = 'Import media file(s) to the user';
+    protected $description = 'Import media file(s) to an user';
 
     /**
      * Create a new command instance.
@@ -45,7 +45,7 @@ class Import extends Command
                 ->usingName($file->getFilename())
                 ->toMediaCollection($this->argument('collection'));
 
-            $media->setStatus('private', 'needs approval');
+            $media->setStatus('pending', 'needs processing');
         }
     }
 
@@ -54,8 +54,12 @@ class Import extends Command
      */
     protected function getPathFiles(): Finder
     {
-        // Make sure to only import valid media
+        // Ignore unreadable files
         $filter = function (\SplFileInfo $file) {
+            if (!$file->isReadable() || !$file->isWritable()) {
+                return false;
+            }
+
             $mime = mime_content_type($file->getRealPath());
 
             return in_array($mime, $this->supportedMimeTypes());
@@ -64,7 +68,6 @@ class Import extends Command
         return (new Finder())
             ->files()
             ->in($this->argument('path'))
-            ->ignoreDotFiles(true)
             ->depth('== 0')
             ->name($this->supportedFileNames())
             ->filter($filter)
@@ -76,10 +79,13 @@ class Import extends Command
      */
     protected function supportedFileNames(): array
     {
-        return [
-            '*.mp4', '*.m4v', '*.webm',
-            '*.ogg', '*.ogm', '*.ogv',
-        ];
+        $extensions = collect(
+            config('vod.extensions')
+        );
+
+        return $extensions->map(function ($item) {
+            return "*.{$item}";
+        })->toArray();
     }
 
     /**
@@ -87,10 +93,6 @@ class Import extends Command
      */
     protected function supportedMimeTypes(): array
     {
-        return [
-            'video/mp4', 'video/x-m4v', 'video/mp4v-es',
-            'video/x-ogg', 'video/x-ogm', 'video/x-ogm+ogg',
-            'video/x-theora', 'video/x-theora+ogg', 'video/webm',
-        ];
+        return config('vod.mimetypes');
     }
 }

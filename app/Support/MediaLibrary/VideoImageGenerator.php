@@ -50,16 +50,9 @@ class VideoImageGenerator extends ImageGenerator
      */
     public function supportedExtensions(): Collection
     {
-        return collect([
-            'm4v',
-            'mp4',
-            'ogm',
-            'ogv',
-            'ogx',
-            'vp8',
-            'vp9',
-            'webm',
-        ]);
+        return collect(
+            config('vod.extensions')
+        );
     }
 
     /**
@@ -67,13 +60,8 @@ class VideoImageGenerator extends ImageGenerator
      */
     public function supportedMimeTypes(): Collection
     {
-        return collect([
-            'video/mp4',
-            'video/ogg',
-            'video/vp8',
-            'video/vp9',
-            'video/webm',
-            'video/x-m4v',
-        ]);
+        return collect(
+            config('vod.mimetypes')
+        );
     }
 }

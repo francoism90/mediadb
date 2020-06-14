@@ -13,21 +13,24 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Multicaret\Acquaintances\Traits\CanFollow;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia, Viewable
 {
     use Activityable;
+    use CanFollow;
+    use HasRoles;
+    use InteractsWithMedia;
+    use InteractsWithViews;
     use Notifiable;
     use Randomable;
     use Searchable;
     use Sluggable;
     use SluggableScopeHelpers;
-    use InteractsWithMedia;
-    use InteractsWithViews;
     use ViewableHelpers;
 
     /**

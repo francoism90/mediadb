@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9351c815701c193e96b0a1242c59deb",
+    "content-hash": "4de00ee651dbee594dd563b941bb364c",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1868,16 +1868,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.14.1",
+            "version": "v7.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "469b7719a8dca40841a74f59f2e9f30f01d3a106"
+                "reference": "739c44a3f7041430a3fb357f2dcfdb78f55005d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/469b7719a8dca40841a74f59f2e9f30f01d3a106",
-                "reference": "469b7719a8dca40841a74f59f2e9f30f01d3a106",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/739c44a3f7041430a3fb357f2dcfdb78f55005d7",
+                "reference": "739c44a3f7041430a3fb357f2dcfdb78f55005d7",
                 "shasum": ""
             },
             "require": {
@@ -2020,7 +2020,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-06-02T22:34:18+00:00"
+            "time": "2020-06-09T14:00:25+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2097,16 +2097,16 @@
         },
         {
             "name": "laravel/sanctum",
-            "version": "v2.3.3",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "ecdcd8bff16ba97434da332afc41e4160659feb1"
+                "reference": "2aac713ced04e6e7f046748833dea5ab4c98b621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/ecdcd8bff16ba97434da332afc41e4160659feb1",
-                "reference": "ecdcd8bff16ba97434da332afc41e4160659feb1",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/2aac713ced04e6e7f046748833dea5ab4c98b621",
+                "reference": "2aac713ced04e6e7f046748833dea5ab4c98b621",
                 "shasum": ""
             },
             "require": {
@@ -2153,7 +2153,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2020-05-26T18:42:04+00:00"
+            "time": "2020-06-11T13:58:49+00:00"
         },
         {
             "name": "laravel/scout",
@@ -2861,6 +2861,72 @@
             ],
             "abandoned": "brick/math",
             "time": "2020-01-05T04:49:34+00:00"
+        },
+        {
+            "name": "multicaret/laravel-acquaintances",
+            "version": "v3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/multicaret/laravel-acquaintances.git",
+                "reference": "d9093d91e7f763bb366dfda19b5ca952d2b627dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/d9093d91e7f763bb366dfda19b5ca952d2b627dc",
+                "reference": "d9093d91e7f763bb366dfda19b5ca952d2b627dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.3.2",
+                "doctrine/dbal": "^2.5",
+                "fzaninotto/faker": "~1.4",
+                "laravel/laravel": "5.*",
+                "mockery/mockery": "1.0.x-dev",
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Multicaret\\Acquaintances\\AcquaintancesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Multicaret\\Acquaintances\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Kawsara",
+                    "email": "mkwsra@gmail.com"
+                }
+            ],
+            "description": "This light package, with no dependencies, gives Eloquent models the ability to manage friendships (with groups). And interactions such as: Likes, favorites, votes, subscribe, follow, ..etc. And it includes advanced rating system.",
+            "keywords": [
+                "Followers",
+                "Rate",
+                "Rating",
+                "eloquent",
+                "followships",
+                "friend-system",
+                "friends",
+                "friendships",
+                "interactions",
+                "laravel",
+                "like",
+                "social-media",
+                "wish-list"
+            ],
+            "time": "2020-05-09T14:41:26+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -4301,16 +4367,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.2.7",
+            "version": "8.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "117852093c0e8b5390a6c7dd5f9109dbce969788"
+                "reference": "a3634f6645e07f4982ff64bd75e90c9e8adafba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/117852093c0e8b5390a6c7dd5f9109dbce969788",
-                "reference": "117852093c0e8b5390a6c7dd5f9109dbce969788",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a3634f6645e07f4982ff64bd75e90c9e8adafba0",
+                "reference": "a3634f6645e07f4982ff64bd75e90c9e8adafba0",
                 "shasum": ""
             },
             "require": {
@@ -4397,7 +4463,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-05-13T12:04:55+00:00"
+            "time": "2020-06-11T11:51:43+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
@@ -4818,16 +4884,16 @@
         },
         {
             "name": "spatie/temporary-directory",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "fcb127e615700751dac2aefee0ea2808ff3f5bb1"
+                "reference": "eeb84a7a3543e90759cd852ccb468e3d3340d99d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/fcb127e615700751dac2aefee0ea2808ff3f5bb1",
-                "reference": "fcb127e615700751dac2aefee0ea2808ff3f5bb1",
+                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/eeb84a7a3543e90759cd852ccb468e3d3340d99d",
+                "reference": "eeb84a7a3543e90759cd852ccb468e3d3340d99d",
                 "shasum": ""
             },
             "require": {
@@ -4860,7 +4926,7 @@
                 "spatie",
                 "temporary-directory"
             ],
-            "time": "2019-12-15T18:52:09+00:00"
+            "time": "2020-06-08T08:58:45+00:00"
         },
         {
             "name": "staudenmeir/eloquent-json-relations",
@@ -8639,16 +8705,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.25",
+            "version": "0.12.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9619551d68b2d4c0d681a8df73f3c847c798ee64"
+                "reference": "76c0c4ec90b1eed66fa4855b8b4b53fa9054353f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9619551d68b2d4c0d681a8df73f3c847c798ee64",
-                "reference": "9619551d68b2d4c0d681a8df73f3c847c798ee64",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/76c0c4ec90b1eed66fa4855b8b4b53fa9054353f",
+                "reference": "76c0c4ec90b1eed66fa4855b8b4b53fa9054353f",
                 "shasum": ""
             },
             "require": {
@@ -8691,7 +8757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-10T20:36:16+00:00"
+            "time": "2020-06-10T06:20:14+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

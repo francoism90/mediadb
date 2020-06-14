@@ -29,13 +29,23 @@ use Spatie\QueryBuilder\QueryBuilder;
 class MediaController extends Controller
 {
     /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Media::class, 'media');
+    }
+
+    /**
      * @return MediaResource
      */
     public function index()
     {
+        $query = Media::currentStatus(['processed', 'public']);
+
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
-        $query = QueryBuilder::for(Media::class)
+        $media = QueryBuilder::for($query)
             ->allowedIncludes(['model', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('collect', new CollectionFilter())->ignore(null, '*'),
@@ -56,7 +66,7 @@ class MediaController extends Controller
             ->defaultSort($defaultSort)
             ->jsonPaginate();
 
-        return MediaResource::collection($query);
+        return MediaResource::collection($media);
     }
 
     /**
@@ -153,6 +163,6 @@ class MediaController extends Controller
             return new MediaResource($media);
         }
 
-        return response()->json('error', 500);
+        return response()->json('Unable to delete media', 500);
     }
 }

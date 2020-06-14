@@ -18,6 +18,8 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Support\Facades\URL;
+use Multicaret\Acquaintances\Traits\CanBeFavorited;
+use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -41,6 +43,8 @@ class Media extends BaseMedia implements Viewable
     use Taggable;
     use InteractsWithViews;
     use ViewableHelpers;
+    use CanBeLiked;
+    use CanBeFavorited;
 
     /**
      * @var array
