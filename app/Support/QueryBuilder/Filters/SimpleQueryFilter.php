@@ -82,7 +82,7 @@ class SimpleQueryFilter implements Filter
             ->select(['name'])
             ->collapse('id')
             ->from(0)
-            ->take(10000)
+            ->take(1500)
             ->get();
     }
 }

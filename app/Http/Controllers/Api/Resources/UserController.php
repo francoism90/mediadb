@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
-use App\Support\QueryBuilder\Filters\User\TypeFilter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -24,8 +23,6 @@ class UserController extends Controller
         $query = QueryBuilder::for(User::class)
             ->allowedIncludes('media')
             ->allowedFilters([
-                AllowedFilter::exact('id', 'slug')->ignore(null, '*'),
-                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([

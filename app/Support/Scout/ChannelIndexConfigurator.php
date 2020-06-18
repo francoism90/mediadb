@@ -5,7 +5,7 @@ namespace App\Support\Scout;
 use ScoutElastic\IndexConfigurator;
 use ScoutElastic\Migratable;
 
-class CollectionIndexConfigurator extends IndexConfigurator
+class ChannelIndexConfigurator extends IndexConfigurator
 {
     use Migratable;
 

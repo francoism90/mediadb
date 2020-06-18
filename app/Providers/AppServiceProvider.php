@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
-use App\Models\Collection;
+use App\Models\Channel;
 use App\Models\Media;
+use App\Models\Playlist;
 use App\Models\Tag;
 use App\Models\User;
-use App\Observers\CollectionObserver;
+use App\Observers\ChannelObserver;
 use App\Observers\MediaObserver;
+use App\Observers\PlaylistObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,12 +37,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Enforce HTTPS
-        // URL::forceScheme('https');
-
-        // Observers
-        Collection::observe(CollectionObserver::class);
+        Channel::observe(ChannelObserver::class);
         Media::observe(MediaObserver::class);
+        Playlist::observe(PlaylistObserver::class);
         Tag::observe(TagObserver::class);
         User::observe(UserObserver::class);
     }

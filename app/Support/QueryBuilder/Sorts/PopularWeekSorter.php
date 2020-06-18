@@ -17,12 +17,6 @@ class PopularWeekSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $viewableType = get_class($query->getModel());
-
-        return $query->withCount(['views' => function ($query) use ($viewableType) {
-            $query->where('viewable_type', $viewableType)
-                  ->withinPeriod(Period::pastWeeks(1))
-                  ->distinct('visitor');
-        }])->orderBy('views_count', 'DESC');
+        return $query->orderByViews('DESC', Period::pastWeeks(1), 'view_count', true);
     }
 }

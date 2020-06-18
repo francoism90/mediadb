@@ -19,7 +19,7 @@ class MediaResource extends JsonResource
             'status' => $this->status,
             'mimetype' => $this->mime_type,
             'description' => $this->description,
-            'placeholder' => $this->placeholder_url,
+            'thumbnail' => $this->thumbnail_url,
             'preview' => $this->preview_url,
             'views' => $this->views,
             'collection' => $this->collection_name,
@@ -27,8 +27,9 @@ class MediaResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'relationships' => [
+                'model' => new ChannelResource($this->whenLoaded('model')),
+                'playlists' => PlaylistResource::collection($this->whenLoaded('playlists')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
-                'user' => new UserResource($this->whenLoaded('model')),
             ],
         ];
     }

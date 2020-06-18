@@ -2,35 +2,41 @@
 
 namespace App\Models;
 
-use App\Support\Scout\CollectionIndexConfigurator;
+use App\Support\Scout\PlaylistIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
+use App\Traits\Resourceable;
+use App\Traits\Securable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
-use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Multicaret\Acquaintances\Traits\CanBeFavorited;
+use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
-class Collection extends Model implements Viewable
+class Playlist extends Model implements Viewable
 {
+    use Activityable;
+    use CanBeFavorited;
+    use CanBeLiked;
     use Hashidable;
     use HasJsonRelationships;
     use HasStatuses;
     use HasTags;
-    use Activityable;
-    use Randomable;
-    use Searchable;
-    use Sluggable;
-    use Taggable;
     use InteractsWithViews;
+    use Randomable;
+    use Resourceable;
+    use Searchable;
+    use Securable;
+    use Taggable;
     use ViewableHelpers;
 
     /**
@@ -38,7 +44,7 @@ class Collection extends Model implements Viewable
      */
     protected $casts = [
         'custom_properties' => 'json',
-    ];
+     ];
 
     /**
      * @var array
@@ -53,7 +59,7 @@ class Collection extends Model implements Viewable
     /**
      * @var string
      */
-    protected $indexConfigurator = CollectionIndexConfigurator::class;
+    protected $indexConfigurator = PlaylistIndexConfigurator::class;
 
     /**
      * @var array
@@ -83,21 +89,23 @@ class Collection extends Model implements Viewable
     /**
      * @return array
      */
-    public function sluggable()
+    public function toSearchableArray(): array
     {
-        return [
-            'slug' => [
-                'source' => 'name',
-            ],
-        ];
+        return $this->only([
+            'id',
+            'name',
+            'description',
+            'model_type',
+            'model_id',
+        ]);
     }
 
     /**
-     * @return array
+     * @return void
      */
-    public function toSearchableArray(): array
+    public function model(): MorphTo
     {
-        return $this->only(['id', 'name', 'description']);
+        return $this->morphTo();
     }
 
     /**
@@ -119,26 +127,18 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    /**
-     * @return BelongsToJson
+     * @return belongsToJson
      */
     public function media()
     {
-        return $this->BelongsToJson('App\Models\Media', 'custom_properties->media_ids');
+        return $this->belongsToJson('App\Models\Media', 'custom_properties->media[]->media_id');
     }
 
     /**
      * @return string
      */
-    public function getPlaceholderUrlAttribute(): string
+    public function getThumbnailAttribute(): string
     {
-        return asset('storage/images/placeholders/empty.png');
+        return '';
     }
 }

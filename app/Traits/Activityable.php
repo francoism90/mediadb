@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\User;
+
 trait Activityable
 {
     /**
@@ -10,11 +12,11 @@ trait Activityable
      *
      * @return void
      */
-    public function recordActivity(string $log, array $properties = null)
+    public function recordActivity(string $log, array $properties = null, ?User $user = null)
     {
         activity()
             ->performedOn($this)
-            ->causedBy(auth()->user())
+            ->causedBy($user ?? auth()->user())
             ->withProperties($properties)
             ->log($log);
     }

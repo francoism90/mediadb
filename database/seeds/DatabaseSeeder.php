@@ -9,7 +9,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PermissionsSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
         $this->call(TagsTableSeeder::class);
+        $this->call(ChannelsTableSeeder::class);
+        $this->call(PlaylistsTableSeeder::class);
     }
 }

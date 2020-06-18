@@ -2,34 +2,40 @@
 
 namespace App\Models;
 
+use App\Support\Scout\ChannelIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
-use App\Support\Scout\UserIndexConfigurator;
 use App\Traits\Activityable;
-use App\Traits\Playlistable;
 use App\Traits\Randomable;
+use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Notifications\Notifiable;
-use Multicaret\Acquaintances\Traits\CanFollow;
+use Multicaret\Acquaintances\Traits\CanSubscribe;
 use ScoutElastic\Searchable;
-use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\ModelStatus\HasStatuses;
+use Spatie\Tags\HasTags;
 
-class User extends Authenticatable implements Viewable
+class Channel extends Model implements HasMedia, Viewable
 {
     use Activityable;
-    use CanFollow;
-    use HasRoles;
+    use CanSubscribe;
+    use HasStatuses;
+    use HasTags;
+    use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
-    use Playlistable;
     use Randomable;
     use Searchable;
     use Sluggable;
     use SluggableScopeHelpers;
+    use Taggable;
     use ViewableHelpers;
 
     /**
@@ -37,25 +43,12 @@ class User extends Authenticatable implements Viewable
      */
     protected $casts = [
         'custom_properties' => 'json',
-        'email_verified_at' => 'datetime',
     ];
 
     /**
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $guarded = [];
 
     /**
      * @var bool
@@ -65,7 +58,7 @@ class User extends Authenticatable implements Viewable
     /**
      * @var string
      */
-    protected $indexConfigurator = UserIndexConfigurator::class;
+    protected $indexConfigurator = ChannelIndexConfigurator::class;
 
     /**
      * @var array
@@ -113,27 +106,72 @@ class User extends Authenticatable implements Viewable
     }
 
     /**
+     * @return void
+     */
+    public function model(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    /**
      * @return array
      */
     public function toSearchableArray(): array
     {
-        return $this->only(['id', 'name', 'description']);
+        return $this->only([
+            'id',
+            'name',
+            'description',
+            'model_type',
+            'model_id',
+        ]);
     }
 
     /**
-     * @return morphMany
+     * @return string
      */
-    public function channels()
+    public static function getTagClassName(): string
     {
-        return $this->morphMany('App\Models\Channel', 'model');
+        return Tag::class;
     }
 
     /**
-     * @return belongsToJson
+     * @return MorphToMany
      */
-    public function playlists()
+    public function tags()
     {
-        return $this->morphMany('App\Models\Playlist', 'model');
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->orderBy('order_column');
+    }
+
+    /**
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('videos')
+             ->useDisk('media')
+             ->singleFile();
+    }
+
+    /**
+     * @param Media $media
+     */
+    public function registerMediaConversions($media = null): void
+    {
+        $this->addMediaConversion('thumbnail')
+            ->width(480)
+            ->height(320)
+            ->extractVideoFrameAtSecond(
+                $media->getCustomProperty('snapshot', 1)
+            )
+            ->performOnCollections('videos');
+
+        $this->addMediaConversion('preview')
+            ->withoutManipulations()
+            ->performOnCollections('dummy')
+            ->nonQueued();
     }
 
     /**

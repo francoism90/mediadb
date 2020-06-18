@@ -14,10 +14,7 @@ class LocalUrlGenerator extends BaseUrlGenerator
      */
     public function getUrl(): string
     {
-        return URL::signedRoute('api.asset.show', [
-            $this->media,
-            auth()->user(),
-        ]);
+        return '';
     }
 
     /**
@@ -29,11 +26,12 @@ class LocalUrlGenerator extends BaseUrlGenerator
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return URL::temporarySignedRoute(
-            'api.asset.download',
+            'api.media.download',
             $expiration,
             [
                 $this->media,
                 auth()->user(),
+                $this->conversion ? $this->conversion->getName() : 'media',
                 $this->media->updated_at->timestamp,
             ]
         );

@@ -47,4 +47,16 @@ trait Randomable
 
         return "randomSeed{$key}";
     }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInRandomSeedOrder($query)
+    {
+        return $query->inRandomOrder(
+            self::getRandomSeed()
+        );
+    }
 }

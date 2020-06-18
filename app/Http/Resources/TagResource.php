@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Collection;
 use App\Models\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,11 +17,7 @@ class TagResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'type' => $this->type,
-            'placeholder' => $this->placeholder_url,
-            'collect' => $this->when(
-                $this->hasAppend('collect'),
-                $this->getTagCountByType(Collection::class)
-            ),
+            'thumbnail' => $this->thumbnail,
             'media' => $this->when(
                 $this->hasAppend('media'),
                 $this->getTagCountByType(Media::class)

@@ -9,7 +9,7 @@ class TagsTableSeeder extends Seeder
     /**
      * @var array
      */
-    private $genres = [
+    protected $genres = [
         'Action',
         'Adventure',
         'Animation',
@@ -30,7 +30,7 @@ class TagsTableSeeder extends Seeder
     /**
      * @var array
      */
-    private $languages = [
+    protected $languages = [
         'English',
         'Dutch',
     ];
@@ -38,7 +38,7 @@ class TagsTableSeeder extends Seeder
     /**
      * @var array
      */
-    private $people = [
+    protected $people = [
         'Homer Simpson',
         'Bart Simpson',
         'Marge Simpson',
@@ -89,7 +89,7 @@ class TagsTableSeeder extends Seeder
      *
      * @return string
      */
-    private function getJsonByLocale(string $value, string $locale = 'en'): string
+    protected function getJsonByLocale(string $value, string $locale = 'en'): string
     {
         return json_encode(
             [$locale => $value],

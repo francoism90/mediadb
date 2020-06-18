@@ -2,11 +2,11 @@
 
 namespace App\Support\QueryBuilder\Filters\Media;
 
-use App\Models\Collection;
+use App\Models\Channel;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class CollectionFilter implements Filter
+class ChannelFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
@@ -14,7 +14,7 @@ class CollectionFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         // Media models
-        $ids = Collection::findByHash($value)->media->pluck('id')->toArray();
+        $ids = Channel::findBySlugOrFail($value)->media->pluck('id')->toArray();
 
         return $query->whereIn('id', $ids);
     }

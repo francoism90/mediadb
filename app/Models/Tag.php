@@ -59,19 +59,11 @@ class Tag extends TagModel
     }
 
     /**
-     * @return morphedByMany
-     */
-    public function media()
-    {
-        return $this->morphedByMany(Media::class, 'taggable', 'taggables');
-    }
-
-    /**
      * @return string
      */
-    public function getPlaceholderUrlAttribute(): string
+    public function getThumbnailAttribute(): string
     {
-        return asset('storage/images/placeholders/empty.png');
+        return '';
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Collection;
 use App\Models\Media;
+use App\Models\Playlist;
 use App\Models\Tag;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/api';
+    public const HOME = '/api/v1';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -33,8 +33,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::bind('collect', fn ($value, $route) => Collection::findByHash($value));
         Route::bind('media', fn ($value, $route) => Media::findByHash($value));
+        Route::bind('playlist', fn ($value, $route) => Playlist::findByHash($value));
         Route::bind('tag', fn ($value, $route) => Tag::findByHash($value));
     }
 

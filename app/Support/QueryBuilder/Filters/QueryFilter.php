@@ -120,7 +120,7 @@ class QueryFilter implements Filter
         return $model->search($this->queryStr)
             ->select(['name', 'description'])
             ->from(0)
-            ->take(10000)
+            ->take(1500)
             ->get();
     }
 }

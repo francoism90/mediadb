@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Api\Resources;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Media\StoreRequest;
 use App\Http\Requests\Media\UpdateRequest;
-use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MediaResource;
+use App\Http\Resources\PlaylistResource;
 use App\Models\Media;
-use App\Support\QueryBuilder\Filters\Media\CollectionFilter;
-use App\Support\QueryBuilder\Filters\Media\TypeFilter;
-use App\Support\QueryBuilder\Filters\Media\UserFilter;
+use App\Models\User;
+use App\Support\QueryBuilder\Filters\Media\ChannelFilter;
+use App\Support\QueryBuilder\Filters\Media\PlaylistFilter;
+use App\Support\QueryBuilder\Filters\Media\RelatedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Filters\RelatedFilter;
-use App\Support\QueryBuilder\Filters\ViewedAtFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
 use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
@@ -46,14 +45,12 @@ class MediaController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
 
         $media = QueryBuilder::for($query)
-            ->allowedIncludes(['model', 'tags'])
+            ->allowedIncludes(['model', 'playlists', 'tags'])
             ->allowedFilters([
-                AllowedFilter::custom('collect', new CollectionFilter())->ignore(null, '*'),
+                AllowedFilter::custom('channel', new ChannelFilter())->ignore(null, '*'),
+                AllowedFilter::custom('playlist', new PlaylistFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
-                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('user', new UserFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
-                AllowedFilter::custom('viewed_at', new ViewedAtFilter())->ignore(null),
             ])
             ->allowedSorts([
                 $defaultSort,
@@ -108,9 +105,14 @@ class MediaController extends Controller
         return (new MediaResource($media->load(['model', 'tags'])))
             ->additional([
                 'meta' => [
-                    'collects' => CollectionResource::collection($media->user_collections),
                     'download_url' => $media->download_url,
                     'stream_url' => $media->stream_url,
+                    'user_playlists' => PlaylistResource::collection(
+                        $media->playlists()
+                            ->where('model_type', User::class)
+                            ->where('model_id', auth()->user()->id)
+                            ->get()
+                    ),
                 ],
             ]);
     }
@@ -136,8 +138,8 @@ class MediaController extends Controller
             $media->syncTagsWithTypes($request->input('tags'));
         }
 
-        if ($request->has('collect')) {
-            $media->syncCollections($request->input('collect'), Auth::user());
+        if ($request->has('playlists')) {
+            $request->user()->syncPlaylistsWithMedia($media, $request->input('playlists'));
         }
 
         if ($request->has('snapshot')) {

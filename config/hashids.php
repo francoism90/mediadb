@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-use App\Models\Collection;
 use App\Models\Media;
+use App\Models\Playlist;
 use App\Models\Tag;
 
 return [
@@ -41,13 +41,13 @@ return [
     */
 
     'connections' => [
-        Collection::class => [
-            'salt' => 'fb226emj467sfsjni6dccw78gjj782sw',
+        Media::class => [
+            'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
             'length' => '12',
         ],
 
-        Media::class => [
-            'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
+        Playlist::class => [
+            'salt' => '46ej7d955gfew3ss4avt97hmohovaamh',
             'length' => '12',
         ],
 

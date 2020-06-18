@@ -9,21 +9,25 @@ use App\Models\User;
 class DownloadController extends Controller
 {
     /**
-     * @param Media $media
-     * @param User  $user
+     * @param Media  $media
+     * @param User   $user
+     * @param string $conversion
      *
      * @return mixed
      */
-    public function __invoke(Media $media, User $user)
+    public function __invoke(Media $media, User $user, ?string $conversion = '')
     {
-        // TODO: permissions
+        $conversion = 'media' === $conversion ? '' : $conversion;
 
-        $path = $media->getPath();
-
-        if (!$path || !file_exists($path)) {
+        if ($conversion && !$media->hasGeneratedConversion($conversion)) {
             abort(404);
         }
 
+        if (!$conversion && !$user->hasRole('super-admin')) {
+            abort(403);
+        }
+
+        $path = $media->getPath($conversion);
         $type = mime_content_type($path);
 
         // Internal redirect path

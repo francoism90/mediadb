@@ -17,7 +17,6 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Support\Facades\URL;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
@@ -28,23 +27,23 @@ use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Media extends BaseMedia implements Viewable
 {
+    use Activityable;
+    use CanBeFavorited;
+    use CanBeLiked;
     use Hashidable;
     use HasJsonRelationships;
     use HasStatuses;
     use HasTags;
-    use Activityable;
+    use InteractsWithViews;
     use Randomable;
     use Resourceable;
     use Searchable;
-    use Sluggable;
     use Securable;
+    use Sluggable;
     use SluggableScopeHelpers;
     use Streamable;
     use Taggable;
-    use InteractsWithViews;
     use ViewableHelpers;
-    use CanBeLiked;
-    use CanBeFavorited;
 
     /**
      * @var array
@@ -103,7 +102,13 @@ class Media extends BaseMedia implements Viewable
      */
     public function toSearchableArray(): array
     {
-        return $this->only(['id', 'name', 'description']);
+        return $this->only([
+            'id',
+            'name',
+            'description',
+            'model_type',
+            'model_id',
+        ]);
     }
 
     /**
@@ -127,25 +132,25 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return hasManyJson
      */
-    public function collections()
+    public function playlists()
     {
-        return $this->hasManyJson('App\Models\Collection', 'custom_properties->media_ids');
+        return $this->hasManyJson('App\Models\Playlist', 'custom_properties->media[]->media_id');
     }
 
     /**
      * @return string
      */
-    public function getPlaceholderUrlAttribute(): string
+    public function getThumbnailUrlAttribute(): string
     {
         if (!$this->hasGeneratedConversion('thumbnail')) {
             return '';
         }
 
-        return URL::signedRoute('api.asset.placeholder', [
-            'media' => $this,
-            'user' => auth()->user(),
-            'version' => $this->updated_at->timestamp,
-        ]);
+        return $this->getTemporaryUrl(
+            Carbon::now()->addHours(
+                config('vod.expire')
+            ), 'thumbnail'
+        );
     }
 
     /**
@@ -157,20 +162,11 @@ class Media extends BaseMedia implements Viewable
             return '';
         }
 
-        return URL::signedRoute('api.asset.preview', [
-            'media' => $this,
-            'user' => auth()->user(),
-            'version' => $this->updated_at->timestamp,
-        ]);
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getUserCollectionsAttribute()
-    {
-        return $this->collections
-            ->where('user_id', auth()->user()->id ?? 0);
+        return $this->getTemporaryUrl(
+            Carbon::now()->addHours(
+                config('vod.expire')
+            ), 'preview'
+        );
     }
 
     /**
@@ -202,7 +198,7 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return string
      */
-    public function getThumbUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
+    public function getPlaceholderUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
     {
         return self::getSecureExpireLink(
             $this->getStreamUrl('thumb', "thumb-{$offset}-{$resize}.jpg"),
@@ -211,29 +207,5 @@ class Media extends BaseMedia implements Viewable
             $this->getRouteKey()."_thumb_{$offset}",
             request()->ip()
         );
-    }
-
-    /**
-     * @param array $items
-     * @param User  $user
-     *
-     * @return void
-     */
-    public function syncCollections(array $items = [], User $user)
-    {
-        // Add media to following collections
-        $attaches = $user->createCollections($items);
-
-        // Sync collections
-        foreach ($user->collections as $collection) {
-            $hasMedia = $collection->media->firstWhere('id', $this->id);
-            $attach = $attaches->firstWhere('id', $collection->id);
-
-            if ($attach && !$hasMedia) {
-                $collection->media()->attach($this->id)->save();
-            } elseif (!$attach && $hasMedia) {
-                $collection->media()->detach($this->id)->save();
-            }
-        }
     }
 }

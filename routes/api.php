@@ -28,17 +28,15 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Resources
     Route::middleware('auth:sanctum')->name('resource.')->namespace('Resources')->group(function () {
-        Route::apiResource('collect', 'CollectionController')->only(['index', 'show', 'update', 'destroy']);
+        Route::apiResource('channel', 'ChannelController')->only(['index', 'show', 'update', 'destroy']);
         Route::apiResource('media', 'MediaController')->only(['index', 'store', 'show', 'update', 'destroy']);
+        Route::apiResource('playlist', 'PlaylistController')->only(['index', 'store', 'show', 'update', 'destroy']);
         Route::apiResource('tags', 'TagController')->only(['index']);
         Route::apiResource('user', 'UserController')->only(['index', 'show']);
     });
 
-    // Assets
-    Route::middleware('doNotCacheResponse')->name('asset.')->prefix('asset')->namespace('Media')->group(function () {
-        Route::middleware('signed')->get('download/{media}/{user}/{version?}', ['uses' => 'DownloadController', 'as' => 'download'])->where('version', '[0-9]+');
-        Route::middleware('signed')->get('placeholder/{media}/{user}/{version?}', ['uses' => 'PlaceholderController', 'as' => 'placeholder'])->where('version', '[0-9]+');
-        Route::middleware('signed')->get('preview/{media}/{user}/{version?}', ['uses' => 'PreviewController', 'as' => 'preview'])->where('version', '[0-9]+');
-        Route::middleware('auth:sanctum')->get('thumbnail/{media}/{offset}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail'])->where('offset', '[0-9]+');
+    // Media
+    Route::middleware('doNotCacheResponse')->name('media.')->prefix('media')->namespace('Media')->group(function () {
+        Route::middleware('signed')->get('asset/{media}/{user}/{conversion}/{version?}', ['uses' => 'DownloadController', 'as' => 'download'])->where('version', '[0-9]+');
     });
 });

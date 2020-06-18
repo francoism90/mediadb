@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Collection;
+namespace App\Http\Requests\Playlist;
 
 use App\Support\Sanitizer\SlugifyFilter;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,8 +40,6 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     *  Filters to be applied to the input.
-     *
      *  @return array
      */
     public function filters()

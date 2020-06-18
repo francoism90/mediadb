@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-class PermissionsSeeder extends Seeder
+class PermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,18 +20,33 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
+        Permission::create(['name' => 'create channels']);
+        Permission::create(['name' => 'delete channels']);
+        Permission::create(['name' => 'publish channels']);
+        Permission::create(['name' => 'unpublish channels']);
+
         Permission::create(['name' => 'edit media']);
         Permission::create(['name' => 'delete media']);
         Permission::create(['name' => 'publish media']);
         Permission::create(['name' => 'unpublish media']);
 
-        // Create roles and assign created permissions
+        Permission::create(['name' => 'edit playlists']);
+        Permission::create(['name' => 'delete playlists']);
+        Permission::create(['name' => 'publish playlists']);
+        Permission::create(['name' => 'unpublish playlists']);
+
+        // Create admin role and assign created permissions
         $roleAdmin = Role::create(['name' => 'super-admin']);
         $roleAdmin->givePermissionTo(Permission::all());
 
+        // Create moderator role and assign created permissions
         $roleModerator = Role::create(['name' => 'moderator']);
+
         $roleModerator->givePermissionTo('publish media');
         $roleModerator->givePermissionTo('unpublish media');
+
+        $roleModerator->givePermissionTo('publish playlists');
+        $roleModerator->givePermissionTo('unpublish playlists');
 
         // Create the admin user
         $user = User::create([

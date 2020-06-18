@@ -35,7 +35,7 @@ trait Streamable
     /**
      * @return bool
      */
-    private function writeStreamJson(int $expires = 300): bool
+    protected function writeStreamJson(int $expires = 300): bool
     {
         $key = str_replace('.json', '', $this->getStreamJsonName());
 
@@ -44,14 +44,14 @@ trait Streamable
         }
 
         return Cache::remember($key, $expires, fn () => Storage::disk('streams')->put(
-                        $this->getStreamJsonName(), $this->getStreamJsonContents()
-                    ));
+            $this->getStreamJsonName(), $this->getStreamJsonContents()
+        ));
     }
 
     /**
      * @return string
      */
-    private function getStreamJsonName(): string
+    protected function getStreamJsonName(): string
     {
         $userId = auth()->user()->id ?? 0;
 
@@ -61,7 +61,7 @@ trait Streamable
     /**
      * @return string
      */
-    private function getStreamJsonContents(): string
+    protected function getStreamJsonContents(): string
     {
         $contents = [
             'sequences' => (array) [
@@ -87,7 +87,7 @@ trait Streamable
     /**
      * @return string
      */
-    private function getStreamSignedUrl(string $uri): string
+    protected function getStreamSignedUrl(string $uri): string
     {
         if (!function_exists('openssl_encrypt')) {
             throw new Exception('openssl_encrypt is required');
@@ -108,7 +108,7 @@ trait Streamable
      *
      * @return string
      */
-    private function getStreamUrlEncrypted(string $signedUrl): string
+    protected function getStreamUrlEncrypted(string $signedUrl): string
     {
         return openssl_encrypt(
             $signedUrl,
@@ -122,7 +122,7 @@ trait Streamable
     /**
      * @return string
      */
-    private function getStreamKey(): string
+    protected function getStreamKey(): string
     {
         return pack('H*', config('vod.key'));
     }
@@ -130,7 +130,7 @@ trait Streamable
     /**
      * @return string
      */
-    private function getStreamIV(): string
+    protected function getStreamIV(): string
     {
         return pack('H*', config('vod.iv'));
     }
@@ -138,7 +138,7 @@ trait Streamable
     /**
      * @return int
      */
-    private function getStreamHashSize(): int
+    protected function getStreamHashSize(): int
     {
         return config('vod.secret.hash_size', 8);
     }

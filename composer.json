@@ -33,7 +33,6 @@
     "spatie/laravel-query-builder": "^2.0",
     "spatie/laravel-responsecache": "^6.6",
     "spatie/laravel-tags": "^2.4",
-    "spatie/temporary-directory": "^1.2",
     "staudenmeir/eloquent-json-relations": "^1.4",
     "vinkla/hashids": "^8.0",
     "waavi/sanitizer": "^1.0"

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCollectionsTable extends Migration
+class CreateChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->morphs('model');
             $table->string('slug')->unique();
-            $table->string('name')->index();
-            $table->bigInteger('user_id')->index();
-            $table->longText('description')->nullable();
+            $table->string('name');
             $table->json('custom_properties')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->longText('description')->nullable();
+            $table->nullableTimestamps();
         });
     }
 
@@ -32,6 +31,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('channels');
     }
 }

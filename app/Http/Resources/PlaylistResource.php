@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CollectionResource extends JsonResource
+class PlaylistResource extends JsonResource
 {
     /**
      * @return array
@@ -13,15 +13,15 @@ class CollectionResource extends JsonResource
     {
         return [
             'id' => $this->getRouteKey(),
-            'slug' => $this->slug,
             'name' => $this->name,
-            'placeholder' => $this->placeholder_url,
-            'media' => $this->media()->count(),
+            'thumbnail' => $this->thumbnail,
+            'items' => $this->media()->count(),
             'views' => $this->views,
             'created_at' => $this->created_at,
             'relationships' => [
+                'media' => MediaResource::collection($this->whenLoaded('media')),
+                'model' => new UserResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
-                'user' => new UserResource($this->whenLoaded('user')),
             ],
         ];
     }
