@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
 use App\Traits\Activityable;
+use App\Traits\Channelable;
+use App\Traits\Hashidable;
 use App\Traits\Playlistable;
 use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
@@ -22,6 +24,8 @@ class User extends Authenticatable implements Viewable
 {
     use Activityable;
     use CanFollow;
+    use Channelable;
+    use Hashidable;
     use HasRoles;
     use InteractsWithViews;
     use Notifiable;
@@ -102,14 +106,6 @@ class User extends Authenticatable implements Viewable
                 'source' => 'name',
             ],
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 
     /**

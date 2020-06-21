@@ -11,6 +11,7 @@ use App\Traits\Resourceable;
 use App\Traits\Securable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
+use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,7 @@ class Playlist extends Model implements Viewable
     use Randomable;
     use Resourceable;
     use Searchable;
+    use Sluggable;
     use Securable;
     use Taggable;
     use ViewableHelpers;
@@ -85,6 +87,18 @@ class Playlist extends Model implements Viewable
             ],
         ],
     ];
+
+    /**
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ],
+        ];
+    }
 
     /**
      * @return array

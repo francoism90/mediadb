@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Media;
 
 use App\Models\Channel;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
 
@@ -13,7 +14,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $signature = 'media:import {path} {channel} {collection=videos}';
+    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos}';
 
     /**
      * The console command description.
@@ -35,12 +36,20 @@ class Import extends Command
      */
     public function handle()
     {
-        $channel = Channel::findOrFail($this->argument('channel'));
+        // Find the user
+        $user = User::findBySlugOrFail($this->argument('user'));
 
+        // Find the channel (or create if needed)
+        $channel = $user->firstOrCreateChannels([
+            ['name' => $this->argument('channel')],
+        ]);
+
+        // Import media
         foreach ($this->getPathFiles() as $file) {
             $this->info("Importing {$file->getFilename()}");
 
             $media = $channel
+                ->first()
                 ->addMedia($file->getRealPath())
                 ->usingName($file->getFilename())
                 ->toMediaCollection($this->argument('collection'));

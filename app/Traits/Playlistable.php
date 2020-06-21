@@ -13,7 +13,7 @@ trait Playlistable
      *
      * @return Collection
      */
-    public function createPlaylists(array $items = [], string $status = 'published'): Collection
+    public function firstOrCreatePlaylists(array $items = [], string $status = 'published'): Collection
     {
         $collection = collect();
 
@@ -41,7 +41,7 @@ trait Playlistable
     public function syncPlaylistsWithMedia(Media $media, array $items = [], array $attributes = [])
     {
         // Make sure the playlists exists
-        $playlists = $this->createPlaylists($items);
+        $playlists = $this->firstOrCreatePlaylists($items);
 
         // Get the current playlists
         $currentPlaylists = $this->playlists()->with('media')->get();

@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Support\Scout\ChannelIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
+use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +26,7 @@ class Channel extends Model implements HasMedia, Viewable
 {
     use Activityable;
     use CanSubscribe;
+    use Hashidable;
     use HasStatuses;
     use HasTags;
     use InteractsWithMedia;
@@ -34,7 +35,6 @@ class Channel extends Model implements HasMedia, Viewable
     use Randomable;
     use Searchable;
     use Sluggable;
-    use SluggableScopeHelpers;
     use Taggable;
     use ViewableHelpers;
 
@@ -98,22 +98,6 @@ class Channel extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
-    /**
-     * @return void
-     */
-    public function model(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
      * @return array
      */
     public function toSearchableArray(): array
@@ -125,6 +109,14 @@ class Channel extends Model implements HasMedia, Viewable
             'model_type',
             'model_id',
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function model(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     /**

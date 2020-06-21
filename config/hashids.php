@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
+use App\Models\Channel;
 use App\Models\Media;
 use App\Models\Playlist;
 use App\Models\Tag;
+use App\Models\User;
 
 return [
     /*
@@ -41,6 +43,11 @@ return [
     */
 
     'connections' => [
+        Channel::class => [
+            'salt' => 'op94ywdruie8o5ctndk8pvnfxfm435ma',
+            'length' => '12',
+        ],
+
         Media::class => [
             'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
             'length' => '12',
@@ -53,6 +60,11 @@ return [
 
         Tag::class => [
             'salt' => 'bjcgme4mqsqu73qufnn9cd5penuaqkc2',
+            'length' => '12',
+        ],
+
+        User::class => [
+            'salt' => 'g5vm89r3vitip345gnesugim8vk5zxrw',
             'length' => '12',
         ],
     ],

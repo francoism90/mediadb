@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Resources;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Channel\UpdateRequest;
 use App\Http\Resources\ChannelResource;
 use App\Models\Channel;
 use App\Support\QueryBuilder\Filters\QueryFilter;
@@ -67,5 +68,43 @@ class ChannelController extends Controller
         $channel->recordView('view_count', now()->addYear());
 
         return new ChannelResource($channel->load(['model', 'tags']));
+    }
+
+    /**
+     * @param UpdateRequest $request
+     * @param Channel       $channel
+     *
+     * @return ChannelResource
+     */
+    public function update(UpdateRequest $request, Channel $channel)
+    {
+        $channel->update([
+            'name' => $request->input('name', $channel->name),
+            'description' => $request->input('description', $channel->description),
+        ]);
+
+        if ($request->has('status')) {
+            $channel->setStatus($request->input('status'), 'user request');
+        }
+
+        if ($request->has('tags')) {
+            $channel->syncTagsWithTypes($request->input('tags'));
+        }
+
+        return new ChannelResource($channel);
+    }
+
+    /**
+     * @param Channel $channel
+     *
+     * @return ChannelResource
+     */
+    public function destroy(Channel $channel)
+    {
+        if ($channel->delete()) {
+            return new ChannelResource($channel);
+        }
+
+        return response()->json('Unable to delete channel', 500);
     }
 }

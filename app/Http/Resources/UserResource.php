@@ -13,6 +13,7 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->getRouteKey(),
+            'slug' => $this->slug,
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
             'views' => $this->views,

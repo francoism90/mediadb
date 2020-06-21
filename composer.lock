@@ -1868,16 +1868,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.15.0",
+            "version": "v7.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "739c44a3f7041430a3fb357f2dcfdb78f55005d7"
+                "reference": "dc9cd8338d222dec2d9962553639e08c4585fa5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/739c44a3f7041430a3fb357f2dcfdb78f55005d7",
-                "reference": "739c44a3f7041430a3fb357f2dcfdb78f55005d7",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dc9cd8338d222dec2d9962553639e08c4585fa5b",
+                "reference": "dc9cd8338d222dec2d9962553639e08c4585fa5b",
                 "shasum": ""
             },
             "require": {
@@ -1965,6 +1965,7 @@
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6).",
+                "ext-ftp": "Required to use the Flysystem FTP driver.",
                 "ext-gd": "Required to use Illuminate\\Http\\Testing\\FileFactory::image().",
                 "ext-memcached": "Required to use the memcache cache driver.",
                 "ext-pcntl": "Required to use all features of the queue worker.",
@@ -2020,7 +2021,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-06-09T14:00:25+00:00"
+            "time": "2020-06-16T14:31:25+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2097,16 +2098,16 @@
         },
         {
             "name": "laravel/sanctum",
-            "version": "v2.4.1",
+            "version": "v2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "2aac713ced04e6e7f046748833dea5ab4c98b621"
+                "reference": "cf07490b92e07ee6206f712d4502e8a2a41f5049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/2aac713ced04e6e7f046748833dea5ab4c98b621",
-                "reference": "2aac713ced04e6e7f046748833dea5ab4c98b621",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/cf07490b92e07ee6206f712d4502e8a2a41f5049",
+                "reference": "cf07490b92e07ee6206f712d4502e8a2a41f5049",
                 "shasum": ""
             },
             "require": {
@@ -2153,7 +2154,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2020-06-11T13:58:49+00:00"
+            "time": "2020-06-16T19:14:01+00:00"
         },
         {
             "name": "laravel/scout",
@@ -8705,16 +8706,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.28",
+            "version": "0.12.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "76c0c4ec90b1eed66fa4855b8b4b53fa9054353f"
+                "reference": "9771daaf6b95c6313b908d0bcdee0afcd51f838a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/76c0c4ec90b1eed66fa4855b8b4b53fa9054353f",
-                "reference": "76c0c4ec90b1eed66fa4855b8b4b53fa9054353f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9771daaf6b95c6313b908d0bcdee0afcd51f838a",
+                "reference": "9771daaf6b95c6313b908d0bcdee0afcd51f838a",
                 "shasum": ""
             },
             "require": {
@@ -8757,7 +8758,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-10T06:20:14+00:00"
+            "time": "2020-06-14T14:10:59+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

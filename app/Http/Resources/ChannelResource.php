@@ -13,6 +13,7 @@ class ChannelResource extends JsonResource
     {
         return [
             'id' => $this->getRouteKey(),
+            'slug' => $this->slug,
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
             'items' => $this->media()->count(),

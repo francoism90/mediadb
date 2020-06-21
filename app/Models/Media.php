@@ -14,7 +14,6 @@ use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -40,7 +39,6 @@ class Media extends BaseMedia implements Viewable
     use Searchable;
     use Securable;
     use Sluggable;
-    use SluggableScopeHelpers;
     use Streamable;
     use Taggable;
     use ViewableHelpers;
