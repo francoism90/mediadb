@@ -27,7 +27,7 @@
     "php-ffmpeg/php-ffmpeg": "^0.16.0",
     "spatie/laravel-activitylog": "^3.11",
     "spatie/laravel-json-api-paginate": "^1.5",
-    "spatie/laravel-medialibrary": "^8.0",
+    "spatie/laravel-medialibrary": "^8.0.0",
     "spatie/laravel-model-status": "^1.9",
     "spatie/laravel-permission": "^3.13",
     "spatie/laravel-query-builder": "^2.0",

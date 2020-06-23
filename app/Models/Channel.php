@@ -143,8 +143,7 @@ class Channel extends Model implements HasMedia, Viewable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('videos')
-             ->useDisk('media')
-             ->singleFile();
+             ->useDisk('media');
     }
 
     /**

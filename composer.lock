@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bff8be3569be8cc533dc0093f9ee0fd",
+    "content-hash": "8110b42d71ae98f499b3b66b7dfb1372",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -4368,16 +4368,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.3.0",
+            "version": "8.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "a3634f6645e07f4982ff64bd75e90c9e8adafba0"
+                "reference": "a834a75abc739c8b0181e6eb68073b85b9b419dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a3634f6645e07f4982ff64bd75e90c9e8adafba0",
-                "reference": "a3634f6645e07f4982ff64bd75e90c9e8adafba0",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a834a75abc739c8b0181e6eb68073b85b9b419dd",
+                "reference": "a834a75abc739c8b0181e6eb68073b85b9b419dd",
                 "shasum": ""
             },
             "require": {
@@ -4464,7 +4464,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-06-11T11:51:43+00:00"
+            "time": "2020-06-22T10:20:34+00:00"
         },
         {
             "name": "spatie/laravel-model-status",

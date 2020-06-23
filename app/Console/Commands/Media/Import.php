@@ -36,20 +36,12 @@ class Import extends Command
      */
     public function handle()
     {
-        // Find the user
-        $user = User::findBySlugOrFail($this->argument('user'));
+        $channel = $this->firstOrCreateChannel();
 
-        // Find the channel (or create if needed)
-        $channel = $user->firstOrCreateChannels([
-            ['name' => $this->argument('channel')],
-        ]);
-
-        // Import media
-        foreach ($this->getPathFiles() as $file) {
+        foreach ($this->getFilesInPath() as $file) {
             $this->info("Importing {$file->getFilename()}");
 
             $media = $channel
-                ->first()
                 ->addMedia($file->getRealPath())
                 ->usingName($file->getFilename())
                 ->toMediaCollection($this->argument('collection'));
@@ -59,9 +51,27 @@ class Import extends Command
     }
 
     /**
+     * @return Channel
+     */
+    protected function firstOrCreateChannel(): Channel
+    {
+        $user = User::findBySlugOrFail($this->argument('user'));
+
+        $model = $user->channels()->firstOrCreate(
+            ['name' => $this->argument('channel')]
+        );
+
+        if (!$model->status()) {
+            $model->setStatus('public');
+        }
+
+        return $model;
+    }
+
+    /**
      * @return Finder
      */
-    protected function getPathFiles(): Finder
+    protected function getFilesInPath(): Finder
     {
         // Ignore unreadable files
         $filter = function (\SplFileInfo $file) {
