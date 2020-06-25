@@ -27,10 +27,12 @@ class AuthController extends Controller
     /**
      * @param Request $request
      *
-     * @return bool
+     * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {
-        return Auth::guard('web')->logout($request);
+        Auth::guard('web')->logout($request);
+
+        return response()->json();
     }
 }

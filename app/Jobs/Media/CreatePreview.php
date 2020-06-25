@@ -33,11 +33,14 @@ class CreatePreview implements ShouldQueue
     public $deleteWhenMissingModels = true;
 
     /**
-     * The number of seconds the job can run before timing out.
-     *
      * @var int
      */
-    public $timeout = 120;
+    public $tries = 1;
+
+    /**
+     * @var int
+     */
+    public $timeout = 900;
 
     /**
      * @var Media
@@ -51,7 +54,7 @@ class CreatePreview implements ShouldQueue
      */
     public function __construct(Media $media)
     {
-        $this->media = $media->fresh()->withoutRelations();
+        $this->media = $media->refresh()->withoutRelations();
     }
 
     /**

@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'include_factory_builders' => true,
+    'include_factory_builders' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,8 @@ return [
     */
 
     'model_locations' => [
-        'app/Models/*',
+        'app',
+        'app/Models',
     ],
 
     /*

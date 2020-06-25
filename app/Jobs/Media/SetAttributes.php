@@ -25,6 +25,13 @@ class SetAttributes implements ShouldQueue
     public $deleteWhenMissingModels = true;
 
     /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 300;
+
+    /**
      * @var FFMpeg
      */
     protected $ffmpeg;
@@ -41,7 +48,7 @@ class SetAttributes implements ShouldQueue
      */
     public function __construct(Media $media)
     {
-        $this->media = $media->fresh()->withoutRelations();
+        $this->media = $media->refresh()->withoutRelations();
     }
 
     /**

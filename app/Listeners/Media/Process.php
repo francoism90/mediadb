@@ -39,7 +39,7 @@ class Process
                 SetAttributes::withChain([
                     new CreatePreview($event->media),
                     new SetProcessed($event->media),
-                ])->dispatch($event->media);
+                ])->dispatch($event->media)->allOnQueue('media');
                 break;
         }
     }

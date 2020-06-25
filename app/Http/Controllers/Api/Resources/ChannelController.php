@@ -97,7 +97,7 @@ class ChannelController extends Controller
     /**
      * @param Channel $channel
      *
-     * @return ChannelResource
+     * @return ChannelResource|JsonResponse
      */
     public function destroy(Channel $channel)
     {

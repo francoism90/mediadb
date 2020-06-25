@@ -14,7 +14,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos}';
+    protected $signature = 'media:import {path} {limit=3} {channel=Administrator} {user=administrator} {collection=videos}';
 
     /**
      * The console command description.
@@ -38,6 +38,8 @@ class Import extends Command
     {
         $channel = $this->firstOrCreateChannel();
 
+        $i = 0;
+
         foreach ($this->getFilesInPath() as $file) {
             $this->info("Importing {$file->getFilename()}");
 
@@ -47,6 +49,11 @@ class Import extends Command
                 ->toMediaCollection($this->argument('collection'));
 
             $media->setStatus('pending', 'needs processing');
+
+            // Limit the number of imports
+            if (++$i == $this->argument('limit')) {
+                break;
+            }
         }
     }
 
@@ -62,7 +69,7 @@ class Import extends Command
         );
 
         if (!$model->status()) {
-            $model->setStatus('public');
+            $model->setStatus('published');
         }
 
         return $model;

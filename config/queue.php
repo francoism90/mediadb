@@ -63,6 +63,14 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
+
+        'redis-media' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'media',
+            'retry_after' => 900,
+            'block_for' => null,
+        ],
     ],
 
     /*
