@@ -40,7 +40,7 @@ class SetProcessed implements ShouldQueue
      */
     public function __construct(Media $media)
     {
-        $this->media = $media->refresh()->withoutRelations();
+        $this->media = $media->fresh()->withoutRelations();
     }
 
     /**
