@@ -6,7 +6,7 @@ use App\Jobs\Media\CreatePreview;
 use App\Jobs\Media\SetAttributes;
 use App\Jobs\Media\SetProcessed;
 use App\Models\Media;
-use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAdded;
+use Spatie\MediaLibrary\Conversions\Events\ConversionHasBeenCompleted;
 
 class Process
 {
@@ -29,7 +29,7 @@ class Process
      *
      * @return void
      */
-    public function handle(MediaHasBeenAdded $event)
+    public function handle(ConversionHasBeenCompleted $event)
     {
         // e.g. video/mp4 => video
         $type = strtok($event->media->mime_type, '/');

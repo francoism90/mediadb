@@ -64,12 +64,13 @@ trait Streamable
     protected function getStreamJsonContents(): string
     {
         $contents = [
+            'id' => $this->getRouteKey(),
             'sequences' => (array) [
                 [
+                    'id' => $this->getRouteKey(),
+                    'label' => $this->name ?? $this->getRouteKey(),
                     'clips' => [
                         [
-                            'id' => $this->getRouteKey(),
-                            'label' => $this->name ?? $this->getRouteKey(),
                             'type' => 'source',
                             'path' => $this->getPath(),
                         ],
