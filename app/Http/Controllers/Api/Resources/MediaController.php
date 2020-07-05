@@ -13,14 +13,17 @@ use App\Support\QueryBuilder\Filters\Media\ChannelFilter;
 use App\Support\QueryBuilder\Filters\Media\PlaylistFilter;
 use App\Support\QueryBuilder\Filters\Media\RelatedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Sorts\Media\LongestSorter;
+use App\Support\QueryBuilder\Sorts\Media\ShortestSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
+use App\Support\QueryBuilder\Sorts\NameSorter;
 use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
 use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
+use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -42,7 +45,7 @@ class MediaController extends Controller
     {
         $query = Media::currentStatus(['processed', 'public']);
 
-        $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
+        $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $media = QueryBuilder::for($query)
             ->allowedIncludes(['model', 'playlists', 'tags'])
@@ -54,11 +57,15 @@ class MediaController extends Controller
             ])
             ->allowedSorts([
                 $defaultSort,
-                AllowedSort::custom('popular-month', new PopularMonthSorter()),
-                AllowedSort::custom('popular-week', new PopularWeekSorter()),
-                AllowedSort::custom('recent', new RecentSorter()),
-                AllowedSort::custom('trending', new TrendingSorter()),
-                AllowedSort::custom('views', new MostViewsSorter()),
+                AllowedSort::custom('shortest', new ShortestSorter())->defaultDirection('asc'),
+                AllowedSort::custom('longest', new LongestSorter())->defaultDirection('desc'),
+                AllowedSort::custom('name', new NameSorter())->defaultDirection('asc'),
+                AllowedSort::custom('popular-month', new PopularMonthSorter())->defaultDirection('desc'),
+                AllowedSort::custom('popular-week', new PopularWeekSorter())->defaultDirection('desc'),
+                AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
+                AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
+                AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
+                AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])
             ->defaultSort($defaultSort)
             ->jsonPaginate();
@@ -130,8 +137,17 @@ class MediaController extends Controller
             'description' => $request->input('description', $media->description),
         ]);
 
+        if ($request->has('model')) {
+            $model = Media::findByHash(
+                $request->input('model.id', $media->model_id),
+                $request->input('model.type', $media->model_type),
+            );
+
+            $media->model()->associate($model)->save();
+        }
+
         if ($request->has('status')) {
-            $media->setStatus($request->input('status'), 'user request');
+            $media->setStatus($request->input('status'), 'update-request');
         }
 
         if ($request->has('tags')) {

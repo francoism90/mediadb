@@ -16,7 +16,7 @@ class Optimize extends Command
      *
      * @var string
      */
-    protected $signature = 'media:optimize';
+    protected $signature = 'media:optimize {validate=false}';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class Optimize extends Command
         $models = Media::all();
 
         foreach ($models as $model) {
-            if ($this->hasMissingMainFile($model)) {
+            if ($this->argument('validate') && $this->hasMissingMainFile($model)) {
                 $this->error("Missing file: {$model->id}");
                 continue;
             }

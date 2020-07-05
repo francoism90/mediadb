@@ -5,7 +5,7 @@ namespace App\Support\QueryBuilder\Sorts;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class MediaSorter implements Sort
+class InOrderSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -16,6 +16,9 @@ class MediaSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        return $query->withCount('media')->orderBy('media_count', 'DESC');
+        // Remove any current orders
+        $query->getQuery()->orders = null;
+
+        return $query->orderBy('order_column', 'ASC');
     }
 }

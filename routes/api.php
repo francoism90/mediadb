@@ -32,7 +32,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::apiResource('media', 'MediaController')->only(['index', 'store', 'show', 'update', 'destroy']);
         Route::apiResource('playlist', 'PlaylistController')->only(['index', 'store', 'show', 'update', 'destroy']);
         Route::apiResource('tags', 'TagController')->only(['index']);
-        Route::apiResource('user', 'UserController')->only(['index', 'show']);
     });
 
     // Media

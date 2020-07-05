@@ -8,11 +8,14 @@ use App\Http\Resources\ChannelResource;
 use App\Models\Channel;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
+use App\Support\QueryBuilder\Sorts\NameSorter;
 use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
 use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
+use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
+use App\Support\QueryBuilder\Sorts\UpdatedSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -34,7 +37,7 @@ class ChannelController extends Controller
     {
         $query = Channel::currentStatus(['published']);
 
-        $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter());
+        $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $channels = QueryBuilder::for($query)
             ->allowedIncludes(['media', 'model', 'tags'])
@@ -43,12 +46,14 @@ class ChannelController extends Controller
             ])
             ->allowedSorts([
                 $defaultSort,
-                AllowedSort::custom('popular-month', new PopularMonthSorter()),
-                AllowedSort::custom('popular-week', new PopularWeekSorter()),
-                AllowedSort::custom('recent', new RecentSorter()),
-                AllowedSort::custom('trending', new TrendingSorter()),
-                AllowedSort::custom('views', new MostViewsSorter()),
-                AllowedSort::field('name'),
+                AllowedSort::custom('name', new NameSorter())->defaultDirection('asc'),
+                AllowedSort::custom('popular-month', new PopularMonthSorter())->defaultDirection('desc'),
+                AllowedSort::custom('popular-week', new PopularWeekSorter())->defaultDirection('desc'),
+                AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
+                AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
+                AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
+                AllowedSort::custom('updated', new UpdatedSorter())->defaultDirection('desc'),
+                AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])
             ->defaultSort($defaultSort)
             ->jsonPaginate();

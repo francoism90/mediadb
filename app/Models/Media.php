@@ -80,6 +80,9 @@ class Media extends BaseMedia implements Viewable
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'autocomplete_search',
             ],
+            'duration' => [
+                'type' => 'float',
+            ],
         ],
     ];
 
@@ -100,13 +103,14 @@ class Media extends BaseMedia implements Viewable
      */
     public function toSearchableArray(): array
     {
-        return $this->only([
-            'id',
-            'name',
-            'description',
-            'model_type',
-            'model_id',
-        ]);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'model_type' => $this->model_type,
+            'model_id' => $this->model_id,
+            'duration' => $this->getCustomProperty('duration', 0),
+        ];
     }
 
     /**

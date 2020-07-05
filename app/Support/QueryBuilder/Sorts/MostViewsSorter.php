@@ -16,6 +16,9 @@ class MostViewsSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
+        // Remove any current orders
+        $query->getQuery()->orders = null;
+
         return $query->orderByViews('DESC', null, 'view_count', true);
     }
 }

@@ -31,6 +31,11 @@ class Process
      */
     public function handle(ConversionHasBeenCompleted $event)
     {
+        // Already processed media
+        if ($event->media->hasEverHadStatus('processed')) {
+            return;
+        }
+
         // e.g. video/mp4 => video
         $type = strtok($event->media->mime_type, '/');
 

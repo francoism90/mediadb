@@ -6,7 +6,6 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class QueryFilter implements Filter
@@ -15,6 +14,11 @@ class QueryFilter implements Filter
      * @var string
      */
     protected ?string $queryStr = null;
+
+    /**
+     * @var array
+     */
+    protected ?array $queryTags = [];
 
     /**
      * @param Builder      $query
@@ -28,71 +32,49 @@ class QueryFilter implements Filter
         // Convert arrays to string
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $this->setQueryString((string) $value);
+        $this->setQuery((string) $value)
+             ->setQueryTags();
 
         // Merge all models
-        $models = $this->getModelsByTags($query->getModel());
+        $models = $this->getModelsByQuery($query->getModel());
+
         $models = $models->merge(
-            $this->getQueryModels($query->getModel())
+            $this->getModelsByTags($query->getModel())
         );
 
-        // Return results
+        // Get models
         $ids = $models->pluck('id')->toArray() ?? [];
         $idsOrder = implode(',', $ids);
 
-        // Remove any current OrderBy
-        $query->getQuery()->orders = null;
-
         return $query->whereIn('id', $ids)
-                     ->orderByRaw(DB::raw("FIELD(id, $idsOrder)"));
+                     ->orderByRaw("FIELD(id, {$idsOrder})");
     }
 
     /**
      * @param string $str
      *
-     * @return void
+     * @return self
      */
-    private function setQueryString(string $str = ''): void
+    protected function setQuery(string $str = ''): self
     {
-        // Replace special chars
-        $this->queryStr = str_replace(['.', '_'], ' ', $str);
-
         // Keep ASCII > 127
         $this->queryStr = filter_var(
-            $this->queryStr,
+            $str,
             FILTER_SANITIZE_STRING,
             FILTER_FLAG_NO_ENCODE_QUOTES |
             FILTER_FLAG_STRIP_LOW
         );
 
-        // Remove whitespace
-        $this->trimQueryString();
+        // Remove some specials chars
+        $this->replaceInQueryString(['.', ',', '_', '*']);
+
+        return $this;
     }
 
     /**
-     * @return void
+     * @return self
      */
-    private function trimQueryString(): void
-    {
-        $this->queryStr = preg_replace('/\s+/', ' ', trim($this->queryStr));
-    }
-
-    /**
-     * @param array $matches
-     *
-     * @return void
-     */
-    private function replaceInQueryString(array $replace = []): void
-    {
-        $this->queryStr = str_replace($replace, ' ', $this->queryStr);
-
-        $this->trimQueryString();
-    }
-
-    /**
-     * @return Collection
-     */
-    private function getModelsByTags(Model $model)
+    protected function setQueryTags(): self
     {
         // https://stackoverflow.com/a/35498078
         preg_match_all('/#([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u', $this->queryStr, $matches);
@@ -100,27 +82,62 @@ class QueryFilter implements Filter
         // Remove tags from query (if any)
         $this->replaceInQueryString($matches[0] ?? []);
 
-        // Get all matches
-        $tagSlugs = array_unique($matches[1]) ?? false;
+        // Get all tag slugs
+        $this->queryTags = array_unique($matches[1]) ?? [];
 
-        if (!$tagSlugs) {
-            return collect();
-        }
+        return $this;
+    }
 
-        $tags = Tag::withSlugTranslated($tagSlugs)->get();
+    /**
+     * @param array $matches
+     *
+     * @return self
+     */
+    protected function replaceInQueryString(array $replace = []): self
+    {
+        $this->queryStr = str_replace($replace, ' ', $this->queryStr);
 
-        return $model->withAllTagsOfAnyType($tags)->get();
+        $this->trimQueryString();
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    protected function trimQueryString(): self
+    {
+        // Remove double spaces and tabs
+        $this->queryStr = preg_replace('/\s+/', ' ', trim($this->queryStr));
+
+        return $this;
     }
 
     /**
      * @return Collection
      */
-    private function getQueryModels(Model $model)
+    protected function getModelsByQuery(Model $model)
     {
         return $model->search($this->queryStr)
-            ->select(['name', 'description'])
+            ->select(['id'])
             ->from(0)
-            ->take(1500)
+            ->take(10000)
             ->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    protected function getModelsByTags(Model $model)
+    {
+        if (!$this->queryTags) {
+            return collect();
+        }
+
+        $tags = Tag::withSlugTranslated($this->queryTags)->get();
+
+        return $model->withAllTagsOfAnyType($tags)
+                     ->inRandomSeedOrder()
+                     ->get();
     }
 }

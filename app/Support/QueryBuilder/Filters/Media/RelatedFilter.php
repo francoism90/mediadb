@@ -6,7 +6,6 @@ use App\Models\Channel;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class RelatedFilter implements Filter
@@ -39,15 +38,12 @@ class RelatedFilter implements Filter
             $models = $models->merge($collection);
         }
 
-        // Return ordered models
+        // Get models
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
-        // Remove any current OrderBy
-        $query->getQuery()->orders = null;
-
         return $query->whereIn('id', $ids)
-                     ->orderByRaw(DB::raw("FIELD(id, $idsOrder)"));
+                     ->orderByRaw("FIELD(id, {$idsOrder})");
     }
 
     /**

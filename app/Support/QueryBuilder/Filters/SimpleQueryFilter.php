@@ -5,7 +5,6 @@ namespace App\Support\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class SimpleQueryFilter implements Filter
@@ -36,11 +35,8 @@ class SimpleQueryFilter implements Filter
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
-        // Remove any current OrderBy
-        $query->getQuery()->orders = null;
-
         return $query->whereIn('id', $ids)
-                     ->orderByRaw(DB::raw("FIELD(id, $idsOrder)"));
+                     ->orderByRaw("FIELD(id, {$idsOrder})");
     }
 
     /**
@@ -48,7 +44,7 @@ class SimpleQueryFilter implements Filter
      *
      * @return void
      */
-    private function setQueryString(string $str = ''): void
+    protected function setQueryString(string $str = ''): void
     {
         // Replace special chars
         $this->queryStr = str_replace(['.', '_'], ' ', $str);
@@ -68,7 +64,7 @@ class SimpleQueryFilter implements Filter
     /**
      * @return void
      */
-    private function trimQueryString(): void
+    protected function trimQueryString(): void
     {
         $this->queryStr = preg_replace('/\s+/', ' ', trim($this->queryStr));
     }
@@ -76,7 +72,7 @@ class SimpleQueryFilter implements Filter
     /**
      * @return Collection
      */
-    private function getQueryModels(Model $model)
+    protected function getQueryModels(Model $model)
     {
         return $model->search($this->queryStr)
             ->select(['name'])

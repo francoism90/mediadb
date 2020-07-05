@@ -2,11 +2,10 @@
 
 namespace App\Support\QueryBuilder\Sorts;
 
-use CyrildeWit\EloquentViewable\Support\Period;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class PopularMonthSorter implements Sort
+class UpdatedSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -20,6 +19,6 @@ class PopularMonthSorter implements Sort
         // Remove any current orders
         $query->getQuery()->orders = null;
 
-        return $query->orderByViews('DESC', Period::pastMonths(1), 'view_count', true);
+        return $query->orderBy('updated_at', 'DESC');
     }
 }

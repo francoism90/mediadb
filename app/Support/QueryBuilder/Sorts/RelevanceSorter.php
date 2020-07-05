@@ -2,13 +2,14 @@
 
 namespace App\Support\QueryBuilder\Sorts;
 
-use CyrildeWit\EloquentViewable\Support\Period;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class PopularMonthSorter implements Sort
+class RelevanceSorter implements Sort
 {
     /**
+     * Simple use order given by filter.
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param bool                                  $descending
      * @param string                                $property
@@ -17,9 +18,6 @@ class PopularMonthSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Remove any current orders
-        $query->getQuery()->orders = null;
-
-        return $query->orderByViews('DESC', Period::pastMonths(1), 'view_count', true);
+        return $query;
     }
 }
