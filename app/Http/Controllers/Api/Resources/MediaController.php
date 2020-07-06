@@ -116,9 +116,9 @@ class MediaController extends Controller
                     'stream_url' => $media->stream_url,
                     'user_playlists' => PlaylistResource::collection(
                         $media->playlists()
-                            ->where('model_type', User::class)
-                            ->where('model_id', auth()->user()->id)
-                            ->get()
+                              ->where('model_type', User::class)
+                              ->where('model_id', auth()->user()->id)
+                              ->get()
                     ),
                 ],
             ]);

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Support\QueryBuilder\Sorts;
+namespace App\Support\QueryBuilder\Sorts\Tag;
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class MediaCountSorter implements Sort
+class ItemsSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -19,6 +19,11 @@ class MediaCountSorter implements Sort
         // Remove any current orders
         $query->getQuery()->orders = null;
 
-        return $query->withCount('media')->orderBy('media_count', 'DESC');
+        return $query->withCount(['channels', 'media', 'playlists'])
+                     ->orderBy('channels_count', 'DESC')
+                     ->orderBy('media_count', 'DESC')
+                     ->orderBy('playlists_count', 'DESC');
+
+        return $query;
     }
 }

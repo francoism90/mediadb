@@ -61,9 +61,25 @@ class Tag extends TagModel
     /**
      * @return morphedByMany
      */
+    public function channels()
+    {
+        return $this->morphedByMany(Channel::class, 'taggable', 'taggables');
+    }
+
+    /**
+     * @return morphedByMany
+     */
     public function media()
     {
         return $this->morphedByMany(Media::class, 'taggable', 'taggables');
+    }
+
+    /**
+     * @return morphedByMany
+     */
+    public function playlists()
+    {
+        return $this->morphedByMany(Playlist::class, 'taggable', 'taggables');
     }
 
     /**
@@ -75,9 +91,9 @@ class Tag extends TagModel
     }
 
     /**
-     * @return int
+     * @return Collection
      */
-    public function getTagCountByType($type = null): int
+    public function getItemCount($type = null)
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
