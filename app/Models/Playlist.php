@@ -7,7 +7,6 @@ use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Resourceable;
 use App\Traits\Securable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
@@ -34,7 +33,6 @@ class Playlist extends Model implements Viewable
     use HasTags;
     use InteractsWithViews;
     use Randomable;
-    use Resourceable;
     use Searchable;
     use Sluggable;
     use Securable;
@@ -154,5 +152,13 @@ class Playlist extends Model implements Viewable
     public function getThumbnailAttribute(): string
     {
         return '';
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemsAttribute($type = null): int
+    {
+        return $this->media->count();
     }
 }

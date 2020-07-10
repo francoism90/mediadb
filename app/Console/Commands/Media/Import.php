@@ -14,7 +14,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos} {limit=3}';
+    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos} {limit=5}';
 
     /**
      * The console command description.

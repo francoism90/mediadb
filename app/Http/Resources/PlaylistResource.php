@@ -16,7 +16,7 @@ class PlaylistResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
-            'items' => $this->media()->count(),
+            'items' => $this->whenAppended('items'),
             'views' => $this->views,
             'created_at' => $this->created_at,
             'relationships' => [

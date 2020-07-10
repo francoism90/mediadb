@@ -23,7 +23,5 @@ class ItemsSorter implements Sort
                      ->orderBy('channels_count', 'DESC')
                      ->orderBy('media_count', 'DESC')
                      ->orderBy('playlists_count', 'DESC');
-
-        return $query;
     }
 }

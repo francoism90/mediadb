@@ -72,7 +72,10 @@ class ChannelController extends Controller
         $channel->recordActivity('show');
         $channel->recordView('view_count', now()->addYear());
 
-        return new ChannelResource($channel->load(['model', 'tags']));
+        return new ChannelResource(
+            $channel->load(['model', 'tags'])
+                    ->append('items')
+        );
     }
 
     /**

@@ -74,7 +74,10 @@ class PlaylistController extends Controller
         $playlist->recordActivity('show');
         $playlist->recordView('view_count', now()->addYear());
 
-        return new PlaylistResource($playlist->load(['model', 'tags']));
+        return new PlaylistResource(
+            $playlist->load(['model', 'tags'])
+                     ->append('items')
+        );
     }
 
     /**

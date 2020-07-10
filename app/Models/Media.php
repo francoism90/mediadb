@@ -7,7 +7,6 @@ use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Resourceable;
 use App\Traits\Securable;
 use App\Traits\Streamable;
 use App\Traits\Taggable;
@@ -35,7 +34,6 @@ class Media extends BaseMedia implements Viewable
     use HasTags;
     use InteractsWithViews;
     use Randomable;
-    use Resourceable;
     use Searchable;
     use Securable;
     use Sluggable;

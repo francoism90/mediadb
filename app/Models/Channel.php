@@ -172,4 +172,12 @@ class Channel extends Model implements HasMedia, Viewable
     {
         return '';
     }
+
+    /**
+     * @return int
+     */
+    public function getItemsAttribute($type = null): int
+    {
+        return $this->media->count();
+    }
 }

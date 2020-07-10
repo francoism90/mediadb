@@ -6,7 +6,6 @@ use App\Support\Scout\Rules\SimpleMatchRule;
 use App\Support\Scout\TagIndexConfigurator;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Resourceable;
 use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
@@ -15,7 +14,6 @@ class Tag extends TagModel
 {
     use Hashidable;
     use Randomable;
-    use Resourceable;
     use Searchable;
 
     /**
@@ -91,9 +89,9 @@ class Tag extends TagModel
     }
 
     /**
-     * @return Collection
+     * @return int
      */
-    public function getItemCount($type = null)
+    public function getItemsAttribute($type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
