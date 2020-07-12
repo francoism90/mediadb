@@ -87,7 +87,7 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [

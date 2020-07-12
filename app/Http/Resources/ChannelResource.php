@@ -15,12 +15,11 @@ class ChannelResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => $this->whenAppended('thumbnail', $this->thumbnail_url),
             'items' => $this->whenAppended('items'),
             'views' => $this->views,
             'created_at' => $this->created_at,
             'relationships' => [
-                'media' => MediaResource::collection($this->whenLoaded('media')),
                 'model' => new UserResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
             ],

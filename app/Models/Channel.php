@@ -88,7 +88,7 @@ class Channel extends Model implements HasMedia, Viewable
     /**
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -168,7 +168,7 @@ class Channel extends Model implements HasMedia, Viewable
     /**
      * @return string
      */
-    public function getThumbnailAttribute(): string
+    public function getThumbnailUrlAttribute(): string
     {
         return '';
     }

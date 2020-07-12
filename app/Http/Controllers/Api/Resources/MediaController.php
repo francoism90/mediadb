@@ -48,6 +48,7 @@ class MediaController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $media = QueryBuilder::for($query)
+            ->allowedAppends(['preview', 'thumbnail'])
             ->allowedIncludes(['model', 'playlists', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('channel', new ChannelFilter())->ignore(null, '*'),
@@ -109,11 +110,12 @@ class MediaController extends Controller
         $media->recordActivity('show');
         $media->recordView('view_count', now()->addYear());
 
-        return (new MediaResource($media->load(['model', 'tags'])))
+        return (new MediaResource(
+            $media->load(['model', 'tags'])
+                  ->append(['download_url', 'stream_url', 'thumbnail'])
+            ))
             ->additional([
                 'meta' => [
-                    'download_url' => $media->download_url,
-                    'stream_url' => $media->stream_url,
                     'user_playlists' => PlaylistResource::collection(
                         $media->playlists()
                               ->where('model_type', User::class)

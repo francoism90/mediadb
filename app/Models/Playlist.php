@@ -89,7 +89,7 @@ class Playlist extends Model implements Viewable
     /**
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -149,9 +149,11 @@ class Playlist extends Model implements Viewable
     /**
      * @return string
      */
-    public function getThumbnailAttribute(): string
+    public function getThumbnailUrlAttribute(): string
     {
-        return '';
+        $model = $this->media()->orderByDesc('created_at')->first();
+
+        return $model ? $model->thumbnail_url : '';
     }
 
     /**

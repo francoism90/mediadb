@@ -81,14 +81,6 @@ class Tag extends TagModel
     }
 
     /**
-     * @return string
-     */
-    public function getThumbnailAttribute(): string
-    {
-        return '';
-    }
-
-    /**
      * @return int
      */
     public function getItemsAttribute($type = null): int
