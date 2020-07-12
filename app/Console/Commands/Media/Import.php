@@ -14,7 +14,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos} {limit=5}';
+    protected $signature = 'media:import {path} {channel=Administrator} {user=administrator} {collection=videos}';
 
     /**
      * The console command description.
@@ -51,7 +51,7 @@ class Import extends Command
             $media->setStatus('pending', 'needs processing');
 
             // Limit the number of imports
-            if (++$i == $this->argument('limit')) {
+            if (++$i == config('vod.import_limit', 5)) {
                 break;
             }
         }

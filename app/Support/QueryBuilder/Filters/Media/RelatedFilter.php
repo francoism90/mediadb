@@ -66,10 +66,10 @@ class RelatedFilter implements Filter
     {
         return [
             $this->getModelsByChannel(),
-            $this->getModelsByRandom(),
             $this->getModelsByQuery(),
             $this->getModelsByTags(),
             $this->getModelsByAdditional(),
+            $this->getModelsByRandom(),
         ];
     }
 
@@ -86,20 +86,6 @@ class RelatedFilter implements Filter
             ->collapse('id')
             ->from(0)
             ->take(9)
-            ->get();
-    }
-
-    /**
-     * @return Collection
-     */
-    protected function getModelsByRandom()
-    {
-        return Media::select('id')
-            ->whereKeyNot($this->media->id)
-            ->where('model_type', Channel::class)
-            ->where('model_id', $this->media->model->id)
-            ->inRandomSeedOrder()
-            ->take(6)
             ->get();
     }
 
@@ -135,12 +121,26 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    public function getModelsByAdditional()
+    protected function getModelsByAdditional()
+    {
+        return Media::select('id')
+            ->whereKeyNot($this->media->id)
+            ->where('model_type', Channel::class)
+            ->where('model_id', $this->media->model->id)
+            ->inRandomSeedOrder()
+            ->take(6)
+            ->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getModelsByRandom()
     {
         return Media::select('id')
             ->whereKeyNot($this->media->id)
             ->inRandomSeedOrder()
-            ->take(9)
+            ->take(6)
             ->get();
     }
 }

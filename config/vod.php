@@ -32,12 +32,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | VOD Streaming
+    | VOD Importing
     |--------------------------------------------------------------------------
     |
     | Formats allowed to be imported and used for VOD streaming.
     |
     */
+
+    'import_limit' => env('VOD_IMPORT_LIMIT', 5),
 
     'extensions' => [
         'm4v',
