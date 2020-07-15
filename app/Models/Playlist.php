@@ -159,7 +159,7 @@ class Playlist extends Model implements Viewable
     /**
      * @return int
      */
-    public function getItemsAttribute($type = null): int
+    public function getItemsAttribute(): int
     {
         return $this->media->count();
     }

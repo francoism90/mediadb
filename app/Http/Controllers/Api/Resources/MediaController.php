@@ -7,6 +7,7 @@ use App\Http\Requests\Media\StoreRequest;
 use App\Http\Requests\Media\UpdateRequest;
 use App\Http\Resources\MediaResource;
 use App\Http\Resources\PlaylistResource;
+use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
 use App\Models\User;
 use App\Support\QueryBuilder\Filters\Media\ChannelFilter;
@@ -17,13 +18,10 @@ use App\Support\QueryBuilder\Sorts\Media\LongestSorter;
 use App\Support\QueryBuilder\Sorts\Media\ShortestSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\NameSorter;
-use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
-use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
-use Illuminate\Support\Facades\Artisan;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -61,8 +59,6 @@ class MediaController extends Controller
                 AllowedSort::custom('shortest', new ShortestSorter())->defaultDirection('asc'),
                 AllowedSort::custom('longest', new LongestSorter())->defaultDirection('desc'),
                 AllowedSort::custom('name', new NameSorter())->defaultDirection('asc'),
-                AllowedSort::custom('popular-month', new PopularMonthSorter())->defaultDirection('desc'),
-                AllowedSort::custom('popular-week', new PopularWeekSorter())->defaultDirection('desc'),
                 AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
                 AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
@@ -163,10 +159,8 @@ class MediaController extends Controller
         if ($request->has('snapshot')) {
             $media->setCustomProperty('snapshot', $request->input('snapshot'))->save();
 
-            Artisan::call('media-library:regenerate', [
-                '--ids' => $media->id,
-                '--force' => true,
-            ]);
+            // Regenerate the thumbnail
+            CreateThumbnail::dispatch($media)->onQueue('media');
         }
 
         return new MediaResource($media);

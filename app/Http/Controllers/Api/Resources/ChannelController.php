@@ -9,8 +9,6 @@ use App\Models\Channel;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\NameSorter;
-use App\Support\QueryBuilder\Sorts\PopularMonthSorter;
-use App\Support\QueryBuilder\Sorts\PopularWeekSorter;
 use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\RelevanceSorter;
@@ -48,8 +46,6 @@ class ChannelController extends Controller
             ->allowedSorts([
                 $defaultSort,
                 AllowedSort::custom('name', new NameSorter())->defaultDirection('asc'),
-                AllowedSort::custom('popular-month', new PopularMonthSorter())->defaultDirection('desc'),
-                AllowedSort::custom('popular-week', new PopularWeekSorter())->defaultDirection('desc'),
                 AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
                 AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),

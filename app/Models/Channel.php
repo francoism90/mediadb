@@ -147,22 +147,22 @@ class Channel extends Model implements HasMedia, Viewable
     }
 
     /**
+     * We need to define media conversion to use them.
+     * Jobs do the actual conversion.
+     *
      * @param Media $media
      */
     public function registerMediaConversions($media = null): void
     {
         $this->addMediaConversion('thumbnail')
-            ->width(480)
-            ->height(320)
-            ->extractVideoFrameAtSecond(
-                $media->getCustomProperty('snapshot', 1)
-            )
-            ->performOnCollections('videos');
+             ->setManipulations(['format' => 'jpg'])
+             ->performOnCollections('register-conversion')
+             ->nonQueued();
 
         $this->addMediaConversion('preview')
-            ->withoutManipulations()
-            ->performOnCollections('dummy')
-            ->nonQueued();
+             ->withoutManipulations()
+             ->performOnCollections('register-conversion')
+             ->nonQueued();
     }
 
     /**
@@ -176,7 +176,7 @@ class Channel extends Model implements HasMedia, Viewable
     /**
      * @return int
      */
-    public function getItemsAttribute($type = null): int
+    public function getItemsAttribute(): int
     {
         return $this->media->count();
     }

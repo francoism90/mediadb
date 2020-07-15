@@ -3,11 +3,11 @@
 namespace App\Console\Commands\Media;
 
 use App\Jobs\Media\CreatePreview;
+use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetAttributes;
 use App\Jobs\Media\SetProcessed;
 use App\Models\Media;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class Optimize extends Command
 {
@@ -100,19 +100,20 @@ class Optimize extends Command
      */
     protected function hasMissingConversions(Media $media): self
     {
-        if (!$media->hasGeneratedConversion('thumbnail')) {
+        if (!$media->hasGeneratedConversion('thumbnail') ||
+            !file_exists($media->getPath('thumbnail'))
+        ) {
             $this->warn("Missing thumbnail: {$media->id}");
 
-            Artisan::call('media-library:regenerate', [
-                '--ids' => $media->id,
-                '--force' => true,
-            ]);
+            CreateThumbnail::dispatch($media)->onQueue('media');
         }
 
-        if (!$media->hasGeneratedConversion('preview')) {
+        if (!$media->hasGeneratedConversion('preview') ||
+            !file_exists($media->getPath('preview'))
+        ) {
             $this->warn("Missing preview: {$media->id}");
 
-            CreatePreview::dispatch($media);
+            CreatePreview::dispatch($media)->onQueue('media');
         }
 
         return $this;

@@ -16,14 +16,8 @@ class PerformConversionsJob implements ShouldQueue
     use SerializesModels;
     use Queueable;
 
-    /**
-     * @var int
-     */
     public $tries = 1;
 
-    /**
-     * @var int
-     */
     public $timeout = 900;
 
     protected ConversionCollection $conversions;
