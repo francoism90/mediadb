@@ -73,7 +73,9 @@ class CreateThumbnail implements ShouldQueue
             $this->media->getCustomProperty('snapshot', 1)
         ));
 
-        $frame->addFilter(new CustomFrameFilter('scale=320x240'));
+        $frame->addFilter(
+            new CustomFrameFilter("scale='min(320,iw)':'min(240,ih)")
+        );
 
         $frame->save($path);
 
