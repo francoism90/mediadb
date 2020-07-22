@@ -59,9 +59,11 @@ class SetAttributes implements ShouldQueue
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            'timeout' => $this->timeout,
+            'ffmpeg.threads' => config('media-library.threads', 0),
         ]);
 
-        if (!$this->isProbable()) {
+        if (!$this->isValid()) {
             throw new \Exception('Unable to probe file.');
         }
 
@@ -117,7 +119,7 @@ class SetAttributes implements ShouldQueue
     /**
      * @return bool
      */
-    protected function isProbable(): bool
+    protected function isValid(): bool
     {
         return $this->ffmpeg
             ->getFFProbe()

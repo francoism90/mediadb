@@ -66,4 +66,21 @@ return [
         'video/x-theora',
         'video/x-theora+ogg',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | VOD Sprites
+    |--------------------------------------------------------------------------
+    |
+    | Thumbnails from a sprite images when hovering over the progress bar.
+    |
+    */
+
+    'sprite' => [
+        'rows' => env('VOD_SPRITE_ROWS', 8),
+        'columns' => env('VOD_SPRITE_COLUMNS', 8),
+        'interval' => env('VOD_SRPITE_INTERVAL', 2),
+        'width' => env('VOD_SPRITE_WIDTH', 160),
+        'height' => env('VOD_SPRITE_HEIGHT', 90),
+    ],
 ];

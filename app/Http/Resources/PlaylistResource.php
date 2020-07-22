@@ -15,10 +15,10 @@ class PlaylistResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
-            'thumbnail' => $this->whenAppended('thumbnail', $this->thumbnail_url),
-            'items' => $this->whenAppended('items'),
             'views' => $this->views,
             'created_at' => $this->created_at,
+            'items' => $this->whenAppended('items'),
+            'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'relationships' => [
                 'model' => new UserResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),

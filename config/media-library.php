@@ -81,13 +81,13 @@ return [
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
+    'path_generator' => App\Support\MediaLibrary\PathGenerator::class,
 
     /*
      * When urls to files get generated, this class will be called. Leave empty
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => App\Support\MediaLibrary\LocalUrlGenerator::class,
+    'url_generator' => App\Support\MediaLibrary\UrlGenerator::class,
 
     /*
      * Whether to activate versioning when urls to files get generated.

@@ -38,7 +38,7 @@ class ChannelController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $channels = QueryBuilder::for($query)
-            ->allowedAppends(['thumbnail', 'items'])
+            ->allowedAppends(['items', 'thumbnail_url'])
             ->allowedIncludes(['media', 'model', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),

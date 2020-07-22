@@ -65,17 +65,18 @@ class CreatePreview implements ShouldQueue
         $ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            'timeout' => $this->timeout,
+            'ffmpeg.threads' => config('media-library.threads', 0),
         ]);
 
         $video = $ffmpeg->open($this->media->getPath());
-        $duration = $ffmpeg->getFFProbe()->format($this->media->getPath())->get('duration');
 
         // Prepare the conversion
         $tempDirectory = TemporaryDirectory::create();
 
         $path = $tempDirectory->path($this->getConversionFileName());
 
-        $clips = $this->prepareConversion($tempDirectory, $video, $duration);
+        $clips = $this->prepareConversion($tempDirectory, $video);
 
         $concat = $video->concat($clips);
         $concat->saveFromSameCodecs($path);
@@ -96,10 +97,15 @@ class CreatePreview implements ShouldQueue
     }
 
     /**
-     * @return self
+     * @param TemporaryDirectory $tempDirectory
+     * @param Video              $video
+     *
+     * @return array
      */
-    protected function prepareConversion($tempDirectory, Video $video, float $duration = 0): array
+    protected function prepareConversion($tempDirectory, Video $video): array
     {
+        $duration = $this->media->getCustomProperty('duration', 0);
+
         $steps = $duration / 8;
         $range = range(0, $duration, $steps);
         $parts = [1, 3, 5, 7];
@@ -118,7 +124,7 @@ class CreatePreview implements ShouldQueue
                 )
                  ->filters()
                  ->resize(
-                     new Dimension(320, 240), ResizeFilter::RESIZEMODE_INSET, true
+                     new Dimension(320, 240), ResizeFilter::RESIZEMODE_FIT, false
                 );
 
             $clip->save(
@@ -171,8 +177,6 @@ class CreatePreview implements ShouldQueue
      */
     protected function getConversionFileName(): string
     {
-        $filename = pathinfo($this->media->file_name, PATHINFO_FILENAME);
-
-        return "{$filename}-preview.{$this->getMediaExtension()}";
+        return "preview.{$this->getMediaExtension()}";
     }
 }

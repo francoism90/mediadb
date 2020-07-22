@@ -154,15 +154,14 @@ class Channel extends Model implements HasMedia, Viewable
      */
     public function registerMediaConversions($media = null): void
     {
-        $this->addMediaConversion('thumbnail')
-             ->setManipulations(['format' => 'jpg'])
-             ->performOnCollections('register-conversion')
-             ->nonQueued();
+        $conversions = ['thumbnail', 'preview', 'sprite'];
 
-        $this->addMediaConversion('preview')
+        foreach ($conversions as $conversion) {
+            $this->addMediaConversion($conversion)
              ->withoutManipulations()
-             ->performOnCollections('register-conversion')
+             ->performOnCollections('no-conversions')
              ->nonQueued();
+        }
     }
 
     /**

@@ -17,7 +17,7 @@ MediaDB is very much in development and is not yet suitable for production purpo
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ngx_brotli](https://github.com/google/ngx_brotli)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
-- [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like php-redis.
+- [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis`, `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
 - [Laravel](https://laravel.com/docs/7.x) environment with MySQL/MariaDB (with JSON support), Redis, Supervisor, etc.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)

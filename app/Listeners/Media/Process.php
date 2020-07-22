@@ -3,6 +3,7 @@
 namespace App\Listeners\Media;
 
 use App\Jobs\Media\CreatePreview;
+use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetAttributes;
 use App\Jobs\Media\SetProcessed;
@@ -31,6 +32,7 @@ class Process
                 SetAttributes::withChain([
                     new CreateThumbnail($event->media),
                     new CreatePreview($event->media),
+                    new CreateSprite($event->media),
                     new SetProcessed($event->media),
                 ])->dispatch($event->media)->allOnQueue('media');
                 break;

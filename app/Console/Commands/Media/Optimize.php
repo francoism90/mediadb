@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Media;
 
 use App\Jobs\Media\CreatePreview;
+use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetAttributes;
 use App\Jobs\Media\SetProcessed;
@@ -16,7 +17,7 @@ class Optimize extends Command
      *
      * @var string
      */
-    protected $signature = 'media:optimize {validate=false}';
+    protected $signature = 'media:optimize {--force}';
 
     /**
      * The console command description.
@@ -41,22 +42,21 @@ class Optimize extends Command
         $models = Media::all();
 
         foreach ($models as $model) {
-            if ($this->argument('validate') && $this->hasMissingMainFile($model)) {
-                $this->error("Missing file: {$model->id}");
+            if ($this->option('force')) {
+                $this->warn("Force optimizing: {$model->id}");
+
+                SetAttributes::withChain([
+                    new CreateThumbnail($model),
+                    new CreatePreview($model),
+                    new CreateSprite($model),
+                    new SetProcessed($model),
+                ])->dispatch($model)->allOnQueue('media');
                 continue;
             }
 
             $this->hasMissingAttributes($model)
                  ->hasMissingConversions($model);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasMissingMainFile(Media $media): bool
-    {
-        return !file_exists($media->getPath());
     }
 
     /**
@@ -100,20 +100,22 @@ class Optimize extends Command
      */
     protected function hasMissingConversions(Media $media): self
     {
-        if (!$media->hasGeneratedConversion('thumbnail') ||
-            !file_exists($media->getPath('thumbnail'))
-        ) {
+        if (!$media->hasGeneratedConversion('thumbnail')) {
             $this->warn("Missing thumbnail: {$media->id}");
 
             CreateThumbnail::dispatch($media)->onQueue('media');
         }
 
-        if (!$media->hasGeneratedConversion('preview') ||
-            !file_exists($media->getPath('preview'))
-        ) {
+        if (!$media->hasGeneratedConversion('preview')) {
             $this->warn("Missing preview: {$media->id}");
 
             CreatePreview::dispatch($media)->onQueue('media');
+        }
+
+        if (!$media->hasGeneratedConversion('sprite')) {
+            $this->warn("Missing sprite: {$media->id}");
+
+            CreateSprite::dispatch($media)->onQueue('media');
         }
 
         return $this;

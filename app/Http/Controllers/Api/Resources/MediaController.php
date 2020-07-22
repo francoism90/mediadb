@@ -46,7 +46,7 @@ class MediaController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $media = QueryBuilder::for($query)
-            ->allowedAppends(['preview', 'thumbnail'])
+            ->allowedAppends(['preview_url', 'thumbnail_url'])
             ->allowedIncludes(['model', 'playlists', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('channel', new ChannelFilter())->ignore(null, '*'),
@@ -108,7 +108,10 @@ class MediaController extends Controller
 
         return (new MediaResource(
             $media->load(['model', 'tags'])
-                  ->append(['download_url', 'stream_url', 'thumbnail'])
+                  ->append([
+                      'download_url', 'sprite_url',
+                      'stream_url', 'thumbnail_url',
+                    ])
             ))
             ->additional([
                 'meta' => [

@@ -8,17 +8,19 @@ use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Securable;
+use App\Traits\Spriteable;
 use App\Traits\Streamable;
 use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
+use Spatie\MediaLibrary\Support\UrlGenerator\UrlGeneratorFactory;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
@@ -37,6 +39,7 @@ class Media extends BaseMedia implements Viewable
     use Searchable;
     use Securable;
     use Sluggable;
+    use Spriteable;
     use Streamable;
     use Taggable;
     use ViewableHelpers;
@@ -140,16 +143,47 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return string
      */
+    public function getBasePath(): string
+    {
+        $urlGenerator = UrlGeneratorFactory::createForMedia($this);
+
+        return $urlGenerator->getBasePath();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseMediaPath(): string
+    {
+        $urlGenerator = UrlGeneratorFactory::createForMedia($this);
+
+        return $urlGenerator->getBaseMediaPath();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDownloadUrlAttribute(): string
+    {
+        $expires = now()->addSeconds(
+            config('vod.expire')
+        );
+
+        return $this->getTemporaryUrl($expires);
+    }
+
+    /**
+     * @return string
+     */
     public function getThumbnailUrlAttribute(): string
     {
-        if (!$this->hasGeneratedConversion('thumbnail')) {
-            return '';
-        }
-
-        return $this->getTemporaryUrl(
-            Carbon::now()->addHours(
-                config('vod.expire')
-            ), 'thumbnail'
+        return URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+                'name' => 'thumbnail.jpg',
+            ]
         );
     }
 
@@ -158,26 +192,27 @@ class Media extends BaseMedia implements Viewable
      */
     public function getPreviewUrlAttribute(): string
     {
-        if (!$this->hasGeneratedConversion('preview')) {
-            return '';
-        }
-
-        return $this->getTemporaryUrl(
-            Carbon::now()->addHours(
-                config('vod.expire')
-            ), 'preview'
+        return URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+                'name' => "preview.{$this->extension}",
+            ]
         );
     }
 
     /**
      * @return string
      */
-    public function getDownloadUrlAttribute(): string
+    public function getSpriteUrlAttribute(): string
     {
-        return $this->getTemporaryUrl(
-            Carbon::now()->addHours(
-                config('vod.expire')
-            )
+        return URL::signedRoute(
+            'api.media.sprite',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+            ]
         );
     }
 
@@ -191,20 +226,6 @@ class Media extends BaseMedia implements Viewable
             config('vod.secret'),
             config('vod.expire'),
             $this->getRouteKey(),
-            request()->ip()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlaceholderUrlAttribute(int $offset = 1000, string $resize = 'w160-h100'): string
-    {
-        return self::getSecureExpireLink(
-            $this->getStreamUrl('thumb', "thumb-{$offset}-{$resize}.jpg"),
-            config('vod.secret'),
-            config('vod.expire'),
-            $this->getRouteKey()."_thumb_{$offset}",
             request()->ip()
         );
     }

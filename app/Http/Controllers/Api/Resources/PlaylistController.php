@@ -39,7 +39,7 @@ class PlaylistController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $playlists = QueryBuilder::for($query)
-            ->allowedAppends(['thumbnail', 'items'])
+            ->allowedAppends(['items', 'thumbnail_url'])
             ->allowedIncludes(['playlist', 'model', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('user', new UserFilter())->ignore(null, '*', '#'),

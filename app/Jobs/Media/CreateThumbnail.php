@@ -60,6 +60,8 @@ class CreateThumbnail implements ShouldQueue
         $ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            'timeout' => $this->timeout,
+            'ffmpeg.threads' => config('media-library.threads', 0),
         ]);
 
         $video = $ffmpeg->open($this->media->getPath());
@@ -74,7 +76,7 @@ class CreateThumbnail implements ShouldQueue
         ));
 
         $frame->addFilter(
-            new CustomFrameFilter("scale='min(320,iw)':'min(240,ih)")
+            new CustomFrameFilter('scale=320:240')
         );
 
         $frame->save($path);
@@ -104,8 +106,6 @@ class CreateThumbnail implements ShouldQueue
      */
     protected function getConversionFileName(): string
     {
-        $filename = pathinfo($this->media->file_name, PATHINFO_FILENAME);
-
-        return "{$filename}-thumbnail.jpg";
+        return 'thumbnail.jpg';
     }
 }

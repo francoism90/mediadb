@@ -15,9 +15,9 @@ class UserResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
-            'thumbnail' => $this->thumbnail,
             'views' => $this->views,
             'created_at' => $this->created_at,
+            'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'relationships' => [
                 'channels' => MediaResource::collection($this->whenLoaded('channels')),
             ],
