@@ -8,16 +8,23 @@ use Illuminate\Support\Facades\URL;
 
 trait Spriteable
 {
+    /**
+     * @param array $frames
+     * @param User $user
+     *
+     * @return string
+     */
     public function getSpriteContents(array $frames = [], User $user): string
     {
         $cacheKey = "sprite_{$this->getRouteKey()}_{$user->id}";
 
-        $contents = Cache::remember($cacheKey, 60 * 10, function () use ($frames, $user) {
+        $contents = Cache::remember($cacheKey, 60 * 60 * 8, function () use ($frames, $user) {
             $str = "WEBVTT\n\n";
 
             foreach ($frames as $frame) {
                 $str .= "{$frame['start']} --> {$frame['end']}\n";
 
+                // Sprite url must be unique for the user
                 $frame['url'] = $this->getSpriteUrl($frame['sprite'], $user);
 
                 $str .= json_encode($frame, JSON_UNESCAPED_SLASHES)."\n\n";
@@ -29,6 +36,12 @@ trait Spriteable
         return $contents;
     }
 
+    /**
+     * @param int $id
+     * @param User $user
+     *
+     * @return string
+     */
     public function getSpriteUrl(int $id, User $user): string
     {
         return URL::signedRoute(

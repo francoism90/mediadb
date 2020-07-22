@@ -72,7 +72,7 @@ return [
     | VOD Sprites
     |--------------------------------------------------------------------------
     |
-    | Thumbnails from a sprite images when hovering over the progress bar.
+    | Thumbnails from sprite images when hovering over the progress bar.
     |
     */
 
