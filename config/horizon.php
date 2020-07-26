@@ -150,7 +150,7 @@ return [
     |
     */
 
-    'memory_limit' => 128,
+    'memory_limit' => 192,
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,15 @@ return [
                 'tries' => 3,
                 'timeout' => 900,
             ],
+
+            'supervisor-3' => [
+                'connection' => 'redis',
+                'queue' => ['optimize'],
+                'balance' => 'simple',
+                'processes' => 3,
+                'tries' => 3,
+                'timeout' => 3600,
+            ],
         ],
 
         'local' => [
@@ -201,6 +210,15 @@ return [
                 'processes' => 3,
                 'tries' => 3,
                 'timeout' => 900,
+            ],
+
+            'supervisor-3' => [
+                'connection' => 'redis',
+                'queue' => ['optimize'],
+                'balance' => 'simple',
+                'processes' => 3,
+                'tries' => 3,
+                'timeout' => 3600,
             ],
         ],
     ],

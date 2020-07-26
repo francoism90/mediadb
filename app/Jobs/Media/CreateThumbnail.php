@@ -6,6 +6,7 @@ use App\Models\Media;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Frame\CustomFrameFilter;
+use FFMpeg\Media\Video;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -69,22 +70,7 @@ class CreateThumbnail implements ShouldQueue
         // Prepare the conversion
         $tempDirectory = TemporaryDirectory::create();
 
-        $path = $tempDirectory->path($this->getConversionFileName());
-
-        $frame = $video->frame(TimeCode::fromSeconds(
-            $this->media->getCustomProperty('snapshot', 1)
-        ));
-
-        $frame->addFilter(
-            new CustomFrameFilter('scale=320:240')
-        );
-
-        $frame->save($path);
-
-        // Optimize the conversion
-        $optimizer = OptimizerChainFactory::create();
-
-        $optimizer->optimize($path);
+        $path = $this->prepareConversion($tempDirectory, $video);
 
         /** @var \Spatie\MediaLibrary\MediaCollections\Filesystem $filesystem */
         $filesystem = app(Filesystem::class);
@@ -99,6 +85,35 @@ class CreateThumbnail implements ShouldQueue
         $this->media->markAsConversionGenerated('thumbnail', true);
 
         $tempDirectory->delete();
+    }
+
+    /**
+     * @param TemporaryDirectory $tempDirectory
+     * @param Video              $video
+     *
+     * @return string
+     */
+    protected function prepareConversion($tempDirectory, Video $video): string
+    {
+        $path = $tempDirectory->path($this->getConversionFileName());
+
+        $duration = $this->media->getCustomProperty('duration', 5);
+
+        $frame = $video->frame(TimeCode::fromSeconds(
+            $this->media->getCustomProperty('snapshot', $duration / 2)
+        ));
+
+        $frame->addFilter(
+            new CustomFrameFilter('scale=320:240')
+        );
+
+        $frame->save($path);
+
+        // Optimize the conversion
+        $optimizer = OptimizerChainFactory::create();
+        $optimizer->optimize($path);
+
+        return $path;
     }
 
     /**

@@ -39,7 +39,9 @@ return [
     |
     */
 
-    'import_limit' => env('VOD_IMPORT_LIMIT', 5),
+    'import_limit' => env('VOD_IMPORT_LIMIT', 10),
+
+    'optimize_limit' => env('VOD_OPTIMIZE_LIMIT', 5),
 
     'extensions' => [
         'm4v',

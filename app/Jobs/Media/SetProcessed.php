@@ -26,7 +26,7 @@ class SetProcessed implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 120;
+    public $timeout = 90;
 
     /**
      * @var Media

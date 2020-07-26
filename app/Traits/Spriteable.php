@@ -10,23 +10,27 @@ trait Spriteable
 {
     /**
      * @param array $frames
-     * @param User $user
+     * @param User  $user
      *
      * @return string
      */
     public function getSpriteContents(array $frames = [], User $user): string
     {
+        // Return on empty frames
+        if (!$frames) {
+            return '';
+        }
+
         $cacheKey = "sprite_{$this->getRouteKey()}_{$user->id}";
 
-        $contents = Cache::remember($cacheKey, 60 * 60 * 8, function () use ($frames, $user) {
+        $contents = Cache::remember($cacheKey, 60 * 60 * 24, function () use ($frames, $user) {
             $str = "WEBVTT\n\n";
 
             foreach ($frames as $frame) {
-                $str .= "{$frame['start']} --> {$frame['end']}\n";
-
                 // Sprite url must be unique for the user
                 $frame['url'] = $this->getSpriteUrl($frame['sprite'], $user);
 
+                $str .= "{$frame['start']} --> {$frame['end']}\n";
                 $str .= json_encode($frame, JSON_UNESCAPED_SLASHES)."\n\n";
             }
 
@@ -37,7 +41,7 @@ trait Spriteable
     }
 
     /**
-     * @param int $id
+     * @param int  $id
      * @param User $user
      *
      * @return string

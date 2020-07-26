@@ -5,6 +5,7 @@ namespace App\Console\Commands\Media;
 use App\Models\Channel;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
 class Import extends Command
@@ -45,7 +46,9 @@ class Import extends Command
 
             $media = $channel
                 ->addMedia($file->getRealPath())
-                ->usingName($file->getFilename())
+                ->usingName(
+                    $this->convertToTitleCase($file->getFilename())
+                )
                 ->toMediaCollection($this->argument('collection'));
 
             $media->setStatus('pending', 'needs processing');
@@ -120,5 +123,16 @@ class Import extends Command
     protected function supportedMimeTypes(): array
     {
         return config('vod.mimetypes');
+    }
+
+    /**
+     * @return string
+     */
+    protected function convertToTitleCase(string $value): string
+    {
+        $str = str_replace(['.', ',', '_', '-'], ' ', $value);
+        $str = preg_replace('/\s+/', ' ', trim($str));
+
+        return Str::title($str);
     }
 }

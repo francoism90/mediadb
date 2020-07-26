@@ -36,7 +36,7 @@ class CreateSprite implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 900;
+    public $timeout = 2700;
 
     /**
      * @var Media
@@ -209,6 +209,7 @@ class CreateSprite implements ShouldQueue
 
         // Add each frame for montage
         foreach ($frames as $frame) {
+            // Create empty frame if non exists
             if (!file_exists($frame['path'])) {
                 $image = new \Imagick();
                 $image->newImage($thumbWidth, $thumbHeight, new \ImagickPixel('black'));
@@ -253,8 +254,8 @@ class CreateSprite implements ShouldQueue
         });
 
         file_put_contents($path, json_encode(
-            $filtered, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
-        );
+            $filtered, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        ));
 
         return $this;
     }

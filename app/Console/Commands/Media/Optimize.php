@@ -9,6 +9,7 @@ use App\Jobs\Media\SetAttributes;
 use App\Jobs\Media\SetProcessed;
 use App\Models\Media;
 use Illuminate\Console\Command;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 class Optimize extends Command
 {
@@ -39,7 +40,11 @@ class Optimize extends Command
      */
     public function handle()
     {
-        $models = Media::all();
+        $models = $this->getInvalidMediaModels();
+
+        if ($this->option('force')) {
+            $models = $this->getRandomMediaModels();
+        }
 
         foreach ($models as $model) {
             if ($this->option('force')) {
@@ -50,13 +55,42 @@ class Optimize extends Command
                     new CreatePreview($model),
                     new CreateSprite($model),
                     new SetProcessed($model),
-                ])->dispatch($model)->allOnQueue('media');
+                ])->dispatch($model)->allOnQueue('optimize');
                 continue;
             }
 
             $this->hasMissingAttributes($model)
                  ->hasMissingConversions($model);
         }
+    }
+
+    /**
+     * @return MediaCollection
+     */
+    protected function getInvalidMediaModels(): MediaCollection
+    {
+        $query = Media::WhereNull('custom_properties->duration')
+            ->orWhereNull('custom_properties->generated_conversions')
+            ->orWhereNull('custom_properties->generated_conversions->preview')
+            ->orWhereNull('custom_properties->generated_conversions->sprite')
+            ->orWhereNull('custom_properties->generated_conversions->thumbnail')
+            ->inRandomOrder()
+            ->take(config('vod.optimize_limit', 5))
+            ->get();
+
+        return $query;
+    }
+
+    /**
+     * @return MediaCollection
+     */
+    protected function getRandomMediaModels(): MediaCollection
+    {
+        $query = Media::inRandomOrder()
+                ->take(config('vod.optimize_limit', 5))
+                ->get();
+
+        return $query;
     }
 
     /**
@@ -74,7 +108,7 @@ class Optimize extends Command
 
         SetAttributes::withChain([
             new SetProcessed($media),
-        ])->dispatch($media)->allOnQueue('media');
+        ])->dispatch($media)->allOnQueue('optimize');
 
         return $this;
     }
@@ -103,19 +137,19 @@ class Optimize extends Command
         if (!$media->hasGeneratedConversion('thumbnail')) {
             $this->warn("Missing thumbnail: {$media->id}");
 
-            CreateThumbnail::dispatch($media)->onQueue('media');
+            CreateThumbnail::dispatch($media)->onQueue('optimize');
         }
 
         if (!$media->hasGeneratedConversion('preview')) {
             $this->warn("Missing preview: {$media->id}");
 
-            CreatePreview::dispatch($media)->onQueue('media');
+            CreatePreview::dispatch($media)->onQueue('optimize');
         }
 
         if (!$media->hasGeneratedConversion('sprite')) {
             $this->warn("Missing sprite: {$media->id}");
 
-            CreateSprite::dispatch($media)->onQueue('media');
+            CreateSprite::dispatch($media)->onQueue('optimize');
         }
 
         return $this;

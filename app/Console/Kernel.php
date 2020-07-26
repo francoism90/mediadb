@@ -31,8 +31,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('horizon:snapshot')->everyFiveMinutes();
-        $schedule->command('telescope:prune')->daily();
+        // Laravel
+        $schedule->command('horizon:snapshot')
+                 ->everyFiveMinutes()
+                 ->runInBackground();
+
+        $schedule->command('telescope:prune')
+                 ->daily()
+                 ->runInBackground();
+
+        // Media
+        $schedule->command('media:optimize')
+                 ->everySixHours()
+                 ->environments(['staging', 'production'])
+                 ->runInBackground();
     }
 
     /**
