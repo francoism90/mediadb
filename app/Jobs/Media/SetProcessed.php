@@ -22,6 +22,11 @@ class SetProcessed implements ShouldQueue
     public $deleteWhenMissingModels = true;
 
     /**
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
      * The number of seconds the job can run before timing out.
      *
      * @var int

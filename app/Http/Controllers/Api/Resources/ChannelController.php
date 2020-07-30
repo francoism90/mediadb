@@ -66,7 +66,7 @@ class ChannelController extends Controller
     public function show(Channel $channel)
     {
         // Tracking
-        $channel->recordActivity('show');
+        $channel->recordActivity('viewed');
         $channel->recordView('view_count', now()->addYear());
 
         return new ChannelResource(

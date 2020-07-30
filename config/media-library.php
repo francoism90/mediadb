@@ -130,7 +130,6 @@ return [
         Spatie\MediaLibrary\Conversions\ImageGenerators\Webp::class,
         Spatie\MediaLibrary\Conversions\ImageGenerators\Pdf::class,
         Spatie\MediaLibrary\Conversions\ImageGenerators\Svg::class,
-        // Spatie\MediaLibrary\Conversions\ImageGenerators\Video::class,
     ],
 
     /*
@@ -158,7 +157,6 @@ return [
      * your custom jobs extend the ones provided by the package.
      */
     'jobs' => [
-        // 'perform_conversions' => \Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob::class,
         'perform_conversions' => App\Support\MediaLibrary\PerformConversionsJob::class,
         'generate_responsive_images' => \Spatie\MediaLibrary\ResponsiveImages\Jobs\GenerateResponsiveImagesJob::class,
     ],

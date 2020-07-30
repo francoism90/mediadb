@@ -31,7 +31,7 @@ class CreateThumbnail implements ShouldQueue
     /**
      * @var int
      */
-    public $tries = 1;
+    public $tries = 3;
 
     /**
      * @var int
@@ -60,9 +60,11 @@ class CreateThumbnail implements ShouldQueue
     {
         $ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+            'ffmpeg.threads' => config('media-library.threads', 4),
+            'ffmpeg.timeout' => $this->timeout,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
             'timeout' => $this->timeout,
-            'ffmpeg.threads' => config('media-library.threads', 0),
         ]);
 
         $video = $ffmpeg->open($this->media->getPath());

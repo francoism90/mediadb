@@ -169,7 +169,9 @@ class Channel extends Model implements HasMedia, Viewable
      */
     public function getThumbnailUrlAttribute(): string
     {
-        return '';
+        $model = $this->media()->orderByDesc('created_at')->first();
+
+        return $model ? $model->thumbnail_url : '';
     }
 
     /**

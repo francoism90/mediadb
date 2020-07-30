@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Playlist\UpdateRequest;
 use App\Http\Resources\PlaylistResource;
 use App\Models\Playlist;
-use App\Support\QueryBuilder\Filters\Playlist\UserFilter;
+use App\Support\QueryBuilder\Filters\Playlist\TypeFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\NameSorter;
@@ -42,7 +42,7 @@ class PlaylistController extends Controller
             ->allowedAppends(['items', 'thumbnail_url'])
             ->allowedIncludes(['playlist', 'model', 'tags'])
             ->allowedFilters([
-                AllowedFilter::custom('user', new UserFilter())->ignore(null, '*', '#'),
+                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([
@@ -68,7 +68,7 @@ class PlaylistController extends Controller
     public function show(Playlist $playlist)
     {
         // Tracking
-        $playlist->recordActivity('show');
+        $playlist->recordActivity('viewed');
         $playlist->recordView('view_count', now()->addYear());
 
         return new PlaylistResource(

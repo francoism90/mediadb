@@ -31,7 +31,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Laravel
         $schedule->command('horizon:snapshot')
                  ->everyFiveMinutes()
                  ->runInBackground();
@@ -40,7 +39,10 @@ class Kernel extends ConsoleKernel
                  ->daily()
                  ->runInBackground();
 
-        // Media
+        $schedule->command('activitylog:clean')
+                 ->daily()
+                 ->runInBackground();
+
         $schedule->command('media:optimize')
                  ->everySixHours()
                  ->environments(['staging', 'production'])

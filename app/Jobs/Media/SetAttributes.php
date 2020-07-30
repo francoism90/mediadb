@@ -25,6 +25,11 @@ class SetAttributes implements ShouldQueue
     public $deleteWhenMissingModels = true;
 
     /**
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
      * The number of seconds the job can run before timing out.
      *
      * @var int
@@ -58,9 +63,11 @@ class SetAttributes implements ShouldQueue
     {
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
+            'ffmpeg.threads' => config('media-library.threads', 4),
+            'ffmpeg.timeout' => $this->timeout,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
+            'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
             'timeout' => $this->timeout,
-            'ffmpeg.threads' => config('media-library.threads', 0),
         ]);
 
         if (!$this->isValid()) {

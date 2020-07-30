@@ -17,9 +17,9 @@ MediaDB is very much in development and is not yet suitable for production purpo
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ngx_brotli](https://github.com/google/ngx_brotli)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
-- [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis`, `php-imagick`.
+- [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
-- [Laravel](https://laravel.com/docs/7.x) environment with MySQL/MariaDB (with JSON support), Redis, Supervisor, etc.
+- [Laravel](https://laravel.com/docs/7.x) environment with MariaDB/MySQL (with JSON support), Redis, Supervisor, etc.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing.
 
@@ -44,7 +44,6 @@ Use MediaDB UI or your custom frontend to retrieve streaming data.
 
 - Make sure the path is owned by `http` (or the running user), e.g. `# chown -R http:http /path/to/import`, as the importer will skip non writable files.
 - Make sure the videos can be played in the browser as they aren't being encoded (yet).
-- Uploading using the browser is planned, but at the moment importing is the preferred method.
 - Make sure there is enough space on the disk to import and process the media.
 - See `app/Console/Commands/Media/Import.php` for more details.
 

@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Support\QueryBuilder\Filters\Media\ChannelFilter;
 use App\Support\QueryBuilder\Filters\Media\PlaylistFilter;
 use App\Support\QueryBuilder\Filters\Media\RelatedFilter;
+use App\Support\QueryBuilder\Filters\Media\WatchedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\Media\LongestSorter;
 use App\Support\QueryBuilder\Sorts\Media\ShortestSorter;
@@ -52,6 +53,7 @@ class MediaController extends Controller
                 AllowedFilter::custom('channel', new ChannelFilter())->ignore(null, '*'),
                 AllowedFilter::custom('playlist', new PlaylistFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
+                AllowedFilter::custom('history', new WatchedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([
@@ -103,7 +105,7 @@ class MediaController extends Controller
     public function show(Media $media)
     {
         // Tracking
-        $media->recordActivity('show');
+        $media->recordActivity('viewed');
         $media->recordView('view_count', now()->addYear());
 
         return (new MediaResource(
