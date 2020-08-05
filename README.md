@@ -31,11 +31,11 @@ For the time being please consult the upstream documentation of used packages in
 
 ## Usage
 
-To import media (only video at the moment) to a channel, which will be created if needed, run:
+To import media (only video at the moment) to a channel (which will be created if needed), run:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan media:import /path/to/import "Top Gear"
+php artisan channel:import /path/to/import "Top Gear"
 ```
 
 Use MediaDB UI or your custom frontend to retrieve streaming data.
