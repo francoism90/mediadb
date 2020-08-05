@@ -27,11 +27,9 @@ class SetProcessed implements ShouldQueue
     public $tries = 3;
 
     /**
-     * The number of seconds the job can run before timing out.
-     *
      * @var int
      */
-    public $timeout = 90;
+    public $timeout = 60;
 
     /**
      * @var Media
@@ -39,13 +37,11 @@ class SetProcessed implements ShouldQueue
     protected $media;
 
     /**
-     * Create a new job instance.
-     *
      * @return void
      */
     public function __construct(Media $media)
     {
-        $this->media = $media->fresh()->withoutRelations();
+        $this->media = $media;
     }
 
     /**

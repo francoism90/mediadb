@@ -75,9 +75,9 @@ class Tag extends TagModel
     /**
      * @return morphedByMany
      */
-    public function playlists()
+    public function collections()
     {
-        return $this->morphedByMany(Playlist::class, 'taggable', 'taggables');
+        return $this->morphedByMany(Collection::class, 'taggable', 'taggables');
     }
 
     /**

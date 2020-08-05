@@ -12,8 +12,8 @@
 declare(strict_types=1);
 
 use App\Models\Channel;
+use App\Models\Collection;
 use App\Models\Media;
-use App\Models\Playlist;
 use App\Models\Tag;
 use App\Models\User;
 
@@ -48,13 +48,13 @@ return [
             'length' => '12',
         ],
 
-        Media::class => [
-            'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
+        Collection::class => [
+            'salt' => '46ej7d955gfew3ss4avt97hmohovaamh',
             'length' => '12',
         ],
 
-        Playlist::class => [
-            'salt' => '46ej7d955gfew3ss4avt97hmohovaamh',
+        Media::class => [
+            'salt' => 'yk53ywzm5bfhxcychc3w65eyd3hvdvvr',
             'length' => '12',
         ],
 

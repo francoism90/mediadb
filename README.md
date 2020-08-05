@@ -85,13 +85,13 @@ Note: make sure Elasticsearch is up and running.
 
 ```bash
 php artisan elastic:create-index "App\Support\Scout\ChannelIndexConfigurator"
+php artisan elastic:create-index "App\Support\Scout\CollectionIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\MediaIndexConfigurator"
-php artisan elastic:create-index "App\Support\Scout\PlaylistIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\UserIndexConfigurator"
 php artisan elastic:update-mapping "App\Models\Channel"
+php artisan elastic:update-mapping "App\Models\Collection"
 php artisan elastic:update-mapping "App\Models\Media"
-php artisan elastic:update-mapping "App\Models\Playlist"
 php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
 ```
@@ -141,13 +141,13 @@ set $base /srv/http/mediadb/api/storage/app/streams;
 
 ```bash
 php artisan elastic:update-index "App\Support\Scout\ChannelIndexConfigurator"
+php artisan elastic:update-index "App\Support\Scout\CollectionIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\MediaIndexConfigurator"
-php artisan elastic:update-index "App\Support\Scout\PlaylistIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\UserIndexConfigurator"
 php artisan elastic:update-mapping "App\Models\Channel"
+php artisan elastic:update-mapping "App\Models\Collection"
 php artisan elastic:update-mapping "App\Models\Media"
-php artisan elastic:update-mapping "App\Models\Playlist"
 php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
 ```
@@ -156,8 +156,8 @@ Optional (re-)index the models:
 
 ```bash
 php artisan scout:import "App\Models\Channel"
+php artisan scout:import "App\Models\Collection"
 php artisan scout:import "App\Models\Media"
-php artisan scout:import "App\Models\Playlist"
 php artisan scout:import "App\Models\Tag"
 php artisan scout:import "App\Models\User"
 ```

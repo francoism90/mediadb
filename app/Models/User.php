@@ -5,9 +5,7 @@ namespace App\Models;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
 use App\Traits\Activityable;
-use App\Traits\Channelable;
 use App\Traits\Hashidable;
-use App\Traits\Playlistable;
 use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -24,12 +22,10 @@ class User extends Authenticatable implements Viewable
 {
     use Activityable;
     use CanFollow;
-    use Channelable;
     use Hashidable;
     use HasRoles;
     use InteractsWithViews;
     use Notifiable;
-    use Playlistable;
     use Randomable;
     use Searchable;
     use Sluggable;
@@ -127,9 +123,9 @@ class User extends Authenticatable implements Viewable
     /**
      * @return belongsToJson
      */
-    public function playlists()
+    public function collections()
     {
-        return $this->morphMany('App\Models\Playlist', 'model');
+        return $this->morphMany('App\Models\Collection', 'model');
     }
 
     /**

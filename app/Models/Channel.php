@@ -7,7 +7,6 @@ use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
@@ -35,7 +34,6 @@ class Channel extends Model implements HasMedia, Viewable
     use Randomable;
     use Searchable;
     use Sluggable;
-    use Taggable;
     use ViewableHelpers;
 
     /**

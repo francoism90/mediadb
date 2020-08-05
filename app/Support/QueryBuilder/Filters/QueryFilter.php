@@ -77,7 +77,7 @@ class QueryFilter implements Filter
     protected function setQueryTags(): self
     {
         // https://stackoverflow.com/a/35498078
-        preg_match_all('/#([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u', $this->queryStr, $matches);
+        preg_match_all('/tag:([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u', $this->queryStr, $matches);
 
         // Remove tags from query (if any)
         $this->replaceInQueryString($matches[0] ?? []);
@@ -89,13 +89,14 @@ class QueryFilter implements Filter
     }
 
     /**
-     * @param array $matches
+     * @param array|string $find
+     * @param array|string $replace
      *
      * @return self
      */
-    protected function replaceInQueryString(array $replace = []): self
+    protected function replaceInQueryString($find = [], $replace = ' '): self
     {
-        $this->queryStr = str_replace($replace, ' ', $this->queryStr);
+        $this->queryStr = str_replace($find, $replace, $this->queryStr);
 
         $this->trimQueryString();
 

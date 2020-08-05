@@ -19,9 +19,9 @@ class ItemsSorter implements Sort
         // Remove any current orders
         $query->getQuery()->orders = null;
 
-        return $query->withCount(['channels', 'media', 'playlists'])
+        return $query->withCount(['channels', 'media', 'collections'])
                      ->orderBy('channels_count', 'DESC')
                      ->orderBy('media_count', 'DESC')
-                     ->orderBy('playlists_count', 'DESC');
+                     ->orderBy('collections_count', 'DESC');
     }
 }

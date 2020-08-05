@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Channel\UpdateRequest;
 use App\Http\Resources\ChannelResource;
 use App\Models\Channel;
+use App\Services\TagSyncService;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\NameSorter;
@@ -21,11 +22,15 @@ use Spatie\QueryBuilder\QueryBuilder;
 class ChannelController extends Controller
 {
     /**
-     * @return void
+     * @var TagSyncService
      */
-    public function __construct()
+    protected $tagSyncService;
+
+    public function __construct(TagSyncService $tagSyncService)
     {
         $this->authorizeResource(Channel::class, 'channel');
+
+        $this->tagSyncService = $tagSyncService;
     }
 
     /**
@@ -83,18 +88,22 @@ class ChannelController extends Controller
      */
     public function update(UpdateRequest $request, Channel $channel)
     {
+        // Set attributes
         $channel->update([
-            'name' => $request->input('name', $channel->name),
-            'description' => $request->input('description', $channel->description),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
         ]);
 
+        // Set status
         if ($request->has('status')) {
             $channel->setStatus($request->input('status'), 'user request');
         }
 
-        if ($request->has('tags')) {
-            $channel->syncTagsWithTypes($request->input('tags'));
-        }
+        // Sync tags
+        $this->tagSyncService->sync(
+            $channel,
+            $request->input('tags')
+        );
 
         return new ChannelResource($channel);
     }

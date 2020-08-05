@@ -32,16 +32,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | VOD Importing
+    | VOD Settings
     |--------------------------------------------------------------------------
     |
-    | Formats allowed to be imported and used for VOD streaming.
+    | Global settings for imports and streaming.
     |
     */
 
-    'import_limit' => env('VOD_IMPORT_LIMIT', 10),
-
-    'optimize_limit' => env('VOD_OPTIMIZE_LIMIT', 5),
+    'processes' => [
+        'import' => env('VOD_IMPORT_LIMIT', 50),
+        'optimize' => env('VOD_OPTIMIZE_LIMIT', 25),
+    ],
 
     'extensions' => [
         'm4v',
@@ -67,22 +68,5 @@ return [
         'video/x-ogm+ogg',
         'video/x-theora',
         'video/x-theora+ogg',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | VOD Sprites
-    |--------------------------------------------------------------------------
-    |
-    | Thumbnails from sprite images when hovering over the progress bar.
-    |
-    */
-
-    'sprite' => [
-        'rows' => env('VOD_SPRITE_ROWS', 8),
-        'columns' => env('VOD_SPRITE_COLUMNS', 8),
-        'interval' => env('VOD_SRPITE_INTERVAL', 2),
-        'width' => env('VOD_SPRITE_WIDTH', 160),
-        'height' => env('VOD_SPRITE_HEIGHT', 90),
     ],
 ];

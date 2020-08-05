@@ -30,10 +30,10 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'publish media']);
         Permission::create(['name' => 'unpublish media']);
 
-        Permission::create(['name' => 'edit playlists']);
-        Permission::create(['name' => 'delete playlists']);
-        Permission::create(['name' => 'publish playlists']);
-        Permission::create(['name' => 'unpublish playlists']);
+        Permission::create(['name' => 'edit collections']);
+        Permission::create(['name' => 'delete collections']);
+        Permission::create(['name' => 'publish collections']);
+        Permission::create(['name' => 'unpublish collections']);
 
         // Create admin role and assign created permissions
         $roleAdmin = Role::create(['name' => 'super-admin']);
@@ -45,8 +45,8 @@ class PermissionsTableSeeder extends Seeder
         $roleModerator->givePermissionTo('publish media');
         $roleModerator->givePermissionTo('unpublish media');
 
-        $roleModerator->givePermissionTo('publish playlists');
-        $roleModerator->givePermissionTo('unpublish playlists');
+        $roleModerator->givePermissionTo('publish collections');
+        $roleModerator->givePermissionTo('unpublish collections');
 
         // Create the admin user
         $user = User::create([

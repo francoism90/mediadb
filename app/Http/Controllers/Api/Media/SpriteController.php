@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
+use App\Services\MediaSpriteTrackService;
 
 class SpriteController extends Controller
 {
+    /**
+     * @var MediaSpriteTrackService
+     */
+    protected $mediaSpriteService;
+
+    public function __construct(MediaSpriteTrackService $mediaSpriteService)
+    {
+        $this->mediaSpriteService = $mediaSpriteService;
+    }
+
     /**
      * @param Media $media
      * @param User  $user
@@ -20,14 +31,10 @@ class SpriteController extends Controller
             abort(404);
         }
 
-        $path = $media->getBaseMediaPath().'conversions/sprite.json';
-        $json = file_get_contents($path);
-
-        // Decode json
-        $frames = json_decode($json, true);
-
-        // Get frames
-        $contents = $media->getSpriteContents($frames, $user);
+        $contents = $this->mediaSpriteService->getTrack(
+            $media,
+            $user
+        );
 
         return response($contents)
             ->withHeaders([

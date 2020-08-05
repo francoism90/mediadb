@@ -7,10 +7,6 @@ use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
-use App\Traits\Securable;
-use App\Traits\Spriteable;
-use App\Traits\Streamable;
-use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
 use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
@@ -37,11 +33,7 @@ class Media extends BaseMedia implements Viewable
     use InteractsWithViews;
     use Randomable;
     use Searchable;
-    use Securable;
     use Sluggable;
-    use Spriteable;
-    use Streamable;
-    use Taggable;
     use ViewableHelpers;
 
     /**
@@ -110,7 +102,7 @@ class Media extends BaseMedia implements Viewable
             'description' => $this->description,
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
-            'duration' => $this->getCustomProperty('duration', 0),
+            'duration' => $this->getCustomProperty('metdata.duration', 0),
         ];
     }
 
@@ -135,9 +127,9 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return hasManyJson
      */
-    public function playlists()
+    public function collections()
     {
-        return $this->hasManyJson('App\Models\Playlist', 'custom_properties->media[]->media_id');
+        return $this->hasManyJson('App\Models\Collections', 'custom_properties->media[]->media_id');
     }
 
     /**
@@ -197,7 +189,7 @@ class Media extends BaseMedia implements Viewable
             [
                 'media' => $this,
                 'user' => auth()->user(),
-                'name' => "preview.{$this->extension}",
+                'name' => 'preview.webm',
             ]
         );
     }
@@ -221,12 +213,12 @@ class Media extends BaseMedia implements Viewable
      */
     public function getStreamUrlAttribute(): string
     {
-        return self::getSecureExpireLink(
-            $this->getStreamUrl(),
-            config('vod.secret'),
-            config('vod.expire'),
-            $this->getRouteKey(),
-            request()->ip()
+        return URL::signedRoute(
+            'api.media.stream',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+            ]
         );
     }
 }

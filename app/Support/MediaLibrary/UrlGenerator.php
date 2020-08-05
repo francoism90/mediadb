@@ -15,7 +15,7 @@ class UrlGenerator extends BaseUrlGenerator
     public function getUrl(): string
     {
         return URL::signedRoute(
-            'api.media.asset',
+            'api.media.download',
             [
                 $this->media,
                 auth()->user(),

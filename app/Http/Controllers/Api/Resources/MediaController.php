@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Api\Resources;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\StoreRequest;
 use App\Http\Requests\Media\UpdateRequest;
 use App\Http\Resources\MediaResource;
-use App\Http\Resources\PlaylistResource;
-use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
-use App\Models\User;
+use App\Services\TagSyncService;
 use App\Support\QueryBuilder\Filters\Media\ChannelFilter;
-use App\Support\QueryBuilder\Filters\Media\PlaylistFilter;
+use App\Support\QueryBuilder\Filters\Media\CollectionFilter;
 use App\Support\QueryBuilder\Filters\Media\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Media\WatchedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
@@ -30,11 +27,15 @@ use Spatie\QueryBuilder\QueryBuilder;
 class MediaController extends Controller
 {
     /**
-     * @return void
+     * @var TagSyncService
      */
-    public function __construct()
+    protected $tagSyncService;
+
+    public function __construct(TagSyncService $tagSyncService)
     {
         $this->authorizeResource(Media::class, 'media');
+
+        $this->tagSyncService = $tagSyncService;
     }
 
     /**
@@ -48,10 +49,10 @@ class MediaController extends Controller
 
         $media = QueryBuilder::for($query)
             ->allowedAppends(['preview_url', 'thumbnail_url'])
-            ->allowedIncludes(['model', 'playlists', 'tags'])
+            ->allowedIncludes(['model', 'collections', 'tags'])
             ->allowedFilters([
                 AllowedFilter::custom('channel', new ChannelFilter())->ignore(null, '*'),
-                AllowedFilter::custom('playlist', new PlaylistFilter())->ignore(null, '*'),
+                AllowedFilter::custom('collection', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('history', new WatchedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
@@ -73,31 +74,6 @@ class MediaController extends Controller
     }
 
     /**
-     * @param StoreRequest $request
-     *
-     * @return MediaResource
-     */
-    public function store(StoreRequest $request)
-    {
-        $files = $request->file('files');
-
-        $models = collect();
-
-        foreach ($files as $file) {
-            $media = $request->user()
-                ->addMedia($file)
-                ->usingName($file->getClientOriginalName())
-                ->toMediaCollection('videos');
-
-            $media->setStatus('private', 'needs approval');
-
-            $models->push($media);
-        }
-
-        return MediaResource::collection($models);
-    }
-
-    /**
      * @param Media $media
      *
      * @return MediaResource
@@ -108,23 +84,15 @@ class MediaController extends Controller
         $media->recordActivity('viewed');
         $media->recordView('view_count', now()->addYear());
 
-        return (new MediaResource(
+        return new MediaResource(
             $media->load(['model', 'tags'])
                   ->append([
-                      'download_url', 'sprite_url',
-                      'stream_url', 'thumbnail_url',
+                      'download_url',
+                      'sprite_url',
+                      'stream_url',
+                      'thumbnail_url',
                     ])
-            ))
-            ->additional([
-                'meta' => [
-                    'user_playlists' => PlaylistResource::collection(
-                        $media->playlists()
-                              ->where('model_type', User::class)
-                              ->where('model_id', auth()->user()->id)
-                              ->get()
-                    ),
-                ],
-            ]);
+        );
     }
 
     /**
@@ -135,38 +103,30 @@ class MediaController extends Controller
      */
     public function update(UpdateRequest $request, Media $media)
     {
+        // Set attributes
         $media->update([
-            'name' => $request->input('name', $media->name),
-            'description' => $request->input('description', $media->description),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
         ]);
 
-        if ($request->has('model')) {
-            $model = Media::findByHash(
-                $request->input('model.id', $media->model_id),
-                $request->input('model.type', $media->model_type),
-            );
+        // Set model
+        $model = Media::findByHash(
+            $request->input('model.id', $media->model_id),
+            $request->input('model.type', $media->model_type),
+        );
 
-            $media->model()->associate($model)->save();
-        }
+        $media->model()->associate($model)->save();
 
+        // Set status
         if ($request->has('status')) {
-            $media->setStatus($request->input('status'), 'update-request');
+            $media->setStatus($request->input('status'), 'user-request');
         }
 
-        if ($request->has('tags')) {
-            $media->syncTagsWithTypes($request->input('tags'));
-        }
-
-        if ($request->has('playlists')) {
-            $request->user()->syncPlaylistsWithMedia($media, $request->input('playlists'));
-        }
-
-        if ($request->has('snapshot')) {
-            $media->setCustomProperty('snapshot', $request->input('snapshot'))->save();
-
-            // Regenerate the thumbnail
-            CreateThumbnail::dispatch($media)->onQueue('media');
-        }
+        // Sync tags
+        $this->tagSyncService->sync(
+            $media,
+            $request->input('tags')
+        );
 
         return new MediaResource($media);
     }

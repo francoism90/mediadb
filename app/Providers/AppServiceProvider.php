@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Channel;
+use App\Models\Collection;
 use App\Models\Media;
-use App\Models\Playlist;
 use App\Models\Tag;
 use App\Models\User;
 use App\Observers\ChannelObserver;
+use App\Observers\CollectionObserver;
 use App\Observers\MediaObserver;
-use App\Observers\PlaylistObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Route;
@@ -38,8 +38,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Channel::observe(ChannelObserver::class);
+        Collection::observe(CollectionObserver::class);
         Media::observe(MediaObserver::class);
-        Playlist::observe(PlaylistObserver::class);
         Tag::observe(TagObserver::class);
         User::observe(UserObserver::class);
     }

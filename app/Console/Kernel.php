@@ -43,8 +43,13 @@ class Kernel extends ConsoleKernel
                  ->daily()
                  ->runInBackground();
 
-        $schedule->command('media:optimize')
+        $schedule->command('media:sync')
                  ->everySixHours()
+                 ->environments(['staging', 'production'])
+                 ->runInBackground();
+
+        $schedule->command('channel:sync')
+                 ->daily()
                  ->environments(['staging', 'production'])
                  ->runInBackground();
     }
