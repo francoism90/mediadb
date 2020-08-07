@@ -102,7 +102,7 @@ class Media extends BaseMedia implements Viewable
             'description' => $this->description,
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
-            'duration' => $this->getCustomProperty('metdata.duration', 0),
+            'duration' => $this->getCustomProperty('metadata.duration', 0),
         ];
     }
 
