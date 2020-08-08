@@ -42,7 +42,7 @@ class ShortestSorter implements Sort
             ->whereIn('id', $query->pluck('id')->toArray())
             ->collapse('id')
             ->from(0)
-            ->take(5000)
+            ->take(10000)
             ->orderBy('duration', 'ASC');
     }
 }

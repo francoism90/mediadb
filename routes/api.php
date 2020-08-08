@@ -43,6 +43,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Signed URLs
         Route::middleware(['signed', 'cache.headers:public;max_age=604800;etag'])->get('/asset/{media}/{user}/{name}', ['uses' => 'AssetController', 'as' => 'asset']);
         Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+        Route::middleware('signed')->get('/preview/{media}/{user}', ['uses' => 'PreviewController', 'as' => 'preview']);
         Route::middleware('signed')->get('/sprite/{media}/{user}', ['uses' => 'SpriteController', 'as' => 'sprite']);
         Route::middleware('signed')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
     });

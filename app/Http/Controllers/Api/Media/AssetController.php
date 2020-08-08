@@ -17,7 +17,7 @@ class AssetController extends Controller
      */
     public function __invoke(Media $media, User $user, string $name)
     {
-        $path = $media->getBaseMediaPath()."/conversions/${name}";
+        $path = $media->getBaseMediaPath()."conversions/${name}";
 
         if (!file_exists($path)) {
             abort(404);

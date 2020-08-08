@@ -10,7 +10,7 @@ class MediaStreamService
 {
     public const MAPPING_PATH = 'dash';
     public const MAPPING_MANIFEST = 'manifest.mpd';
-    public const MAPPING_EXPIRE = 300;
+    public const MAPPING_CACHE = 900;
 
     /**
      * @param Media  $media
@@ -22,12 +22,13 @@ class MediaStreamService
     public function getExpireUrl(
         Media $media,
         string $streamKey,
-        string $requestIp
+        string $requestIp,
+        ?string $type = null
     ): string {
         // Get encrypted url
-        $url = $this->getUrl($media, $streamKey);
+        $url = $this->getUrl($media, $streamKey, $type);
 
-        // Generate expire url
+        // Generate nginx expire url
         $id = $media->getRouteKey() ?? $media->id;
         $expires = time() + config('vod.expire', 60 * 60 * 3);
         $secret = config('vod.secret');
@@ -46,10 +47,10 @@ class MediaStreamService
      *
      * @return string
      */
-    public function getUrl(Media $media, string $streamKey): string
+    protected function getUrl(Media $media, string $streamKey, ?string $type = null): string
     {
         // Generate media mapping file
-        $jsonContents = $this->getMappingContents($media);
+        $jsonContents = $this->getMappingContents($media, $type);
 
         // Write mapping file
         $this->writeMappingCacheFile($streamKey, $jsonContents);
@@ -71,24 +72,22 @@ class MediaStreamService
     }
 
     /**
-     * @param Media $media
+     * @param Media       $media
+     * @param string|null $type
      *
      * @return string
      */
-    protected function getMappingContents(Media $media): string
+    protected function getMappingContents(Media $media, ?string $type = null): string
     {
+        $clips = $this->getClipsContents($media, $type);
+
         $contents = [
             'id' => $media->id,
             'sequences' => (array) [
                 [
                     'id' => $media->id,
                     'label' => $media->name,
-                    'clips' => [
-                        [
-                            'type' => 'source',
-                            'path' => $media->getPath(),
-                        ],
-                    ],
+                    'clips' => $clips,
                 ],
             ],
         ];
@@ -97,6 +96,36 @@ class MediaStreamService
             $contents,
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         );
+    }
+
+    /**
+     * @param Media       $media
+     * @param string|null $type
+     *
+     * @return array
+     */
+    protected function getClipsContents(Media $media, ?string $type = null): array
+    {
+        switch ($type) {
+            case 'preview':
+                $clips = [
+                    [
+                        'type' => 'source',
+                        'path' => $media->getBaseMediaPath().'conversions/preview.mp4',
+                    ],
+                ];
+            break;
+
+            default:
+                $clips = [
+                    [
+                        'type' => 'source',
+                        'path' => $media->getPath(),
+                    ],
+                ];
+        }
+
+        return $clips;
     }
 
     /**
@@ -174,7 +203,7 @@ class MediaStreamService
 
         return Cache::remember(
             $streamKey,
-            self::MAPPING_EXPIRE,
+            self::MAPPING_CACHE,
             fn () => Storage::disk('streams')->put("{$streamKey}.json", $contents)
         );
     }

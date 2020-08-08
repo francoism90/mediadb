@@ -36,20 +36,20 @@ class Kernel extends ConsoleKernel
                  ->runInBackground();
 
         $schedule->command('telescope:prune')
-                 ->daily()
+                 ->dailyAt('1:00')
                  ->runInBackground();
 
         $schedule->command('activitylog:clean')
-                 ->daily()
+                 ->dailyAt('1:00')
                  ->runInBackground();
 
         $schedule->command('media:sync')
-                 ->everySixHours()
+                 ->weeklyOn('3:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();
 
         $schedule->command('channel:sync')
-                 ->daily()
+                 ->weeklyOn('3:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();
     }

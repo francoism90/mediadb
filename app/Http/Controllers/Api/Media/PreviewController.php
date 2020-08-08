@@ -7,7 +7,7 @@ use App\Models\Media;
 use App\Models\User;
 use App\Services\MediaStreamService;
 
-class StreamController extends Controller
+class PreviewController extends Controller
 {
     /**
      * @var MediaStreamService
@@ -27,13 +27,14 @@ class StreamController extends Controller
      */
     public function __invoke(Media $media, User $user)
     {
-        $streamKey = "stream_{$media->id}_{$user->id}";
+        $streamKey = "preview_{$media->id}_{$user->id}";
 
         $streamUrl = $this->mediaStreamService
             ->getExpireUrl(
                 $media,
                 $streamKey,
-                request()->ip()
+                request()->ip(),
+                'preview'
             );
 
         return redirect($streamUrl);

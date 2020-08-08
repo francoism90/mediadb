@@ -185,11 +185,10 @@ class Media extends BaseMedia implements Viewable
     public function getPreviewUrlAttribute(): string
     {
         return URL::signedRoute(
-            'api.media.asset',
+            'api.media.preview',
             [
                 'media' => $this,
                 'user' => auth()->user(),
-                'name' => 'preview.webm',
             ]
         );
     }

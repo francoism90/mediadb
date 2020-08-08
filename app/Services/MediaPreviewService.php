@@ -9,7 +9,7 @@ use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Audio\SimpleFilter;
 use FFMpeg\Filters\Video\ResizeFilter;
-use FFMpeg\Format\Video\WebM;
+use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video;
 use Illuminate\Validation\ValidationException;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
@@ -17,9 +17,9 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class MediaPreviewService
 {
-    public const CONVERSION_NAME = 'preview.webm';
+    public const CONVERSION_NAME = 'preview.mp4';
     public const CONVERSION_TYPE = 'conversions';
-    public const PREVIEW_BITRATE = 180;
+    public const PREVIEW_BITRATE = 200;
     public const PREVIEW_FRAMERATE = 30;
     public const PREVIEW_GOP = 60;
     public const PREVIEW_PARTS = [1, 3, 5, 7, 9, 11, 13, 15];
@@ -105,7 +105,7 @@ class MediaPreviewService
         $videoClips = $this->createVideoClips($media);
 
         // Conversion path
-        $path = $this->temporaryDirectory->path("{$media->id}/preview.webm");
+        $path = $this->temporaryDirectory->path("{$media->id}/preview.mp4");
 
         // We need to load the first video
         $video = $this->getVideo($videoClips[0]);
@@ -135,14 +135,14 @@ class MediaPreviewService
         $frameRanges = $this->getFrameRanges($duration);
 
         // Clip format
-        $format = new WebM();
+        $format = new X264();
         $format->setKiloBitrate(self::PREVIEW_BITRATE);
 
         // Keep each clip
         $clips = [];
 
         foreach (self::PREVIEW_PARTS as $part) {
-            $path = $this->temporaryDirectory->path("{$media->id}/{$part}.webm");
+            $path = $this->temporaryDirectory->path("{$media->id}/{$part}.mp4");
 
             $clip = $video->clip(
                 TimeCode::fromSeconds($frameRanges[$part]),
