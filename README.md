@@ -1,16 +1,18 @@
 # MediaDB (API)
 
-## Build your own streaming service
-
-### Intro
+[![Build Status](https://travis-ci.com/francoism90/mediadb.svg?branch=master)](https://travis-ci.com/francoism90/mediadb)
 
 **MediaDB** is a web-based video streaming service written in Laravel and Vue.
-It relies on [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) for on-the-fly repackaging of MP4 files to DASH. [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) and [expire tokens](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html) are used to prevent unwanted access & reading of streams.
-The user is allowed to use an external player (Android, VLC, etc.), however this may be optional in the near future.
+
+- The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
+- [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) and [expire tokens](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html) are used to prevent unwanted access and reading of streams.
+- Generate sprites and thumbnails of video files.
 
 MediaDB is very much in development and is not yet suitable for production purposes.
 
-### Requirements
+## Installation
+
+MediaDB requires a Laravel compatible development environment like [Homestead](https://laravel.com/docs/7.x/homestead#environment-variables).
 
 - [nginx](https://nginx.org) with `--with-http_secure_link_module`
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
@@ -19,35 +21,15 @@ MediaDB is very much in development and is not yet suitable for production purpo
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
 - [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
-- [Laravel](https://laravel.com/docs/7.x) environment with MariaDB/MySQL (with JSON support), Redis, Supervisor, etc.
+- MariaDB/MySQL (with JSON support), Redis and Supervisor.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing.
 
-For the time being please consult the upstream documentation of used packages in `composer.json` for possible other missing (OS) dependencies or recommendations.
+Please consult the upstream documentation of used packages in `composer.json` for possible other missing (OS) dependencies and/or recommendations.
 
-### Optional
+### Front-end
 
 - <https://github.com/francoism90/mediadb-ui> - Front-end for MediaDB written in Vue and Quasar.
-
-## Usage
-
-To import media (only video at the moment) to a channel (which will be created if needed), run:
-
-```bash
-cd /srv/http/mediadb/api
-php artisan channel:import /path/to/import "Top Gear"
-```
-
-Use MediaDB UI or your custom frontend to retrieve streaming data.
-
-### Notes
-
-- Make sure the path is owned by `http` (or the running user), e.g. `# chown -R http:http /path/to/import`, as the importer will skip non writable files.
-- Make sure the videos can be played in the browser as they aren't being encoded (yet).
-- Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Media/Import.php` for more details.
-
-## Install
 
 Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/srv/http/mediadb/api` (mediadb-api) and `/srv/http/mediadb/ui` (mediadb-ui).
 
@@ -69,6 +51,7 @@ See `doc/supervisor` for configuration examples.
 
 ```bash
 cd /srv/http/mediadb/api
+cp .env.example .env
 composer install
 php artisan migrate
 php artisan key:generate
@@ -135,7 +118,25 @@ VOD_SECRET=secret
 set $base /srv/http/mediadb/api/storage/app/streams;
 ```
 
-## Upgrade
+## Usage
+
+Media files must be imported to a channel (which will be created if needed):
+
+```bash
+cd /srv/http/mediadb/api
+php artisan channel:import /path/to/import "Top Gear"
+```
+
+Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end to retrieve the streaming data/manage media.
+
+### Notes
+
+- Make sure the import and destination path is owned by `http` (running user). The importer will skip non writable files.
+- Make sure the videos can be played in the browser as they aren't being encoded (yet).
+- Make sure there is enough space on the disk to import and process the media.
+- See `app/Console/Commands/Channel/Import.php` for more details.
+
+## Upgrade guide
 
 ### Elasticsearch
 
@@ -162,7 +163,7 @@ php artisan scout:import "App\Models\Tag"
 php artisan scout:import "App\Models\User"
 ```
 
-## Optimize
+## Optimizing
 
 ```bash
 composer install --optimize-autoloader --no-dev
@@ -172,3 +173,17 @@ php artisan optimize
 ### Modules
 
 - <https://github.com/kaltura/nginx-vod-module#performance-recommendations>
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Credits
+
+- [Kaltura](https://github.com/kaltura)
+- [Koel](https://github.com/koel)
+- [Spatie](https://github.com/spatie)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

@@ -37,36 +37,33 @@ return [
     |
     | Global settings for imports and streaming.
     |
+    | https://github.com/kaltura/nginx-vod-module/issues/427
+    |
     */
-
-    'processes' => [
-        'import' => env('VOD_IMPORT_LIMIT', 50),
-        'optimize' => env('VOD_OPTIMIZE_LIMIT', 25),
-    ],
 
     'extensions' => [
         'm4v',
         'mp4',
-        'ogm',
-        'ogv',
-        'ogx',
-        'vp8',
-        'vp9',
-        'webm',
+        // 'ogm',
+        // 'ogv',
+        // 'ogx',
+        // 'vp8',
+        // 'vp9',
+        // 'webm',
     ],
 
     'mimetypes' => [
         'video/mp4',
         'video/mp4v-es',
-        'video/ogg',
-        'video/vp8',
-        'video/vp9',
-        'video/webm',
+        // 'video/ogg',
+        // 'video/vp8',
+        // 'video/vp9',
+        // 'video/webm',
         'video/x-m4v',
-        'video/x-ogg',
-        'video/x-ogm',
-        'video/x-ogm+ogg',
-        'video/x-theora',
-        'video/x-theora+ogg',
+        // 'video/x-ogg',
+        // 'video/x-ogm',
+        // 'video/x-ogm+ogg',
+        // 'video/x-theora',
+        // 'video/x-theora+ogg',
     ],
 ];
