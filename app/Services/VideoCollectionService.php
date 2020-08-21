@@ -22,13 +22,15 @@ class VideoCollectionService
      * @param Model      $model
      * @param Video      $video
      * @param Collection $collections
+     * @param bool       $detach
      *
      * @return void
      */
     public function sync(
         Model $model,
         Video $video,
-        Collection $collections
+        Collection $collections,
+        bool $detach = true
     ): void {
         // Create collections for model
         $videoCollections = $this->collectionService->create($model, $collections);
@@ -44,7 +46,7 @@ class VideoCollectionService
             // Sync collections
             if (!$hasVideo && $inCollection) {
                 $collection->videos()->attach($video->id);
-            } elseif ($hasVideo && !$inCollection) {
+            } elseif ($detach && $hasVideo && !$inCollection) {
                 $collection->videos()->detach($video->id);
             }
         }

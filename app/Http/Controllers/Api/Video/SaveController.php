@@ -18,7 +18,8 @@ class SaveController extends Controller
     }
 
     /**
-     * @param Video $video
+     * @param SaveRequest $request
+     * @param Video       $video
      *
      * @return VideoResource
      */
@@ -28,6 +29,7 @@ class SaveController extends Controller
             auth()->user(),
             $video,
             collect($request->input('collections', [])),
+            $request->isMethod('put')
         );
 
         return new VideoResource($video);

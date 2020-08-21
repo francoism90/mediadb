@@ -31,9 +31,9 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Resources
     Route::middleware('auth:sanctum')->name('resource.')->namespace('Resources')->group(function () {
-        Route::apiResource('collections', 'CollectionController')->only(['index', 'store', 'show', 'update', 'destroy']);
+        Route::apiResource('collections', 'CollectionController')->only(['index', 'show', 'update', 'destroy']);
         Route::apiResource('tags', 'TagController')->only(['index']);
-        Route::apiResource('videos', 'VideoController')->only(['index', 'store', 'show', 'update', 'destroy']);
+        Route::apiResource('videos', 'VideoController')->only(['index', 'show', 'update', 'destroy']);
     });
 
     // Media
@@ -48,6 +48,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // Video
     Route::middleware('doNotCacheResponse')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
-        Route::middleware('auth:sanctum')->put('/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
+        Route::middleware('auth:sanctum')->match(['post', 'put'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
     });
 });
