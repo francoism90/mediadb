@@ -122,7 +122,7 @@ Media files must be imported to a channel (which will be created if needed):
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan user:import /path/to/import "Top Gear"
+php artisan video:import /path/to/import "Top Gear"
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end to retrieve the streaming data/manage media.

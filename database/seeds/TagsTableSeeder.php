@@ -92,7 +92,7 @@ class TagsTableSeeder extends Seeder
             ]);
         }
 
-        // People
+        // Studios
         foreach ($this->studios as $studio) {
             $slug = Str::slug($studio);
 
