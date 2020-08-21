@@ -8,7 +8,6 @@ use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Frame\CustomFrameFilter;
 use FFMpeg\Media\Video;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\ValidationException;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
@@ -63,15 +62,6 @@ class MediaSpriteService
      */
     public function execute(Media $media): void
     {
-        // Validate is video
-        $type = strtok($media->mime_type, '/');
-
-        throw_if(
-            'video' !== $type,
-            ValidationException::class,
-            'Media has invalid mimetype.'
-        );
-
         // Perform conversion
         $spritePath = $this->createVideoSprite($media);
 

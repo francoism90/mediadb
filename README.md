@@ -67,16 +67,14 @@ It is advisable to view all configuration files and change them when necessary, 
 Note: make sure Elasticsearch is up and running.
 
 ```bash
-php artisan elastic:create-index "App\Support\Scout\ChannelIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\CollectionIndexConfigurator"
-php artisan elastic:create-index "App\Support\Scout\MediaIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:create-index "App\Support\Scout\UserIndexConfigurator"
-php artisan elastic:update-mapping "App\Models\Channel"
+php artisan elastic:create-index "App\Support\Scout\VideoIndexConfigurator"
 php artisan elastic:update-mapping "App\Models\Collection"
-php artisan elastic:update-mapping "App\Models\Media"
 php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
+php artisan elastic:update-mapping "App\Models\Video"
 ```
 
 #### Seeders
@@ -124,7 +122,7 @@ Media files must be imported to a channel (which will be created if needed):
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan channel:import /path/to/import "Top Gear"
+php artisan user:import /path/to/import "Top Gear"
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end to retrieve the streaming data/manage media.
@@ -134,33 +132,30 @@ Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end 
 - Make sure the import and destination path is owned by `http` (running user). The importer will skip non writable files.
 - Make sure the videos can be played in the browser as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Channel/Import.php` for more details.
+- See `app/Console/Commands/User/Import.php` for more details.
 
 ## Upgrade guide
 
 ### Elasticsearch
 
 ```bash
-php artisan elastic:update-index "App\Support\Scout\ChannelIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\CollectionIndexConfigurator"
-php artisan elastic:update-index "App\Support\Scout\MediaIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\TagIndexConfigurator"
 php artisan elastic:update-index "App\Support\Scout\UserIndexConfigurator"
-php artisan elastic:update-mapping "App\Models\Channel"
+php artisan elastic:update-index "App\Support\Scout\VideoIndexConfigurator"
 php artisan elastic:update-mapping "App\Models\Collection"
-php artisan elastic:update-mapping "App\Models\Media"
 php artisan elastic:update-mapping "App\Models\Tag"
 php artisan elastic:update-mapping "App\Models\User"
+php artisan elastic:update-mapping "App\Models\Video"
 ```
 
 Optional (re-)index the models:
 
 ```bash
-php artisan scout:import "App\Models\Channel"
 php artisan scout:import "App\Models\Collection"
-php artisan scout:import "App\Models\Media"
 php artisan scout:import "App\Models\Tag"
 php artisan scout:import "App\Models\User"
+php artisan scout:import "App\Models\Video"
 ```
 
 ## Optimizing

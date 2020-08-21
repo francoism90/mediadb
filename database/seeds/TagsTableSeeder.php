@@ -24,6 +24,7 @@ class TagsTableSeeder extends Seeder
         'Political',
         'Romance',
         'Science Fiction',
+        'Talk',
         'Thriller',
     ];
 
@@ -38,11 +39,19 @@ class TagsTableSeeder extends Seeder
     /**
      * @var array
      */
-    protected $people = [
+    protected $actors = [
         'Homer Simpson',
         'Bart Simpson',
         'Marge Simpson',
         'Lisa Simpson',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $studios = [
+        'Bar',
+        'Foo',
     ];
 
     /**
@@ -72,14 +81,25 @@ class TagsTableSeeder extends Seeder
             ]);
         }
 
-        // People
-        foreach ($this->people as $person) {
-            $slug = Str::slug($person);
+        // Actors
+        foreach ($this->actors as $actor) {
+            $slug = Str::slug($actor);
 
             DB::table('tags')->insert([
                 'slug' => $this->getJsonByLocale($slug),
-                'name' => $this->getJsonByLocale($person),
-                'type' => 'person',
+                'name' => $this->getJsonByLocale($actor),
+                'type' => 'actor',
+            ]);
+        }
+
+        // People
+        foreach ($this->studios as $studio) {
+            $slug = Str::slug($studio);
+
+            DB::table('tags')->insert([
+                'slug' => $this->getJsonByLocale($slug),
+                'name' => $this->getJsonByLocale($studio),
+                'type' => 'studio',
             ]);
         }
     }

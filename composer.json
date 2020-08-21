@@ -22,7 +22,6 @@
     "laravel/sanctum": "^2.0",
     "laravel/telescope": "^3.1",
     "laravel/tinker": "^2.0",
-    "laravel/ui": "^2.0",
     "multicaret/laravel-acquaintances": "^3.3",
     "php-ffmpeg/php-ffmpeg": "^0.16.0",
     "spatie/laravel-activitylog": "^3.11",
@@ -34,7 +33,6 @@
     "spatie/laravel-query-builder": "^2.0",
     "spatie/laravel-responsecache": "^6.6",
     "spatie/laravel-tags": "^2.4",
-    "staudenmeir/eloquent-json-relations": "^1.4",
     "vinkla/hashids": "^8.0",
     "waavi/sanitizer": "^1.0"
   },

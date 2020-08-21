@@ -24,13 +24,11 @@ class MediaResource extends JsonResource
             'metadata' => $this->getCustomProperty('metadata'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'download_url' => $this->whenAppended('download_url'),
             'preview_url' => $this->whenAppended('preview_url'),
             'sprite_url' => $this->whenAppended('sprite_url'),
             'stream_url' => $this->whenAppended('stream_url'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'relationships' => [
-                'model' => new ChannelResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
             ],
         ];

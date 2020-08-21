@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-use App\Models\Channel;
 use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Video;
 
 return [
     /*
@@ -43,11 +43,6 @@ return [
     */
 
     'connections' => [
-        Channel::class => [
-            'salt' => 'op94ywdruie8o5ctndk8pvnfxfm435ma',
-            'length' => '12',
-        ],
-
         Collection::class => [
             'salt' => '46ej7d955gfew3ss4avt97hmohovaamh',
             'length' => '12',
@@ -65,6 +60,11 @@ return [
 
         User::class => [
             'salt' => 'g5vm89r3vitip345gnesugim8vk5zxrw',
+            'length' => '12',
+        ],
+
+        Video::class => [
+            'salt' => 'my38l3l7c4z4q2pcs68n3kcfvro4c6pj',
             'length' => '12',
         ],
     ],

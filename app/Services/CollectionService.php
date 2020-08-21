@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class CollectionService
 {
-    public const CREATE_STATUS = 'private';
+    public const COLLECTION_STATUS = 'private';
 
     /**
      * @param Model      $model
@@ -21,7 +21,7 @@ class CollectionService
 
         foreach ($collections as $collection) {
             $name = $collection['name'] ?? $model->name;
-            $status = $collection['status'] ?? self::CREATE_STATUS;
+            $status = $collection['status'] ?? self::COLLECTION_STATUS;
 
             $collectionModel = $model->collections()->firstOrCreate(
                 ['name' => $name]

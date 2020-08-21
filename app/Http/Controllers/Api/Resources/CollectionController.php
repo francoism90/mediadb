@@ -7,16 +7,14 @@ use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Services\TagSyncService;
-use App\Support\QueryBuilder\Filters\Collection\MediaFilter;
 use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
+use App\Support\QueryBuilder\Filters\Collection\VideoFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
-use App\Support\QueryBuilder\Sorts\NameSorter;
-use App\Support\QueryBuilder\Sorts\RecentSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
-use App\Support\QueryBuilder\Sorts\UpdatedSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -46,20 +44,20 @@ class CollectionController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $collections = QueryBuilder::for(Collection::class)
-            ->allowedAppends(['items', 'thumbnail_url'])
-            ->allowedIncludes(['collection', 'model', 'tags'])
+            ->allowedAppends(['item_count', 'thumbnail_url'])
+            ->allowedIncludes(['model', 'tags', 'videos'])
             ->allowedFilters([
-                AllowedFilter::custom('media', new MediaFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
+                AllowedFilter::custom('video', new VideoFilter())->ignore(null, '*'),
             ])
             ->allowedSorts([
                 $defaultSort,
-                AllowedSort::custom('name', new NameSorter())->defaultDirection('asc'),
-                AllowedSort::custom('recent', new RecentSorter())->defaultDirection('desc'),
+                AllowedSort::custom('name', new FieldSorter())->defaultDirection('asc'),
+                AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
+                AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
-                AllowedSort::custom('updated', new UpdatedSorter())->defaultDirection('desc'),
                 AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])
             ->defaultSort($defaultSort)
@@ -81,7 +79,7 @@ class CollectionController extends Controller
 
         return new CollectionResource(
             $collection->load(['model', 'tags'])
-                       ->append('items')
+                       ->append('item_count')
         );
     }
 
@@ -100,9 +98,7 @@ class CollectionController extends Controller
         ]);
 
         // Set status
-        if ($request->has('status')) {
-            $collection->setStatus($request->input('status'), 'user request');
-        }
+        $collection->setStatus($request->input('status', 'published'));
 
         // Sync tags
         $this->tagSyncService->sync(

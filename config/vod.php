@@ -41,29 +41,46 @@ return [
     |
     */
 
-    'extensions' => [
-        'm4v',
-        'mp4',
-        // 'ogm',
-        // 'ogv',
-        // 'ogx',
-        // 'vp8',
-        // 'vp9',
-        // 'webm',
+    'video' => [
+        'extensions' => [
+            'm4v',
+            'mp4',
+            // 'ogm',
+            // 'ogv',
+            // 'ogx',
+            // 'vp8',
+            // 'vp9',
+            // 'webm',
+        ],
+
+        'mimetypes' => [
+            'video/mp4',
+            'video/mp4v-es',
+            // 'video/ogg',
+            // 'video/vp8',
+            // 'video/vp9',
+            // 'video/webm',
+            'video/x-m4v',
+            // 'video/x-ogg',
+            // 'video/x-ogm',
+            // 'video/x-ogm+ogg',
+            // 'video/x-theora',
+            // 'video/x-theora+ogg',
+        ],
+
+        'size' => ['>= 1M', '<= 10G'],
     ],
 
-    'mimetypes' => [
-        'video/mp4',
-        'video/mp4v-es',
-        // 'video/ogg',
-        // 'video/vp8',
-        // 'video/vp9',
-        // 'video/webm',
-        'video/x-m4v',
-        // 'video/x-ogg',
-        // 'video/x-ogm',
-        // 'video/x-ogm+ogg',
-        // 'video/x-theora',
-        // 'video/x-theora+ogg',
+    'tracks' => [
+        'extensions' => [
+            'vtt',
+        ],
+
+        'mimetypes' => [
+            'text/plain',
+            'text/vtt',
+        ],
+
+        'size' => ['>= 1K', '<= 10M'],
     ],
 ];

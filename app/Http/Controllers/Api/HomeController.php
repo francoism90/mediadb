@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         return response()->json([
             'success' => true,
-            'message' => 'welcome',
+            'message' => 'Welcome to the MediaDB API. Please do not abuse the service.',
         ]);
     }
 }

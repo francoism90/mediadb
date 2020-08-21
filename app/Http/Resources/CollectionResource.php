@@ -15,13 +15,16 @@ class CollectionResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
+            'description' => $this->description,
             'views' => $this->views,
             'created_at' => $this->created_at,
-            'items' => $this->whenAppended('items'),
+            'updated_at' => $this->updated_at,
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
+            'item_count' => $this->whenAppended('item_count'),
             'relationships' => [
                 'model' => new UserResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
+                'videos' => VideoResource::collection($this->whenLoaded('videos')),
             ],
         ];
     }

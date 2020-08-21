@@ -16,12 +16,11 @@ class ItemsSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Remove any current orders
         $query->getQuery()->orders = null;
 
-        return $query->withCount(['channels', 'media', 'collections'])
-                     ->orderBy('channels_count', 'DESC')
-                     ->orderBy('media_count', 'DESC')
-                     ->orderBy('collections_count', 'DESC');
+        return $query
+            ->withCount(['collections', 'videos'])
+            ->orderBy('collections_count', 'DESC')
+            ->orderBy('videos_count', 'DESC');
     }
 }

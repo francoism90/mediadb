@@ -39,5 +39,6 @@ class ProcessVideo implements ShouldQueue
      */
     public function handle()
     {
+        // TODO: validation of metadata?
     }
 }

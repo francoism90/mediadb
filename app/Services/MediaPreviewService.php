@@ -11,7 +11,6 @@ use FFMpeg\Filters\Audio\SimpleFilter;
 use FFMpeg\Filters\Video\ResizeFilter;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video;
-use Illuminate\Validation\ValidationException;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
@@ -67,15 +66,6 @@ class MediaPreviewService
      */
     public function execute(Media $media): void
     {
-        // Validate is video
-        $type = strtok($media->mime_type, '/');
-
-        throw_if(
-            'video' !== $type,
-            ValidationException::class,
-            'Media has invalid mimetype.'
-        );
-
         // Perform conversion
         $previewPath = $this->createVideoPreview($media);
 

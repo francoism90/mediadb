@@ -29,7 +29,7 @@ class MultiMatchRule extends SearchRule
             'must' => [
                 'multi_match' => [
                     'query' => $this->builder->query,
-                    'fields' => ['name^5', 'description'],
+                    'fields' => ['name^5', 'overview'],
                     'tie_breaker' => 0.3,
                 ],
             ],

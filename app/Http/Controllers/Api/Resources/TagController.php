@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\Resources;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
-use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
+use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
-use App\Support\QueryBuilder\Sorts\InOrderSorter;
+use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
 use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\Tag\ItemsSorter;
@@ -19,13 +19,13 @@ class TagController extends Controller
 {
     public function index()
     {
-        $defaultSort = AllowedSort::custom('name', new InOrderSorter())->defaultDirection('asc');
+        $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');
 
         $query = QueryBuilder::for(Tag::class)
-            ->allowedAppends(['items'])
+            ->allowedAppends(['item_count'])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
             ->AllowedSorts([
                 $defaultSort,

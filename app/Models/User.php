@@ -14,16 +14,21 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Multicaret\Acquaintances\Traits\CanFollow;
 use ScoutElastic\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements Viewable
+class User extends Authenticatable implements HasMedia, Viewable
 {
+    use HasApiTokens;
     use Activityable;
     use CanFollow;
     use Hashidable;
     use HasRoles;
+    use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
     use Randomable;
@@ -113,11 +118,21 @@ class User extends Authenticatable implements Viewable
     }
 
     /**
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+             ->singleFile()
+             ->useDisk('media');
+    }
+
+    /**
      * @return morphMany
      */
-    public function channels()
+    public function videos()
     {
-        return $this->morphMany('App\Models\Channel', 'model');
+        return $this->morphMany('App\Models\Video', 'model');
     }
 
     /**
@@ -134,5 +149,16 @@ class User extends Authenticatable implements Viewable
     public function getThumbnailAttribute(): string
     {
         return '';
+    }
+
+    /**
+     * @return array
+     */
+    public function getAssignedRolesAttribute(): array
+    {
+        return [
+            'roles' => $this->getRoleNames()->toArray(),
+            'permissions' => $this->getAllPermissions()->pluck('name')->toArray(),
+        ];
     }
 }

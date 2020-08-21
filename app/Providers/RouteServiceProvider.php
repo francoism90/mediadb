@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Channel;
 use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +35,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::bind('channel', fn ($value, $route) => Channel::findByHash($value));
         Route::bind('collection', fn ($value, $route) => Collection::findByHash($value));
+        Route::bind('collections', fn ($value, $route) => Collection::findByHash($value));
         Route::bind('media', fn ($value, $route) => Media::findByHash($value));
-        Route::bind('tag', fn ($value, $route) => Tag::findByHash($value));
+        Route::bind('tags', fn ($value, $route) => Tag::findByHash($value));
         Route::bind('user', fn ($value, $route) => User::findByHash($value));
+        Route::bind('video', fn ($value, $route) => Video::findByHash($value));
+        Route::bind('videos', fn ($value, $route) => Video::findByHash($value));
     }
 
     /**

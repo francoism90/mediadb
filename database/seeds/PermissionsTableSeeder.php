@@ -20,20 +20,17 @@ class PermissionsTableSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'create channels']);
-        Permission::create(['name' => 'delete channels']);
-        Permission::create(['name' => 'publish channels']);
-        Permission::create(['name' => 'unpublish channels']);
-
-        Permission::create(['name' => 'edit media']);
-        Permission::create(['name' => 'delete media']);
-        Permission::create(['name' => 'publish media']);
-        Permission::create(['name' => 'unpublish media']);
-
+        Permission::create(['name' => 'create collections']);
         Permission::create(['name' => 'edit collections']);
         Permission::create(['name' => 'delete collections']);
         Permission::create(['name' => 'publish collections']);
         Permission::create(['name' => 'unpublish collections']);
+
+        Permission::create(['name' => 'create videos']);
+        Permission::create(['name' => 'edit videos']);
+        Permission::create(['name' => 'delete videos']);
+        Permission::create(['name' => 'publish videos']);
+        Permission::create(['name' => 'unpublish videos']);
 
         // Create admin role and assign created permissions
         $roleAdmin = Role::create(['name' => 'super-admin']);
@@ -42,11 +39,11 @@ class PermissionsTableSeeder extends Seeder
         // Create moderator role and assign created permissions
         $roleModerator = Role::create(['name' => 'moderator']);
 
-        $roleModerator->givePermissionTo('publish media');
-        $roleModerator->givePermissionTo('unpublish media');
-
-        $roleModerator->givePermissionTo('publish collections');
+        $roleModerator->givePermissionTo('edit collections');
         $roleModerator->givePermissionTo('unpublish collections');
+
+        $roleModerator->givePermissionTo('edit videos');
+        $roleModerator->givePermissionTo('unpublish videos');
 
         // Create the admin user
         $user = User::create([

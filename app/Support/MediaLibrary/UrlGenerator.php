@@ -19,7 +19,6 @@ class UrlGenerator extends BaseUrlGenerator
             [
                 $this->media,
                 auth()->user(),
-                $this->conversion ? $this->conversion->getName() : null,
             ]
         );
     }
@@ -38,7 +37,6 @@ class UrlGenerator extends BaseUrlGenerator
             [
                 $this->media,
                 auth()->user(),
-                $this->conversion ? $this->conversion->getName() : null,
             ]
         );
     }

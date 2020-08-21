@@ -13,12 +13,12 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
-use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Collection extends Model implements Viewable
 {
@@ -26,7 +26,6 @@ class Collection extends Model implements Viewable
     use CanBeFavorited;
     use CanBeLiked;
     use Hashidable;
-    use HasJsonRelationships;
     use HasStatuses;
     use HasTags;
     use InteractsWithViews;
@@ -40,7 +39,7 @@ class Collection extends Model implements Viewable
      */
     protected $casts = [
         'custom_properties' => 'json',
-     ];
+    ];
 
     /**
      * @var array
@@ -130,16 +129,33 @@ class Collection extends Model implements Viewable
     public function tags()
     {
         return $this
-            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->morphToMany(
+                self::getTagClassName(),
+                'taggable',
+                'taggables',
+                null,
+                'tag_id'
+            )
             ->orderBy('order_column');
     }
 
     /**
-     * @return belongsToJson
+     * @return morphedByMany
      */
-    public function media()
+    public function videos()
     {
-        return $this->belongsToJson('App\Models\Media', 'custom_properties->media[]->media_id');
+        return $this->morphedByMany(
+            'App\Models\Video',
+            'collectable'
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemCountAttribute(): int
+    {
+        return $this->videos()->count();
     }
 
     /**
@@ -147,16 +163,8 @@ class Collection extends Model implements Viewable
      */
     public function getThumbnailUrlAttribute(): string
     {
-        $model = $this->media()->orderByDesc('created_at')->first();
+        $model = $this->videos()->orderByDesc('created_at')->first();
 
         return $model ? $model->thumbnail_url : '';
-    }
-
-    /**
-     * @return int
-     */
-    public function getItemsAttribute(): int
-    {
-        return $this->media->count();
     }
 }

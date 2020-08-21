@@ -30,11 +30,11 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|string|min:1|max:255',
             'description' => 'nullable|string|min:0|max:1024',
-            'status' => 'nullable|string|in:private,public',
+            'status' => 'nullable|string|in:private,published',
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|string|min:1|max:255',
-            'tags.*.type' => 'nullable|string|in:genre,language,person',
+            'tags.*.type' => 'nullable|string|in:actor,genre,language,studio',
             'tags.*.name' => 'required|string|min:1|max:255',
         ];
     }
