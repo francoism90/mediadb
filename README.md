@@ -39,11 +39,11 @@ See `doc/nginx` for configuration examples.
 
 | Site             | Domain                         | Details                                                                                |
 |------------------|--------------------------------|----------------------------------------------------------------------------------------|
-| mediadb-api.conf | localhost:3000                 | API: generates JSON for vod-local, authentication, import videos, json-api/REST, etc.  |
-| mediadb-ui.conf  | mediadb.dom:443 mediadb.dom:80 | Front-end: accessible for user, browse library, search, play, etc.                     |
-| vod-local.conf   | localhost:8081                 | VOD: points to JSON mappings files (full media paths, sequences, etc.).                |
-| vod-mapped.conf  | localhost:1935                 | VOD: processes streaming (DASH), thumbnails (optional) and add security tokens.        |
-| vod-stream.conf  | stream.dom:443 stream.dom:80   | VOD: accessible for user, validate security tokens, retrieve upstream vod-mapped data. |
+| mediadb-api.conf | localhost:3000                   | API: generates JSON for vod-local, authentication, import videos, json-api/REST, etc.    |
+| mediadb-ui.conf  | mediadb.test:443 mediadb.test:80 | Front-end: accessible for user, browse library, search, play, etc.                    |
+| vod-local.conf   | localhost:8081                   | VOD: points to JSON mappings files (full media paths, sequences, etc.).                  |
+| vod-mapped.conf  | localhost:1935                   | VOD: processes streaming (DASH), thumbnails (optional) and add security tokens.        |
+| vod-stream.conf  | stream.test:443 stream.test:80   | VOD: accessible for user, validate security tokens, retrieve upstream vod-mapped data.   |
 
 ### Laravel
 

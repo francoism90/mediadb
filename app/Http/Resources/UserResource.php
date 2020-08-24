@@ -19,9 +19,6 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'roles' => $this->whenAppended('assigned_roles'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
-            'relationships' => [
-                'channels' => MediaResource::collection($this->whenLoaded('channels')),
-            ],
         ];
     }
 }

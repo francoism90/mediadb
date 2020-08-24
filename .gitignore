@@ -1,5 +1,5 @@
 /config
-/database/seeds
+/database
 /node_modules
 /public
 /storage/*.key

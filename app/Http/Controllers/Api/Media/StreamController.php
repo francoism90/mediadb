@@ -33,7 +33,6 @@ class StreamController extends Controller
             ->getExpireUrl(
                 $media,
                 $streamKey,
-                request()->ip()
             );
 
         return redirect($streamUrl);

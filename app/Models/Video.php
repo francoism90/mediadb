@@ -21,6 +21,7 @@ use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 
@@ -230,16 +231,11 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return string
+     * @return MediaCollection
      */
-    public function getDownloadUrlAttribute(): string
+    public function getTracksAttribute(): MediaCollection
     {
-        $expires = now()->addSeconds(
-            config('vod.expire')
-        );
-
-        return $this->getFirstClip()
-                    ->getTemporaryUrl($expires);
+        return $this->getMedia('tracks');
     }
 
     /**

@@ -22,7 +22,6 @@ class MediaStreamService
     public function getExpireUrl(
         Media $media,
         string $streamKey,
-        string $requestIp,
         ?string $type = null
     ): string {
         // Get encrypted url
@@ -33,7 +32,7 @@ class MediaStreamService
         $expires = time() + config('vod.expire', 60 * 60 * 3);
         $secret = config('vod.secret');
 
-        $md5 = md5("{$expires}{$id}{$requestIp} {$secret}", true);
+        $md5 = md5("{$expires}{$id} {$secret}", true);
         $md5 = base64_encode($md5);
         $md5 = strtr($md5, '+/', '-_');
         $md5 = str_replace('=', '', $md5);

@@ -39,7 +39,7 @@ class VideoImportService
 
         foreach ($files as $file) {
             $filePath = $file->getRealPath();
-            $fileName = $file->getFilename();
+            $fileName = $file->getFilenameWithoutExtension();
 
             throw_if(
                 !$this->videoMetadataService->isProbable($filePath),

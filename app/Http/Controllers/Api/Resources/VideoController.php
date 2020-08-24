@@ -89,6 +89,7 @@ class VideoController extends Controller
             $video->load('tags')
                   ->append([
                     'metadata',
+                    'tracks',
                     'sprite_url',
                     'stream_url',
                     'thumbnail_url',

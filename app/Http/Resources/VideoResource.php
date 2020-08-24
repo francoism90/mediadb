@@ -26,6 +26,7 @@ class VideoResource extends JsonResource
             'tagline' => $this->tagline,
             'overview' => $this->overview,
             'metadata' => $this->whenAppended('metadata'),
+            'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),
             'preview_url' => $this->whenAppended('preview_url'),
             'sprite_url' => $this->whenAppended('sprite_url'),
             'stream_url' => $this->whenAppended('stream_url'),

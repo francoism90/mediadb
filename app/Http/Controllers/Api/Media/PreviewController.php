@@ -33,7 +33,6 @@ class PreviewController extends Controller
             ->getExpireUrl(
                 $media,
                 $streamKey,
-                request()->ip(),
                 'preview'
             );
 

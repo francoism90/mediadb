@@ -235,16 +235,16 @@
         },
         {
             "name": "cakephp/chronos",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "9309d85c33c65917c0e582c0a6b07df56fe27dd9"
+                "reference": "30baea51824076719921c6c2d720bfd6b49e6dca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/9309d85c33c65917c0e582c0a6b07df56fe27dd9",
-                "reference": "9309d85c33c65917c0e582c0a6b07df56fe27dd9",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/30baea51824076719921c6c2d720bfd6b49e6dca",
+                "reference": "30baea51824076719921c6c2d720bfd6b49e6dca",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +286,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-05-26T01:27:20+00:00"
+            "time": "2020-08-22T02:42:12+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -4840,24 +4840,29 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "6.6.2",
+            "version": "6.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "9c9f00cf7ad0f675705d0cf95f3ada6229704602"
+                "reference": "b68093a67702e67db6f6bd8829df25319c6e66f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/9c9f00cf7ad0f675705d0cf95f3ada6229704602",
-                "reference": "9c9f00cf7ad0f675705d0cf95f3ada6229704602",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/b68093a67702e67db6f6bd8829df25319c6e66f9",
+                "reference": "b68093a67702e67db6f6bd8829df25319c6e66f9",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^7.13",
+                "illuminate/cache": "^7.13",
+                "illuminate/console": "^7.13",
+                "illuminate/container": "^7.13",
+                "illuminate/http": "^7.13",
+                "illuminate/support": "^7.13",
                 "nesbot/carbon": "^2.35",
                 "php": "^7.4"
             },
             "require-dev": {
+                "laravel/framework": "^7.13",
                 "mockery/mockery": "^1.4",
                 "orchestra/testbench": "^5.2",
                 "phpunit/phpunit": "^9.1.5",
@@ -4907,20 +4912,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-06-03T18:57:54+00:00"
+            "time": "2020-08-22T08:48:13+00:00"
         },
         {
             "name": "spatie/laravel-tags",
-            "version": "2.6.2",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-tags.git",
-                "reference": "94193bf61a6263a7b4f38ac4f5c2470728f3b334"
+                "reference": "a4300342b5eea9da84348c5167ceb3b755b24666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/94193bf61a6263a7b4f38ac4f5c2470728f3b334",
-                "reference": "94193bf61a6263a7b4f38ac4f5c2470728f3b334",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/a4300342b5eea9da84348c5167ceb3b755b24666",
+                "reference": "a4300342b5eea9da84348c5167ceb3b755b24666",
                 "shasum": ""
             },
             "require": {
@@ -4966,11 +4971,11 @@
             ],
             "funding": [
                 {
-                    "url": "https://www.patreon.com/spatie",
-                    "type": "patreon"
+                    "url": "https://github.com/spatie",
+                    "type": "github"
                 }
             ],
-            "time": "2020-05-28T08:29:51+00:00"
+            "time": "2020-08-22T09:03:17+00:00"
         },
         {
             "name": "spatie/laravel-translatable",
