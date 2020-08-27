@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Collection;
-use Illuminate\Support\Collection as IlluminateCollection;
+use Illuminate\Support\LazyCollection;
 
 class CollectionSyncService
 {
@@ -32,12 +32,12 @@ class CollectionSyncService
     }
 
     /**
-     * @return IlluminateCollection
+     * @return LazyCollection
      */
-    protected function getCollectionsWithTags(): IlluminateCollection
+    protected function getCollectionsWithTags(): LazyCollection
     {
         return Collection::has('tags')
             ->with(['tags', 'videos'])
-            ->get();
+            ->cursor();
     }
 }

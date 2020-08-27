@@ -104,7 +104,7 @@ class Video extends Model implements HasMedia, Viewable
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
             'file_name' => $this->file_name,
-            'duration' => $this->duration,
+            'duration' => $this->metadata['duration'] ?? 0,
         ];
     }
 

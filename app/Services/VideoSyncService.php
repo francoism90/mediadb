@@ -7,8 +7,7 @@ use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
 use App\Models\Video;
-use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Illuminate\Support\LazyCollection;
 
 class VideoSyncService
 {
@@ -28,21 +27,21 @@ class VideoSyncService
      *
      * @return void
      */
-    public function sync(bool $force = false): void
+    public function sync(?bool $force = false): void
     {
-        $metadataModels = $this->getMediaByMissingMetadata($force);
-        $conversionModels = $this->getMediaByMissingConversions($force);
+        $metadataModels = $this->getMediaByMissingMetadata();
+        $conversionModels = $this->getMediaByMissingConversions();
 
         $this->setMetadata($metadataModels);
-        $this->performConversions($conversionModels, $force);
+        $this->performConversions($conversionModels);
     }
 
     /**
-     * @param Collection $models
+     * @param LazyCollection $models
      *
      * @return void
      */
-    protected function setMetadata(Collection $models): void
+    protected function setMetadata(LazyCollection $models): void
     {
         foreach ($models as $model) {
             $this->videoMetadataService->setAttributes($model);
@@ -50,12 +49,11 @@ class VideoSyncService
     }
 
     /**
-     * @param Collection $models
-     * @param bool|null  $force
+     * @param LazyCollection $models
      *
      * @return void
      */
-    protected function performConversions(Collection $models): void
+    protected function performConversions(LazyCollection $models): void
     {
         foreach ($models as $model) {
             if (!$model->hasGeneratedConversion('thumbnail')) {
@@ -73,31 +71,31 @@ class VideoSyncService
     }
 
     /**
-     * @return MediaCollection
+     * @return LazyCollection
      */
-    protected function getMediaByMissingMetadata(): MediaCollection
+    protected function getMediaByMissingMetadata(): LazyCollection
     {
         $collection = Media::where('model_type', Video::class)
             ->WhereNull('custom_properties->metadata')
             ->orWhereNull('custom_properties->metadata->duration')
             ->orWhereNull('custom_properties->metadata->width')
             ->orWhereNull('custom_properties->metadata->height')
-            ->get();
+            ->cursor();
 
         return $collection;
     }
 
     /**
-     * @return MediaCollection
+     * @return LazyCollection
      */
-    protected function getMediaByMissingConversions(): MediaCollection
+    protected function getMediaByMissingConversions(): LazyCollection
     {
         $collection = Media::where('model_type', Video::class)
             ->WhereNull('custom_properties->generated_conversions')
             ->orWhereNull('custom_properties->generated_conversions->preview')
             ->orWhereNull('custom_properties->generated_conversions->sprite')
             ->orWhereNull('custom_properties->generated_conversions->thumbnail')
-            ->get();
+            ->cursor();
 
         return $collection;
     }
