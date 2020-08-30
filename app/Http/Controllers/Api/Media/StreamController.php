@@ -5,18 +5,18 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
-use App\Services\MediaStreamService;
+use App\Services\Media\StreamService;
 
 class StreamController extends Controller
 {
     /**
-     * @var MediaStreamService
+     * @var StreamService
      */
-    protected $mediaStreamService;
+    protected $streamService;
 
-    public function __construct(MediaStreamService $mediaStreamService)
+    public function __construct(StreamService $streamService)
     {
-        $this->mediaStreamService = $mediaStreamService;
+        $this->streamService = $streamService;
     }
 
     /**
@@ -29,7 +29,7 @@ class StreamController extends Controller
     {
         $streamKey = "media_{$media->id}_{$user->id}";
 
-        $streamUrl = $this->mediaStreamService
+        $streamUrl = $this->streamService
             ->getExpireUrl(
                 $media,
                 $streamKey,

@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Models\Video;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class VideoCollectionService
+class VideoSaveService
 {
     /**
      * @var CollectionService
@@ -19,7 +19,7 @@ class VideoCollectionService
     }
 
     /**
-     * @param Model      $model
+     * @param User       $user
      * @param Video      $video
      * @param Collection $collections
      * @param bool       $detach
@@ -27,19 +27,19 @@ class VideoCollectionService
      * @return void
      */
     public function sync(
-        Model $model,
+        User $user,
         Video $video,
         Collection $collections,
         bool $detach = true
     ): void {
         // Create collections for model
-        $videoCollections = $this->collectionService->create($model, $collections);
+        $videoCollections = $this->collectionService->create($user, $collections);
 
         // Get the all model collections
-        $modelCollections = $model->collections()->with('videos')->get();
+        $userCollections = $user->collections()->with('videos')->get();
 
         // Loop over all collections
-        foreach ($modelCollections as $collection) {
+        foreach ($userCollections as $collection) {
             $hasVideo = $collection->videos->firstWhere('id', $video->id);
             $inCollection = $videoCollections->firstWhere('id', $collection->id);
 

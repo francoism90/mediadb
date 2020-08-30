@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\MediaThumbnailService;
+use App\Services\Media\ThumbnailService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -48,8 +48,8 @@ class CreateThumbnail implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MediaThumbnailService $thumbnailService)
+    public function handle(ThumbnailService $thumbnailService)
     {
-        $thumbnailService->execute($this->media);
+        $thumbnailService->create($this->media);
     }
 }

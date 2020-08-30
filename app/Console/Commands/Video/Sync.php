@@ -12,7 +12,7 @@ class Sync extends Command
      *
      * @var string
      */
-    protected $signature = 'video:sync {--force}';
+    protected $signature = 'video:sync';
 
     /**
      * The console command description.
@@ -34,8 +34,6 @@ class Sync extends Command
      */
     public function handle(VideoSyncService $videoSyncService)
     {
-        $videoSyncService->sync(
-            $this->option('force')
-        );
+        $videoSyncService->sync();
     }
 }

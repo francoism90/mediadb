@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Collection;
+use App\Models\Collection as Collection;
 use Illuminate\Support\LazyCollection;
 
 class CollectionSyncService
@@ -12,15 +12,15 @@ class CollectionSyncService
      */
     public function sync(): void
     {
-        $this->attachModelTagsToMedia();
+        $this->attachVideoTagsToMedia();
     }
 
     /**
      * @return void
      */
-    protected function attachModelTagsToMedia(): void
+    protected function attachVideoTagsToMedia(): void
     {
-        $models = $this->getCollectionsWithTags();
+        $models = $this->getVideosWithTags();
 
         foreach ($models as $model) {
             $tags = $model->tags->all();
@@ -34,7 +34,7 @@ class CollectionSyncService
     /**
      * @return LazyCollection
      */
-    protected function getCollectionsWithTags(): LazyCollection
+    protected function getVideosWithTags(): LazyCollection
     {
         return Collection::has('tags')
             ->with(['tags', 'videos'])

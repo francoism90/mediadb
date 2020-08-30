@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\MediaSpriteService;
+use App\Services\Media\SpriteService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -48,8 +48,8 @@ class CreateSprite implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MediaSpriteService $mediaSpriteService)
+    public function handle(SpriteService $spriteService)
     {
-        $mediaSpriteService->execute($this->media);
+        $spriteService->create($this->media);
     }
 }

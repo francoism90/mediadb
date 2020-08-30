@@ -4,70 +4,101 @@ namespace App\Services;
 
 use App\Events\Video\MediaHasBeenAdded;
 use App\Models\Collection;
+use App\Models\User;
+use App\Services\Media\MetadataService;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\Finder\Finder;
+use Throwable;
 
 class VideoImportService
 {
     /**
-     * @var VideoMetadataService
+     * @var CollectionService
      */
-    protected $videoMetadataService;
+    protected $collectionService;
 
     /**
-     * @param VideoMetadataService $videoMetadataService
+     * @var MetadataService
      */
-    public function __construct(VideoMetadataService $videoMetadataService)
-    {
-        $this->videoMetadataService = $videoMetadataService;
+    protected $metadataService;
+
+    /**
+     * @param MetadataService $videoMetadataService
+     */
+    public function __construct(
+        CollectionService $collectionService,
+        MetadataService $metadataService
+    ) {
+        $this->collectionService = $collectionService;
+        $this->metadataService = $metadataService;
     }
 
     /**
-     * @param Collection $collection
-     * @param string     $path
-     * @param string     $type
+     * @param User   $user
+     * @param string $collection
+     * @param string $path
+     * @param string $type
      *
      * @return void
      */
     public function import(
-        Collection $collection,
+        User $user,
+        string $collection,
         string $path,
         string $type = null
     ): void {
+        $collectionModel = $this->createCollection($user, $collection);
+
         $files = $this->getFilesInPath($path);
 
         foreach ($files as $file) {
-            $filePath = $file->getRealPath();
-            $fileName = $file->getFilenameWithoutExtension();
+            try {
+                $filePath = $file->getRealPath();
+                $fileName = $file->getFilenameWithoutExtension();
 
-            throw_if(
-                !$this->videoMetadataService->isProbable($filePath),
-                ValidationException::class,
-                "Unable to import file: {$fileName}"
-            );
+                throw_if(
+                    !$this->metadataService->isProbable($filePath),
+                    ValidationException::class,
+                    "Unable to probe path: {$filePath}"
+                );
 
-            // Create video model
-            $model = $collection->model;
+                $video = $user->videos()->create([
+                    'name' => $this->convertFilename($fileName),
+                    'type' => $type,
+                ]);
 
-            $video = $model->videos()->create([
-                'name' => $this->convertFilename($fileName),
-                'type' => $type,
-            ]);
+                $media = $video
+                    ->addMedia($filePath)
+                    ->toMediaCollection('clip');
 
-            // Import video file to media-library
-            $media = $video
-                ->addMedia($filePath)
-                ->toMediaCollection('clip');
+                $this->metadataService->setAttributes($media);
 
-            // Attach video to model
-            $collection->videos()->attach($video);
+                $collectionModel->videos()->attach($video);
 
-            // Set video metadata
-            $this->videoMetadataService->setAttributes($media);
-
-            event(new MediaHasBeenAdded($video, $media));
+                event(new MediaHasBeenAdded($video, $media));
+            } catch (Throwable $e) {
+                report($e);
+            }
         }
+    }
+
+    /**
+     * @param User   $user
+     * @param string $collection
+     *
+     * @return Collection
+     */
+    protected function createCollection(User $user, string $collection): Collection
+    {
+        $collections = $this->collectionService->create(
+            $user,
+            collect([
+                ['name' => $collection],
+            ])
+        );
+
+        return $collections->first();
     }
 
     /**

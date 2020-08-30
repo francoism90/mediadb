@@ -3,20 +3,22 @@
 namespace App\Console\Commands\Video;
 
 use App\Models\Collection;
+use App\Models\User;
 use App\Services\VideoImportService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection as IlluminateCollection;
 
 class Import extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'video:import {path} {collection=Series}';
+    protected $signature = 'video:import {user} {path} {type=episode}';
 
     /**
      * @var string
      */
-    protected $description = 'Import media files to a collection';
+    protected $description = 'Import video files to library';
 
     /**
      * Create a new command instance.
@@ -31,19 +33,48 @@ class Import extends Command
      */
     public function handle(VideoImportService $videoImportService)
     {
+        $user = $this->getUserModel();
+        $collection = $this->getCollectionName();
+
         $videoImportService->import(
-            $this->getCollectionModel(),
+            $user,
+            $collection,
             $this->argument('path'),
+            $this->argument('type')
         );
     }
 
     /**
-     * @return Collection
+     * @return string
      */
-    protected function getCollectionModel(): Collection
+    protected function getCollectionName(): string
     {
-        return Collection::firstWhere(
-            'name', $this->argument('collection')
+        $name = $this->anticipate('Save videos to collection', function ($input) {
+            return $this->getCollectionsByQuery($input)->pluck('name')->toArray();
+        });
+
+        return $name;
+    }
+
+    /**
+     * @return User
+     */
+    protected function getUserModel(): User
+    {
+        return User::findOrFail(
+            $this->argument('user')
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCollectionsByQuery(string $query = ''): IlluminateCollection
+    {
+        return Collection::search($query)
+            ->select(['id', 'name'])
+            ->from(0)
+            ->take(25)
+            ->get();
     }
 }

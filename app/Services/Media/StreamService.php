@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
-class MediaStreamService
+class StreamService
 {
     public const MAPPING_PATH = 'dash';
     public const MAPPING_MANIFEST = 'manifest.mpd';

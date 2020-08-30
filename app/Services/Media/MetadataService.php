@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
 use FFMpeg\FFMpeg;
 
-class VideoMetadataService
+class MetadataService
 {
     /**
      * @var FFMpeg

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
+use App\Services\ImageService;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Frame\CustomFrameFilter;
@@ -10,7 +11,7 @@ use FFMpeg\Media\Video;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
-class MediaThumbnailService
+class ThumbnailService
 {
     public const CONVERSION_NAME = 'thumbnail.jpg';
     public const CONVERSION_TYPE = 'conversions';
@@ -61,10 +62,10 @@ class MediaThumbnailService
      *
      * @return void
      */
-    public function execute(Media $media): void
+    public function create(Media $media): void
     {
         // Perform conversion
-        $framePath = $this->createVideoFrame($media);
+        $framePath = $this->prepareConversion($media);
 
         // Optimize frame
         $this->imageService->optimize($framePath);
@@ -89,7 +90,7 @@ class MediaThumbnailService
      *
      * @return string
      */
-    protected function createVideoFrame(Media $media): string
+    protected function prepareConversion(Media $media): string
     {
         // Path for the video frame
         $path = $this->temporaryDirectory->path("{$media->id}/thumbnail.jpg");

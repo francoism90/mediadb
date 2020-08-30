@@ -56,4 +56,20 @@ class Media extends BaseMedia implements Viewable
     {
         return $this->getUrl();
     }
+
+    /**
+     * @return string
+     */
+    public function getTypeAttribute(): string
+    {
+        return $this->getCustomProperty('type', 'N/A');
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguageAttribute(): string
+    {
+        return $this->getCustomProperty('language', 'N/A');
+    }
 }

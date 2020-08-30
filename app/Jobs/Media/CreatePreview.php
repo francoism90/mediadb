@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\MediaPreviewService;
+use App\Services\Media\PreviewService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -48,8 +48,8 @@ class CreatePreview implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MediaPreviewService $previewService)
+    public function handle(PreviewService $previewService)
     {
-        $previewService->execute($this->media);
+        $previewService->create($this->media);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 
-class MediaSpriteTrackService
+class SpriteTrackService
 {
     public const SPRITETRACK_EXPIRE = 60 * 5;
 
@@ -17,7 +17,7 @@ class MediaSpriteTrackService
      *
      * @return string
      */
-    public function getTrack(Media $media, User $user): string
+    public function getContents(Media $media, User $user): string
     {
         $cacheKey = "sprite_{$media->id}_{$user->id}";
 

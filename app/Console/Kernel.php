@@ -43,13 +43,13 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('01:00')
                  ->runInBackground();
 
-        $schedule->command('media:sync')
+        $schedule->command('video:sync')
                  ->weeklyOn(1, '03:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();
 
-        $schedule->command('channel:sync')
-                 ->weeklyOn(1, '03:00')
+        $schedule->command('collection:sync')
+                 ->weeklyOn(2, '03:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();
     }

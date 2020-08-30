@@ -7,27 +7,26 @@ use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
 use App\Models\Video;
+use App\Services\Media\MetadataService;
 use Illuminate\Support\LazyCollection;
 
 class VideoSyncService
 {
     /**
-     * @var VideoMetadataService
+     * @var MetadataService
      */
-    protected $videoMetadataService;
+    protected $metadataService;
 
     public function __construct(
-        VideoMetadataService $videoMetadataService
+        MetadataService $metadataService
     ) {
-        $this->videoMetadataService = $videoMetadataService;
+        $this->metadataService = $metadataService;
     }
 
     /**
-     * @param bool|null $force
-     *
      * @return void
      */
-    public function sync(?bool $force = false): void
+    public function sync(): void
     {
         $metadataModels = $this->getMediaByMissingMetadata();
         $conversionModels = $this->getMediaByMissingConversions();
@@ -44,7 +43,7 @@ class VideoSyncService
     protected function setMetadata(LazyCollection $models): void
     {
         foreach ($models as $model) {
-            $this->videoMetadataService->setAttributes($model);
+            $this->metadataService->setAttributes($model);
         }
     }
 

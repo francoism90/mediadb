@@ -6,12 +6,12 @@ use App\Models\Video;
 use App\Services\VideoTrackImportService;
 use Illuminate\Console\Command;
 
-class Tracks extends Command
+class ImportTracks extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'video:import-tracks {path} {model} {type=subtitles}';
+    protected $signature = 'video:import-tracks {video} {path}';
 
     /**
      * @var string
@@ -31,10 +31,16 @@ class Tracks extends Command
      */
     public function handle(VideoTrackImportService $videoTrackImportService)
     {
+        $type = $this->choice('What is the track type?', ['subtitles']);
+        $language = $this->choice('What is the track language?', ['en']);
+
         $videoTrackImportService->import(
             $this->getVideoModel(),
             $this->argument('path'),
-            $this->argument('type'),
+            [
+                'type' => $type,
+                'language' => $language,
+            ],
         );
     }
 
@@ -43,8 +49,8 @@ class Tracks extends Command
      */
     protected function getVideoModel(): Video
     {
-        return Video::findByHash(
-            $this->argument('model')
+        return Video::findOrFail(
+            $this->argument('video')
         );
     }
 }

@@ -5,42 +5,44 @@ namespace App\Services;
 use App\Events\Video\MediaHasBeenAdded;
 use App\Models\Video;
 use Symfony\Component\Finder\Finder;
+use Throwable;
 
 class VideoTrackImportService
 {
     /**
      * @param Video  $video
      * @param string $path
-     * @param string $type
+     * @param string $properties
      *
      * @return void
      */
     public function import(
         Video $video,
         string $path,
-        string $type
+        array $properties = []
     ): void {
         $files = $this->getFilesInPath($path);
 
         foreach ($files as $file) {
-            $filePath = $file->getRealPath();
-            $fileExtension = $file->getExtension();
+            try {
+                $filePath = $file->getRealPath();
+                $fileExtension = $file->getExtension();
 
-            // Import track file to media-library
-            $media = $video
-                ->addMedia($filePath)
-                ->withCustomProperties([
-                    'type' => $type,
-                ])
-                ->toMediaCollection('tracks');
+                $media = $video
+                    ->addMedia($filePath)
+                    ->withCustomProperties($properties)
+                    ->toMediaCollection('tracks');
 
-            // Force WebVTT
-            if ('vtt' === $fileExtension) {
-                $media->mime_type = 'text/vtt';
-                $media->save();
+                // Force WebVTT
+                if ('vtt' === $fileExtension) {
+                    $media->mime_type = 'text/vtt';
+                    $media->save();
+                }
+
+                event(new MediaHasBeenAdded($video, $media));
+            } catch (Throwable $e) {
+                report($e);
             }
-
-            event(new MediaHasBeenAdded($video, $media));
         }
     }
 

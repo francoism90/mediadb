@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
 use FFMpeg\Coordinate\TimeCode;
@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
-class MediaSpriteService
+class SpriteService
 {
     public const CONVERSION_NAME = 'sprite.json';
     public const CONVERSION_TYPE = 'conversions';
@@ -60,10 +60,10 @@ class MediaSpriteService
      *
      * @return void
      */
-    public function execute(Media $media): void
+    public function create(Media $media): void
     {
         // Perform conversion
-        $spritePath = $this->createVideoSprite($media);
+        $spritePath = $this->prepareConversion($media);
 
         // Copy to MediaLibrary
         $this->filesystem->copyToMediaLibrary(
@@ -85,13 +85,13 @@ class MediaSpriteService
      *
      * @return string
      */
-    protected function createVideoSprite(Media $media): string
+    protected function prepareConversion(Media $media): string
     {
         // Create video frames
-        $videoFrames = $this->createVideoFrames($media);
+        $videoFrames = $this->createFrames($media);
 
         // Create video sprites
-        $videoSprites = $this->createVideoSprites($videoFrames);
+        $videoSprites = $this->createSprites($videoFrames);
 
         // Copy sprites
         $spriteGroups = $videoSprites->groupBy('sprite')->toArray();
@@ -116,7 +116,7 @@ class MediaSpriteService
      *
      * @return Collection
      */
-    protected function createVideoFrames(Media $media): Collection
+    protected function createFrames(Media $media): Collection
     {
         // Video instance
         $video = $this->getVideo($media->getPath());
@@ -160,7 +160,7 @@ class MediaSpriteService
      *
      * @return Collection
      */
-    protected function createVideoSprites(Collection $frames): Collection
+    protected function createSprites(Collection $frames): Collection
     {
         // Calculate sprite sections
         $frameCount = 1;
@@ -190,7 +190,7 @@ class MediaSpriteService
 
             // Create new section (if needed)
             if (0 === $frameCount % self::SPRITE_ITEMS || $frames->last()['start'] === $frame['start']) {
-                $this->createVideoMontage(
+                $this->createMontage(
                     $spriteCount,
                     $spriteFrames->where('sprite', $spriteCount)
                 );
@@ -218,7 +218,7 @@ class MediaSpriteService
      *
      * @return void
      */
-    protected function createVideoMontage(int $sprite, Collection $frames): void
+    protected function createMontage(int $sprite, Collection $frames): void
     {
         $path = $this->temporaryDirectory->path("sprite-{$sprite}.webp");
 

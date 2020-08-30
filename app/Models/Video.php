@@ -104,7 +104,7 @@ class Video extends Model implements HasMedia, Viewable
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
             'file_name' => $this->file_name,
-            'duration' => $this->metadata['duration'] ?? 0,
+            'duration' => $this->duration,
         ];
     }
 
@@ -231,9 +231,19 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return MediaCollection
+     * @return int
      */
-    public function getTracksAttribute(): MediaCollection
+    public function getDurationAttribute(): int
+    {
+        $metadata = $this->getMetadataAttribute();
+
+        return $metadata['duration'] ?? 0;
+    }
+
+    /**
+     * @return Collection|MediaCollection
+     */
+    public function getTracksAttribute()
     {
         return $this->getMedia('tracks');
     }

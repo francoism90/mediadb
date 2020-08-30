@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use App\Models\Media;
 use FFMpeg\Coordinate\Dimension;
@@ -14,7 +14,7 @@ use FFMpeg\Media\Video;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
-class MediaPreviewService
+class PreviewService
 {
     public const CONVERSION_NAME = 'preview.mp4';
     public const CONVERSION_TYPE = 'conversions';
@@ -64,10 +64,10 @@ class MediaPreviewService
      *
      * @return void
      */
-    public function execute(Media $media): void
+    public function create(Media $media): void
     {
         // Perform conversion
-        $previewPath = $this->createVideoPreview($media);
+        $previewPath = $this->prepareConversion($media);
 
         // Copy to MediaLibrary
         $this->filesystem->copyToMediaLibrary(
@@ -89,10 +89,10 @@ class MediaPreviewService
      *
      * @return string
      */
-    protected function createVideoPreview(Media $media): string
+    protected function prepareConversion(Media $media): string
     {
         // Create video clips
-        $videoClips = $this->createVideoClips($media);
+        $videoClips = $this->createClips($media);
 
         // Conversion path
         $path = $this->temporaryDirectory->path("{$media->id}/preview.mp4");
@@ -113,7 +113,7 @@ class MediaPreviewService
      *
      * @return array
      */
-    protected function createVideoClips(Media $media): array
+    protected function createClips(Media $media): array
     {
         // Media video
         $video = $this->getVideo($media->getPath());

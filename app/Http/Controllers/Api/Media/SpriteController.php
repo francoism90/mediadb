@@ -5,18 +5,18 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
-use App\Services\MediaSpriteTrackService;
+use App\Services\Media\SpriteTrackService;
 
 class SpriteController extends Controller
 {
     /**
-     * @var MediaSpriteTrackService
+     * @var SpriteTrackService
      */
-    protected $mediaSpriteService;
+    protected $spriteTrackService;
 
-    public function __construct(MediaSpriteTrackService $mediaSpriteService)
+    public function __construct(SpriteTrackService $spriteTrackService)
     {
-        $this->mediaSpriteService = $mediaSpriteService;
+        $this->spriteTrackService = $spriteTrackService;
     }
 
     /**
@@ -31,7 +31,7 @@ class SpriteController extends Controller
             abort(404);
         }
 
-        $contents = $this->mediaSpriteService->getTrack(
+        $contents = $this->spriteTrackService->getContents(
             $media,
             $user
         );
