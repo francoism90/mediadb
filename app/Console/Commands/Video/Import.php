@@ -49,7 +49,7 @@ class Import extends Command
      */
     protected function getCollectionName(): string
     {
-        $name = $this->anticipate('Save videos to collection', function ($input) {
+        $name = $this->anticipate('Add videos to collection', function ($input) {
             return $this->getCollectionsByQuery($input)->pluck('name')->toArray();
         });
 

@@ -17,7 +17,6 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 - [nginx](https://nginx.org) with `--with-http_secure_link_module`
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
-- [ngx_brotli](https://github.com/google/ngx_brotli)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
 - [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
@@ -107,7 +106,7 @@ VOD_SECRET=secret
 ```
 
 ```bash
-"$secure_link_expires$arg_id$remote_addr secret";
+secure_link_md5 "$secure_link_expires$arg_id secret";
 ```
 
 ### Set VOD path
@@ -118,11 +117,11 @@ set $base /srv/http/mediadb/api/storage/app/streams;
 
 ## Usage
 
-Media files must be imported to a channel (which will be created if needed):
+To import media files:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan video:import /path/to/import "Top Gear"
+php artisan video:import <user-id> /path/to/import
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end to retrieve the streaming data/manage media.
@@ -132,7 +131,7 @@ Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end 
 - Make sure the import and destination path is owned by `http` (running user). The importer will skip non writable files.
 - Make sure the videos can be played in the browser as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/User/Import.php` for more details.
+- See `app/Console/Commands/Video/Import.php` for more details.
 
 ## Upgrade guide
 
