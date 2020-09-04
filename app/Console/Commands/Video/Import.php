@@ -74,7 +74,7 @@ class Import extends Command
         return Collection::search($query)
             ->select(['id', 'name'])
             ->from(0)
-            ->take(25)
+            ->take(5)
             ->get();
     }
 }

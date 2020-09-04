@@ -5,12 +5,12 @@ namespace App\Services\Media;
 use App\Models\Media;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class StreamService
 {
     public const MAPPING_PATH = 'dash';
     public const MAPPING_MANIFEST = 'manifest.mpd';
-    public const MAPPING_CACHE = 900;
 
     /**
      * @param Media  $media
@@ -21,11 +21,10 @@ class StreamService
      */
     public function getExpireUrl(
         Media $media,
-        string $streamKey,
         ?string $type = null
     ): string {
         // Get encrypted url
-        $url = $this->getUrl($media, $streamKey, $type);
+        $url = $this->getUrl($media, $type);
 
         // Generate nginx expire url
         $id = $media->getRouteKey() ?? $media->id;
@@ -41,13 +40,16 @@ class StreamService
     }
 
     /**
-     * @param Media  $media
-     * @param string $streamKey
+     * @param Media       $media
+     * @param string|null $type
      *
      * @return string
      */
-    protected function getUrl(Media $media, string $streamKey, ?string $type = null): string
+    protected function getUrl(Media $media, ?string $type = null): string
     {
+        // Generate streamKey
+        $streamKey = Str::uuid();
+
         // Generate media mapping file
         $jsonContents = $this->getMappingContents($media, $type);
 
@@ -134,7 +136,7 @@ class StreamService
      */
     protected function generateMappingHashPath(string $streamKey): string
     {
-        // e.g. media_1_50.json/manifest.mpd
+        // e.g. <uuid>.json/manifest.mpd
         $path = "{$streamKey}.json".'/'.self::MAPPING_MANIFEST;
 
         $hash = substr(
@@ -202,7 +204,7 @@ class StreamService
 
         return Cache::remember(
             $streamKey,
-            self::MAPPING_CACHE,
+            config('vod.expire', 60 * 60 * 3),
             fn () => Storage::disk('streams')->put("{$streamKey}.json", $contents)
         );
     }

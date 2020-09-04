@@ -27,13 +27,7 @@ class StreamController extends Controller
      */
     public function __invoke(Media $media, User $user)
     {
-        $streamKey = "media_{$media->id}_{$user->id}";
-
-        $streamUrl = $this->streamService
-            ->getExpireUrl(
-                $media,
-                $streamKey,
-            );
+        $streamUrl = $this->streamService->getExpireUrl($media);
 
         return redirect($streamUrl);
     }

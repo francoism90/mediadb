@@ -43,6 +43,11 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('01:00')
                  ->runInBackground();
 
+        $schedule->command('media:cleanup')
+                 ->dailyAt('01:00')
+                 ->environments(['staging', 'production'])
+                 ->runInBackground();
+
         $schedule->command('video:sync')
                  ->weeklyOn(1, '03:00')
                  ->environments(['staging', 'production'])
