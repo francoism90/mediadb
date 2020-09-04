@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Video;
 
 use App\Jobs\Media\CreatePreview;
 use App\Jobs\Media\CreateSprite;
@@ -10,7 +10,7 @@ use App\Models\Video;
 use App\Services\Media\MetadataService;
 use Illuminate\Support\LazyCollection;
 
-class VideoSyncService
+class SyncService
 {
     /**
      * @var MetadataService

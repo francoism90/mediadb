@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Video;
 
 use App\Events\Video\MediaHasBeenAdded;
 use App\Models\Collection;
 use App\Models\User;
+use App\Services\Collection\SyncService as CollectionSyncService;
 use App\Services\Media\MetadataService;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\Finder\Finder;
 use Throwable;
 
-class VideoImportService
+class ImportService
 {
     /**
-     * @var CollectionService
+     * @var CollectionSyncService
      */
     protected $collectionService;
 
@@ -27,10 +28,10 @@ class VideoImportService
      * @param MetadataService $videoMetadataService
      */
     public function __construct(
-        CollectionService $collectionService,
+        CollectionSyncService $collectionSyncService,
         MetadataService $metadataService
     ) {
-        $this->collectionService = $collectionService;
+        $this->collectionService = $collectionSyncService;
         $this->metadataService = $metadataService;
     }
 

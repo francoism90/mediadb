@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Tag;
 
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class TagSyncService
+class SyncService
 {
     /**
      * @param Model      $model

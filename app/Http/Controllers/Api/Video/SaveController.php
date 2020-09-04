@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\SaveRequest;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
-use App\Services\VideoSaveService;
+use App\Services\Video\SaveService;
 
 class SaveController extends Controller
 {
-    protected $videoSaveService;
+    /**
+     * @var SaveService
+     */
+    protected $saveService;
 
-    public function __construct(VideoSaveService $videoSaveService)
+    public function __construct(SaveService $saveService)
     {
-        $this->videoSaveService = $videoSaveService;
+        $this->saveService = $saveService;
     }
 
     /**
@@ -25,7 +28,7 @@ class SaveController extends Controller
      */
     public function __invoke(SaveRequest $request, Video $video)
     {
-        $this->videoSaveService->sync(
+        $this->saveService->sync(
             auth()->user(),
             $video,
             collect($request->input('collections', [])),

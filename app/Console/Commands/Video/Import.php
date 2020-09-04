@@ -4,7 +4,7 @@ namespace App\Console\Commands\Video;
 
 use App\Models\Collection;
 use App\Models\User;
-use App\Services\VideoImportService;
+use App\Services\Video\ImportService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection as IlluminateCollection;
 
@@ -31,12 +31,12 @@ class Import extends Command
     /**
      * @return mixed
      */
-    public function handle(VideoImportService $videoImportService)
+    public function handle(ImportService $importService)
     {
         $user = $this->getUserModel();
         $collection = $this->getCollectionName();
 
-        $videoImportService->import(
+        $importService->import(
             $user,
             $collection,
             $this->argument('path'),

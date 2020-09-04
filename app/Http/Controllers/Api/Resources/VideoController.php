@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
-use App\Services\TagSyncService;
+use App\Services\Tag\SyncService as TagSyncService;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Video\CollectionFilter;

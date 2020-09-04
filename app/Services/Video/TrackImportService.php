@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Video;
 
 use App\Events\Video\MediaHasBeenAdded;
 use App\Models\Video;
 use Symfony\Component\Finder\Finder;
 use Throwable;
 
-class VideoTrackImportService
+class TrackImportService
 {
     /**
      * @param Video  $video

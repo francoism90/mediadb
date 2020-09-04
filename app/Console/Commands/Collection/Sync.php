@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Collection;
 
-use App\Services\CollectionSyncService;
+use App\Services\Collection\SyncService;
 use Illuminate\Console\Command;
 
 class Sync extends Command
@@ -32,8 +32,8 @@ class Sync extends Command
     /**
      * @return mixed
      */
-    public function handle(CollectionSyncService $collectionSyncService)
+    public function handle(SyncService $syncService)
     {
-        $collectionSyncService->sync();
+        $syncService->sync();
     }
 }

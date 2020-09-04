@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Media;
 
-use App\Services\CleanupService;
+use App\Services\Media\CleanupService;
 use Illuminate\Console\Command;
 
 class Cleanup extends Command

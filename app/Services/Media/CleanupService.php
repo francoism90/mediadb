@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Media;
 
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Finder\Finder;

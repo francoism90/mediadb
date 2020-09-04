@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Video;
 
 use App\Models\User;
 use App\Models\Video;
+use App\Services\Collection\SyncService as CollectionSyncService;
 use Illuminate\Support\Collection;
 
-class VideoSaveService
+class SaveService
 {
     /**
      * @var CollectionService
      */
     protected $collectionService;
 
-    public function __construct(CollectionService $collectionService)
+    public function __construct(CollectionSyncService $collectionService)
     {
         $this->collectionService = $collectionService;
     }

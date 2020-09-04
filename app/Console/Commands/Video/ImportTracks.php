@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Video;
 
 use App\Models\Video;
-use App\Services\VideoTrackImportService;
+use App\Services\Video\TrackImportService;
 use Illuminate\Console\Command;
 
 class ImportTracks extends Command
@@ -29,12 +29,12 @@ class ImportTracks extends Command
     /**
      * @return mixed
      */
-    public function handle(VideoTrackImportService $videoTrackImportService)
+    public function handle(TrackImportService $trackImportService)
     {
         $type = $this->choice('What is the track type?', ['subtitles']);
         $language = $this->choice('What is the track language?', ['en']);
 
-        $videoTrackImportService->import(
+        $trackImportService->import(
             $this->getVideoModel(),
             $this->argument('path'),
             [

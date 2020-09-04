@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Video;
 
-use App\Services\VideoSyncService;
+use App\Services\Video\SyncService;
 use Illuminate\Console\Command;
 
 class Sync extends Command
@@ -30,10 +30,12 @@ class Sync extends Command
     }
 
     /**
-     * @return mixed
+     * @param SyncService $syncService
+     *
+     * @return void
      */
-    public function handle(VideoSyncService $videoSyncService)
+    public function handle(SyncService $syncService)
     {
-        $videoSyncService->sync();
+        $syncService->sync();
     }
 }
