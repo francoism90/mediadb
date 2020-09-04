@@ -27,7 +27,7 @@ class PreviewController extends Controller
      */
     public function __invoke(Media $media, User $user)
     {
-        $streamUrl = $this->streamService->getExpireUrl($media, 'preview');
+        $streamUrl = $this->streamService->getUrl($media, 'preview');
 
         return redirect($streamUrl);
     }

@@ -276,7 +276,8 @@ class SpriteService
 
         // Write the sprite json
         file_put_contents($path, json_encode(
-            $filtered, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+            $filtered,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
         ));
 
         return $path;

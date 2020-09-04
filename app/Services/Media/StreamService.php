@@ -3,7 +3,6 @@
 namespace App\Services\Media;
 
 use App\Models\Media;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -13,18 +12,17 @@ class StreamService
     public const MAPPING_MANIFEST = 'manifest.mpd';
 
     /**
-     * @param Media  $media
-     * @param string $streamKey
-     * @param string $requestIp
+     * @param Media       $media
+     * @param string|null $type
      *
      * @return string
      */
-    public function getExpireUrl(
+    public function getUrl(
         Media $media,
         ?string $type = null
     ): string {
         // Get encrypted url
-        $url = $this->getUrl($media, $type);
+        $url = $this->getEncryptedUrl($media, $type);
 
         // Generate nginx expire url
         $id = $media->getRouteKey() ?? $media->id;
@@ -45,16 +43,16 @@ class StreamService
      *
      * @return string
      */
-    protected function getUrl(Media $media, ?string $type = null): string
+    protected function getEncryptedUrl(Media $media, ?string $type = null): string
     {
         // Generate streamKey
         $streamKey = Str::uuid();
 
         // Generate media mapping file
-        $jsonContents = $this->getMappingContents($media, $type);
+        $jsonContents = $this->getMediaMapping($media, $type);
 
         // Write mapping file
-        $this->writeMappingCacheFile($streamKey, $jsonContents);
+        $this->writeMappingFile($streamKey, $jsonContents);
 
         // Get hash path
         $hashPath = $this->generateMappingHashPath($streamKey);
@@ -78,9 +76,9 @@ class StreamService
      *
      * @return string
      */
-    protected function getMappingContents(Media $media, ?string $type = null): string
+    protected function getMediaMapping(Media $media, ?string $type = null): string
     {
-        $clips = $this->getClipsContents($media, $type);
+        $clips = $this->getClipSourceMapping($media, $type);
 
         $contents = [
             'id' => $media->id,
@@ -105,7 +103,7 @@ class StreamService
      *
      * @return array
      */
-    protected function getClipsContents(Media $media, ?string $type = null): array
+    protected function getClipSourceMapping(Media $media, ?string $type = null): array
     {
         switch ($type) {
             case 'preview':
@@ -140,21 +138,23 @@ class StreamService
         $path = "{$streamKey}.json".'/'.self::MAPPING_MANIFEST;
 
         $hash = substr(
-            md5($path, true), 0, $this->getStreamHashSize()
+            md5($path, true),
+            0,
+            $this->getStreamHashSize()
         );
 
         return $hash.$path;
     }
 
     /**
-     * @param string $url
+     * @param string $path
      *
      * @return string
      */
-    protected function generateEncryptedMappingPath(string $url): string
+    protected function generateEncryptedMappingPath(string $path): string
     {
         return openssl_encrypt(
-            $url,
+            $path,
             'aes-256-cbc',
             $this->getStreamKey(),
             OPENSSL_RAW_DATA | OPENSSL_NO_PADDING,
@@ -187,25 +187,15 @@ class StreamService
     }
 
     /**
-     * @param string    $streamKey
-     * @param string    $contents
-     * @param bool|null $force
+     * @param string $streamKey
+     * @param string $contents
      *
      * @return bool
      */
-    protected function writeMappingCacheFile(
+    protected function writeMappingFile(
         string $streamKey,
-        string $contents,
-        ?bool $force = false
+        string $contents
     ): bool {
-        if (!Storage::disk('streams')->exists("{$streamKey}.json") || $force) {
-            Cache::forget($streamKey);
-        }
-
-        return Cache::remember(
-            $streamKey,
-            config('vod.expire', 60 * 60 * 3),
-            fn () => Storage::disk('streams')->put("{$streamKey}.json", $contents)
-        );
+        return Storage::disk('streams')->put("{$streamKey}.json", $contents);
     }
 }

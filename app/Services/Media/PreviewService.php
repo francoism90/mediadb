@@ -142,10 +142,10 @@ class PreviewService
             $clip->addFilter(new SimpleFilter(['-an'])) // disable audio codec)
                  ->filters()
                  ->resize(
-                    new Dimension(self::PREVIEW_WIDTH, self::PREVIEW_HEIGHT),
-                    ResizeFilter::RESIZEMODE_FIT,
-                    false
-                )
+                     new Dimension(self::PREVIEW_WIDTH, self::PREVIEW_HEIGHT),
+                     ResizeFilter::RESIZEMODE_FIT,
+                     false
+                 )
                 ->framerate(
                     new FrameRate(self::PREVIEW_FRAMERATE),
                     self::PREVIEW_GOP

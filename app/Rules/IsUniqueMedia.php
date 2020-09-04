@@ -17,7 +17,9 @@ class IsUniqueMedia implements Rule
     {
         // Used by spatie/medialibrary
         $fileName = str_replace(
-            ['#', '/', '\\', ' '], '-', $value->getClientOriginalName()
+            ['#', '/', '\\', ' '],
+            '-',
+            $value->getClientOriginalName()
         );
 
         return 0 === Media::where('file_name', $fileName)
