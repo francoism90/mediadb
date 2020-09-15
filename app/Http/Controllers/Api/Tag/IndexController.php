@@ -27,7 +27,9 @@ class IndexController extends Controller
         $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');
 
         $query = QueryBuilder::for(Tag::class)
-            ->allowedAppends(['item_count'])
+            ->allowedAppends([
+                'item_count',
+            ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),

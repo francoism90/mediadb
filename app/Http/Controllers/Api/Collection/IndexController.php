@@ -29,8 +29,15 @@ class IndexController extends Controller
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $collections = QueryBuilder::for(Collection::class)
-            ->allowedAppends(['item_count', 'thumbnail_url'])
-            ->allowedIncludes(['model', 'tags', 'videos'])
+            ->allowedAppends([
+                'item_count',
+                'thumbnail_url',
+            ])
+            ->allowedIncludes([
+                'model',
+                'tags',
+                'videos',
+            ])
             ->allowedFilters([
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
@@ -39,6 +46,7 @@ class IndexController extends Controller
             ->allowedSorts([
                 $defaultSort,
                 AllowedSort::custom('name', new FieldSorter())->defaultDirection('asc'),
+                AllowedSort::custom('type', new FieldSorter())->defaultDirection('asc'),
                 AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
