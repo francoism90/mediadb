@@ -106,15 +106,7 @@ class StreamService
     protected function getClipSourceMapping(Media $media, ?string $type = null): array
     {
         switch ($type) {
-            case 'preview':
-                $clips = [
-                    [
-                        'type' => 'source',
-                        'path' => $media->getBaseMediaPath().'conversions/preview.mp4',
-                    ],
-                ];
-            break;
-
+            // case: 'preview':
             default:
                 $clips = [
                     [

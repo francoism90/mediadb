@@ -15,7 +15,7 @@ class ThumbnailService
 {
     public const CONVERSION_NAME = 'thumbnail.jpg';
     public const CONVERSION_TYPE = 'conversions';
-    public const THUMBNAIL_FILTER = 'scale=320:180';
+    public const THUMBNAIL_FILTER = 'scale=1080:-1';
 
     /**
      * @var Filesystem
@@ -99,7 +99,7 @@ class ThumbnailService
         $video = $this->getVideo($media->getPath());
 
         // Get current media duration
-        $duration = $media->getCustomProperty('metadata.duration', 5);
+        $duration = $media->getCustomProperty('metadata.duration', 60);
 
         // Frameshot timecode
         $frameshot = $media->getCustomProperty('frameshot', $duration / 2);

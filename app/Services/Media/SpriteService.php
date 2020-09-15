@@ -13,15 +13,13 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class SpriteService
 {
-    public const CONVERSION_NAME = 'sprite.json';
+    public const CONVERSION_NAME = 'sprite.webp';
     public const CONVERSION_TYPE = 'conversions';
-    public const SPRITE_ROWS = 8;
-    public const SPRITE_COLUMNS = 8;
-    public const SPRITE_ITEMS = 64;
-    public const SPRITE_INTERVAL = 2;
-    public const SPRITE_FILTER = 'scale=160:90';
-    public const SPRITE_WIDTH = 160;
-    public const SPRITE_HEIGHT = 90;
+    public const SPRITE_ITEMS = 20;
+    public const SPRITE_COLUMNS = 5;
+    public const SPRITE_WIDTH = 220;
+    public const SPRITE_HEIGHT = 160;
+    public const SPRITE_FILTER = 'scale=220:160';
 
     /**
      * @var Filesystem
@@ -62,10 +60,8 @@ class SpriteService
      */
     public function create(Media $media): void
     {
-        // Perform conversion
         $spritePath = $this->prepareConversion($media);
 
-        // Copy to MediaLibrary
         $this->filesystem->copyToMediaLibrary(
             $spritePath,
             $media,
@@ -73,10 +69,8 @@ class SpriteService
             self::CONVERSION_NAME
         );
 
-        // Mark conversion as done
         $media->markAsConversionGenerated('sprite', true);
 
-        // Delete temporary files
         $this->temporaryDirectory->delete();
     }
 
@@ -87,26 +81,20 @@ class SpriteService
      */
     protected function prepareConversion(Media $media): string
     {
-        // Create video frames
-        $videoFrames = $this->createFrames($media);
+        // Create each frame
+        $frames = $this->createFrames($media);
 
-        // Create video sprites
-        $videoSprites = $this->createSprites($videoFrames);
+        // Create sprite montage
+        $path = $this->createMontage($frames);
 
-        // Copy sprites
-        $spriteGroups = $videoSprites->groupBy('sprite')->toArray();
+        // Set as media property
+        $filtered = $frames->map(function ($item) {
+            unset($item['path']);
 
-        foreach ($spriteGroups as $key => $sprites) {
-            $this->filesystem->copyToMediaLibrary(
-                $this->temporaryDirectory->path("sprite-${key}.webp"),
-                $media,
-                self::CONVERSION_TYPE,
-                "sprite-${key}.webp"
-            );
-        }
+            return $item;
+        });
 
-        // Create sprite json
-        $path = $this->createSpriteJson($videoSprites);
+        $media->setCustomProperty('sprite', $filtered);
 
         return $path;
     }
@@ -118,22 +106,25 @@ class SpriteService
      */
     protected function createFrames(Media $media): Collection
     {
+        // Media duration
+        $duration = $media->getCustomProperty('metadata.duration', 60);
+
+        // Calculate frame ranges
+        $parts = $this->getFramesByRange($duration);
+
         // Video instance
         $video = $this->getVideo($media->getPath());
 
-        // Media duration
-        $duration = $media->getCustomProperty('metadata.duration', 10);
-
-        // Frameshot collection
-        $parts = $this->getFrameRanges($duration);
-
-        // Frame generation
+        // Create frames
         $frames = collect();
 
-        foreach ($parts as $part) {
-            $path = $this->temporaryDirectory->path("frames/{$part}.png");
+        $frameCount = 1;
+        $framePositionX = 0;
+        $framePositionY = 0;
 
-            // Create video frame
+        foreach ($parts as $part) {
+            $path = $this->temporaryDirectory->path("frames/{$frameCount}.png");
+
             $frame = $video->frame(
                 TimeCode::fromSeconds($part)
             );
@@ -144,12 +135,24 @@ class SpriteService
 
             $frame->save($path);
 
-            // Add frame to collection
+            // Add to collection
             $frames->push([
+                'id' => $frameCount,
+                'timecode' => $part,
+                'x' => $framePositionX,
+                'y' => $framePositionY,
                 'path' => $path,
-                'start' => gmdate('H:i:s.v', $part),
-                'end' => gmdate('H:i:s.v', $part + self::SPRITE_INTERVAL),
             ]);
+
+            // Set next frame positions
+            if (0 === $frameCount % self::SPRITE_COLUMNS) {
+                $framePositionX = 0;
+                $framePositionY += self::SPRITE_HEIGHT;
+            } else {
+                $framePositionX += self::SPRITE_WIDTH;
+            }
+
+            ++$frameCount;
         }
 
         return $frames;
@@ -158,96 +161,21 @@ class SpriteService
     /**
      * @param Collection $frames
      *
-     * @return Collection
+     * @return string
      */
-    protected function createSprites(Collection $frames): Collection
+    protected function createMontage(Collection $frames): string
     {
-        // Calculate sprite sections
-        $frameCount = 1;
-        $spriteCount = 1;
+        $path = $this->temporaryDirectory->path('sprite.webp');
 
-        // Calculate sprite frame positions
-        $spriteFrameX = 0;
-        $spriteFrameY = 0;
-
-        $spriteFrames = collect();
-
-        foreach ($frames as $frame) {
-            // Set frame attributes
-            $frame['sprite'] = $spriteCount;
-            $frame['x'] = $spriteFrameX;
-            $frame['y'] = $spriteFrameY;
-
-            $spriteFrames->push($frame);
-
-            // Set next frame positions
-            if (0 === $frameCount % self::SPRITE_COLUMNS) {
-                $spriteFrameX = 0;
-                $spriteFrameY += self::SPRITE_HEIGHT;
-            } else {
-                $spriteFrameX += self::SPRITE_WIDTH;
-            }
-
-            // Create new section (if needed)
-            if (0 === $frameCount % self::SPRITE_ITEMS || $frames->last()['start'] === $frame['start']) {
-                $this->createMontage(
-                    $spriteCount,
-                    $spriteFrames->where('sprite', $spriteCount)
-                );
-
-                // Reset Counters
-                $frameCount = 1;
-
-                // Reset thumbnail calculations
-                $spriteFrameX = 0;
-                $spriteFrameY = 0;
-
-                ++$spriteCount;
-                continue;
-            }
-
-            ++$frameCount;
-        }
-
-        return $spriteFrames;
-    }
-
-    /**
-     * @param int        $sprite
-     * @param Collection $frames
-     *
-     * @return void
-     */
-    protected function createMontage(int $sprite, Collection $frames): void
-    {
-        $path = $this->temporaryDirectory->path("sprite-{$sprite}.webp");
-
-        // Init imagick
         $imagick = new \Imagick();
 
         foreach ($frames as $frame) {
-            // Create missing frame (if needed)
-            if (!file_exists($frame['path'])) {
-                $image = new \Imagick();
-
-                $image->newImage(
-                    self::SPRITE_WIDTH,
-                    self::SPRITE_HEIGHT,
-                    new \ImagickPixel('black')
-                );
-
-                $image->setImageFormat('png');
-
-                $imagick->addImage($image);
-                continue;
-            }
-
             $imagick->addImage(
                 new \Imagick($frame['path'])
             );
         }
 
-        $sprite = $imagick->montageImage(
+        $montage = $imagick->montageImage(
             new \ImagickDraw(),
             self::SPRITE_COLUMNS.'x',
             self::SPRITE_WIDTH.'x'.self::SPRITE_HEIGHT.'!',
@@ -255,42 +183,9 @@ class SpriteService
             '0'
         );
 
-        $sprite->writeImage($path);
-    }
-
-    /**
-     * @param Collection $frames
-     *
-     * @return string
-     */
-    protected function createSpriteJson(Collection $frames): string
-    {
-        $path = $this->temporaryDirectory->path('sprite.json');
-
-        // Remove the temporary path
-        $filtered = $frames->map(function ($item) {
-            unset($item['path']);
-
-            return $item;
-        });
-
-        // Write the sprite json
-        file_put_contents($path, json_encode(
-            $filtered,
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
-        ));
+        $montage->writeImage($path);
 
         return $path;
-    }
-
-    /**
-     * @param float $duration
-     *
-     * @return array
-     */
-    protected function getFrameRanges(float $duration): array
-    {
-        return range(0, $duration, self::SPRITE_INTERVAL);
     }
 
     /**
@@ -301,5 +196,22 @@ class SpriteService
     protected function getVideo(string $path): Video
     {
         return $this->ffmpeg->open($path);
+    }
+
+    /**
+     * @param float $duration
+     *
+     * @return array
+     */
+    protected function getFramesByRange(float $duration): array
+    {
+        $step = $duration / (self::SPRITE_ITEMS + 1);
+
+        $range = array_map('round', range(0, $duration, $step));
+
+        // Remove first and last parts
+        $frames = array_slice($range, 1, -1);
+
+        return $frames;
     }
 }

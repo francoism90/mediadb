@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Tag;
 use App\Models\User;
-use App\Models\Video;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class VideoPolicy
+class TagPolicy
 {
     use HandlesAuthorization;
 
@@ -25,23 +25,14 @@ class VideoPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $tag
      *
      * @return bool
      */
-    public function view(?User $user, Video $video)
+    public function view(?User $user, Tag $tag)
     {
-        if ($video->latestStatus(['published'])->exists()) {
-            return true;
-        }
-
-        // Visitors cannot view private items
-        if (null === $user) {
-            return false;
-        }
-
-        return $user->id === $video->model->id;
+        return true;
     }
 
     /**
@@ -53,7 +44,7 @@ class VideoPolicy
      */
     public function create(User $user)
     {
-        if ($user->can('create video')) {
+        if ($user->can('create tag')) {
             return true;
         }
 
@@ -63,58 +54,58 @@ class VideoPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $tag
      *
      * @return bool
      */
-    public function update(User $user, Video $video)
+    public function update(User $user, Tag $tag)
     {
-        if ($user->can('edit video')) {
+        if ($user->can('edit tag')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $tag
      *
      * @return bool
      */
-    public function delete(User $user, Video $video)
+    public function delete(User $user, Tag $tag)
     {
-        if ($user->can('delete video')) {
+        if ($user->can('delete tag')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $tag
      *
      * @return bool
      */
-    public function restore(User $user, Video $video)
+    public function restore(User $user, Tag $tag)
     {
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $tag
      *
      * @return bool
      */
-    public function forceDelete(User $user, Video $video)
+    public function forceDelete(User $user, Tag $tag)
     {
     }
 }

@@ -151,6 +151,17 @@ class Collection extends Model implements Viewable
     }
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed                                 $type
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+
+    /**
      * @return int
      */
     public function getItemCountAttribute(): int

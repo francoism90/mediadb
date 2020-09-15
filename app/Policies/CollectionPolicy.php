@@ -15,7 +15,7 @@ class CollectionPolicy
      *
      * @param \App\Models\User $user
      *
-     * @return mixed
+     * @return bool
      */
     public function viewAny(User $user)
     {
@@ -28,7 +28,7 @@ class CollectionPolicy
      * @param \App\Models\User       $user
      * @param \App\Models\Collection $collection
      *
-     * @return mixed
+     * @return bool
      */
     public function view(?User $user, Collection $collection)
     {
@@ -49,13 +49,15 @@ class CollectionPolicy
      *
      * @param \App\Models\User $user
      *
-     * @return mixed
+     * @return bool
      */
     public function create(User $user)
     {
         if ($user->can('create collections')) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -64,7 +66,7 @@ class CollectionPolicy
      * @param \App\Models\User       $user
      * @param \App\Models\Collection $collection
      *
-     * @return mixed
+     * @return bool
      */
     public function update(User $user, Collection $collection)
     {
@@ -81,7 +83,7 @@ class CollectionPolicy
      * @param \App\Models\User       $user
      * @param \App\Models\Collection $collection
      *
-     * @return mixed
+     * @return bool
      */
     public function delete(User $user, Collection $collection)
     {
@@ -98,7 +100,7 @@ class CollectionPolicy
      * @param \App\Models\User       $user
      * @param \App\Models\Collection $collection
      *
-     * @return mixed
+     * @return bool
      */
     public function restore(User $user, Collection $collection)
     {
@@ -110,7 +112,7 @@ class CollectionPolicy
      * @param \App\Models\User       $user
      * @param \App\Models\Collection $collection
      *
-     * @return mixed
+     * @return bool
      */
     public function forceDelete(User $user, Collection $collection)
     {

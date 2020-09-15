@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Resources;
+namespace App\Http\Controllers\Api\Collection;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
-use App\Services\Tag\SyncService as TagSyncService;
 use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
 use App\Support\QueryBuilder\Filters\Collection\VideoFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
@@ -19,28 +17,15 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class CollectionController extends Controller
+class IndexController extends Controller
 {
-    /**
-     * @var TagSyncService
-     */
-    protected $tagSyncService;
-
-    /**
-     * @return void
-     */
-    public function __construct(TagSyncService $tagSyncService)
-    {
-        $this->authorizeResource(Collection::class, 'collection');
-
-        $this->tagSyncService = $tagSyncService;
-    }
-
     /**
      * @return CollectionResource
      */
-    public function index()
+    public function __invoke()
     {
+        $this->authorize('viewAny', Collection::class);
+
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $collections = QueryBuilder::for(Collection::class)
@@ -64,62 +49,5 @@ class CollectionController extends Controller
             ->jsonPaginate();
 
         return CollectionResource::collection($collections);
-    }
-
-    /**
-     * @param Collection $collection
-     *
-     * @return CollectionResource
-     */
-    public function show(Collection $collection)
-    {
-        // Tracking
-        $collection->recordActivity('viewed');
-        $collection->recordView('view_count', now()->addYear());
-
-        return new CollectionResource(
-            $collection->load(['model', 'tags'])
-                       ->append('item_count')
-        );
-    }
-
-    /**
-     * @param UpdateRequest $request
-     * @param Collection    $collection
-     *
-     * @return CollectionResource
-     */
-    public function update(UpdateRequest $request, Collection $collection)
-    {
-        // Set attributes
-        $collection->update([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
-
-        // Set status
-        $collection->setStatus($request->input('status', 'published'));
-
-        // Sync tags
-        $this->tagSyncService->sync(
-            $collection,
-            $request->input('tags')
-        );
-
-        return new CollectionResource($collection);
-    }
-
-    /**
-     * @param Collection $collection
-     *
-     * @return CollectionResource
-     */
-    public function destroy(Collection $collection)
-    {
-        if ($collection->delete()) {
-            return new CollectionResource($collection);
-        }
-
-        return response()->json('Unable to delete collection', 500);
     }
 }

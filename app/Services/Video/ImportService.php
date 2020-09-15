@@ -95,7 +95,7 @@ class ImportService
         $collections = $this->collectionService->create(
             $user,
             collect([
-                ['name' => $collection],
+                ['name' => $collection, 'type' => 'title'],
             ])
         );
 

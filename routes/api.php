@@ -29,25 +29,38 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Route::middleware('auth:sanctum')->get('unimpersonate', ['uses' => 'UnimpersonateController', 'as' => 'unimpersonate']);
     });
 
-    // Resources
-    Route::middleware('auth:sanctum')->name('resource.')->namespace('Resources')->group(function () {
-        Route::apiResource('collections', 'CollectionController')->only(['index', 'show', 'update', 'destroy']);
-        Route::apiResource('tags', 'TagController')->only(['index']);
-        Route::apiResource('videos', 'VideoController')->only(['index', 'show', 'update', 'destroy']);
-    });
-
     // Media
-    Route::middleware('doNotCacheResponse')->name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware(['signed', 'cache.headers:public;max_age=604800;etag'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
-        Route::middleware(['signed', 'cache.headers:public;max_age=604800;etag'])->get('/preview/{media}/{user}', ['uses' => 'PreviewController', 'as' => 'preview']);
-        Route::middleware(['signed', 'cache.headers:public;max_age=604800;etag'])->get('/sprite/{media}/{user}', ['uses' => 'SpriteController', 'as' => 'sprite']);
-        Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
-        Route::middleware('signed')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+    Route::middleware('signed')->name('media.')->prefix('media')->namespace('Media')->group(function () {
+        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
+        Route::middleware('doNotCacheResponse')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+        Route::middleware('doNotCacheResponse')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
     });
 
     // Video
-    Route::middleware('doNotCacheResponse')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
-        Route::middleware('auth:sanctum')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
-        Route::middleware('auth:sanctum')->match(['post', 'put'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
+    Route::middleware('auth:sanctum')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
+        // Resource
+        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::match(['put', 'patch'], '/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
+        Route::match(['delete'], '/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::match(['get'], '/{video}', ['uses' => 'ShowController', 'as' => 'show']);
+
+        // Miscellaneous
+        Route::middleware('doNotCacheResponse')->match(['put', 'patch'], '/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
+        Route::middleware('doNotCacheResponse')->match(['put', 'patch'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
+    });
+
+    // Collection
+    Route::middleware('auth:sanctum')->name('collections.')->prefix('collections')->namespace('Collection')->group(function () {
+        // Resource
+        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::match(['put', 'patch'], '/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
+        Route::match(['delete'], '/{collection}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::match(['get'], '/{collection}', ['uses' => 'ShowController', 'as' => 'show']);
+    });
+
+    // Tag
+    Route::middleware('auth:sanctum')->name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
+        // Resource
+        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
     });
 });

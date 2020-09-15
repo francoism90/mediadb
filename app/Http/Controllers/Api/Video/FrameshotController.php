@@ -19,13 +19,15 @@ class FrameshotController extends Controller
         FrameshotRequest $request,
         Video $video
     ) {
-        $media = $video->getFirstClip();
+        $this->authorize('update', $video);
 
-        $media
-            ->setCustomProperty('frameshot', $request->input('timecode'))
-            ->save();
+        optional($video->getFirstMedia('clip'), function ($clip) use ($request) {
+            $clip
+                ->setCustomProperty('frameshot', $request->input('timecode'))
+                ->save();
 
-        CreateThumbnail::dispatch($media)->onQueue('media');
+            CreateThumbnail::dispatch($clip)->onQueue('media');
+        });
 
         return response()->json();
     }

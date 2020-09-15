@@ -36,7 +36,7 @@ class SaveService
         // Create collections for model
         $videoCollections = $this->collectionService->create($user, $collections);
 
-        // Get the all model collections
+        // Get the user collections
         $userCollections = $user->collections()->with('videos')->get();
 
         // Loop over all collections

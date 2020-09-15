@@ -3,7 +3,7 @@
 namespace App\Listeners\Video;
 
 use App\Events\Video\MediaHasBeenAdded;
-use App\Jobs\Media\CreatePreview;
+use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\ProcessVideo;
 use App\Jobs\Media\SetProcessed;
@@ -24,7 +24,7 @@ class ProcessMedia
             case 'video':
                 ProcessVideo::withChain([
                     new CreateThumbnail($event->media),
-                    new CreatePreview($event->media),
+                    new CreateSprite($event->media),
                     new SetProcessed($event->media),
                 ])->dispatch($event->media)->allOnQueue('optimize');
                 break;
