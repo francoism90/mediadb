@@ -18,7 +18,7 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
-- [PHP](https://php.net/) 7.2 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
+- [PHP](https://php.net/) 7.3 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
 - MariaDB/MySQL (with JSON support), Redis and Supervisor.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
@@ -26,9 +26,9 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 
 Please consult the upstream documentation of used packages in `composer.json` for possible other missing (OS) dependencies and/or recommendations.
 
-### Front-end
+### Front-end/app
 
-- <https://github.com/francoism90/mediadb-ui> - Front-end for MediaDB written in Vue and Quasar.
+- <https://github.com/francoism90/mediadb-ui> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar.
 
 Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/srv/http/mediadb/api` (mediadb-api) and `/srv/http/mediadb/ui` (mediadb-ui).
 
@@ -117,20 +117,27 @@ set $base /srv/http/mediadb/api/storage/app/streams;
 
 ## Usage
 
-To import media files:
+To import video files:
 
 ```bash
 cd /srv/http/mediadb/api
 php artisan video:import <user-id> /path/to/import
 ```
 
-Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or custom front-end to retrieve the streaming data/manage media.
+To import video track files (e.g. WebVTT subtitles/captions):
+
+```bash
+cd /srv/http/mediadb/api
+php artisan video:import-tracks <video-id> /path/to/import
+```
+
+Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.
 
 ### Notes
 
 - Make sure the import and destination path is owned by `http` (running user). The importer will skip non writable files.
 - Make sure the videos can be played in the browser as they aren't being encoded (yet).
-- Make sure there is enough space on the disk to import and process the media.
+- Make sure there is enough space on the disk to import and process the video.
 - See `app/Console/Commands/Video/Import.php` for more details.
 
 ## Upgrade guide

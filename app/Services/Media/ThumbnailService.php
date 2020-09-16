@@ -13,9 +13,9 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class ThumbnailService
 {
-    public const CONVERSION_NAME = 'thumbnail.jpg';
+    public const CONVERSION_NAME = 'thumbnail.webp';
     public const CONVERSION_TYPE = 'conversions';
-    public const THUMBNAIL_FILTER = 'scale=1080:-1';
+    public const THUMBNAIL_FILTER = 'scale=2048:-1';
 
     /**
      * @var Filesystem

@@ -24,7 +24,7 @@ class AssetController extends Controller
                 $path = "{$root}/conversions/sprite.webp";
                 break;
             case 'thumbnail':
-                $path = "{$root}/conversions/thumbnail.jpg";
+                $path = "{$root}/conversions/thumbnail.webp";
                 break;
             default:
                 abort(403);
