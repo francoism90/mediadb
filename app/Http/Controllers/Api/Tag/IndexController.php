@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Resources;
+namespace App\Http\Controllers\Api\Tag;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
@@ -15,14 +15,21 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class TagController extends Controller
+class IndexController extends Controller
 {
-    public function index()
+    /**
+     * @return TagResource
+     */
+    public function __invoke()
     {
+        $this->authorize('viewAny', Tag::class);
+
         $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');
 
         $query = QueryBuilder::for(Tag::class)
-            ->allowedAppends(['item_count'])
+            ->allowedAppends([
+                'item_count',
+            ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),

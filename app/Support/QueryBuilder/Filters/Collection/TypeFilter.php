@@ -13,13 +13,14 @@ class TypeFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         return $query
+            ->when('title' === $value, function ($query) {
+                return $query->where('type', 'title');
+            })
             ->when('user' === $value, function ($query) {
                 return $query->where('model_type', User::class)
                              ->where('model_id', auth()->user()->id);
             }, function ($query) {
-                // TODO: check if collection is public
-                return $query->where('model_type', User::class)
-                             ->whereNotIn('model_id', [auth()->user()->id]);
+                return $query->where('model_type', User::class);
             });
     }
 }

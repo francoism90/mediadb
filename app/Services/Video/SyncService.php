@@ -2,7 +2,6 @@
 
 namespace App\Services\Video;
 
-use App\Jobs\Media\CreatePreview;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
@@ -59,10 +58,6 @@ class SyncService
                 CreateThumbnail::dispatch($model)->onQueue('optimize');
             }
 
-            if (!$model->hasGeneratedConversion('preview')) {
-                CreatePreview::dispatch($model)->onQueue('optimize');
-            }
-
             if (!$model->hasGeneratedConversion('sprite')) {
                 CreateSprite::dispatch($model)->onQueue('optimize');
             }
@@ -91,7 +86,6 @@ class SyncService
     {
         $collection = Media::where('model_type', Video::class)
             ->WhereNull('custom_properties->generated_conversions')
-            ->orWhereNull('custom_properties->generated_conversions->preview')
             ->orWhereNull('custom_properties->generated_conversions->sprite')
             ->orWhereNull('custom_properties->generated_conversions->thumbnail')
             ->cursor();

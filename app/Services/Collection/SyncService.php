@@ -33,10 +33,12 @@ class SyncService
 
         foreach ($collections as $collection) {
             $name = $collection['name'] ?? $model->name;
+            $type = $collection['type'] ?? null;
             $status = $collection['status'] ?? self::COLLECTION_STATUS;
 
             $collectionModel = $model->collections()->firstOrCreate(
-                ['name' => $name]
+                ['name' => $name],
+                ['name' => $name, 'type' => $type]
             );
 
             if (!$collectionModel->status()) {

@@ -137,7 +137,6 @@ class Video extends Model implements HasMedia, Viewable
     public function registerMediaConversions($media = null): void
     {
         $serviceConversions = [
-            'preview',
             'sprite',
             'thumbnail',
         ];
@@ -199,45 +198,14 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return Media
+     * @return Collection
      */
-    public function getFirstClip(): ?Media
+    public function getTitlesAttribute()
     {
-        return $this->getMedia('clip')->first();
-    }
-
-    /**
-     * @return array
-     */
-    public function getMetadataAttribute(): array
-    {
-        $clip = $this->getFirstClip();
-
-        if (!$clip) {
-            return [];
-        }
-
-        return [
-            'file_name' => $clip->file_name,
-            'probe_score' => $clip->getCustomProperty('metadata.probe_score', 0),
-            'aspect_ratio' => $clip->getCustomProperty('metadata.display_aspect_ratio', 'N/A'),
-            'bitrate' => $clip->getCustomProperty('metadata.bitrate', 0),
-            'codec_name' => $clip->getCustomProperty('metadata.codec_name', 'N/A'),
-            'duration' => $clip->getCustomProperty('metadata.duration', 0),
-            'size' => $clip->getCustomProperty('metadata.size', 0),
-            'height' => $clip->getCustomProperty('metadata.height', 0),
-            'width' => $clip->getCustomProperty('metadata.width', 0),
-        ];
-    }
-
-    /**
-     * @return int
-     */
-    public function getDurationAttribute(): int
-    {
-        $metadata = $this->getMetadataAttribute();
-
-        return $metadata['duration'] ?? 0;
+        return $this
+            ->collections()
+            ->ofType('title')
+            ->get();
     }
 
     /**
@@ -249,62 +217,114 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getThumbnailUrlAttribute(): string
+    public function getBitrateAttribute()
     {
-        $firstClip = $this->getFirstClip();
-
-        return URL::signedRoute(
-            'api.media.asset',
-            [
-                'media' => $firstClip,
-                'user' => auth()->user(),
-                'name' => 'thumbnail.jpg',
-                'version' => $firstClip->updated_at->timestamp,
-            ]
-        );
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.bitrate', 0);
+        });
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getPreviewUrlAttribute(): string
+    public function getCodecNameAttribute()
     {
-        return URL::signedRoute(
-            'api.media.preview',
-            [
-                'media' => $this->getFirstClip(),
-                'user' => auth()->user(),
-            ]
-        );
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.codec_name', 'N/A');
+        });
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getSpriteUrlAttribute(): string
+    public function getDurationAttribute()
     {
-        return URL::signedRoute(
-            'api.media.sprite',
-            [
-                'media' => $this->getFirstClip(),
-                'user' => auth()->user(),
-            ]
-        );
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.duration', 0);
+        });
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getStreamUrlAttribute(): string
+    public function getHeightAttribute()
     {
-        return URL::signedRoute(
-            'api.media.stream',
-            [
-                'media' => $this->getFirstClip(),
-                'user' => auth()->user(),
-            ]
-        );
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.height', 480);
+        });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWidthAttribute()
+    {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.width', 768);
+        });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpriteAttribute()
+    {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('sprite', []);
+        });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpriteUrlAttribute()
+    {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return URL::signedRoute(
+                'api.media.asset',
+                [
+                    'media' => $clip,
+                    'user' => auth()->user(),
+                    'name' => 'sprite',
+                    'version' => $clip->updated_at->timestamp,
+                ]
+            );
+        });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreamUrlAttribute()
+    {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return URL::signedRoute(
+                'api.media.stream',
+                [
+                    'media' => $clip,
+                    'user' => auth()->user(),
+                ]
+            );
+        });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnailUrlAttribute()
+    {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return URL::signedRoute(
+                'api.media.asset',
+                [
+                    'media' => $clip,
+                    'user' => auth()->user(),
+                    'name' => 'thumbnail',
+                    'version' => $clip->updated_at->timestamp,
+                ]
+            );
+        });
     }
 }

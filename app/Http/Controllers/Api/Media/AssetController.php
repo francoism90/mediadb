@@ -17,12 +17,23 @@ class AssetController extends Controller
      */
     public function __invoke(Media $media, User $user, string $name)
     {
-        $path = $media->getBaseMediaPath()."conversions/${name}";
+        $root = $media->getBaseMediaPath();
+
+        switch ($name) {
+            case 'sprite':
+                $path = "{$root}/conversions/sprite.webp";
+                break;
+            case 'thumbnail':
+                $path = "{$root}/conversions/thumbnail.webp";
+                break;
+            default:
+                abort(403);
+        }
 
         if (!file_exists($path)) {
             abort(404);
         }
 
-        return response()->download($path, $name);
+        return response()->download($path, basename($path));
     }
 }

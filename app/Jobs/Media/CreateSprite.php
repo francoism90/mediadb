@@ -30,7 +30,7 @@ class CreateSprite implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 2700;
+    public $timeout = 900;
 
     /**
      * @var Media
