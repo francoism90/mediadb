@@ -30,7 +30,7 @@
     "spatie/laravel-medialibrary": "^8.0.0",
     "spatie/laravel-model-status": "^1.9",
     "spatie/laravel-permission": "^3.13",
-    "spatie/laravel-query-builder": "^2.0",
+    "spatie/laravel-query-builder": "2.8.2",
     "spatie/laravel-responsecache": "^6.6",
     "spatie/laravel-tags": "^2.4",
     "vinkla/hashids": "^8.0",

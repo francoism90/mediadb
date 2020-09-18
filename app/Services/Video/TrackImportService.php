@@ -99,8 +99,24 @@ class TrackImportService
     /**
      * @return array
      */
-    protected function supportedMimeTypes(): array
+    public function supportedMimeTypes(): array
     {
         return config('vod.tracks.mimetypes');
+    }
+
+    /**
+     * @return array
+     */
+    public function supportedTypes(): array
+    {
+        return config('vod.tracks.types');
+    }
+
+    /**
+     * @return array
+     */
+    public function supportedLanguages(): array
+    {
+        return array_keys(config('vod.tracks.languages'));
     }
 }

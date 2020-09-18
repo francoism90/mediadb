@@ -31,8 +31,15 @@ class ImportTracks extends Command
      */
     public function handle(TrackImportService $trackImportService)
     {
-        $type = $this->choice('What is the track type?', ['subtitles']);
-        $language = $this->choice('What is the track language?', ['en']);
+        $type = $this->choice(
+            'What is the track type?',
+            $trackImportService->supportedTypes()
+        );
+
+        $language = $this->choice(
+            'What is the track language?',
+            $trackImportService->supportedLanguages()
+        );
 
         $trackImportService->import(
             $this->getVideoModel(),
