@@ -6,7 +6,7 @@ return [
     | VOD URL
     |--------------------------------------------------------------------------
     |
-    | The URL used for connecting to the main streaming server.
+    | The URL to the main streaming server.
     |
     */
 
@@ -17,8 +17,7 @@ return [
     | VOD Secrets
     |--------------------------------------------------------------------------
     |
-    | Don't forget to set these in your .env file and be aware that they must
-    | match on the streaming server(s).
+    | @reminder update the .env file and the streaming server.
     |
     */
 
@@ -37,7 +36,7 @@ return [
     |
     | Global settings for imports and streaming.
     |
-    | https://github.com/kaltura/nginx-vod-module/issues/427
+    | @doc https://github.com/kaltura/nginx-vod-module/issues/427
     |
     */
 
@@ -81,6 +80,15 @@ return [
             'text/vtt',
         ],
 
+        'languages' => [
+            'en' => 'English',
+            'nl' => 'Dutch',
+        ],
+
         'size' => ['<= 10M'],
+
+        'types' => [
+            'subtitles',
+        ],
     ],
 ];
