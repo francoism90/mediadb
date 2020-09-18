@@ -46,7 +46,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
         // Miscellaneous
         Route::middleware('doNotCacheResponse')->match(['put', 'patch'], '/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
-        Route::middleware('doNotCacheResponse')->match(['put', 'patch'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
+        Route::middleware('doNotCacheResponse')->match(['put', 'post'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
     });
 
     // Collection
