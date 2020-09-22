@@ -60,6 +60,10 @@ class MetadataService
     {
         $format = $this->ffmpeg->getFFProbe()->format($path);
 
+        if (!$format) {
+            return [];
+        }
+
         return [
             'start_time' => $format->get('start_time', 0),
             'duration' => $format->get('duration', 0),
@@ -78,6 +82,10 @@ class MetadataService
     public function getVideoAttributes(string $path): array
     {
         $stream = $this->ffmpeg->getFFProbe()->streams($path)->videos()->first();
+
+        if (!$stream) {
+            return [];
+        }
 
         return [
             'codec_name' => $stream->get('codec_name', null),
