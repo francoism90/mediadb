@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 class SpaController extends Controller
 {
     /**
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {

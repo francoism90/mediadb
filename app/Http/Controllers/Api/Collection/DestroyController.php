@@ -11,12 +11,10 @@ class DestroyController extends Controller
     /**
      * @param Collection $collection
      *
-     * @return CollectionResource
+     * @return CollectionResource|\Illuminate\Http\JsonResponse
      */
     public function __invoke(Collection $collection)
     {
-        $this->authorize('delete', $collection);
-
         if ($collection->delete()) {
             return new CollectionResource($collection);
         }

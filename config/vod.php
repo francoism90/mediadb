@@ -36,7 +36,7 @@ return [
     |
     | Global settings for imports and streaming.
     |
-    | @doc https://github.com/kaltura/nginx-vod-module/issues/427
+    | @see https://github.com/kaltura/nginx-vod-module/issues/427
     |
     */
 

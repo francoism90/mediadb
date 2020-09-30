@@ -24,8 +24,6 @@ class IndexController extends Controller
      */
     public function __invoke()
     {
-        $this->authorize('viewAny', Collection::class);
-
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $collections = QueryBuilder::for(Collection::class)

@@ -25,8 +25,6 @@ class IndexController extends Controller
      */
     public function __invoke()
     {
-        $this->authorize('viewAny', Video::class);
-
         $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
 
         $videos = QueryBuilder::for(Video::class)

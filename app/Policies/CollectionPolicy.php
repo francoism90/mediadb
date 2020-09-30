@@ -104,6 +104,11 @@ class CollectionPolicy
      */
     public function restore(User $user, Collection $collection)
     {
+        if ($user->can('restore collections')) {
+            return true;
+        }
+
+        return $user->id === $collection->model->id;
     }
 
     /**
@@ -116,5 +121,10 @@ class CollectionPolicy
      */
     public function forceDelete(User $user, Collection $collection)
     {
+        if ($user->can('delete collections')) {
+            return true;
+        }
+
+        return $user->id === $collection->model->id;
     }
 }

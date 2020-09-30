@@ -2,25 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\Collection;
-use App\Models\Media;
-use App\Models\Tag;
-use App\Models\User;
-use App\Models\Video;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
-    protected $namespace = 'App\Http\Controllers';
-
     /**
      * The path to the "home" route for your application.
      *
@@ -29,53 +18,42 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/api/v1';
 
     /**
+     * The controller namespace for the application.
+     *
+     * When present, controller route declarations will automatically be prefixed with this namespace.
+     *
+     * @var string|null
+     */
+    protected $namespace = 'App\Http\Controllers';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      */
     public function boot()
     {
-        parent::boot();
+        $this->configureRateLimiting();
 
-        Route::bind('collection', fn ($value, $route) => Collection::findByHash($value));
-        Route::bind('collections', fn ($value, $route) => Collection::findByHash($value));
-        Route::bind('media', fn ($value, $route) => Media::findByHash($value));
-        Route::bind('tags', fn ($value, $route) => Tag::findByHash($value));
-        Route::bind('user', fn ($value, $route) => User::findByHash($value));
-        Route::bind('video', fn ($value, $route) => Video::findByHash($value));
-        Route::bind('videos', fn ($value, $route) => Video::findByHash($value));
+        $this->routes(function () {
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+        });
     }
 
     /**
-     * Define the routes for the application.
-     */
-    public function map()
-    {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-    }
-
-    /**
-     * Define the "web" routes for the application.
+     * Configure the rate limiters for the application.
      *
-     * These routes all receive session state, CSRF protection, etc.
+     * @return void
      */
-    protected function mapWebRoutes()
+    protected function configureRateLimiting()
     {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/web.php'));
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(100);
+        });
     }
 }

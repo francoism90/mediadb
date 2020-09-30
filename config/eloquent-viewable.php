@@ -6,7 +6,6 @@ return [
     | Eloquent Models
     |--------------------------------------------------------------------------
     */
-
     'models' => [
         /*
          * Here you can configure the default `View` model.
@@ -22,7 +21,6 @@ return [
     | Cache Configuration
     |--------------------------------------------------------------------------
     */
-
     'cache' => [
         /*
          * Everthing will be stored under the following key.
@@ -45,12 +43,11 @@ return [
     | Cooldown Configuration
     |--------------------------------------------------------------------------
     */
-
     'cooldown' => [
         /*
          * Everthing will be stored under the following key in the session.
          */
-        'key' => 'cyrildewit.eloquent-viewable.cooldown',
+        'key' => 'cyrildewit.eloquent-viewable.cooldowns',
     ],
 
     /*

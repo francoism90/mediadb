@@ -15,8 +15,6 @@ class ShowController extends Controller
      */
     public function __invoke(Video $video)
     {
-        $this->authorize('view', $video);
-
         $video->recordActivity('viewed');
         $video->recordView('view_count', now()->addYear());
 

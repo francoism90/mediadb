@@ -104,6 +104,11 @@ class VideoPolicy
      */
     public function restore(User $user, Video $video)
     {
+        if ($user->can('restore video')) {
+            return true;
+        }
+
+        return $user->id === $video->model->id;
     }
 
     /**
@@ -116,5 +121,10 @@ class VideoPolicy
      */
     public function forceDelete(User $user, Video $video)
     {
+        if ($user->can('delete video')) {
+            return true;
+        }
+
+        return $user->id === $video->model->id;
     }
 }

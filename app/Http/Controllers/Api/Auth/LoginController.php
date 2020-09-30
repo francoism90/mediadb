@@ -15,7 +15,7 @@ class LoginController extends Controller
     /**
      * @param Request $request
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(Request $request)
     {

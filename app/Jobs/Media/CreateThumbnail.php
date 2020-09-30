@@ -42,7 +42,7 @@ class CreateThumbnail implements ShouldQueue
      */
     public function __construct(Media $media)
     {
-        $this->media = $media;
+        $this->media = $media->withoutRelations();
     }
 
     /**

@@ -5,13 +5,13 @@ namespace App\Listeners\Video;
 use App\Events\Video\MediaHasBeenAdded;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
-use App\Jobs\Media\ProcessVideo;
 use App\Jobs\Media\SetProcessed;
+use Illuminate\Support\Facades\Bus;
 
 class ProcessMedia
 {
     /**
-     * @param object $event
+     * @param MediaHasBeenAdded $event
      *
      * @return void
      */
@@ -22,11 +22,11 @@ class ProcessMedia
 
         switch ($type) {
             case 'video':
-                ProcessVideo::withChain([
+                Bus::chain([
                     new CreateThumbnail($event->media),
                     new CreateSprite($event->media),
                     new SetProcessed($event->media),
-                ])->dispatch($event->media)->allOnQueue('optimize');
+                ])->onQueue('optimize')->dispatch($event->media);
                 break;
         }
     }

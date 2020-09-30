@@ -13,14 +13,12 @@ class FrameshotController extends Controller
      * @param FrameshotRequest $request
      * @param Video            $video
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(
         FrameshotRequest $request,
         Video $video
     ) {
-        $this->authorize('update', $video);
-
         optional($video->getFirstMedia('clip'), function ($clip) use ($request) {
             $clip
                 ->setCustomProperty('frameshot', $request->input('timecode'))

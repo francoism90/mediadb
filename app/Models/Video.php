@@ -12,8 +12,6 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -21,7 +19,6 @@ use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Tags\HasTags;
 
@@ -92,28 +89,16 @@ class Video extends Model implements HasMedia, Viewable
     ];
 
     /**
-     * @return array
+     * Retrieve the model for a bound value.
+     *
+     * @param mixed       $value
+     * @param string|null $field
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function toSearchableArray(): array
+    public function resolveRouteBinding($value, $field = null)
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'overview' => $this->overview,
-            'type' => $this->type,
-            'model_type' => $this->model_type,
-            'model_id' => $this->model_id,
-            'file_name' => $this->file_name,
-            'duration' => $this->duration,
-        ];
-    }
-
-    /**
-     * @return MorphTo
-     */
-    public function model(): MorphTo
-    {
-        return $this->morphTo();
+        return $this->findByHash($value);
     }
 
     /**
@@ -126,6 +111,14 @@ class Video extends Model implements HasMedia, Viewable
                 'source' => 'name',
             ],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public static function getTagClassName(): string
+    {
+        return Tag::class;
     }
 
     /**
@@ -163,17 +156,34 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public static function getTagClassName(): string
+    public function toSearchableArray(): array
     {
-        return Tag::class;
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'overview' => $this->overview,
+            'type' => $this->type,
+            'model_type' => $this->model_type,
+            'model_id' => $this->model_id,
+            'file_name' => $this->file_name,
+            'duration' => $this->duration,
+        ];
     }
 
     /**
-     * @return MorphToMany
+     * @return mixed
      */
-    public function tags(): MorphToMany
+    public function model()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function tags()
     {
         return $this
             ->morphToMany(
@@ -187,9 +197,9 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return MorphToMany
+     * @return mixed
      */
-    public function collections(): MorphToMany
+    public function collections()
     {
         return $this->morphToMany(
             'App\Models\Collection',
@@ -198,7 +208,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
     public function getTitlesAttribute()
     {
@@ -209,7 +219,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return Collection|MediaCollection
+     * @return mixed
      */
     public function getTracksAttribute()
     {
@@ -217,7 +227,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getBitrateAttribute()
     {
@@ -227,7 +237,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getCodecNameAttribute()
     {
@@ -237,7 +247,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getDurationAttribute()
     {
@@ -247,7 +257,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getHeightAttribute()
     {
@@ -257,7 +267,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getWidthAttribute()
     {
@@ -267,7 +277,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
     public function getSpriteAttribute()
     {
@@ -277,7 +287,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getSpriteUrlAttribute()
     {
@@ -295,7 +305,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getStreamUrlAttribute()
     {
@@ -311,7 +321,7 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getThumbnailUrlAttribute()
     {

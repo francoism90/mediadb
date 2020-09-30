@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Video;
 
-use App\Support\Sanitizer\SlugifyFilter;
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
 
 class UpdateRequest extends FormRequest
 {
@@ -51,16 +50,6 @@ class UpdateRequest extends FormRequest
             'tags.*.id' => 'trim|strip_tags',
             'tags.*.type' => 'trim|strip_tags|slug',
             'tags.*.name' => 'trim|strip_tags',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function customFilters()
-    {
-        return [
-            'slug' => SlugifyFilter::class,
         ];
     }
 }

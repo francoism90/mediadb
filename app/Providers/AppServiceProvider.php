@@ -6,11 +6,13 @@ use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Video;
 use App\Observers\CollectionObserver;
 use App\Observers\MediaObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
-use Illuminate\Support\Facades\Route;
+use App\Observers\VideoObserver;
+use App\Support\Sanitizer\SlugFilter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Route::singularResourceParameters(false);
+        \Sanitizer::extend('slug', SlugFilter::class);
     }
 
     /**
@@ -39,5 +41,6 @@ class AppServiceProvider extends ServiceProvider
         Media::observe(MediaObserver::class);
         Tag::observe(TagObserver::class);
         User::observe(UserObserver::class);
+        Video::observe(VideoObserver::class);
     }
 }

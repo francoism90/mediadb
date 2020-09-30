@@ -15,8 +15,6 @@ class ShowController extends Controller
      */
     public function __invoke(Collection $collection)
     {
-        $this->authorize('view', $collection);
-
         $collection->recordActivity('viewed');
         $collection->recordView('view_count', now()->addYear());
 

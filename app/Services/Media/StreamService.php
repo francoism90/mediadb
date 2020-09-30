@@ -3,6 +3,7 @@
 namespace App\Services\Media;
 
 use App\Models\Media;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -13,20 +14,22 @@ class StreamService
 
     /**
      * @param Media       $media
+     * @param User        $user
      * @param string|null $type
      *
      * @return string
      */
     public function getUrl(
         Media $media,
+        User $user,
         ?string $type = null
     ): string {
         // Get encrypted url
         $url = $this->getEncryptedUrl($media, $type);
 
         // Generate nginx expire url
-        $id = $media->getRouteKey() ?? $media->id;
-        $expires = time() + config('vod.expire', 60 * 60 * 3);
+        $id = "{$user->getRouteKey()}_{$media->getRouteKey()}";
+        $expires = time() + config('vod.expire', 60 * 60 * 8);
         $secret = config('vod.secret');
 
         $md5 = md5("{$expires}{$id} {$secret}", true);

@@ -23,11 +23,11 @@ class StreamController extends Controller
      * @param Media $media
      * @param User  $user
      *
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function __invoke(Media $media, User $user)
     {
-        $streamUrl = $this->streamService->getUrl($media);
+        $streamUrl = $this->streamService->getUrl($media, $user);
 
         return redirect($streamUrl);
     }

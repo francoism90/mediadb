@@ -11,12 +11,10 @@ class DestroyController extends Controller
     /**
      * @param Video $video
      *
-     * @return VideoResource
+     * @return VideoResource|\Illuminate\Http\JsonResponse
      */
     public function __invoke(Video $video)
     {
-        $this->authorize('delete', $video);
-
         if ($video->delete()) {
             return new VideoResource($video);
         }

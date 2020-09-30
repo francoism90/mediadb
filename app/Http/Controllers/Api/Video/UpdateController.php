@@ -28,8 +28,6 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Video $video)
     {
-        $this->authorize('update', $video);
-
         $video->update([
             'name' => $request->input('name'),
             'overview' => $request->input('overview'),

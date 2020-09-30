@@ -67,7 +67,7 @@ class Import extends Command
     }
 
     /**
-     * @return array
+     * @return IlluminateCollection
      */
     protected function getCollectionsByQuery(string $query = ''): IlluminateCollection
     {

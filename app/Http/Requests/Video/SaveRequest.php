@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Video;
 
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
 
 class SaveRequest extends FormRequest
 {

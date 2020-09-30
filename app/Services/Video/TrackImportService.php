@@ -12,7 +12,7 @@ class TrackImportService
     /**
      * @param Video  $video
      * @param string $path
-     * @param string $properties
+     * @param array  $properties
      *
      * @return void
      */

@@ -16,10 +16,10 @@ class SpriteService
     public const CONVERSION_NAME = 'sprite.webp';
     public const CONVERSION_TYPE = 'conversions';
     public const SPRITE_ITEMS = 20;
-    public const SPRITE_COLUMNS = 5;
-    public const SPRITE_WIDTH = 220;
-    public const SPRITE_HEIGHT = 160;
-    public const SPRITE_FILTER = 'scale=220:160';
+    public const SPRITE_COLUMNS = 4;
+    public const SPRITE_WIDTH = 128;
+    public const SPRITE_HEIGHT = 64;
+    public const SPRITE_FILTER = 'scale=128:64';
 
     /**
      * @var Filesystem
@@ -46,15 +46,15 @@ class SpriteService
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffmpeg.threads' => config('media-library.ffmpeg_threads', 4),
-            'ffmpeg.timeout' => 2700,
+            'ffmpeg.timeout' => 900,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
-            'timeout' => 2700,
+            'timeout' => 900,
         ]);
     }
 
     /**
-     * @param Media $name
+     * @param Media $media
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class SpriteService
 
         $range = array_map('round', range(0, $duration, $step));
 
-        // Remove first and last parts
+        // Remove first and last part
         $frames = array_slice($range, 1, -1);
 
         return $frames;

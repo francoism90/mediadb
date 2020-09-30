@@ -22,8 +22,6 @@ class IndexController extends Controller
      */
     public function __invoke()
     {
-        $this->authorize('viewAny', Tag::class);
-
         $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');
 
         $query = QueryBuilder::for(Tag::class)

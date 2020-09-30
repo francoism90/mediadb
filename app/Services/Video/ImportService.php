@@ -24,9 +24,6 @@ class ImportService
      */
     protected $metadataService;
 
-    /**
-     * @param MetadataService $videoMetadataService
-     */
     public function __construct(
         CollectionSyncService $collectionSyncService,
         MetadataService $metadataService

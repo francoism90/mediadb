@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 class SaveService
 {
     /**
-     * @var CollectionService
+     * @var CollectionSyncService
      */
     protected $collectionService;
 

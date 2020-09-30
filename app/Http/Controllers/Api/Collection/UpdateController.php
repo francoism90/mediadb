@@ -28,8 +28,6 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Collection $collection)
     {
-        $this->authorize('update', $collection);
-
         $collection->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),

@@ -13,7 +13,6 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
@@ -82,6 +81,19 @@ class Collection extends Model implements Viewable
     ];
 
     /**
+     * Retrieve the model for a bound value.
+     *
+     * @param mixed       $value
+     * @param string|null $field
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->findByHash($value);
+    }
+
+    /**
      * @return array
      */
     public function sluggable(): array
@@ -108,14 +120,6 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return void
-     */
-    public function model(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
      * @return string
      */
     public static function getTagClassName(): string
@@ -124,7 +128,15 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return MorphToMany
+     * @return mixed
+     */
+    public function model(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * @return mixed
      */
     public function tags()
     {
@@ -140,7 +152,7 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return morphedByMany
+     * @return mixed
      */
     public function videos()
     {

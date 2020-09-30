@@ -4,6 +4,7 @@ namespace App\Services\Media;
 
 use App\Models\Media;
 use FFMpeg\FFMpeg;
+use Illuminate\Support\Collection;
 
 class MetadataService
 {
@@ -25,20 +26,19 @@ class MetadataService
     }
 
     /**
-     * @param Media $name
+     * @param Media $media
      *
      * @return void
      */
     public function setAttributes(Media $media): void
     {
-        // Get attributes
-        $attributes = array_merge(
-            $this->getFormatAttributes($media->getPath()),
+        $collection = $this->getFormatAttributes($media->getPath());
+
+        $attributes = $collection->merge(
             $this->getVideoAttributes($media->getPath())
         );
 
-        // Save as metadata
-        $media->setCustomProperty('metadata', $attributes)->save();
+        $media->setCustomProperty('metadata', $attributes->all())->save();
     }
 
     /**
@@ -54,40 +54,32 @@ class MetadataService
     /**
      * @param string $path
      *
-     * @return array
+     * @return Collection
      */
-    public function getFormatAttributes(string $path): array
+    public function getFormatAttributes(string $path): Collection
     {
         $format = $this->ffmpeg->getFFProbe()->format($path);
 
-        if (!$format) {
-            return [];
-        }
-
-        return [
+        return collect([
             'start_time' => $format->get('start_time', 0),
             'duration' => $format->get('duration', 0),
             'size' => $format->get('size', 0),
             'bitrate' => $format->get('bit_rate', 0),
             'probe_score' => $format->get('probe_score', 0),
             'tags' => $format->get('tags', []),
-        ];
+        ]);
     }
 
     /**
      * @param string $path
      *
-     * @return array
+     * @return Collection
      */
-    public function getVideoAttributes(string $path): array
+    public function getVideoAttributes(string $path): Collection
     {
         $stream = $this->ffmpeg->getFFProbe()->streams($path)->videos()->first();
 
-        if (!$stream) {
-            return [];
-        }
-
-        return [
+        return collect([
             'codec_name' => $stream->get('codec_name', null),
             'profile' => $stream->get('profile', null),
             'width' => $stream->get('width', 0),
@@ -97,6 +89,6 @@ class MetadataService
             'closed_captions' => $stream->get('closed_captions', 0),
             'pix_fmt' => $stream->get('pix_fmt', 0),
             'display_aspect_ratio' => $stream->get('display_aspect_ratio', null),
-        ];
+        ]);
     }
 }

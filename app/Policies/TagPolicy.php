@@ -95,6 +95,11 @@ class TagPolicy
      */
     public function restore(User $user, Tag $tag)
     {
+        if ($user->can('restore tag')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -107,5 +112,10 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag)
     {
+        if ($user->can('delete tag')) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -12,6 +12,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -27,6 +28,7 @@ class User extends Authenticatable implements HasMedia, Viewable
     use Activityable;
     use CanFollow;
     use Hashidable;
+    use HasFactory;
     use HasRoles;
     use InteractsWithMedia;
     use InteractsWithViews;
@@ -98,6 +100,19 @@ class User extends Authenticatable implements HasMedia, Viewable
     ];
 
     /**
+     * Retrieve the model for a bound value.
+     *
+     * @param mixed       $value
+     * @param string|null $field
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->findByHash($value);
+    }
+
+    /**
      * @return array
      */
     public function sluggable(): array
@@ -107,14 +122,6 @@ class User extends Authenticatable implements HasMedia, Viewable
                 'source' => 'name',
             ],
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function toSearchableArray(): array
-    {
-        return $this->only(['id', 'name', 'description']);
     }
 
     /**
@@ -128,7 +135,15 @@ class User extends Authenticatable implements HasMedia, Viewable
     }
 
     /**
-     * @return morphMany
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only(['id', 'name', 'description']);
+    }
+
+    /**
+     * @return mixed
      */
     public function videos()
     {
@@ -136,7 +151,7 @@ class User extends Authenticatable implements HasMedia, Viewable
     }
 
     /**
-     * @return belongsToJson
+     * @return mixed
      */
     public function collections()
     {

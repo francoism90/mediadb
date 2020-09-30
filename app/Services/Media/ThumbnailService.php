@@ -58,7 +58,7 @@ class ThumbnailService
     }
 
     /**
-     * @param Media $name
+     * @param Media $media
      *
      * @return void
      */
