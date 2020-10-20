@@ -30,7 +30,7 @@ class CreateThumbnail implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 120;
+    public $timeout = 300;
 
     /**
      * @var Media

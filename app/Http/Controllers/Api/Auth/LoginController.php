@@ -3,45 +3,38 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
     /**
-     * @param Request $request
+     * @param LoginRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(Request $request)
+    public function __invoke(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:1|max:32',
-            'device_name' => 'required|string',
-            'remember' => 'boolean',
-        ]);
-
         $user = User::where('email', $request->email)->first();
 
+        // Validate login
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages(['email' => ['The provided credentials are incorrect.']]);
         }
 
+        // Session Guard
         $statefulDomains = explode(',', env('SANCTUM_STATEFUL_DOMAINS'));
 
         $requestHost = parse_url($request->headers->get('origin'), PHP_URL_HOST);
 
-        // Use session guard
         if (in_array($requestHost, $statefulDomains)) {
             $credentials = $request->only('email', 'password');
 
             throw_if(
-                !Auth::attempt($credentials, $request->input('remember', true)),
+                !auth()->attempt($credentials, $request->input('remember', true)),
                 AuthorizationException::class,
                 'Unable to authenticate'
             );

@@ -4,50 +4,48 @@ namespace App\Services\Video;
 
 use App\Models\User;
 use App\Models\Video;
-use App\Services\Collection\SyncService as CollectionSyncService;
-use Illuminate\Support\Collection;
+use App\Services\Collection\SyncService;
 
 class SaveService
 {
     /**
-     * @var CollectionSyncService
+     * @var SyncService
      */
-    protected $collectionService;
+    protected $syncService;
 
-    public function __construct(CollectionSyncService $collectionService)
+    public function __construct(SyncService $syncService)
     {
-        $this->collectionService = $collectionService;
+        $this->syncService = $syncService;
     }
 
     /**
-     * @param User       $user
-     * @param Video      $video
-     * @param Collection $collections
-     * @param bool       $detach
+     * @param User  $user
+     * @param Video $video
+     * @param array $collections
+     * @param bool  $detach
      *
      * @return void
      */
     public function sync(
         User $user,
         Video $video,
-        Collection $collections,
-        bool $detach = true
+        array $collections,
+        bool $detach = false
     ): void {
-        // Create collections for model
-        $videoCollections = $this->collectionService->create($user, $collections);
+        // Create collections
+        $models = $this->syncService->create($user, $collections);
 
-        // Get the user collections
-        $userCollections = $user->collections()->with('videos')->get();
+        // Get the current user collections
+        $userCollections = $user->collections()->with('videos:id')->get();
 
-        // Loop over all collections
+        // Sync each collection
         foreach ($userCollections as $collection) {
             $hasVideo = $collection->videos->firstWhere('id', $video->id);
-            $inCollection = $videoCollections->firstWhere('id', $collection->id);
+            $attachVideo = $models->firstWhere('id', $collection->id);
 
-            // Sync collections
-            if (!$hasVideo && $inCollection) {
+            if (!$hasVideo && $attachVideo) {
                 $collection->videos()->attach($video->id);
-            } elseif ($detach && $hasVideo && !$inCollection) {
+            } elseif ($hasVideo && !$attachVideo && $detach) {
                 $collection->videos()->detach($video->id);
             }
         }

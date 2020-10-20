@@ -15,10 +15,15 @@ class DestroyController extends Controller
      */
     public function __invoke(Video $video)
     {
-        if ($video->delete()) {
-            return new VideoResource($video);
+        if (!$video->delete()) {
+            return response()->json([], 500);
         }
 
-        return response()->json([], 500);
+        notify([
+            'message' => "{$video->name} has been deleted.",
+            'type' => 'positive',
+        ]);
+
+        return new VideoResource($video);
     }
 }

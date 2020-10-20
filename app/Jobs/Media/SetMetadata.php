@@ -3,13 +3,14 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
+use App\Services\Media\MetadataService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SetProcessed implements ShouldQueue
+class SetMetadata implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -29,7 +30,7 @@ class SetProcessed implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 300;
 
     /**
      * @var Media
@@ -47,8 +48,8 @@ class SetProcessed implements ShouldQueue
     /**
      * @return void
      */
-    public function handle()
+    public function handle(MetadataService $metadataService)
     {
-        $this->media->setStatus('processed');
+        $metadataService->setAttributes($this->media);
     }
 }

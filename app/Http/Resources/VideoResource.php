@@ -12,6 +12,7 @@ class VideoResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'videos',
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
@@ -24,7 +25,9 @@ class VideoResource extends JsonResource
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'tagline' => $this->tagline,
-            'overview' => $this->overview,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'overview' => $this->whenAppended('overview'),
             'bitrate' => $this->whenAppended('bitrate'),
             'codec_name' => $this->whenAppended('codec_name'),
             'duration' => $this->whenAppended('duration'),
@@ -36,8 +39,6 @@ class VideoResource extends JsonResource
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'titles' => $this->whenAppended('titles', CollectionResource::collection($this->titles)),
             'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'relationships' => [
                 'model' => new UserResource($this->whenLoaded('model')),
                 'collections' => CollectionResource::collection($this->whenLoaded('collection')),

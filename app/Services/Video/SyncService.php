@@ -4,6 +4,7 @@ namespace App\Services\Video;
 
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
+use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Video;
 use App\Services\Media\MetadataService;
@@ -16,9 +17,8 @@ class SyncService
      */
     protected $metadataService;
 
-    public function __construct(
-        MetadataService $metadataService
-    ) {
+    public function __construct(MetadataService $metadataService)
+    {
         $this->metadataService = $metadataService;
     }
 
@@ -27,32 +27,46 @@ class SyncService
      */
     public function sync(): void
     {
-        $metadataModels = $this->getMediaByMissingMetadata();
-        $conversionModels = $this->getMediaByMissingConversions();
-
-        $this->setMetadata($metadataModels);
-        $this->performConversions($conversionModels);
+        $this->setMetadata();
+        $this->setTags();
+        $this->performConversions();
     }
 
     /**
-     * @param LazyCollection $models
-     *
      * @return void
      */
-    protected function setMetadata(LazyCollection $models): void
+    protected function setMetadata(): void
     {
+        $models = $this->getMediaByMissingMetadata();
+
         foreach ($models as $model) {
             $this->metadataService->setAttributes($model);
         }
     }
 
     /**
-     * @param LazyCollection $models
-     *
      * @return void
      */
-    protected function performConversions(LazyCollection $models): void
+    protected function setTags(): void
     {
+        $collections = $this->getCollectionsWithTags();
+
+        foreach ($collections as $collection) {
+            $tags = $collection->tags->all();
+
+            foreach ($collection->videos as $model) {
+                $model->attachTags($tags);
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function performConversions(): void
+    {
+        $models = $this->getMediaByMissingConversions();
+
         foreach ($models as $model) {
             if (!$model->hasGeneratedConversion('thumbnail')) {
                 CreateThumbnail::dispatch($model)->onQueue('optimize');
@@ -69,14 +83,12 @@ class SyncService
      */
     protected function getMediaByMissingMetadata(): LazyCollection
     {
-        $collection = Media::where('model_type', Video::class)
+        return Media::where('model_type', Video::class)
             ->WhereNull('custom_properties->metadata')
             ->orWhereNull('custom_properties->metadata->duration')
             ->orWhereNull('custom_properties->metadata->width')
             ->orWhereNull('custom_properties->metadata->height')
             ->cursor();
-
-        return $collection;
     }
 
     /**
@@ -84,12 +96,20 @@ class SyncService
      */
     protected function getMediaByMissingConversions(): LazyCollection
     {
-        $collection = Media::where('model_type', Video::class)
+        return Media::where('model_type', Video::class)
             ->WhereNull('custom_properties->generated_conversions')
             ->orWhereNull('custom_properties->generated_conversions->sprite')
             ->orWhereNull('custom_properties->generated_conversions->thumbnail')
             ->cursor();
+    }
 
-        return $collection;
+    /**
+     * @return LazyCollection
+     */
+    protected function getCollectionsWithTags(): LazyCollection
+    {
+        return Collection::has('tags')
+            ->with(['tags', 'videos'])
+            ->cursor();
     }
 }

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use App\Support\Scout\Rules\SimpleMatchRule;
+use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\VideoIndexConfigurator;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
+use App\Traits\Taggable;
+use App\Traits\Translatable;
 use App\Traits\Viewable as ViewableHelpers;
-use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
@@ -20,23 +21,36 @@ use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Sluggable\HasTranslatableSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
+use Spatie\Translatable\HasTranslations;
 
 class Video extends Model implements HasMedia, Viewable
 {
+    use HasTranslations;
+    use HasTranslatableSlug;
     use Activityable;
     use CanBeLiked;
     use CanBeFavorited;
     use Hashidable;
     use HasStatuses;
-    use HasTags;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
     use Randomable;
     use Searchable;
-    use Sluggable;
+    use Translatable;
     use ViewableHelpers;
+    use HasTags, Taggable {
+        Taggable::getTagClassName insteadof HasTags;
+        Taggable::tags insteadof HasTags;
+    }
+
+    /**
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'overview'];
 
     /**
      * @var array
@@ -64,7 +78,7 @@ class Video extends Model implements HasMedia, Viewable
      * @var array
      */
     protected $searchRules = [
-        SimpleMatchRule::class,
+        MultiMatchRule::class,
     ];
 
     /**
@@ -77,7 +91,7 @@ class Video extends Model implements HasMedia, Viewable
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'autocomplete_search',
             ],
-            'file_name' => [
+            'overview' => [
                 'type' => 'text',
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'autocomplete_search',
@@ -85,12 +99,15 @@ class Video extends Model implements HasMedia, Viewable
             'duration' => [
                 'type' => 'float',
             ],
+            'file_name' => [
+                'type' => 'text',
+                'analyzer' => 'autocomplete',
+                'search_analyzer' => 'autocomplete_search',
+            ],
         ],
     ];
 
     /**
-     * Retrieve the model for a bound value.
-     *
      * @param mixed       $value
      * @param string|null $field
      *
@@ -102,23 +119,13 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return array
+     * @return SlugOptions
      */
-    public function sluggable(): array
+    public function getSlugOptions(): SlugOptions
     {
-        return [
-            'slug' => [
-                'source' => 'name',
-            ],
-        ];
-    }
-
-    /**
-     * @return string
-     */
-    public static function getTagClassName(): string
-    {
-        return Tag::class;
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**
@@ -162,13 +169,17 @@ class Video extends Model implements HasMedia, Viewable
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'overview' => $this->overview,
-            'type' => $this->type,
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'status' => $this->status,
+            'release_date' => $this->release_date,
             'file_name' => $this->file_name,
             'duration' => $this->duration,
+            'season_number' => $this->season_number,
+            'episode_number' => $this->episode_number,
+            'overview' => $this->overview,
         ];
     }
 
@@ -178,22 +189,6 @@ class Video extends Model implements HasMedia, Viewable
     public function model()
     {
         return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function tags()
-    {
-        return $this
-            ->morphToMany(
-                self::getTagClassName(),
-                'taggable',
-                'taggables',
-                null,
-                'tag_id'
-            )
-            ->orderBy('order_column');
     }
 
     /**
@@ -231,7 +226,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getBitrateAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('metadata.bitrate', 0);
         });
     }
@@ -241,7 +236,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getCodecNameAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('metadata.codec_name', 'N/A');
         });
     }
@@ -251,7 +246,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getDurationAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('metadata.duration', 0);
         });
     }
@@ -261,7 +256,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getHeightAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('metadata.height', 480);
         });
     }
@@ -271,7 +266,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getWidthAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('metadata.width', 768);
         });
     }
@@ -281,7 +276,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getSpriteAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return $clip->getCustomProperty('sprite', []);
         });
     }
@@ -291,7 +286,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getSpriteUrlAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return URL::signedRoute(
                 'api.media.asset',
                 [
@@ -309,7 +304,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getStreamUrlAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return URL::signedRoute(
                 'api.media.stream',
                 [
@@ -325,7 +320,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getThumbnailUrlAttribute()
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
+        return optional($this->getFirstMedia('clips'), function ($clip) {
             return URL::signedRoute(
                 'api.media.asset',
                 [

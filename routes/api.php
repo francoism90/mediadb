@@ -29,38 +29,47 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Route::middleware('auth:sanctum')->get('unimpersonate', ['uses' => 'UnimpersonateController', 'as' => 'unimpersonate']);
     });
 
-    // Media
-    Route::middleware('signed')->name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
-        Route::middleware('doNotCacheResponse')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
-        Route::middleware('doNotCacheResponse')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+    // Notification
+    Route::middleware('auth:sanctum')->name('notifications.')->prefix('notifications')->namespace('Notification')->group(function () {
+        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::middleware('doNotCacheResponse')->post('/read', ['uses' => 'ReadController', 'as' => 'read']);
+        Route::middleware('doNotCacheResponse')->post('/delete', ['uses' => 'DeleteController', 'as' => 'delete']);
     });
 
     // Video
     Route::middleware('auth:sanctum')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
         // Resource
-        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::match(['put', 'patch'], '/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
-        Route::match(['delete'], '/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::match(['get'], '/{video}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::get('/{video}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::put('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
 
-        // Miscellaneous
-        Route::middleware('doNotCacheResponse')->match(['put', 'patch'], '/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
-        Route::middleware('doNotCacheResponse')->match(['put', 'post'], '/{video}/save', ['uses' => 'SaveController', 'as' => 'save']);
+        // Misc
+        Route::middleware('doNotCacheResponse')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
+        Route::middleware('doNotCacheResponse')->get('/{video}/collections', ['uses' => 'CollectionController', 'as' => 'collections']);
+        Route::middleware('doNotCacheResponse')->match(['put', 'post'], '/{video}/collections', ['uses' => 'SaveController', 'as' => 'save']);
     });
 
     // Collection
     Route::middleware('auth:sanctum')->name('collections.')->prefix('collections')->namespace('Collection')->group(function () {
         // Resource
-        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::match(['put', 'patch'], '/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
-        Route::match(['delete'], '/{collection}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::match(['get'], '/{collection}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::get('/{collection}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::delete('/{collection}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::put('/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
     });
 
     // Tag
     Route::middleware('auth:sanctum')->name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
         // Resource
-        Route::match(['get', 'head'], '/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
+    });
+
+    // Media
+    Route::middleware('signed')->name('media.')->prefix('media')->namespace('Media')->group(function () {
+        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
+        Route::middleware('doNotCacheResponse')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+        Route::middleware('doNotCacheResponse')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
     });
 });

@@ -14,10 +14,10 @@ class CreateCollectionsTable extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->morphs('model');
-            $table->string('slug')->unique();
-            $table->string('name')->index();
+            $table->json('slug');
+            $table->json('name');
             $table->string('type')->index()->nullable();
-            $table->longText('description')->nullable();
+            $table->json('overview')->nullable();
             $table->json('custom_properties')->nullable();
             $table->nullableTimestamps();
         });

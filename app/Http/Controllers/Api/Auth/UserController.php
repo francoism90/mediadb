@@ -15,6 +15,9 @@ class UserController extends Controller
      */
     public function __invoke(Request $request): UserResource
     {
+        // Set the preferred locale
+        app()->setLocale($request->user()->preferredLocale());
+
         return new UserResource(
             $request
                 ->user()

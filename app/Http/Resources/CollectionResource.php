@@ -15,7 +15,7 @@ class CollectionResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
-            'description' => $this->description,
+            'overview' => $this->overview,
             'type' => $this->type,
             'views' => $this->views,
             'created_at' => $this->created_at,

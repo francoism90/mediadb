@@ -36,14 +36,16 @@ return [
     |
     | Global settings for imports and streaming.
     |
-    | @see https://github.com/kaltura/nginx-vod-module/issues/427
+    | @doc https://github.com/kaltura/nginx-vod-module/issues/427
     |
     */
 
-    'video' => [
+    'import' => [
         'extensions' => [
             'm4v',
             'mp4',
+            'vtt',
+            'webp',
             // 'ogm',
             // 'ogv',
             // 'ogx',
@@ -53,6 +55,9 @@ return [
         ],
 
         'mimetypes' => [
+            'image/webp',
+            'text/plain',
+            'text/vtt',
             'video/mp4',
             'video/mp4v-es',
             // 'video/ogg',
@@ -67,28 +72,29 @@ return [
             // 'video/x-theora+ogg',
         ],
 
-        'size' => ['>= 1M', '<= 10G'],
-    ],
-
-    'tracks' => [
-        'extensions' => [
-            'vtt',
+        'size' => [
+            '<= 10G',
         ],
 
-        'mimetypes' => [
-            'text/plain',
-            'text/vtt',
+        'collections' => [
+            'captions' => 'Captions',
+            'clips' => 'Clips',
+            'subtitles' => 'Subtitles',
         ],
 
-        'languages' => [
+        'locales' => [
+            'de' => 'German',
             'en' => 'English',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'it' => 'Italian',
+            'ja' => 'Japanese',
             'nl' => 'Dutch',
         ],
 
-        'size' => ['<= 10M'],
-
         'types' => [
-            'subtitles',
+            'episode' => 'Episode',
+            'movie' => 'Movie',
         ],
     ],
 ];

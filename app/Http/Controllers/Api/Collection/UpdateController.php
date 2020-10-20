@@ -28,19 +28,21 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Collection $collection)
     {
-        $collection->update([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
+        $collection->setTranslation('name', locale(), $request->input('name', $collection->name))
+                   ->setTranslation('overview', locale(), $request->input('overview', $collection->overview))
+                   ->save();
 
-        // Set status
-        $collection->setStatus($request->input('status', 'published'));
+        $collection->setStatus($request->input('status', 'public'));
 
-        // Sync tags
         $this->tagSyncService->sync(
             $collection,
             $request->input('tags')
         );
+
+        notify([
+            'message' => "{$collection->name} has been updated.",
+            'type' => 'positive',
+        ]);
 
         return new CollectionResource($collection);
     }

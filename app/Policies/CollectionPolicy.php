@@ -32,11 +32,11 @@ class CollectionPolicy
      */
     public function view(?User $user, Collection $collection)
     {
-        if ($collection->latestStatus(['published'])->exists()) {
+        if ($collection->latestStatus(['public'])->exists()) {
             return true;
         }
 
-        // Visitors cannot view unpublished items
+        // Visitors cannot view private items
         if (null === $user) {
             return false;
         }

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\Hashidable;
-use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
@@ -16,7 +15,6 @@ class Media extends BaseMedia implements Viewable
     use Hashidable;
     use HasStatuses;
     use InteractsWithViews;
-    use Randomable;
     use ViewableHelpers;
 
     /**
@@ -73,16 +71,8 @@ class Media extends BaseMedia implements Viewable
     /**
      * @return string
      */
-    public function getTypeAttribute(): string
+    public function getLocaleAttribute(): string
     {
-        return $this->getCustomProperty('type', 'N/A');
-    }
-
-    /**
-     * @return string
-     */
-    public function getLanguageAttribute(): string
-    {
-        return $this->getCustomProperty('language', 'N/A');
+        return $this->getCustomProperty('locale', 'undefined');
     }
 }

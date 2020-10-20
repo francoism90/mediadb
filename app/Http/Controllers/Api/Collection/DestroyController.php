@@ -15,10 +15,15 @@ class DestroyController extends Controller
      */
     public function __invoke(Collection $collection)
     {
-        if ($collection->delete()) {
-            return new CollectionResource($collection);
+        if (!$collection->delete()) {
+            return response()->json([], 500);
         }
 
-        return response()->json([], 500);
+        notify([
+            'message' => "{$collection->name} has been deleted.",
+            'type' => 'positive',
+        ]);
+
+        return new CollectionResource($collection);
     }
 }

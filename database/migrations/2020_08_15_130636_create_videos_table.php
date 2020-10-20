@@ -16,17 +16,14 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->morphs('model');
-            $table->string('slug')->unique();
-            $table->string('name')->index();
+            $table->json('slug');
+            $table->json('name');
             $table->string('type')->index()->nullable();
             $table->string('status')->index()->nullable();
             $table->timestamp('release_date')->index()->nullable();
-            $table->string('original_language')->index()->nullable();
-            $table->string('original_title')->index()->nullable();
             $table->unsignedInteger('season_number')->index()->nullable();
             $table->unsignedInteger('episode_number')->index()->nullable();
-            $table->text('tagline')->nullable();
-            $table->longText('overview')->nullable();
+            $table->json('overview')->nullable();
             $table->json('custom_properties')->nullable();
             $table->nullableTimestamps();
         });

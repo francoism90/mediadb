@@ -7,8 +7,8 @@ use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
+use App\Traits\Taggable;
 use App\Traits\Viewable as ViewableHelpers;
-use Cviebrock\EloquentSluggable\Sluggable;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +17,10 @@ use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Sluggable\HasTranslatableSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
+use Spatie\Translatable\HasTranslations;
 
 class Collection extends Model implements Viewable
 {
@@ -26,12 +29,21 @@ class Collection extends Model implements Viewable
     use CanBeLiked;
     use Hashidable;
     use HasStatuses;
-    use HasTags;
     use InteractsWithViews;
     use Randomable;
     use Searchable;
-    use Sluggable;
+    use HasTranslations;
+    use HasTranslatableSlug;
     use ViewableHelpers;
+    use HasTags, Taggable {
+        Taggable::getTagClassName insteadof HasTags;
+        Taggable::tags insteadof HasTags;
+    }
+
+    /**
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'overview'];
 
     /**
      * @var array
@@ -72,7 +84,7 @@ class Collection extends Model implements Viewable
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'autocomplete_search',
             ],
-            'description' => [
+            'overview' => [
                 'type' => 'text',
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'autocomplete_search',
@@ -81,8 +93,6 @@ class Collection extends Model implements Viewable
     ];
 
     /**
-     * Retrieve the model for a bound value.
-     *
      * @param mixed       $value
      * @param string|null $field
      *
@@ -94,15 +104,13 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return array
+     * @return SlugOptions
      */
-    public function sluggable(): array
+    public function getSlugOptions(): SlugOptions
     {
-        return [
-            'slug' => [
-                'source' => 'name',
-            ],
-        ];
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**
@@ -110,21 +118,14 @@ class Collection extends Model implements Viewable
      */
     public function toSearchableArray(): array
     {
-        return $this->only([
-            'id',
-            'name',
-            'description',
-            'model_type',
-            'model_id',
-        ]);
-    }
-
-    /**
-     * @return string
-     */
-    public static function getTagClassName(): string
-    {
-        return Tag::class;
+        return [
+            'id' => $this->id,
+            'model_type' => $this->model_type,
+            'model_id' => $this->model_id,
+            'name' => $this->name,
+            'overview' => $this->overview,
+            'type' => $this->type,
+        ];
     }
 
     /**
@@ -133,22 +134,6 @@ class Collection extends Model implements Viewable
     public function model(): MorphTo
     {
         return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function tags()
-    {
-        return $this
-            ->morphToMany(
-                self::getTagClassName(),
-                'taggable',
-                'taggables',
-                null,
-                'tag_id'
-            )
-            ->orderBy('order_column');
     }
 
     /**

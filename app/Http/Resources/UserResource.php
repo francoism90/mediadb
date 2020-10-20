@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'views' => $this->views,
             'created_at' => $this->created_at,
             'roles' => $this->whenAppended('assigned_roles'),
+            'notifications' => $this->unreadNotifications->count(),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
         ];
     }

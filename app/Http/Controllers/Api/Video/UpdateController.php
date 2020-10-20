@@ -28,17 +28,21 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Video $video)
     {
-        $video->update([
-            'name' => $request->input('name'),
-            'overview' => $request->input('overview'),
-        ]);
+        $video->setTranslation('name', locale(), $request->input('name', $video->name))
+              ->setTranslation('overview', locale(), $request->input('overview', $video->overview))
+              ->save();
 
-        $video->setStatus($request->input('status', 'released'));
+        $video->setStatus($request->input('status', 'public'));
 
         $this->tagSyncService->sync(
             $video,
             $request->input('tags')
         );
+
+        notify([
+            'message' => "{$video->name} has been updated.",
+            'type' => 'positive',
+        ]);
 
         return new VideoResource($video);
     }

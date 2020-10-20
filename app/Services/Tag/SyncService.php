@@ -37,7 +37,7 @@ class SyncService
      */
     public function sortTagsByName(): void
     {
-        $tags = Tag::pluck('name', 'id')->toArray();
+        $tags = Tag::select(['id', 'name'])->pluck('name', 'id')->toArray();
 
         // Sort case-insensitive
         natcasesort($tags);

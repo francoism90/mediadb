@@ -7,7 +7,8 @@ use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Frame\CustomFrameFilter;
 use FFMpeg\Media\Video;
-use Illuminate\Support\Collection;
+use Imagick;
+use ImagickDraw;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
@@ -15,11 +16,11 @@ class SpriteService
 {
     public const CONVERSION_NAME = 'sprite.webp';
     public const CONVERSION_TYPE = 'conversions';
-    public const SPRITE_ITEMS = 20;
-    public const SPRITE_COLUMNS = 4;
-    public const SPRITE_WIDTH = 128;
-    public const SPRITE_HEIGHT = 64;
-    public const SPRITE_FILTER = 'scale=128:64';
+    public const SPRITE_INTERVAL = 10;
+    public const SPRITE_COLUMNS = 20;
+    public const SPRITE_WIDTH = 160;
+    public const SPRITE_HEIGHT = 90;
+    public const SPRITE_FILTER = 'scale=160:190';
 
     /**
      * @var Filesystem
@@ -45,12 +46,17 @@ class SpriteService
 
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
-            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 4),
-            'ffmpeg.timeout' => 900,
+            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
+            'ffmpeg.timeout' => 2700,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
-            'timeout' => 900,
+            'timeout' => 2700,
         ]);
+    }
+
+    public function __destruct()
+    {
+        $this->temporaryDirectory->delete();
     }
 
     /**
@@ -60,88 +66,76 @@ class SpriteService
      */
     public function create(Media $media): void
     {
-        $spritePath = $this->prepareConversion($media);
+        $path = $this->temporaryDirectory->path(self::CONVERSION_NAME);
 
+        $imagick = $this->prepareConversion($media);
+
+        // Create montage
+        $montage = $imagick->montageImage(
+            new ImagickDraw(),
+            self::SPRITE_COLUMNS.'x',
+            self::SPRITE_WIDTH.'x'.self::SPRITE_HEIGHT.'!',
+            Imagick::MONTAGEMODE_CONCATENATE,
+            '0'
+        );
+
+        $montage->writeImage($path);
+
+        // Mark as conversion done
+        $media->markAsConversionGenerated('sprite', true);
+
+        // Copy to media-library
         $this->filesystem->copyToMediaLibrary(
-            $spritePath,
+            $path,
             $media,
             self::CONVERSION_TYPE,
             self::CONVERSION_NAME
         );
-
-        $media->markAsConversionGenerated('sprite', true);
-
-        $this->temporaryDirectory->delete();
     }
 
     /**
      * @param Media $media
      *
-     * @return string
+     * @return Imagick
      */
-    protected function prepareConversion(Media $media): string
+    protected function prepareConversion(Media $media): Imagick
     {
-        // Create each frame
-        $frames = $this->createFrames($media);
-
-        // Create sprite montage
-        $path = $this->createMontage($frames);
-
-        // Set as media property
-        $filtered = $frames->map(function ($item) {
-            unset($item['path']);
-
-            return $item;
-        });
-
-        $media->setCustomProperty('sprite', $filtered);
-
-        return $path;
-    }
-
-    /**
-     * @param Media $media
-     *
-     * @return Collection
-     */
-    protected function createFrames(Media $media): Collection
-    {
-        // Media duration
-        $duration = $media->getCustomProperty('metadata.duration', 60);
-
-        // Calculate frame ranges
-        $parts = $this->getFramesByRange($duration);
-
-        // Video instance
         $video = $this->getVideo($media->getPath());
 
-        // Create frames
-        $frames = collect();
+        $timeCodes = $this->getFrameRange($media);
 
+        $frames = collect();
         $frameCount = 1;
         $framePositionX = 0;
         $framePositionY = 0;
 
-        foreach ($parts as $part) {
-            $path = $this->temporaryDirectory->path("frames/{$frameCount}.png");
+        $imagick = new Imagick();
+
+        foreach ($timeCodes as $timeCode) {
+            $framePath = $this->temporaryDirectory->path("frames/{$frameCount}.jpg");
 
             $frame = $video->frame(
-                TimeCode::fromSeconds($part)
+                TimeCode::fromSeconds($timeCode)
             );
 
             $frame->addFilter(
                 new CustomFrameFilter(self::SPRITE_FILTER)
             );
 
-            $frame->save($path);
+            $frame->save($framePath);
 
-            // Add to collection
+            // Add image
+            $imagick->addImage(
+                new Imagick($framePath)
+            );
+
+            // Push frame
             $frames->push([
                 'id' => $frameCount,
-                'timecode' => $part,
+                'start' => $timeCode,
+                'end' => $timeCode + self::SPRITE_INTERVAL,
                 'x' => $framePositionX,
                 'y' => $framePositionY,
-                'path' => $path,
             ]);
 
             // Set next frame positions
@@ -155,37 +149,22 @@ class SpriteService
             ++$frameCount;
         }
 
-        return $frames;
+        // Set frames as custom property
+        $media->setCustomProperty('sprite', $frames);
+
+        return $imagick;
     }
 
     /**
-     * @param Collection $frames
+     * @param Media $media
      *
-     * @return string
+     * @return array
      */
-    protected function createMontage(Collection $frames): string
+    protected function getFrameRange(Media $media): array
     {
-        $path = $this->temporaryDirectory->path('sprite.webp');
+        $duration = $media->getCustomProperty('metadata.duration', 0);
 
-        $imagick = new \Imagick();
-
-        foreach ($frames as $frame) {
-            $imagick->addImage(
-                new \Imagick($frame['path'])
-            );
-        }
-
-        $montage = $imagick->montageImage(
-            new \ImagickDraw(),
-            self::SPRITE_COLUMNS.'x',
-            self::SPRITE_WIDTH.'x'.self::SPRITE_HEIGHT.'!',
-            \Imagick::MONTAGEMODE_CONCATENATE,
-            '0'
-        );
-
-        $montage->writeImage($path);
-
-        return $path;
+        return range(0, $duration, self::SPRITE_INTERVAL);
     }
 
     /**
@@ -196,22 +175,5 @@ class SpriteService
     protected function getVideo(string $path): Video
     {
         return $this->ffmpeg->open($path);
-    }
-
-    /**
-     * @param float $duration
-     *
-     * @return array
-     */
-    protected function getFramesByRange(float $duration): array
-    {
-        $step = $duration / (self::SPRITE_ITEMS + 1);
-
-        $range = array_map('round', range(0, $duration, $step));
-
-        // Remove first and last part
-        $frames = array_slice($range, 1, -1);
-
-        return $frames;
     }
 }

@@ -8,10 +8,9 @@ use App\Traits\Activityable;
 use App\Traits\Hashidable;
 use App\Traits\Randomable;
 use App\Traits\Viewable as ViewableHelpers;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,21 +21,19 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMedia, Viewable
+class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
 {
     use HasApiTokens;
     use Activityable;
     use CanFollow;
-    use Hashidable;
     use HasFactory;
+    use Hashidable;
     use HasRoles;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
     use Randomable;
     use Searchable;
-    use Sluggable;
-    use SluggableScopeHelpers;
     use ViewableHelpers;
 
     /**
@@ -113,15 +110,23 @@ class User extends Authenticatable implements HasMedia, Viewable
     }
 
     /**
-     * @return array
+     * Get the user's preferred locale.
+     *
+     * @return string
      */
-    public function sluggable(): array
+    public function preferredLocale()
     {
-        return [
-            'slug' => [
-                'source' => 'name',
-            ],
-        ];
+        return data_get($this, 'preferences.locale', config('app.fallback_locale'));
+    }
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'user.'.$this->getRouteKey();
     }
 
     /**
@@ -139,7 +144,12 @@ class User extends Authenticatable implements HasMedia, Viewable
      */
     public function toSearchableArray(): array
     {
-        return $this->only(['id', 'name', 'description']);
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'name' => $this->name,
+            'description' => $this->description,
+        ];
     }
 
     /**

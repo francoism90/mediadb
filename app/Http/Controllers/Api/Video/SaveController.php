@@ -31,9 +31,14 @@ class SaveController extends Controller
         $this->saveService->sync(
             auth()->user(),
             $video,
-            collect($request->input('collections', [])),
+            $request->input('collections', []),
             $request->isMethod('put')
         );
+
+        notify([
+            'message' => "{$video->name} has been saved.",
+            'type' => 'positive',
+        ]);
 
         return new VideoResource($video);
     }

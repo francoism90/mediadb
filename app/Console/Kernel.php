@@ -43,11 +43,6 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('01:00')
                  ->runInBackground();
 
-        $schedule->command('collection:sync')
-                 ->dailyAt('02:00')
-                 ->environments(['staging', 'production'])
-                 ->runInBackground();
-
         $schedule->command('media:cleanup')
                  ->dailyAt('03:00')
                  ->environments(['staging', 'production'])

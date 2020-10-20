@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Listeners\Video;
+namespace App\Listeners\Media;
 
 use App\Events\Video\MediaHasBeenAdded;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
-use App\Jobs\Media\SetProcessed;
+use App\Jobs\Media\SetMetadata;
 use Illuminate\Support\Facades\Bus;
 
-class ProcessMedia
+class Process
 {
     /**
      * @param MediaHasBeenAdded $event
@@ -23,9 +23,9 @@ class ProcessMedia
         switch ($type) {
             case 'video':
                 Bus::chain([
+                    new SetMetadata($event->media),
                     new CreateThumbnail($event->media),
                     new CreateSprite($event->media),
-                    new SetProcessed($event->media),
                 ])->onQueue('optimize')->dispatch($event->media);
                 break;
         }

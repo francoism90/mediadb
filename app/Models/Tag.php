@@ -98,6 +98,16 @@ class Tag extends TagModel
     }
 
     /**
+     * @return string|null
+     */
+    public function getThumbnailUrlAttribute()
+    {
+        // TODO: Add thumbnail support
+
+        return '';
+    }
+
+    /**
      * @param Builder $query
      * @param array   $tags
      * @param string  $type

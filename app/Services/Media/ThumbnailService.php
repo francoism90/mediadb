@@ -49,11 +49,11 @@ class ThumbnailService
 
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
-            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 4),
-            'ffmpeg.timeout' => 120,
+            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
+            'ffmpeg.timeout' => 300,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
-            'timeout' => 120,
+            'timeout' => 300,
         ]);
     }
 
@@ -80,8 +80,10 @@ class ThumbnailService
 
         // Mark conversion as done
         $media->markAsConversionGenerated('thumbnail', true);
+    }
 
-        // Delete temporary files
+    public function __destruct()
+    {
         $this->temporaryDirectory->delete();
     }
 
@@ -92,19 +94,13 @@ class ThumbnailService
      */
     protected function prepareConversion(Media $media): string
     {
-        // Path for the video frame
         $path = $this->temporaryDirectory->path("{$media->id}/thumbnail.jpg");
 
-        // Video instance
         $video = $this->getVideo($media->getPath());
 
-        // Get current media duration
         $duration = $media->getCustomProperty('metadata.duration', 60);
-
-        // Frameshot timecode
         $frameshot = $media->getCustomProperty('frameshot', $duration / 2);
 
-        // Set frame parameters
         $frame = $video->frame(
             TimeCode::fromSeconds($frameshot)
         );
@@ -113,7 +109,6 @@ class ThumbnailService
             new CustomFrameFilter(self::THUMBNAIL_FILTER)
         );
 
-        // Create frame
         $frame->save($path);
 
         return $path;

@@ -37,8 +37,8 @@ class IndexController extends Controller
                 'videos',
             ])
             ->allowedFilters([
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('video', new VideoFilter())->ignore(null, '*'),
             ])
             ->allowedSorts([

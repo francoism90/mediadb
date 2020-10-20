@@ -19,7 +19,7 @@ class CleanupService
     /**
      * @return void
      */
-    public function deleteExpiredStreamFiles(): void
+    protected function deleteExpiredStreamFiles(): void
     {
         $files = $this->getExpiredStreamFiles();
 

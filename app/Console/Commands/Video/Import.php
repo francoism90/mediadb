@@ -2,23 +2,21 @@
 
 namespace App\Console\Commands\Video;
 
-use App\Models\Collection;
-use App\Models\User;
+use App\Models\Video;
 use App\Services\Video\ImportService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection as IlluminateCollection;
 
 class Import extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'video:import {user} {path} {type=episode}';
+    protected $signature = 'video:import {path} {video}';
 
     /**
      * @var string
      */
-    protected $description = 'Import video files to library';
+    protected $description = 'Import media to video model';
 
     /**
      * Create a new command instance.
@@ -33,48 +31,51 @@ class Import extends Command
      */
     public function handle(ImportService $importService)
     {
-        $user = $this->getUserModel();
-        $collection = $this->getCollectionName();
+        $video = $this->getVideoModel();
+        $collection = $this->getCollections();
+        $locale = $this->getLocale();
 
+        // Start importing
         $importService->import(
-            $user,
-            $collection,
+            $video,
             $this->argument('path'),
-            $this->argument('type')
+            $collection,
+            [
+                'locale' => $locale,
+            ]
         );
     }
 
     /**
      * @return string
      */
-    protected function getCollectionName(): string
+    protected function getCollections(): string
     {
-        $name = $this->anticipate('Add videos to collection', function ($input) {
-            return $this->getCollectionsByQuery($input)->pluck('name')->toArray();
-        });
-
-        return $name;
-    }
-
-    /**
-     * @return User
-     */
-    protected function getUserModel(): User
-    {
-        return User::findOrFail(
-            $this->argument('user')
+        return $this->choice(
+            'Choose collection',
+            config('vod.import.collections'),
         );
     }
 
     /**
-     * @return IlluminateCollection
+     * @return string
      */
-    protected function getCollectionsByQuery(string $query = ''): IlluminateCollection
+    protected function getLocale(): string
     {
-        return Collection::search($query)
-            ->select(['id', 'name'])
-            ->from(0)
-            ->take(5)
-            ->get();
+        return $this->choice(
+            'Choose locale',
+            config('vod.import.locales'),
+            locale()
+        );
+    }
+
+    /**
+     * @return Video
+     */
+    protected function getVideoModel(): Video
+    {
+        return Video::findOrFail(
+            $this->argument('video')
+        );
     }
 }

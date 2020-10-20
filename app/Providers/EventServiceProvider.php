@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\Video\MediaHasBeenAdded;
+use App\Listeners\Media\Process as ProcessMedia;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +19,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        MediaHasBeenAdded::class => [
+            ProcessMedia::class,
+        ],
     ];
 
     /**
@@ -26,15 +32,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    }
-
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     *
-     * @return bool
-     */
-    public function shouldDiscoverEvents()
-    {
-        return true;
     }
 }

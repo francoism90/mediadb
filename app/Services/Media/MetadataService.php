@@ -17,7 +17,7 @@ class MetadataService
     {
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
-            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 4),
+            'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
             'ffmpeg.timeout' => 120,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),

@@ -32,7 +32,7 @@ class VideoPolicy
      */
     public function view(?User $user, Video $video)
     {
-        if ($video->latestStatus(['published'])->exists()) {
+        if ($video->latestStatus(['public'])->exists()) {
             return true;
         }
 

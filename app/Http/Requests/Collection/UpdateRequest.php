@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:255',
-            'description' => 'nullable|string|min:0|max:1024',
+            'overview' => 'nullable|string|min:0|max:1024',
             'status' => 'nullable|string|in:private,public',
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*' => 'required|array',
@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'description' => 'trim|strip_tags',
+            'overview' => 'trim|strip_tags',
             'status' => 'trim|escape|lowercase',
             'tags.*.id' => 'trim|strip_tags',
             'tags.*.type' => 'trim|strip_tags|slug',
