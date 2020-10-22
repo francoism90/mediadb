@@ -31,6 +31,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->configureModelBinding();
         $this->configureRateLimiting();
 
         $this->routes(function () {
@@ -42,6 +43,32 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function configureModelBinding()
+    {
+        Route::bind('collection', function ($value) {
+            return \App\Models\Collection::findByHash($value);
+        });
+
+        Route::bind('media', function ($value) {
+            return \App\Models\Media::findByHash($value);
+        });
+
+        Route::bind('tag', function ($value) {
+            return \App\Models\Tag::findByHash($value);
+        });
+
+        Route::bind('user', function ($value) {
+            return \App\Models\User::findByHash($value);
+        });
+
+        Route::bind('video', function ($value) {
+            return \App\Models\Video::findByHash($value);
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
+use App\Events\Video\VideoSaved;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\SaveRequest;
 use App\Http\Resources\VideoResource;
@@ -35,10 +36,7 @@ class SaveController extends Controller
             $request->isMethod('put')
         );
 
-        notify([
-            'message' => "{$video->name} has been saved.",
-            'type' => 'positive',
-        ]);
+        event(new VideoSaved($video));
 
         return new VideoResource($video);
     }

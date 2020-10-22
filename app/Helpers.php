@@ -1,6 +1,6 @@
 <?php
 
-use App\Notifications\BroadcastNotification;
+use App\Notifications\UserNotification;
 
 if (!function_exists('locale')) {
     function locale(): string
@@ -12,7 +12,7 @@ if (!function_exists('locale')) {
 if (!function_exists('notify')) {
     function notify($message): void
     {
-        auth()->user()->notify(new BroadcastNotification(
+        auth()->user()->notify(new UserNotification(
             $message
         ));
     }

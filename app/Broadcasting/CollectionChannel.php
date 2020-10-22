@@ -2,9 +2,10 @@
 
 namespace App\Broadcasting;
 
+use App\Models\Collection;
 use App\Models\User;
 
-class UserChannel
+class CollectionChannel
 {
     /**
      * Create a new channel instance.
@@ -18,13 +19,15 @@ class UserChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
+     * @param \App\Models\User       $user
+     * @param \App\Models\Collection $collection
      *
      * @return array|bool
      */
-    public function join(User $user, User $model)
+    public function join(User $user, Collection $collection)
     {
-        return $user->id === $model->id;
+        // TODO: check user role(s)
+
+        return true;
     }
 }

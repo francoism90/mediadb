@@ -113,10 +113,10 @@ class Video extends Model implements HasMedia, Viewable
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->findByHash($value);
-    }
+    // public function resolveRouteBinding($value, $field = null)
+    // {
+    //     return $this->findByHash($value);
+    // }
 
     /**
      * @return SlugOptions

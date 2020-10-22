@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Collection;
 
+use App\Events\Collection\CollectionUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
@@ -39,10 +40,7 @@ class UpdateController extends Controller
             $request->input('tags')
         );
 
-        notify([
-            'message' => "{$collection->name} has been updated.",
-            'type' => 'positive',
-        ]);
+        event(new CollectionUpdated($collection));
 
         return new CollectionResource($collection);
     }

@@ -97,26 +97,17 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     ];
 
     /**
-     * Retrieve the model for a bound value.
-     *
-     * @param mixed       $value
-     * @param string|null $field
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->findByHash($value);
-    }
-
-    /**
      * Get the user's preferred locale.
      *
      * @return string
      */
     public function preferredLocale()
     {
-        return data_get($this, 'preferences.locale', config('app.fallback_locale'));
+        return data_get(
+            $this,
+            'custom_properties.locale',
+            config('app.fallback_locale')
+        );
     }
 
     /**

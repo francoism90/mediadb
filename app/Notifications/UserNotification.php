@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class BroadcastNotification extends Notification
+class UserNotification extends Notification
 {
     /**
      * @var mixed

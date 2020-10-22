@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
+use App\Events\Video\VideoUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource;
@@ -39,10 +40,7 @@ class UpdateController extends Controller
             $request->input('tags')
         );
 
-        notify([
-            'message' => "{$video->name} has been updated.",
-            'type' => 'positive',
-        ]);
+        event(new VideoUpdated($video));
 
         return new VideoResource($video);
     }

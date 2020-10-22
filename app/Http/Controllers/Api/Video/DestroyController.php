@@ -19,11 +19,6 @@ class DestroyController extends Controller
             return response()->json([], 500);
         }
 
-        notify([
-            'message' => "{$video->name} has been deleted.",
-            'type' => 'positive',
-        ]);
-
         return new VideoResource($video);
     }
 }

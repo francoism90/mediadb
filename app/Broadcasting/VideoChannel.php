@@ -3,6 +3,7 @@
 namespace App\Broadcasting;
 
 use App\Models\User;
+use App\Models\Video;
 
 class VideoChannel
 {
@@ -18,12 +19,15 @@ class VideoChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User $user
+     * @param \App\Models\User  $user
+     * @param \App\Models\Video $video
      *
      * @return array|bool
      */
-    public function join(User $user)
+    public function join(User $user, Video $video)
     {
+        // TODO: check user role(s)
+
         return true;
     }
 }
