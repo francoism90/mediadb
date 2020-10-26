@@ -13,10 +13,9 @@ class CreateCollectionsTable extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->morphs('model');
-            $table->json('slug');
             $table->json('name');
-            $table->string('type')->index()->nullable();
+            $table->json('slug');
+            $table->string('type')->nullable();
             $table->json('overview')->nullable();
             $table->json('custom_properties')->nullable();
             $table->nullableTimestamps();

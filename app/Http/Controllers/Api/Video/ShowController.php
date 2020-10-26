@@ -20,7 +20,7 @@ class ShowController extends Controller
 
         return new VideoResource(
             $video
-                ->load('tags')
+                ->load('collections', 'tags')
                 ->append([
                     'bitrate',
                     'codec_name',

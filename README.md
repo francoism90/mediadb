@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/francoism90/mediadb.svg?branch=master)](https://travis-ci.com/francoism90/mediadb)
 
-**MediaDB** is a web-based video streaming service written in Laravel and Vue.
+**MediaDB** is a web-based media streaming service written in Laravel and Vue.
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
 - [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) and [expire tokens](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html) are used to prevent unwanted access and reading of streams. However a CDN may be preferred, `nginx-secure-token-module` provides support for several token providers.
@@ -59,7 +59,7 @@ php artisan horizon:install
 php artisan telescope:install
 ```
 
-It is advisable to view all configuration files and change them when necessary, especially `.env`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
+It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/library.php`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
 
 #### Indexes
 
@@ -131,18 +131,18 @@ To import files (videos, subtitles/captions, ..) to the library:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan video:create 'My Video Title'
-php artisan video:import /path/to/import <video-id>
+php artisan library:create 'My Title'
+php artisan library:import /path/to/import <model-id>
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.
 
 ### Notes
 
-- Make sure the import and destination path is owned by `http` (running user), the importer will skip non writable files.
-- Make sure the videos can be played in the browser/target device as they aren't being encoded (yet).
-- Make sure there is enough space on the disk to import and process the video.
-- See `app/Console/Commands/Video/Import.php` for more details.
+- Make sure files in the import and destination path are writeable by `http` (or the running user), the importer will skip non writable files.
+- Make sure videos can be played in the browser/target device as they aren't being encoded (yet).
+- Make sure there is enough space on the disk to import and process the media.
+- See `app/Console/Commands/Library/Import.php` for more details.
 
 ## Optimizing
 

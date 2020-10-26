@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Media;
+namespace App\Services;
 
 use App\Models\Media;
 use FFMpeg\FFMpeg;
 use Illuminate\Support\Collection;
 
-class MetadataService
+class MediaService
 {
     /**
      * @var FFMpeg
@@ -18,10 +18,10 @@ class MetadataService
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
-            'ffmpeg.timeout' => 120,
+            'ffmpeg.timeout' => 180,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
-            'timeout' => 120,
+            'timeout' => 180,
         ]);
     }
 

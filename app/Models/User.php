@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
-use App\Traits\Activityable;
-use App\Traits\Hashidable;
-use App\Traits\Randomable;
-use App\Traits\Viewable as ViewableHelpers;
+use App\Traits\HasActivities;
+use App\Traits\HasHashids;
+use App\Traits\HasRandomSeed;
+use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -23,18 +23,18 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
 {
+    use HasActivities;
     use HasApiTokens;
-    use Activityable;
-    use CanFollow;
     use HasFactory;
-    use Hashidable;
+    use HasHashids;
+    use HasRandomSeed;
     use HasRoles;
+    use HasViews;
     use InteractsWithMedia;
     use InteractsWithViews;
+    use CanFollow;
     use Notifiable;
-    use Randomable;
     use Searchable;
-    use ViewableHelpers;
 
     /**
      * @var array
@@ -103,11 +103,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      */
     public function preferredLocale()
     {
-        return data_get(
-            $this,
-            'custom_properties.locale',
-            config('app.fallback_locale')
-        );
+        return data_get($this, 'custom_properties.locale', config('app.fallback_locale'));
     }
 
     /**
@@ -152,18 +148,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
-     * @return mixed
-     */
-    public function collections()
-    {
-        return $this->morphMany('App\Models\Collection', 'model');
-    }
-
-    /**
      * @return string
      */
     public function getThumbnailAttribute(): string
     {
+        // TODO: add thumbnail support
         return '';
     }
 

@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Console\Commands\Media;
+namespace App\Console\Commands\Library;
 
-use App\Services\Media\CleanupService;
+use App\Services\LibraryService;
 use Illuminate\Console\Command;
 
-class Cleanup extends Command
+class Maintenance extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'media:cleanup';
+    protected $signature = 'library:maintenance';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Cleanup media models';
+    protected $description = 'Perform maintenance on library models';
 
     /**
      * Create a new command instance.
@@ -32,8 +32,9 @@ class Cleanup extends Command
     /**
      * @return mixed
      */
-    public function handle(CleanupService $cleanupService)
-    {
-        $cleanupService->cleanup();
+    public function handle(
+        LibraryService $libraryService
+    ): void {
+        $libraryService->performMaintenance();
     }
 }

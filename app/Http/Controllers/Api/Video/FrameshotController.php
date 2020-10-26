@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\Video\VideoUpdated;
+use App\Events\VideoHasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\FrameshotRequest;
 use App\Http\Resources\VideoResource;
@@ -33,7 +33,7 @@ class FrameshotController extends Controller
         // Dispatch thumbnail job
         CreateThumbnail::dispatch($media)->onQueue('media');
 
-        event(new VideoUpdated($video));
+        event(new VideoHasBeenUpdated($video));
 
         return new VideoResource($video);
     }

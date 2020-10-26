@@ -20,7 +20,7 @@ class ShowController extends Controller
 
         return new CollectionResource(
             $collection
-                ->load(['model', 'tags', 'videos'])
+                ->load(['tags', 'videos'])
                 ->append([
                     'item_count',
                     'thumbnail_url',

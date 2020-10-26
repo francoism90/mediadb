@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Media;
+namespace App\Services;
 
 use App\Models\Media;
 use FFMpeg\Coordinate\TimeCode;
@@ -70,7 +70,6 @@ class SpriteService
 
         $imagick = $this->prepareConversion($media);
 
-        // Create montage
         $montage = $imagick->montageImage(
             new ImagickDraw(),
             self::SPRITE_COLUMNS.'x',
@@ -81,10 +80,8 @@ class SpriteService
 
         $montage->writeImage($path);
 
-        // Mark as conversion done
         $media->markAsConversionGenerated('sprite', true);
 
-        // Copy to media-library
         $this->filesystem->copyToMediaLibrary(
             $path,
             $media,
@@ -124,12 +121,10 @@ class SpriteService
 
             $frame->save($framePath);
 
-            // Add image
             $imagick->addImage(
                 new Imagick($framePath)
             );
 
-            // Push frame
             $frames->push([
                 'id' => $frameCount,
                 'start' => $timeCode,
@@ -149,7 +144,6 @@ class SpriteService
             ++$frameCount;
         }
 
-        // Set frames as custom property
         $media->setCustomProperty('sprite', $frames);
 
         return $imagick;

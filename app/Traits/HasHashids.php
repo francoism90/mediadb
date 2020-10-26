@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-trait Hashidable
+trait HasHashids
 {
     /**
      * @param string|null $connection
@@ -22,7 +22,7 @@ trait Hashidable
      */
     public function getRouteKey()
     {
-        return self::getEncodedKey($this->getKey());
+        return self::getEncodedHash($this->getKey());
     }
 
     /**
@@ -30,7 +30,7 @@ trait Hashidable
      */
     public function getDecodedRouteKey()
     {
-        return self::getDecodedKey($this->getKey());
+        return self::getDecodedHash($this->getKey());
     }
 
     /**
@@ -39,7 +39,7 @@ trait Hashidable
      *
      * @return string|int
      */
-    public static function getDecodedKey(string $key, string $connection = null)
+    public static function getDecodedHash(string $key, string $connection = null)
     {
         $decoded = self::getHashidsConnection($connection)->decode($key);
 
@@ -52,7 +52,7 @@ trait Hashidable
      *
      * @return string|int
      */
-    public static function getEncodedKey($key, string $connection = null)
+    public static function getEncodedHash($key, string $connection = null)
     {
         return self::getHashidsConnection($connection)->encode($key);
     }
@@ -65,7 +65,7 @@ trait Hashidable
      */
     public static function findByHash(string $key, string $connection = null): Model
     {
-        $key = self::getDecodedKey($key, $connection);
+        $key = self::getDecodedHash($key, $connection);
 
         $modelInstance = resolve($connection ?? get_called_class());
 

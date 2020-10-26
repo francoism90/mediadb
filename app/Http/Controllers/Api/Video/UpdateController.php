@@ -2,23 +2,32 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\Video\VideoUpdated;
+use App\Events\VideoHasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
-use App\Services\Tag\SyncService as TagSyncService;
+use App\Services\CollectionService;
+use App\Services\TagService;
 
 class UpdateController extends Controller
 {
     /**
-     * @var TagSyncService
+     * @var CollectionService
      */
-    protected $tagSyncService;
+    protected $collectionService;
 
-    public function __construct(TagSyncService $tagSyncService)
-    {
-        $this->tagSyncService = $tagSyncService;
+    /**
+     * @var TagService
+     */
+    protected $tagService;
+
+    public function __construct(
+        CollectionService $collectionService,
+        TagService $tagService
+    ) {
+        $this->collectionService = $collectionService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -29,18 +38,25 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Video $video)
     {
-        $video->setTranslation('name', locale(), $request->input('name', $video->name))
-              ->setTranslation('overview', locale(), $request->input('overview', $video->overview))
+        $locale = app()->getLocale();
+
+        $video->setTranslation('name', $locale, $request->input('name', $video->name))
+              ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
               ->save();
+
+        $this->collectionService->sync(
+            $video,
+            $request->input('collections', []),
+        );
+
+        $this->tagService->sync(
+            $video,
+            $request->input('tags', []),
+        );
 
         $video->setStatus($request->input('status', 'public'));
 
-        $this->tagSyncService->sync(
-            $video,
-            $request->input('tags')
-        );
-
-        event(new VideoUpdated($video));
+        event(new VideoHasBeenUpdated($video));
 
         return new VideoResource($video);
     }

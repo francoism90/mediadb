@@ -4,15 +4,16 @@ namespace App\Models;
 
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\VideoIndexConfigurator;
-use App\Traits\Activityable;
-use App\Traits\Hashidable;
-use App\Traits\Randomable;
-use App\Traits\Taggable;
-use App\Traits\Translatable;
-use App\Traits\Viewable as ViewableHelpers;
+use App\Traits\HasActivities;
+use App\Traits\HasCollections;
+use App\Traits\HasHashids;
+use App\Traits\HasRandomSeed;
+use App\Traits\HasViews;
+use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -28,23 +29,23 @@ use Spatie\Translatable\HasTranslations;
 
 class Video extends Model implements HasMedia, Viewable
 {
-    use HasTranslations;
-    use HasTranslatableSlug;
-    use Activityable;
-    use CanBeLiked;
-    use CanBeFavorited;
-    use Hashidable;
+    use HasActivities;
+    use HasCollections;
+    use HasHashids;
+    use HasRandomSeed;
     use HasStatuses;
+    use HasTranslatableSlug;
+    use HasTranslations;
+    use HasViews;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
-    use Randomable;
     use Searchable;
-    use Translatable;
-    use ViewableHelpers;
-    use HasTags, Taggable {
-        Taggable::getTagClassName insteadof HasTags;
-        Taggable::tags insteadof HasTags;
+    use CanBeFavorited;
+    use CanBeLiked;
+    use HasTags, InteractsWithTags {
+        InteractsWithTags::getTagClassName insteadof HasTags;
+        InteractsWithTags::tags insteadof HasTags;
     }
 
     /**
@@ -108,15 +109,12 @@ class Video extends Model implements HasMedia, Viewable
     ];
 
     /**
-     * @param mixed       $value
-     * @param string|null $field
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return morphTo
      */
-    // public function resolveRouteBinding($value, $field = null)
-    // {
-    //     return $this->findByHash($value);
-    // }
+    public function model(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     /**
      * @return SlugOptions
@@ -169,8 +167,6 @@ class Video extends Model implements HasMedia, Viewable
     {
         return [
             'id' => $this->id,
-            'model_type' => $this->model_type,
-            'model_id' => $this->model_id,
             'name' => $this->name,
             'type' => $this->type,
             'status' => $this->status,
@@ -181,44 +177,6 @@ class Video extends Model implements HasMedia, Viewable
             'episode_number' => $this->episode_number,
             'overview' => $this->overview,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function model()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function collections()
-    {
-        return $this->morphToMany(
-            'App\Models\Collection',
-            'collectable'
-        );
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitlesAttribute()
-    {
-        return $this
-            ->collections()
-            ->ofType('title')
-            ->get();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTracksAttribute()
-    {
-        return $this->getMedia('tracks');
     }
 
     /**
@@ -313,6 +271,14 @@ class Video extends Model implements HasMedia, Viewable
                 ]
             );
         });
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getTracksAttribute()
+    {
+        return $this->getMedia('tracks');
     }
 
     /**

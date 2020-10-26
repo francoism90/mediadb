@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Api\Collection;
 
-use App\Events\Collection\CollectionUpdated;
+use App\Events\CollectionHasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
-use App\Services\Tag\SyncService as TagSyncService;
+use App\Services\TagService;
 
 class UpdateController extends Controller
 {
     /**
-     * @var TagSyncService
+     * @var TagService
      */
-    protected $tagSyncService;
+    protected $tagService;
 
-    public function __construct(TagSyncService $tagSyncService)
+    public function __construct(TagService $tagService)
     {
-        $this->tagSyncService = $tagSyncService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -29,18 +29,20 @@ class UpdateController extends Controller
      */
     public function __invoke(UpdateRequest $request, Collection $collection)
     {
-        $collection->setTranslation('name', locale(), $request->input('name', $collection->name))
-                   ->setTranslation('overview', locale(), $request->input('overview', $collection->overview))
+        $locale = app()->getLocale();
+
+        $collection->setTranslation('name', $locale, $request->input('name', $collection->name))
+                   ->setTranslation('overview', $locale, $request->input('overview', $collection->overview))
                    ->save();
 
         $collection->setStatus($request->input('status', 'public'));
 
-        $this->tagSyncService->sync(
+        $this->tagService->sync(
             $collection,
-            $request->input('tags')
+            $request->input('tags', []),
         );
 
-        event(new CollectionUpdated($collection));
+        event(new CollectionHasBeenUpdated($collection));
 
         return new CollectionResource($collection);
     }

@@ -98,15 +98,8 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        $collection = collect($this->tags);
-
-        $grouped = $collection->groupBy('type');
-
-        foreach ($grouped->toArray() as $group => $items) {
-            // We need to import each individually
-            foreach ($items as $item) {
-                Tag::findOrCreateFromString($item['name'], $group);
-            }
+        foreach ($this->tags as $tag) {
+            Tag::findOrCreateFromString($tag['name'], $tag['type']);
         }
     }
 }

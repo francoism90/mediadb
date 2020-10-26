@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
-use App\Services\Media\StreamService;
+use App\Services\StreamService;
 
 class StreamController extends Controller
 {

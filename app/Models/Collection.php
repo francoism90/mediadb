@@ -4,15 +4,14 @@ namespace App\Models;
 
 use App\Support\Scout\CollectionIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
-use App\Traits\Activityable;
-use App\Traits\Hashidable;
-use App\Traits\Randomable;
-use App\Traits\Taggable;
-use App\Traits\Viewable as ViewableHelpers;
+use App\Traits\HasActivities;
+use App\Traits\HasHashids;
+use App\Traits\HasRandomSeed;
+use App\Traits\HasViews;
+use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
@@ -24,20 +23,20 @@ use Spatie\Translatable\HasTranslations;
 
 class Collection extends Model implements Viewable
 {
-    use Activityable;
     use CanBeFavorited;
     use CanBeLiked;
-    use Hashidable;
+    use HasActivities;
+    use HasHashids;
+    use HasRandomSeed;
     use HasStatuses;
-    use InteractsWithViews;
-    use Randomable;
-    use Searchable;
-    use HasTranslations;
     use HasTranslatableSlug;
-    use ViewableHelpers;
-    use HasTags, Taggable {
-        Taggable::getTagClassName insteadof HasTags;
-        Taggable::tags insteadof HasTags;
+    use HasTranslations;
+    use HasViews;
+    use InteractsWithViews;
+    use Searchable;
+    use HasTags, InteractsWithTags {
+        InteractsWithTags::getTagClassName insteadof HasTags;
+        InteractsWithTags::tags insteadof HasTags;
     }
 
     /**
@@ -109,20 +108,10 @@ class Collection extends Model implements Viewable
     {
         return [
             'id' => $this->id,
-            'model_type' => $this->model_type,
-            'model_id' => $this->model_id,
             'name' => $this->name,
-            'overview' => $this->overview,
             'type' => $this->type,
+            'overview' => $this->overview,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function model(): MorphTo
-    {
-        return $this->morphTo();
     }
 
     /**
@@ -137,14 +126,93 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param mixed                                 $type
+     * @param string|array|\ArrayAccess $values
+     * @param string|null               $type
+     * @param string|null               $locale
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Collection|static
      */
-    public function scopeOfType($query, $type)
+    public static function findOrCreate($values, string $type = null, string $locale = null)
     {
-        return $query->where('type', $type);
+        $collection = collect($values)->map(function ($value) use ($type, $locale) {
+            if ($value instanceof self) {
+                return $value;
+            }
+
+            return static::findOrCreateFromString($value, $type, $locale);
+        });
+
+        return is_string($values) ? $collection->first() : $collection;
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string $locale
+     *
+     * @return Collection|static
+     */
+    protected static function findOrCreateFromString(string $name, string $type = null, string $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        $collection = static::findFromString($name, $type, $locale);
+
+        if (!$collection) {
+            $collection = static::create([
+                'name' => [$locale => $name],
+                'type' => $type,
+            ]);
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string $locale
+     *
+     * @return Collection|null
+     */
+    public static function findFromString(string $name, string $type = null, string $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        return static::query()
+            ->where("name->{$locale}", $name)
+            ->where('type', $type)
+            ->first();
+    }
+
+    /**
+     * @param string $name
+     * @param string $locale
+     *
+     * @return Collection|null
+     */
+    public static function findFromStringOfAnyType(string $name, string $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        return static::query()
+            ->where("name->{$locale}", $name)
+            ->first();
+    }
+
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setAttribute($key, $value)
+    {
+        if ('name' === $key && !is_array($value)) {
+            return $this->setTranslation($key, app()->getLocale(), $value);
+        }
+
+        return parent::setAttribute($key, $value);
     }
 
     /**
@@ -156,12 +224,27 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getThumbnailUrlAttribute(): string
+    public function getThumbnailUrlAttribute()
     {
-        $model = $this->videos()->orderByDesc('created_at')->first();
+        return optional($this->videos()->orderByDesc('created_at')->first(), function ($media) {
+            return $media->thumbnail_url;
+        });
+    }
 
-        return $model ? $model->thumbnail_url : '';
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed                                 $type
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $type)
+    {
+        if (is_null($type)) {
+            return $query;
+        }
+
+        return $query->where('type', $type);
     }
 }

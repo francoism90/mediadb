@@ -36,8 +36,9 @@ class RelatedFilter implements Filter
         $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
-        return $query->whereIn('id', $ids)
-                     ->orderByRaw("FIELD(id, {$idsOrder})");
+        return $query
+            ->whereIn('id', $ids)
+            ->orderByRaw("FIELD(id, {$idsOrder})");
     }
 
     /**

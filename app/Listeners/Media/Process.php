@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Media;
 
-use App\Events\Video\MediaHasBeenAdded;
+use App\Events\MediaHasBeenAdded;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetMetadata;

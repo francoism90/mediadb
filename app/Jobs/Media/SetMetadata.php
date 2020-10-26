@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\Media\MetadataService;
+use App\Services\MediaService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -48,8 +48,8 @@ class SetMetadata implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MetadataService $metadataService)
+    public function handle(MediaService $mediaService)
     {
-        $metadataService->setAttributes($this->media);
+        $mediaService->setAttributes($this->media);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Video;
+namespace App\Events;
 
 use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VideoUpdated implements ShouldBroadcastNow
+class VideoHasBeenUpdated implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;

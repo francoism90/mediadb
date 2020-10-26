@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Collection;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
-use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
 use App\Support\QueryBuilder\Filters\Collection\VideoFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
@@ -32,12 +31,10 @@ class IndexController extends Controller
                 'thumbnail_url',
             ])
             ->allowedIncludes([
-                'model',
                 'tags',
                 'videos',
             ])
             ->allowedFilters([
-                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('video', new VideoFilter())->ignore(null, '*'),
             ])

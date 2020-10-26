@@ -23,7 +23,6 @@ class CollectionResource extends JsonResource
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'item_count' => $this->whenAppended('item_count'),
             'relationships' => [
-                'model' => new UserResource($this->whenLoaded('model')),
                 'tags' => TagResource::collection($this->whenLoaded('tags')),
                 'videos' => VideoResource::collection($this->whenLoaded('videos')),
             ],

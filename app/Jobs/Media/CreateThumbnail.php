@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\Media\ThumbnailService;
+use App\Services\ThumbnailService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

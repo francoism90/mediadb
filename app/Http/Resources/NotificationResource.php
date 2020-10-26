@@ -12,7 +12,7 @@ class NotificationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->getRouteKey(),
             'data' => $this->data,
             'read_at' => $this->read_at,
             'created_at' => $this->created_at,

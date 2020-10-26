@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Support\Carbon;
 
-trait Viewable
+trait HasViews
 {
     /**
      * @param string $collection
@@ -12,7 +12,7 @@ trait Viewable
      *
      * @return void
      */
-    public function recordView(string $collection = null, Carbon $expireAt)
+    public function recordView(string $collection = null, Carbon $expireAt): void
     {
         views($this)
             ->collection($collection)

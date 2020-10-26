@@ -41,7 +41,7 @@ class CollectionPolicy
             return false;
         }
 
-        return $user->id === $collection->model->id;
+        return true;
     }
 
     /**
@@ -74,7 +74,7 @@ class CollectionPolicy
             return true;
         }
 
-        return $user->id === $collection->model->id;
+        return false;
     }
 
     /**
@@ -91,7 +91,7 @@ class CollectionPolicy
             return true;
         }
 
-        return $user->id === $collection->model->id;
+        return false;
     }
 
     /**
@@ -108,7 +108,7 @@ class CollectionPolicy
             return true;
         }
 
-        return $user->id === $collection->model->id;
+        return false;
     }
 
     /**
@@ -125,6 +125,6 @@ class CollectionPolicy
             return true;
         }
 
-        return $user->id === $collection->model->id;
+        return false;
     }
 }

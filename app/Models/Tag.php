@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Support\Scout\Rules\SimpleMatchRule;
 use App\Support\Scout\TagIndexConfigurator;
-use App\Traits\Hashidable;
-use App\Traits\Randomable;
+use App\Traits\HasHashids;
+use App\Traits\HasRandomSeed;
 use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
 
 class Tag extends TagModel
 {
-    use Hashidable;
-    use Randomable;
+    use HasHashids;
+    use HasRandomSeed;
     use Searchable;
 
     /**
@@ -85,16 +85,6 @@ class Tag extends TagModel
     }
 
     /**
-     * @return string|null
-     */
-    public function getThumbnailUrlAttribute()
-    {
-        // TODO: Add thumbnail support
-
-        return '';
-    }
-
-    /**
      * @param Builder $query
      * @param array   $tags
      * @param string  $type
@@ -104,14 +94,14 @@ class Tag extends TagModel
      */
     public function scopeWithSlugTranslated($query, array $tags = [], string $type = null, string $locale = null)
     {
-        $useLocale = $locale ?? app()->getLocale();
+        $locale = $locale ?? app()->getLocale();
 
         return $query
             ->when($type, fn ($query, $type) => $query->where('type', $type))
-                ->where(function ($query) use ($tags, $useLocale) {
-                    foreach ($tags as $tag) {
-                        $query->orWhereJsonContains("slug->{$useLocale}", $tag);
-                    }
-                });
+            ->where(function ($query) use ($tags, $locale) {
+                foreach ($tags as $tag) {
+                    $query->orWhereJsonContains("slug->{$locale}", $tag);
+                }
+            });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Media;
+namespace App\Services;
 
 use App\Models\Media;
 use App\Models\User;
@@ -48,26 +48,20 @@ class StreamService
      */
     protected function getEncryptedUrl(Media $media, ?string $type = null): string
     {
-        // Generate streamKey
         $streamKey = Str::uuid();
 
-        // Generate media mapping file
         $jsonContents = $this->getMediaMapping($media, $type);
 
-        // Write mapping file
         $this->writeMappingFile($streamKey, $jsonContents);
 
-        // Get hash path
         $hashPath = $this->generateMappingHashPath($streamKey);
 
         // Add PKCS#7 padding
         $pad = 16 - (strlen($hashPath) % 16);
         $hashPath .= str_repeat(chr($pad), $pad);
 
-        // Encrypt path
         $encryptedPath = $this->generateEncryptedMappingPath($hashPath);
 
-        // Base64 path
         $encodedPath = rtrim(strtr(base64_encode($encryptedPath), '+/', '-_'), '=');
 
         return config('vod.url').'/'.self::MAPPING_PATH."/{$encodedPath}";

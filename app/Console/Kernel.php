@@ -36,19 +36,14 @@ class Kernel extends ConsoleKernel
                  ->runInBackground();
 
         $schedule->command('telescope:prune')
-                 ->dailyAt('01:00')
+                 ->dailyAt('03:00')
                  ->runInBackground();
 
         $schedule->command('activitylog:clean')
-                 ->dailyAt('01:00')
-                 ->runInBackground();
-
-        $schedule->command('media:cleanup')
                  ->dailyAt('03:00')
-                 ->environments(['staging', 'production'])
                  ->runInBackground();
 
-        $schedule->command('video:sync')
+        $schedule->command('library:maintenance')
                  ->dailyAt('04:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();

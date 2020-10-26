@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Events\Video;
+namespace App\Events;
 
 use App\Models\Media;
-use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,9 +15,9 @@ class MediaHasBeenAdded
     use SerializesModels;
 
     /**
-     * @var Video
+     * @var Model
      */
-    public $video;
+    public $model;
 
     /**
      * @var Media
@@ -29,9 +29,9 @@ class MediaHasBeenAdded
      *
      * @return void
      */
-    public function __construct(Video $video, Media $media)
+    public function __construct(Model $model, Media $media)
     {
-        $this->video = $video;
+        $this->model = $model;
         $this->media = $media;
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 
-trait Randomable
+trait HasRandomSeed
 {
-    public static function bootRandomable()
+    public static function bootHasRandomSeed(): void
     {
         self::setRandomSeed();
     }
@@ -23,7 +24,11 @@ trait Randomable
             $ttl = parent::getRandomSeedLifetime();
         }
 
-        return Cache::remember(self::getRandomSeedKey($class), $ttl, fn () => mt_rand(1000, 9500));
+        return Cache::remember(
+            self::getRandomSeedKey($class),
+            $ttl,
+            fn () => mt_rand(1000, 9500)
+        );
     }
 
     /**
@@ -53,7 +58,7 @@ trait Randomable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeInRandomSeedOrder($query)
+    public function scopeInRandomSeedOrder(Builder $query)
     {
         return $query->inRandomOrder(
             self::getRandomSeed()

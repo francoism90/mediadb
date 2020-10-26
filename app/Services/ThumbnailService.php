@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\Media;
+namespace App\Services;
 
 use App\Models\Media;
-use App\Services\ImageService;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Filters\Frame\CustomFrameFilter;
@@ -64,13 +63,10 @@ class ThumbnailService
      */
     public function create(Media $media): void
     {
-        // Perform conversion
         $framePath = $this->prepareConversion($media);
 
-        // Optimize frame
         $this->imageService->optimize($framePath);
 
-        // Copy to MediaLibrary
         $this->filesystem->copyToMediaLibrary(
             $framePath,
             $media,
@@ -78,7 +74,6 @@ class ThumbnailService
             self::CONVERSION_NAME
         );
 
-        // Mark conversion as done
         $media->markAsConversionGenerated('thumbnail', true);
     }
 

@@ -31,10 +31,10 @@ class IndexController extends Controller
             ->allowedAppends([
                 'duration',
                 'thumbnail_url',
-                'titles',
             ])
             ->allowedIncludes([
                 'model',
+                'collections',
                 'tags',
             ])
             ->allowedFilters([

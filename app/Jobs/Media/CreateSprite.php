@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\Media\SpriteService;
+use App\Services\SpriteService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

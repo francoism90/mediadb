@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\Hashidable;
-use App\Traits\Viewable as ViewableHelpers;
+use App\Traits\HasHashids;
+use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
@@ -12,10 +12,10 @@ use Spatie\ModelStatus\HasStatuses;
 
 class Media extends BaseMedia implements Viewable
 {
-    use Hashidable;
+    use HasHashids;
     use HasStatuses;
+    use HasViews;
     use InteractsWithViews;
-    use ViewableHelpers;
 
     /**
      * @var array

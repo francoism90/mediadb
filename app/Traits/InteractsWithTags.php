@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\Tag;
 
-trait Taggable
+trait InteractsWithTags
 {
     /**
      * @return string
