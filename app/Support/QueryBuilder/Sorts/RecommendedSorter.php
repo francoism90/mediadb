@@ -16,7 +16,12 @@ class RecommendedSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $query->getQuery()->orders = null;
+        // Use given order by filter(s)
+        if ($query->getQuery()->orders) {
+            return $query;
+        }
+
+        // TODO: something useful for the user instead
 
         return $query->inRandomSeedOrder();
     }

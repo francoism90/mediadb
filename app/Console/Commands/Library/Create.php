@@ -11,7 +11,7 @@ class Create extends Command
     /**
      * @var string
      */
-    protected $signature = 'library:create {name} {type=video} {user=1}';
+    protected $signature = 'library:create {name} {type=video} {user=1} {status=public}';
 
     /**
      * @var string
@@ -47,10 +47,14 @@ class Create extends Command
 
         switch ($this->argument('type')) {
             default:
-                return $user->videos()->create([
+                $model = $user->videos()->create([
                     'name' => $this->argument('name'),
                 ]);
+
+                $model->setStatus($this->argument('status'));
         }
+
+        return $model;
     }
 
     /**

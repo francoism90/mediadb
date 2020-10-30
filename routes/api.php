@@ -46,6 +46,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
         // Misc
         Route::middleware('doNotCacheResponse')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
+        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
     });
 
     // Collection
@@ -55,6 +56,9 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::get('/{collection}', ['uses' => 'ShowController', 'as' => 'show']);
         Route::delete('/{collection}', ['uses' => 'DestroyController', 'as' => 'destroy']);
         Route::put('/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
+
+        // Misc
+        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{collection}/subscribe', ['uses' => 'SubscribeController', 'as' => 'subscribe']);
     });
 
     // Tag

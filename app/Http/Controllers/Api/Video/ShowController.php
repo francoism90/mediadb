@@ -22,6 +22,7 @@ class ShowController extends Controller
             $video
                 ->load('collections', 'tags')
                 ->append([
+                    'is_favorited',
                     'bitrate',
                     'codec_name',
                     'duration',

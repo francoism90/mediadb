@@ -34,23 +34,18 @@ class QueryFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        // Convert arrays to string
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        // Set model instance
         $this->model = $query->getModel();
 
-        // Set query
         $this->setQuery((string) $value);
 
-        // Merge all models
         $models = $this->getModelsByQuery();
 
         $models = $models->merge(
             $this->getModelsByTags()
         );
 
-        // Get models
         $ids = $models->pluck('id')->toArray() ?? [];
         $idsOrder = implode(',', $ids);
 
@@ -95,7 +90,7 @@ class QueryFilter implements Filter
         // Remove tags from query
         $this->replaceQuery($matches[0] ?? []);
 
-        // Get all tag slugs
+        // Get unique tag slugs
         $this->tags = array_unique($matches[1]) ?? [];
     }
 

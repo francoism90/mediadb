@@ -7,10 +7,10 @@ use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Support\QueryBuilder\Filters\Collection\VideoFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Filters\SubscribedFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -35,6 +35,7 @@ class IndexController extends Controller
                 'videos',
             ])
             ->allowedFilters([
+                AllowedFilter::custom('subscribed', new SubscribedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('video', new VideoFilter())->ignore(null, '*'),
             ])
@@ -44,7 +45,6 @@ class IndexController extends Controller
                 AllowedSort::custom('type', new FieldSorter())->defaultDirection('asc'),
                 AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
-                AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
                 AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])

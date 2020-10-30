@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\VideoIndexConfigurator;
+use App\Traits\HasAcquaintances;
 use App\Traits\HasActivities;
 use App\Traits\HasCollections;
 use App\Traits\HasHashids;
@@ -17,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
-use Multicaret\Acquaintances\Traits\CanBeLiked;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -42,7 +42,7 @@ class Video extends Model implements HasMedia, Viewable
     use Notifiable;
     use Searchable;
     use CanBeFavorited;
-    use CanBeLiked;
+    use HasAcquaintances;
     use HasTags, InteractsWithTags {
         InteractsWithTags::getTagClassName insteadof HasTags;
         InteractsWithTags::tags insteadof HasTags;

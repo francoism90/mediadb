@@ -9,7 +9,6 @@ use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\Tag\ItemsSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -26,7 +25,9 @@ class IndexController extends Controller
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedAppends([
-                'item_count',
+                'collections',
+                'items',
+                'videos',
             ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
@@ -36,7 +37,6 @@ class IndexController extends Controller
                 $defaultSort,
                 AllowedSort::custom('items', new ItemsSorter())->defaultDirection('desc'),
                 AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc'),
-                AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
             ])
             ->defaultSort($defaultSort)
             ->jsonPaginate();

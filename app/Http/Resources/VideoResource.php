@@ -23,6 +23,7 @@ class VideoResource extends JsonResource
             'views' => $this->views,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'is_favorited' => $this->whenAppended('is_favorited'),
             'overview' => $this->whenAppended('overview'),
             'bitrate' => $this->whenAppended('bitrate'),
             'codec_name' => $this->whenAppended('codec_name'),

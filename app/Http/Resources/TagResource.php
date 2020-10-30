@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Collection;
+use App\Models\Video;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TagResource extends JsonResource
@@ -16,9 +18,12 @@ class TagResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'type' => $this->type,
-            'item_count' => $this->whenAppended('item_count'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'views' => $this->whenAppended('views', $this->views),
+            'items' => $this->whenAppended('items', $this->item_count),
+            'collections' => $this->whenAppended('collections', $this->getItemCountAttribute(Collection::class)),
+            'videos' => $this->whenAppended('videos', $this->getItemCountAttribute(Video::class)),
         ];
     }
 }

@@ -15,7 +15,7 @@ class CreateCollectionsTable extends Migration
             $table->bigIncrements('id');
             $table->json('name');
             $table->json('slug');
-            $table->string('type')->nullable();
+            $table->string('type')->nullable()->index();
             $table->json('overview')->nullable();
             $table->json('custom_properties')->nullable();
             $table->nullableTimestamps();

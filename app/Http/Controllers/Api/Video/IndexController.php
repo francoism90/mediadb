@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Api\Video;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
+use App\Support\QueryBuilder\Filters\FavoritedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Video\CollectionFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use App\Support\QueryBuilder\Sorts\RelevanceSorter;
 use App\Support\QueryBuilder\Sorts\TrendingSorter;
 use App\Support\QueryBuilder\Sorts\Video\DurationSorter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -39,6 +39,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::custom('collection', new CollectionFilter())->ignore(null, '*'),
+                AllowedFilter::custom('favorited', new FavoritedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
@@ -48,7 +49,6 @@ class IndexController extends Controller
                 AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('duration', new DurationSorter())->defaultDirection('asc'),
-                AllowedSort::custom('relevance', new RelevanceSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
                 AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])

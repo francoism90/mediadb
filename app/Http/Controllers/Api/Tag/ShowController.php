@@ -16,12 +16,15 @@ class ShowController extends Controller
     public function __invoke(Tag $tag)
     {
         // $tag->recordActivity('viewed');
-        // $tag->recordView('view_count', now()->addYear());
+        $tag->recordView('view_count', now()->addYear());
 
         return new TagResource(
             $tag
                 ->append([
-                    'item_count',
+                    'views',
+                    'items',
+                    'collections',
+                    'videos',
                     'thumbnail_url',
                 ])
         );

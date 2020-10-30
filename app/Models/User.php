@@ -12,10 +12,12 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Multicaret\Acquaintances\Traits\CanFollow;
+use Multicaret\Acquaintances\Traits\CanFavorite;
+use Multicaret\Acquaintances\Traits\CanSubscribe;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,9 +34,10 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use HasViews;
     use InteractsWithMedia;
     use InteractsWithViews;
-    use CanFollow;
     use Notifiable;
     use Searchable;
+    use CanFavorite;
+    use CanSubscribe;
 
     /**
      * @var array
@@ -117,6 +120,14 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
+     * @return MorphMany
+     */
+    public function videos(): MorphMany
+    {
+        return $this->morphMany(Video::class, 'model');
+    }
+
+    /**
      * @return void
      */
     public function registerMediaCollections(): void
@@ -137,14 +148,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             'name' => $this->name,
             'description' => $this->description,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function videos()
-    {
-        return $this->morphMany('App\Models\Video', 'model');
     }
 
     /**

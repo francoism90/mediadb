@@ -3,19 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasHashids;
-use App\Traits\HasViews;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\MediaLibrary\Support\UrlGenerator\UrlGeneratorFactory;
 use Spatie\ModelStatus\HasStatuses;
 
-class Media extends BaseMedia implements Viewable
+class Media extends BaseMedia
 {
     use HasHashids;
     use HasStatuses;
-    use HasViews;
-    use InteractsWithViews;
 
     /**
      * @var array

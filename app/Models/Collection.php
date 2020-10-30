@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Scout\CollectionIndexConfigurator;
 use App\Support\Scout\Rules\MultiMatchRule;
+use App\Traits\HasAcquaintances;
 use App\Traits\HasActivities;
 use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
@@ -12,8 +13,7 @@ use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
-use Multicaret\Acquaintances\Traits\CanBeFavorited;
-use Multicaret\Acquaintances\Traits\CanBeLiked;
+use Multicaret\Acquaintances\Traits\CanBeSubscribed;
 use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -23,8 +23,6 @@ use Spatie\Translatable\HasTranslations;
 
 class Collection extends Model implements Viewable
 {
-    use CanBeFavorited;
-    use CanBeLiked;
     use HasActivities;
     use HasHashids;
     use HasRandomSeed;
@@ -34,6 +32,8 @@ class Collection extends Model implements Viewable
     use HasViews;
     use InteractsWithViews;
     use Searchable;
+    use CanBeSubscribed;
+    use HasAcquaintances;
     use HasTags, InteractsWithTags {
         InteractsWithTags::getTagClassName insteadof HasTags;
         InteractsWithTags::tags insteadof HasTags;
@@ -115,14 +115,12 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return mixed
+     * @return morphedByMany
      */
     public function videos()
     {
-        return $this->morphedByMany(
-            'App\Models\Video',
-            'collectable'
-        );
+        return $this
+            ->morphedByMany(Video::class, 'collectable');
     }
 
     /**

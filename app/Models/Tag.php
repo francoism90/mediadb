@@ -6,14 +6,19 @@ use App\Support\Scout\Rules\SimpleMatchRule;
 use App\Support\Scout\TagIndexConfigurator;
 use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
+use App\Traits\HasViews;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
 
-class Tag extends TagModel
+class Tag extends TagModel implements Viewable
 {
     use HasHashids;
     use HasRandomSeed;
+    use HasViews;
+    use InteractsWithViews;
     use Searchable;
 
     /**
@@ -54,11 +59,8 @@ class Tag extends TagModel
      */
     public function videos()
     {
-        return $this->morphedByMany(
-            'App\Models\Video',
-            'taggable',
-            'taggables'
-        );
+        return $this
+            ->morphedByMany(Video::class, 'taggable', 'taggables');
     }
 
     /**
@@ -66,11 +68,8 @@ class Tag extends TagModel
      */
     public function collections()
     {
-        return $this->morphedByMany(
-            'App\Models\Collection',
-            'taggable',
-            'taggables'
-        );
+        return $this
+            ->morphedByMany(Collection::class, 'taggable', 'taggables');
     }
 
     /**

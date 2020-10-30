@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Collection;
 use Illuminate\Database\Seeder;
 
 class CollectionsTableSeeder extends Seeder
@@ -42,10 +42,11 @@ class CollectionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::first();
-
         foreach ($this->collections as $collection) {
-            $model = $user->collections()->create($collection);
+            $model = Collection::findOrCreateFromString(
+                $collection['name'], $collection['type']
+            );
+
             $model->setStatus('public');
         }
     }

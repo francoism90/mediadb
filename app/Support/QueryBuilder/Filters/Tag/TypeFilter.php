@@ -9,10 +9,8 @@ class TypeFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        // Convert arrays to string
-        $value = is_array($value) ? implode(' ', $value) : $value;
+        $value = is_string($value) ? explode(' ', $value) : $value;
 
-        // Return by tag type
-        return $query->where('type', $value);
+        return $query->whereIn('type', $value);
     }
 }

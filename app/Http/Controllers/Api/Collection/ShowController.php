@@ -22,6 +22,7 @@ class ShowController extends Controller
             $collection
                 ->load(['tags', 'videos'])
                 ->append([
+                    'is_subscribed',
                     'item_count',
                     'thumbnail_url',
                 ])
