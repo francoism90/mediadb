@@ -38,15 +38,15 @@ See `doc/nginx` for configuration examples.
 
 | Site | Domain | Details |
 | - | - | - |
-| mediadb-api.conf | localhost:3000 | API endpoint: authentication, JSON mapping for vod-local, media manager, etc. |
+| mediadb-api.conf | localhost:3000 | API endpoint: Laravel instance, authentication, media processing, etc. |
 | mediadb-ui.conf | mediadb.test:443 mediadb.test:80 | MediaDB Front-end (optional). |
-| vod-json.conf | localhost:8081 | VOD: JSON mapping (media path, sequences, clips etc.). |
+| vod-json.conf | localhost:8081 | VOD: JSON mapping (media path, sequences, clips, etc.). |
 | vod-mapped.conf | localhost:1935 | VOD: add tokens, streaming (DASH), etc. |
 | vod-stream.conf | stream.test:443 stream.test:80 | VOD: streaming endpoint, validate security tokens, vod-mapped proxy. |
 
 ### Laravel
 
-See `doc/supervisor` for configuration examples.
+See `doc` for configuration examples.
 
 ```bash
 cd /srv/http/mediadb/api
@@ -142,7 +142,7 @@ Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom 
 - Make sure files in the import and destination path are writeable by `http` (or the running user), the importer will skip non writable files.
 - Make sure videos can be played in the browser/target device as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Library/Import.php` for more details.
+- See `app/Console/Commands/Library/Create.php` and `app/Console/Commands/Library/Import.php` for more details.
 
 ## Optimizing
 

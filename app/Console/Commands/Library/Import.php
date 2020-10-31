@@ -36,12 +36,17 @@ class Import extends Command
         $model = $this->findModel();
         $collection = $this->argument('collection');
 
+        $this->info("{$model->name} ({$this->argument('type')})");
+        $this->newLine();
+
         // Import valid files from given path
         $files = $libraryService->getFilesInPath(
             $this->argument('path')
         );
 
         foreach ($files as $file) {
+            $this->info("Importing {$file->getFilename()}");
+
             $libraryService->import($model, $file, $collection);
         }
     }

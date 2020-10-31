@@ -22,6 +22,8 @@ use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
 {
@@ -31,6 +33,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use HasHashids;
     use HasRandomSeed;
     use HasRoles;
+    use HasSlug;
     use HasViews;
     use InteractsWithMedia;
     use InteractsWithViews;
@@ -107,6 +110,16 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     public function preferredLocale()
     {
         return data_get($this, 'custom_properties.locale', config('app.fallback_locale'));
+    }
+
+    /**
+     * @return SlugOptions
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**

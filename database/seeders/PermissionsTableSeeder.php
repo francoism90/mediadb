@@ -53,6 +53,11 @@ class PermissionsTableSeeder extends Seeder
         $roleModerator->givePermissionTo('edit videos');
         $roleModerator->givePermissionTo('unpublish videos');
 
+        // Create member role and assign created permissions
+        $roleMember = Role::create(['name' => 'member']);
+
+        // $roleMember->givePermissionTo('save videos');
+
         // Create the admin user
         $user = User::create([
             'name' => 'Administrator',

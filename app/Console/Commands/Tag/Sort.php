@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Tag;
 
 use App\Services\TagService;
 use Illuminate\Console\Command;
 
-class SortTags extends Command
+class Sort extends Command
 {
     /**
      * @var string
