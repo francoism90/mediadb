@@ -13,7 +13,10 @@ class NotificationResource extends JsonResource
     {
         return [
             'id' => $this->getRouteKey(),
-            'data' => $this->data,
+            'title' => data_get($this->data, 'title'),
+            'body' => data_get($this->data, 'body'),
+            'overview' => data_get($this->data, 'overview'),
+            'type' => data_get($this->data, 'type'),
             'read_at' => $this->read_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

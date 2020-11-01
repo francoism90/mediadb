@@ -9,8 +9,6 @@ class FavoritedFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_array($value) ? implode(' ', $value) : $value;
-
         $modelClass = get_class($query->getModel());
 
         $models = auth()->user()->favorites($modelClass)->get();
