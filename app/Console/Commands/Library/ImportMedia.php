@@ -8,17 +8,17 @@ use App\Services\LibraryService;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 
-class Import extends Command
+class ImportMedia extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'library:import {path} {id} {type=video} {collection=clips}';
+    protected $signature = 'library:import-media {path} {id} {type=video} {collection=subtitles}';
 
     /**
      * @var string
      */
-    protected $description = 'Import files to a library model';
+    protected $description = 'Import media files to a library model';
 
     /**
      * Create a new command instance.
@@ -29,17 +29,12 @@ class Import extends Command
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function handle(LibraryService $libraryService): void
     {
-        $model = $this->findModel();
-        $collection = $this->argument('collection');
+        $model = $this->getModel();
 
-        $this->info("{$model->name} ({$this->argument('type')})");
-        $this->newLine();
-
-        // Import valid files from given path
         $files = $libraryService->getFilesInPath(
             $this->argument('path')
         );
@@ -47,18 +42,19 @@ class Import extends Command
         foreach ($files as $file) {
             $this->info("Importing {$file->getFilename()}");
 
-            $libraryService->import($model, $file, $collection);
+            $libraryService->import($model, $file, $this->argument('collection'));
         }
     }
 
     /**
      * @return Model
      */
-    protected function findModel(): Model
+    protected function getModel(): Model
     {
         switch ($this->argument('type')) {
             case 'media':
                 return Media::findOrFail($this->argument('id'));
+                break;
             default:
                 return Video::findOrFail($this->argument('id'));
         }

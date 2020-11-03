@@ -131,8 +131,8 @@ To import files (videos, subtitles/captions, ..) to the library:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan library:create 'My Title'
-php artisan library:import /path/to/import <model-id>
+php artisan library:import-video /path/to/import
+php artisan library:import-media /path/to/import <video-id>
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.
@@ -142,7 +142,7 @@ Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom 
 - Make sure files in the import and destination path are writeable by `http` (or the running user), the importer will skip non writable files.
 - Make sure videos can be played in the browser/target device as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Library/Create.php` and `app/Console/Commands/Library/Import.php` for more details.
+- See `app/Console/Commands/Library/ImportVideo.php` and `app/Console/Commands/Library/ImportMedia.php` for more details.
 
 ## Optimizing
 
