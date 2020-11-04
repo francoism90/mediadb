@@ -8,6 +8,8 @@
 - [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) and [expire tokens](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html) are used to prevent unwanted access and reading of streams. However a CDN may be preferred, `nginx-secure-token-module` provides support for several token providers.
 - Generates sprites and thumbnails of video files.
 
+Full size [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
+
 MediaDB is very much in development and may not be suitable for production purposes.
 
 ## Installation
