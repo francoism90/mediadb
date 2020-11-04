@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Multicaret\Acquaintances\Traits\CanFavorite;
+use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
@@ -40,6 +41,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use Notifiable;
     use Searchable;
     use CanFavorite;
+    use CanLike;
     use CanSubscribe;
 
     /**

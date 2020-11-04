@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
+use App\Events\VideoHasBeenDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
@@ -18,6 +19,8 @@ class DestroyController extends Controller
         if (!$video->delete()) {
             return response()->json([], 500);
         }
+
+        event(new VideoHasBeenDeleted($video));
 
         return new VideoResource($video);
     }

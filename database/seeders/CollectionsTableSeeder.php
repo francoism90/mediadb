@@ -27,14 +27,6 @@ class CollectionsTableSeeder extends Seeder
             'name' => 'Serie 2',
             'type' => 'title',
         ],
-        [
-            'name' => 'Favorite Series',
-            'type' => null,
-        ],
-        [
-            'name' => 'Favorite Movies',
-            'type' => null,
-        ],
     ];
 
     /**

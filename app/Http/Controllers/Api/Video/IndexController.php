@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use App\Support\QueryBuilder\Filters\FavoritedFilter;
+use App\Support\QueryBuilder\Filters\LikedFilter;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Video\CollectionFilter;
@@ -40,6 +41,7 @@ class IndexController extends Controller
             ->allowedFilters([
                 AllowedFilter::custom('collection', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('favorited', new FavoritedFilter())->ignore(null, '*'),
+                AllowedFilter::custom('liked', new LikedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])

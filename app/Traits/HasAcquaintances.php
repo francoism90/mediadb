@@ -25,6 +25,24 @@ trait HasAcquaintances
     /**
      * @return bool
      */
+    public function getIsLikedAttribute(): bool
+    {
+        return $this->isLikedBy(
+            auth()->user()
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikedAttribute(): int
+    {
+        return $this->likedCount();
+    }
+
+    /**
+     * @return bool
+     */
     public function getIsSubscribedAttribute(): bool
     {
         return $this->isSubscribedBy(

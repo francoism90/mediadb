@@ -47,6 +47,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Misc
         Route::middleware('doNotCacheResponse')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
         Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
+        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{video}/like', ['uses' => 'LikeController', 'as' => 'like']);
     });
 
     // Collection

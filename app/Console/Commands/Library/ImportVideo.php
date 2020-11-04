@@ -3,16 +3,16 @@
 namespace App\Console\Commands\Library;
 
 use App\Models\User;
+use App\Models\Video;
 use App\Services\LibraryService;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 
 class ImportVideo extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'library:import-video {path} {id?} {collection=clips} {user=1}';
+    protected $signature = 'library:import-video {path} {collection=clips} {user=1}';
 
     /**
      * @var string
@@ -39,29 +39,33 @@ class ImportVideo extends Command
         foreach ($files as $file) {
             $this->info("Importing {$file->getFilename()}");
 
-            $model = $this->firstOrCreateModel(
-                ['id' => $this->argument('id')],
-                ['name' => $file->getFilenameWithoutExtension()]
-            );
+            $model = $this->createModel([
+                'name' => $file->getFilenameWithoutExtension(),
+            ]);
 
             $libraryService->import($model, $file, $this->argument('collection'));
         }
     }
 
     /**
-     * @param array|null $attributes
-     * @param array|null $values
+     * @param array $attributes
      *
-     * @return Model
+     * @return Video
      */
-    protected function firstOrCreateModel(?array $attributes = [], ?array $values = []): Model
+    protected function createModel(array $attributes): Video
     {
-        $user = User::findOrFail(
+        return $this->getUser()
+            ->videos()
+            ->create($attributes);
+    }
+
+    /**
+     * @return User
+     */
+    protected function getUser(): User
+    {
+        return User::findOrFail(
             $this->argument('user')
         );
-
-        return $user
-            ->videos()
-            ->firstOrCreate($attributes, $values);
     }
 }

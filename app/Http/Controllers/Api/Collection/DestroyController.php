@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Collection;
 
+use App\Events\CollectionHasBeenDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
@@ -18,6 +19,8 @@ class DestroyController extends Controller
         if (!$collection->delete()) {
             return response()->json([], 500);
         }
+
+        event(new CollectionHasBeenDeleted($collection));
 
         return new CollectionResource($collection);
     }

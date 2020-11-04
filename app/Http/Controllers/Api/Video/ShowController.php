@@ -23,6 +23,7 @@ class ShowController extends Controller
                 ->load('collections', 'tags')
                 ->append([
                     'is_favorited',
+                    'is_liked',
                     'bitrate',
                     'codec_name',
                     'duration',
