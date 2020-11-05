@@ -99,7 +99,7 @@ class RelatedFilter implements Filter
         return $this->model
             ->select('id')
             ->whereKeyNot($this->model->id)
-            ->withAnyCollectionsOfAnyType($this->model->tags)
+            ->withAnyCollectionsOfAnyType($this->model->collections)
             ->inRandomSeedOrder()
             ->take(9)
             ->get();
