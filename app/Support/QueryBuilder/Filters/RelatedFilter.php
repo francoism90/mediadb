@@ -23,10 +23,8 @@ class RelatedFilter implements Filter
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         $this->model = $query->getModel()->findByHash($value);
-
         $this->setQuery();
 
-        // Merge all models
         $models = collect();
 
         foreach ($this->getCollections() as $collection) {
@@ -60,7 +58,7 @@ class RelatedFilter implements Filter
         return [
             $this->getModelsByQuery(),
             $this->getModelsByTags(),
-            $this->getModelsByModel(),
+            $this->getModelsByCollection(),
         ];
     }
 
@@ -73,7 +71,6 @@ class RelatedFilter implements Filter
             ->search($this->query)
             ->select('id')
             ->where('id', '<>', $this->model->id)
-            ->whereMatch('model_type', $this->model->model_type)
             ->collapse('id')
             ->from(0)
             ->take(9)
@@ -87,11 +84,8 @@ class RelatedFilter implements Filter
     {
         return $this->model
             ->select('id')
-            ->where('model_type', $this->model->model_type)
             ->whereKeyNot($this->model->id)
-            ->withAnyTagsOfAnyType(
-                $this->model->tags
-            )
+            ->withAnyTagsOfAnyType($this->model->tags)
             ->inRandomSeedOrder()
             ->take(9)
             ->get();
@@ -100,13 +94,12 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    protected function getModelsByModel()
+    protected function getModelsByCollection()
     {
         return $this->model
             ->select('id')
-            ->where('model_type', $this->model->model_type)
-            ->where('model_id', $this->model->model_id)
             ->whereKeyNot($this->model->id)
+            ->withAnyCollectionsOfAnyType($this->model->tags)
             ->inRandomSeedOrder()
             ->take(9)
             ->get();

@@ -30,11 +30,10 @@ class Maintenance extends Command
     }
 
     /**
-     * @return mixed
+     * @return void
      */
-    public function handle(
-        LibraryService $libraryService
-    ): void {
+    public function handle(LibraryService $libraryService): void
+    {
         $libraryService->performMaintenance();
     }
 }
