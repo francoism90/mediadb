@@ -73,7 +73,7 @@ class RelatedFilter implements Filter
             ->where('id', '<>', $this->model->id)
             ->collapse('id')
             ->from(0)
-            ->take(9)
+            ->take(12)
             ->get();
     }
 
@@ -87,7 +87,7 @@ class RelatedFilter implements Filter
             ->whereKeyNot($this->model->id)
             ->withAnyTagsOfAnyType($this->model->tags)
             ->inRandomSeedOrder()
-            ->take(9)
+            ->take(12)
             ->get();
     }
 
@@ -101,7 +101,7 @@ class RelatedFilter implements Filter
             ->whereKeyNot($this->model->id)
             ->withAnyCollectionsOfAnyType($this->model->collections)
             ->inRandomSeedOrder()
-            ->take(9)
+            ->take(12)
             ->get();
     }
 }
