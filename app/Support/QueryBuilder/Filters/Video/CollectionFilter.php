@@ -10,7 +10,7 @@ class CollectionFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_array($value) ? implode(' ', $value) : $value;
+        $value = is_array($value) ? implode(',', $value) : $value;
 
         $models = Collection::findByHash($value)->videos;
 
