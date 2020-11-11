@@ -20,7 +20,7 @@ class RelatedFilter implements Filter
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_array($value) ? implode(' ', $value) : $value;
+        $value = is_array($value) ? implode(',', $value) : $value;
 
         $this->model = $query->getModel()->findByHash($value);
         $this->setQuery();

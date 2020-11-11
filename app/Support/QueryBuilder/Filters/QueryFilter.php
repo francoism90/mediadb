@@ -124,7 +124,7 @@ class QueryFilter implements Filter
      */
     protected function getModelsByTags()
     {
-        if (!$this->model->tags || !$this->tags) {
+        if (!$this->tags || !$this->model->tags) {
             return collect();
         }
 

@@ -24,7 +24,6 @@ class StreamService
         User $user,
         ?string $type = null
     ): string {
-        // Get encrypted url
         $url = $this->getEncryptedUrl($media, $type);
 
         // Generate nginx expire url
@@ -181,10 +180,8 @@ class StreamService
      *
      * @return bool
      */
-    protected function writeMappingFile(
-        string $streamKey,
-        string $contents
-    ): bool {
+    protected function writeMappingFile(string $streamKey, string $contents): bool
+    {
         return Storage::disk('streams')->put("{$streamKey}.json", $contents);
     }
 }

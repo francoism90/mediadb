@@ -29,7 +29,7 @@ class TypeFilter implements Filter
             $methodName = Str::camel("get-{$type}-models");
 
             $models = $models->merge(
-                $this->$methodName()
+                $this->$methodName() ?? []
             );
         }
 
@@ -42,18 +42,22 @@ class TypeFilter implements Filter
     }
 
     /**
-     * @return Collection
+     * @return Collection|null
      */
-    protected function getFavoritedModels(): Collection
+    protected function getFavoritedModels()
     {
-        return auth()->user()->favorites(Video::class)->get();
+        return optional(auth()->user(), function ($user) {
+            return $user->favorites(Video::class)->get();
+        });
     }
 
     /**
-     * @return Collection
+     * @return Collection|null
      */
-    protected function getLikedModels(): Collection
+    protected function getLikedModels()
     {
-        return auth()->user()->likes(Video::class)->get();
+        return optional(auth()->user(), function ($user) {
+            return $user->likes(Video::class)->get();
+        });
     }
 }

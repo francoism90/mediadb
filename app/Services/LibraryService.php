@@ -21,9 +21,8 @@ class LibraryService
      */
     protected $mediaService;
 
-    public function __construct(
-        MediaService $mediaService
-    ) {
+    public function __construct(MediaService $mediaService)
+    {
         $this->mediaService = $mediaService;
     }
 

@@ -28,7 +28,7 @@ class TypeFilter implements Filter
             $methodName = Str::camel("get-{$type}-models");
 
             $models = $models->merge(
-                $this->$methodName()
+                $this->$methodName() ?? []
             );
         }
 
@@ -41,10 +41,12 @@ class TypeFilter implements Filter
     }
 
     /**
-     * @return Collection
+     * @return Collection|null
      */
     protected function getSubscribedModels()
     {
-        return auth()->user()->subscriptions(Collection::class)->get();
+        return optional(auth()->user(), function ($user) {
+            return $user->subscriptions(Collection::class)->get();
+        });
     }
 }
