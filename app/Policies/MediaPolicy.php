@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Collection;
+use App\Models\Media;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CollectionPolicy
+class MediaPolicy
 {
     use HandlesAuthorization;
 
@@ -19,27 +19,19 @@ class CollectionPolicy
      */
     public function viewAny(?User $user)
     {
-        if (null === $user) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param \App\Models\User  $user
+     * @param \App\Models\Media $model
      *
      * @return bool
      */
-    public function view(?User $user, Collection $model)
+    public function view(?User $user, Media $model)
     {
-        if ($model->latestStatus(['public'])->exists()) {
-            return true;
-        }
-
         if (null === $user) {
             return false;
         }
@@ -56,7 +48,7 @@ class CollectionPolicy
      */
     public function create(User $user)
     {
-        if ($user->can('create collections')) {
+        if ($user->can('create media')) {
             return true;
         }
 
@@ -66,14 +58,14 @@ class CollectionPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param \App\Models\User  $user
+     * @param \App\Models\Media $model
      *
      * @return bool
      */
-    public function update(User $user, Collection $model)
+    public function update(User $user, Media $model)
     {
-        if ($user->can('edit collections')) {
+        if ($user->can('edit media')) {
             return true;
         }
 
@@ -83,14 +75,14 @@ class CollectionPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param \App\Models\User  $user
+     * @param \App\Models\Media $model
      *
      * @return bool
      */
-    public function delete(User $user, Collection $model)
+    public function delete(User $user, Media $model)
     {
-        if ($user->can('delete collections')) {
+        if ($user->can('delete media')) {
             return true;
         }
 
@@ -100,14 +92,14 @@ class CollectionPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param \App\Models\User  $user
+     * @param \App\Models\Media $model
      *
      * @return bool
      */
-    public function restore(User $user, Collection $model)
+    public function restore(User $user, Media $model)
     {
-        if ($user->can('restore collections')) {
+        if ($user->can('restore media')) {
             return true;
         }
 
@@ -117,14 +109,14 @@ class CollectionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param \App\Models\User  $user
+     * @param \App\Models\Media $model
      *
      * @return bool
      */
-    public function forceDelete(User $user, Collection $model)
+    public function forceDelete(User $user, Media $model)
     {
-        if ($user->can('delete collections')) {
+        if ($user->can('delete media')) {
             return true;
         }
 

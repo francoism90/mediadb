@@ -17,8 +17,12 @@ class TagPolicy
      *
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
+        if (null === $user) {
+            return false;
+        }
+
         return true;
     }
 
@@ -26,11 +30,11 @@ class TagPolicy
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $tag
+     * @param \App\Models\Tag  $model
      *
      * @return bool
      */
-    public function view(?User $user, Tag $tag)
+    public function view(?User $user, Tag $model)
     {
         return true;
     }
@@ -55,11 +59,11 @@ class TagPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $tag
+     * @param \App\Models\Tag  $model
      *
      * @return bool
      */
-    public function update(User $user, Tag $tag)
+    public function update(User $user, Tag $model)
     {
         if ($user->can('edit tag')) {
             return true;
@@ -72,11 +76,11 @@ class TagPolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $tag
+     * @param \App\Models\Tag  $model
      *
      * @return bool
      */
-    public function delete(User $user, Tag $tag)
+    public function delete(User $user, Tag $model)
     {
         if ($user->can('delete tag')) {
             return true;
@@ -89,11 +93,11 @@ class TagPolicy
      * Determine whether the user can restore the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $tag
+     * @param \App\Models\Tag  $model
      *
      * @return bool
      */
-    public function restore(User $user, Tag $tag)
+    public function restore(User $user, Tag $model)
     {
         if ($user->can('restore tag')) {
             return true;
@@ -106,11 +110,11 @@ class TagPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $tag
+     * @param \App\Models\Tag  $model
      *
      * @return bool
      */
-    public function forceDelete(User $user, Tag $tag)
+    public function forceDelete(User $user, Tag $model)
     {
         if ($user->can('delete tag')) {
             return true;

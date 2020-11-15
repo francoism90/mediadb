@@ -17,8 +17,12 @@ class VideoPolicy
      *
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
+        if (null === $user) {
+            return false;
+        }
+
         return true;
     }
 
@@ -26,22 +30,21 @@ class VideoPolicy
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      *
      * @return bool
      */
-    public function view(?User $user, Video $video)
+    public function view(?User $user, Video $model)
     {
-        if ($video->latestStatus(['public'])->exists()) {
+        if ($model->latestStatus(['public'])->exists()) {
             return true;
         }
 
-        // Visitors cannot view private items
         if (null === $user) {
             return false;
         }
 
-        return $user->id === $video->model->id;
+        return $user->id === $model->model->id;
     }
 
     /**
@@ -64,67 +67,67 @@ class VideoPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      *
      * @return bool
      */
-    public function update(User $user, Video $video)
+    public function update(User $user, Video $model)
     {
         if ($user->can('edit video')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return $user->id === $model->model->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      *
      * @return bool
      */
-    public function delete(User $user, Video $video)
+    public function delete(User $user, Video $model)
     {
         if ($user->can('delete video')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return $user->id === $model->model->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      *
      * @return bool
      */
-    public function restore(User $user, Video $video)
+    public function restore(User $user, Video $model)
     {
         if ($user->can('restore video')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return $user->id === $model->model->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      *
      * @return bool
      */
-    public function forceDelete(User $user, Video $video)
+    public function forceDelete(User $user, Video $model)
     {
         if ($user->can('delete video')) {
             return true;
         }
 
-        return $user->id === $video->model->id;
+        return $user->id === $model->model->id;
     }
 }

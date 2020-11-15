@@ -23,6 +23,9 @@ class UserController extends Controller
                 ->user()
                 ->append([
                     'assigned_roles',
+                    'avatar_url',
+                    'notifications',
+                    'settings',
                 ])
         );
     }

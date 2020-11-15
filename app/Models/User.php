@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Support\Scout\Rules\MultiMatchRule;
 use App\Support\Scout\UserIndexConfigurator;
 use App\Traits\HasActivities;
+use App\Traits\HasCustomProperties;
 use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
@@ -30,6 +31,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
 {
     use HasActivities;
     use HasApiTokens;
+    use HasCustomProperties;
     use HasFactory;
     use HasHashids;
     use HasRandomSeed;
@@ -166,12 +168,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getThumbnailAttribute(): string
+    public function getAvatarAttribute()
     {
-        // TODO: add thumbnail support
-        return '';
+        return $this->getFirstMediaUrl('avatar');
     }
 
     /**
@@ -183,5 +184,13 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             'roles' => $this->getRoleNames()->toArray(),
             'permissions' => $this->getAllPermissions()->pluck('name')->toArray(),
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsAttribute()
+    {
+        return $this->getCustomProperty('settings');
     }
 }
