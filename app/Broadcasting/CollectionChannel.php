@@ -26,8 +26,6 @@ class CollectionChannel
      */
     public function join(User $user, Collection $collection)
     {
-        // TODO: check user role(s)
-
         return true;
     }
 }

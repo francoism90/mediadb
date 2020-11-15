@@ -2,10 +2,10 @@
 
 namespace App\Broadcasting;
 
+use App\Models\Tag;
 use App\Models\User;
-use App\Models\Video;
 
-class VideoChannel
+class TagChannel
 {
     /**
      * Create a new channel instance.
@@ -19,12 +19,12 @@ class VideoChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $video
+     * @param \App\Models\User $user
+     * @param \App\Models\Tag  $video
      *
      * @return array|bool
      */
-    public function join(User $user, Video $video)
+    public function join(User $user, Tag $tag)
     {
         return true;
     }

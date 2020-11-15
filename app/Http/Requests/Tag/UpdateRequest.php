@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Video;
+namespace App\Http\Requests\Tag;
 
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FrameshotRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     use SanitizesInput;
 
@@ -27,7 +27,11 @@ class FrameshotRequest extends FormRequest
     public function rules()
     {
         return [
-            'timecode' => 'required|numeric|min:0|max:28800',
+            'name' => 'required|string|min:1|max:255',
+            'type' => 'nullable|array|min:0|max:15',
+            'type.id' => 'nullable|string|in:actor,genre,language,studio',
+            'type.name' => 'required|string|min:1|max:255',
+            'order_column' => 'nullable|int',
         ];
     }
 
@@ -37,7 +41,10 @@ class FrameshotRequest extends FormRequest
     public function filters()
     {
         return [
-            'timecode' => 'cast:float',
+            'name' => 'trim|strip_tags',
+            'type.id' => 'trim|strip_tags|slug',
+            'type.name' => 'trim|strip_tags',
+            'order_column' => 'cast:int',
         ];
     }
 }

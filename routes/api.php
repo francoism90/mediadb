@@ -67,6 +67,8 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Resource
         Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
         Route::get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::delete('/{tag}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::put('/{tag}', ['uses' => 'UpdateController', 'as' => 'update']);
     });
 
     // Media

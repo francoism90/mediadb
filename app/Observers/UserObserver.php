@@ -8,41 +8,41 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 class UserObserver
 {
     /**
-     * @param \App\Models\User $user
+     * @param \App\Models\User $model
      */
-    public function created(User $user)
+    public function created(User $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\User $user
+     * @param \App\Models\User $model
      */
-    public function updated(User $user)
+    public function updated(User $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\User $user
+     * @param \App\Models\User $model
      */
-    public function deleted(User $user)
+    public function deleted(User $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\User $user
+     * @param \App\Models\User $model
      */
-    public function restored(User $user)
+    public function restored(User $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\User $user
+     * @param \App\Models\User $model
      */
-    public function forceDeleted(User $user)
+    public function forceDeleted(User $model)
     {
         ResponseCache::clear();
     }

@@ -8,41 +8,41 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 class CollectionObserver
 {
     /**
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      */
-    public function created(Collection $collection)
+    public function created(Collection $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      */
-    public function updated(Collection $collection)
+    public function updated(Collection $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      */
-    public function deleted(Collection $collection)
+    public function deleted(Collection $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      */
-    public function restored(Collection $collection)
+    public function restored(Collection $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      */
-    public function forceDeleted(Collection $collection)
+    public function forceDeleted(Collection $model)
     {
         ResponseCache::clear();
     }

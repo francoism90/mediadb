@@ -8,41 +8,41 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 class TagObserver
 {
     /**
-     * @param \App\Models\Tag $Tag
+     * @param \App\Models\Tag $model
      */
-    public function created(Tag $Tag)
+    public function created(Tag $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Tag $Tag
+     * @param \App\Models\Tag $model
      */
-    public function updated(Tag $Tag)
+    public function updated(Tag $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Tag $Tag
+     * @param \App\Models\Tag $model
      */
-    public function deleted(Tag $Tag)
+    public function deleted(Tag $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Tag $Tag
+     * @param \App\Models\Tag $model
      */
-    public function restored(Tag $Tag)
+    public function restored(Tag $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Tag $Tag
+     * @param \App\Models\Tag $model
      */
-    public function forceDeleted(Tag $Tag)
+    public function forceDeleted(Tag $model)
     {
         ResponseCache::clear();
     }

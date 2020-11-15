@@ -8,41 +8,41 @@ use Spatie\ResponseCache\Facades\ResponseCache;
 class VideoObserver
 {
     /**
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      */
-    public function created(Video $video)
+    public function created(Video $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      */
-    public function updated(Video $video)
+    public function updated(Video $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      */
-    public function deleted(Video $video)
+    public function deleted(Video $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      */
-    public function restored(Video $video)
+    public function restored(Video $model)
     {
         ResponseCache::clear();
     }
 
     /**
-     * @param \App\Models\Video $video
+     * @param \App\Models\Video $model
      */
-    public function forceDeleted(Video $video)
+    public function forceDeleted(Video $model)
     {
         ResponseCache::clear();
     }
