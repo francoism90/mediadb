@@ -35,12 +35,12 @@ class UpdateController extends Controller
                    ->setTranslation('overview', $locale, $request->input('overview', $collection->overview))
                    ->save();
 
-        $collection->setStatus($request->input('status', 'public'));
-
         $this->tagService->sync(
             $collection,
             $request->input('tags', [])
         );
+
+        $collection->setStatus($request->input('status', $collection->status));
 
         event(new CollectionHasBeenUpdated($collection));
 

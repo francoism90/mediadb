@@ -24,6 +24,7 @@ class ShowController extends Controller
                 ->append([
                     'is_subscribed',
                     'item_count',
+                    'status',
                     'thumbnail_url',
                 ])
         );
