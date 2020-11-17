@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Video;
 use App\Services\LibraryService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class ImportVideo extends Command
 {
@@ -40,7 +41,7 @@ class ImportVideo extends Command
             $this->info("Importing {$file->getFilename()}");
 
             $model = $this->createModel([
-                'name' => $file->getFilenameWithoutExtension(),
+                'name' => Str::title($file->getFilenameWithoutExtension()),
             ]);
 
             $libraryService->import($model, $file, $this->argument('collection'));
@@ -54,7 +55,8 @@ class ImportVideo extends Command
      */
     protected function createModel(array $attributes): Video
     {
-        return $this->getUser()
+        return $this
+            ->getUser()
             ->videos()
             ->create($attributes);
     }

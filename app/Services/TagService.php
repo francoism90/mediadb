@@ -7,21 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagService
 {
+    public const TAG_TYPES = [
+        'actor',
+        'genre',
+        'language',
+        'studio',
+    ];
+
     /**
      * @param Model $model
      * @param array $tags
-     * @param array $types
      *
      * @return void
      */
-    public function sync(
-        Model $model,
-        array $tags = [],
-        array $types = ['actor', 'genre', 'studio']
-    ): void {
+    public function sync(Model $model, array $tags = []): void
+    {
         $collect = collect($tags);
 
-        foreach ($types as $type) {
+        foreach (self::TAG_TYPES as $type) {
             $items = $collect
                 ->where('type', $type)
                 ->pluck('name')

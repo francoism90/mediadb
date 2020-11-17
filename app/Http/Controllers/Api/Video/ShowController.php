@@ -28,6 +28,7 @@ class ShowController extends Controller
                     'codec_name',
                     'duration',
                     'height',
+                    'status',
                     'overview',
                     'sprite_url',
                     'sprite',

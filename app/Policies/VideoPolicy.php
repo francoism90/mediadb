@@ -36,12 +36,12 @@ class VideoPolicy
      */
     public function view(?User $user, Video $model)
     {
-        if ($model->latestStatus(['public'])->exists()) {
-            return true;
-        }
-
         if (null === $user) {
             return false;
+        }
+
+        if ($model->latestStatus(['public'])->exists()) {
+            return true;
         }
 
         return $user->id === $model->model->id;

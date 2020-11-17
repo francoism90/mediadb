@@ -46,15 +46,15 @@ class UpdateController extends Controller
 
         $this->collectionService->sync(
             $video,
-            $request->input('collections', []),
+            $request->input('collections', [])
         );
 
         $this->tagService->sync(
             $video,
-            $request->input('tags', []),
+            $request->input('tags', [])
         );
 
-        $video->setStatus($request->input('status', 'public'));
+        $video->setStatus($request->input('status', $video->status));
 
         event(new VideoHasBeenUpdated($video));
 

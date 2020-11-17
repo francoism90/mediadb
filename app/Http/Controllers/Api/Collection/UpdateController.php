@@ -39,7 +39,7 @@ class UpdateController extends Controller
 
         $this->tagService->sync(
             $collection,
-            $request->input('tags', []),
+            $request->input('tags', [])
         );
 
         event(new CollectionHasBeenUpdated($collection));

@@ -28,9 +28,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:255',
-            'type' => 'nullable|array|min:0|max:15',
-            'type.id' => 'nullable|string|in:actor,genre,language,studio',
-            'type.name' => 'required|string|min:1|max:255',
+            'type' => 'required|string|in:actor,genre,language,studio',
             'order_column' => 'nullable|int',
         ];
     }
@@ -42,8 +40,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'type.id' => 'trim|strip_tags|slug',
-            'type.name' => 'trim|strip_tags',
+            'type' => 'trim|escape|lowercase',
             'order_column' => 'cast:int',
         ];
     }

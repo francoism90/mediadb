@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required|string|min:1|max:255',
             'overview' => 'nullable|string|min:0|max:1024',
-            'status' => 'nullable|string|in:private,public',
+            'status' => 'required|string|in:private,public',
             'collections' => 'nullable|array|min:0|max:25',
             'collections.*.type' => 'nullable|string|in:title',
             'collections.*.name' => 'required|string|min:1|max:255',

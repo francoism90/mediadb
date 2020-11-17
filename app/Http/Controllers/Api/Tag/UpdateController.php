@@ -21,10 +21,10 @@ class UpdateController extends Controller
         $locale = app()->getLocale();
 
         $tag->setTranslation('name', $locale, $request->input('name', $tag->name))
-                   ->save();
+            ->save();
 
         $tag->update([
-            'type' => $request->input('type.id', $tag->type),
+            'type' => $request->input('type', $tag->type),
             'order_column' => $request->input('order_column', $tag->order_column),
         ]);
 
