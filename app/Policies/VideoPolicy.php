@@ -40,8 +40,8 @@ class VideoPolicy
             return false;
         }
 
-        if ($model->latestStatus(['public'])->exists()) {
-            return true;
+        if ($model->latestStatus(['private'])->exists()) {
+            return false;
         }
 
         return $user->id === $model->model->id;

@@ -40,8 +40,8 @@ class CollectionPolicy
             return false;
         }
 
-        if ($model->latestStatus(['public'])->exists()) {
-            return true;
+        if ($model->latestStatus(['private'])->exists()) {
+            return false;
         }
 
         return true;
