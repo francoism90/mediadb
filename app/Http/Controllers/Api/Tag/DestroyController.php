@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Tag;
 
-use App\Events\TagHasBeenDeleted;
+use App\Events\Tag\HasBeenDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
@@ -20,7 +20,7 @@ class DestroyController extends Controller
             return response()->json([], 500);
         }
 
-        event(new TagHasBeenDeleted($tag));
+        event(new HasBeenDeleted($tag));
 
         return new TagResource($tag);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\VideoHasBeenUpdated;
+use App\Events\Video\HasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\FrameshotRequest;
 use App\Http\Resources\VideoResource;
@@ -19,7 +19,7 @@ class FrameshotController extends Controller
      */
     public function __invoke(FrameshotRequest $request, Video $video)
     {
-        $media = $video->getFirstMedia('clips');
+        $media = $video->getFirstMedia('clip');
 
         if (!$media) {
             return response()->json([], 500);
@@ -33,7 +33,7 @@ class FrameshotController extends Controller
         // Dispatch thumbnail job
         CreateThumbnail::dispatch($media)->onQueue('media');
 
-        event(new VideoHasBeenUpdated($video));
+        event(new HasBeenUpdated($video));
 
         return new VideoResource($video);
     }

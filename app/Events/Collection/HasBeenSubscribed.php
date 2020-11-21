@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Collection;
 
-use App\Models\Video;
+use App\Models\Collection;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VideoHasBeenDeleted implements ShouldBroadcastNow
+class HasBeenSubscribed implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -21,18 +21,18 @@ class VideoHasBeenDeleted implements ShouldBroadcastNow
     public $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Video
+     * @var Collection
      */
-    public $video;
+    public $collection;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Video $video)
+    public function __construct(Collection $collection)
     {
-        $this->video = $video;
+        $this->collection = $collection;
     }
 
     /**
@@ -42,7 +42,7 @@ class VideoHasBeenDeleted implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'video.deleted';
+        return 'collection.subscribed';
     }
 
     /**
@@ -53,7 +53,7 @@ class VideoHasBeenDeleted implements ShouldBroadcastNow
     public function broadcastOn()
     {
         return new PrivateChannel(
-            'video.'.$this->video->getRouteKey()
+            'collection.'.$this->collection->getRouteKey()
         );
     }
 }

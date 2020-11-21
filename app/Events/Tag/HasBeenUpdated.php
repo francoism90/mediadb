@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Tag;
 
-use App\Models\Collection;
+use App\Models\Tag;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CollectionHasBeenUpdated implements ShouldBroadcastNow
+class HasBeenUpdated implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -21,18 +21,18 @@ class CollectionHasBeenUpdated implements ShouldBroadcastNow
     public $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Collection
+     * @var Tag
      */
-    public $collection;
+    public $tag;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Collection $collection)
+    public function __construct(Tag $tag)
     {
-        $this->collection = $collection;
+        $this->tag = $tag;
     }
 
     /**
@@ -42,7 +42,7 @@ class CollectionHasBeenUpdated implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'collection.updated';
+        return 'tag.updated';
     }
 
     /**
@@ -53,7 +53,7 @@ class CollectionHasBeenUpdated implements ShouldBroadcastNow
     public function broadcastOn()
     {
         return new PrivateChannel(
-            'collection.'.$this->collection->getRouteKey()
+            'tag.'.$this->tag->getRouteKey()
         );
     }
 }

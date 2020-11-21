@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Events\MediaHasBeenAdded;
+use App\Events\Media\HasBeenAdded;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
@@ -55,7 +55,7 @@ class LibraryService
                 $media->save();
             }
 
-            event(new MediaHasBeenAdded($model, $media));
+            event(new HasBeenAdded($model, $media));
         } catch (Throwable $e) {
             report($e);
         }
@@ -76,7 +76,7 @@ class LibraryService
      *
      * @return Finder
      */
-    public function getFilesInPath(string $path): Finder
+    public function getFiles(string $path): Finder
     {
         $filter = function (SplFileInfo $file) {
             if (!$file->isReadable() || !$file->isWritable()) {

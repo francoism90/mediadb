@@ -38,7 +38,9 @@ class MediaService
             $this->getVideoAttributes($media->getPath())
         );
 
-        $media->setCustomProperty('metadata', $attributes->all())->save();
+        $media
+            ->setCustomProperty('metadata', $attributes->all())
+            ->save();
     }
 
     /**

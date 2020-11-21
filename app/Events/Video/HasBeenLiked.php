@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Video;
 
-use App\Models\Tag;
+use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TagHasBeenDeleted implements ShouldBroadcastNow
+class HasBeenLiked implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -21,18 +21,18 @@ class TagHasBeenDeleted implements ShouldBroadcastNow
     public $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Tag
+     * @var Video
      */
-    public $tag;
+    public $video;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Tag $tag)
+    public function __construct(Video $video)
     {
-        $this->tag = $tag;
+        $this->video = $video;
     }
 
     /**
@@ -42,7 +42,7 @@ class TagHasBeenDeleted implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'tag.deleted';
+        return 'video.liked';
     }
 
     /**
@@ -53,7 +53,7 @@ class TagHasBeenDeleted implements ShouldBroadcastNow
     public function broadcastOn()
     {
         return new PrivateChannel(
-            'tag.'.$this->tag->getRouteKey()
+            'video.'.$this->video->getRouteKey()
         );
     }
 }

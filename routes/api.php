@@ -73,7 +73,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Media
     Route::middleware('signed')->name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
+        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
         Route::middleware('doNotCacheResponse')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
         Route::middleware('doNotCacheResponse')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
     });

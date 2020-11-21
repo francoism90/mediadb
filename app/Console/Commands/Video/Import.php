@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Library;
+namespace App\Console\Commands\Video;
 
 use App\Models\User;
 use App\Models\Video;
@@ -8,12 +8,12 @@ use App\Services\LibraryService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class ImportVideo extends Command
+class Import extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'library:import-video {path} {collection=clips} {user=1}';
+    protected $signature = 'video:import {path} {collection=clip} {status=private} {user=1}';
 
     /**
      * @var string
@@ -33,7 +33,7 @@ class ImportVideo extends Command
      */
     public function handle(LibraryService $libraryService): void
     {
-        $files = $libraryService->getFilesInPath(
+        $files = $libraryService->getFiles(
             $this->argument('path')
         );
 
@@ -43,6 +43,8 @@ class ImportVideo extends Command
             $model = $this->createModel([
                 'name' => Str::title($file->getFilenameWithoutExtension()),
             ]);
+
+            $model->setStatus($this->argument('status'));
 
             $libraryService->import($model, $file, $this->argument('collection'));
         }

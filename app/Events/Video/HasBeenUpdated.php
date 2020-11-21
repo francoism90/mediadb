@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Video;
 
 use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VideoHasBeenLiked implements ShouldBroadcastNow
+class HasBeenUpdated implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -42,7 +42,7 @@ class VideoHasBeenLiked implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'video.liked';
+        return 'video.updated';
     }
 
     /**

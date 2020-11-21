@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\VideoHasBeenLiked;
+use App\Events\Video\HasBeenLiked;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
@@ -26,7 +26,7 @@ class LikeController extends Controller
             $user->like($video);
         }
 
-        event(new VideoHasBeenLiked($video));
+        event(new HasBeenLiked($video));
 
         return new VideoResource($video);
     }

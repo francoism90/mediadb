@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Events\UserHasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\UserResource;

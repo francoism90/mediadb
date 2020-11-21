@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Media;
 
-use App\Events\MediaHasBeenAdded;
+use App\Events\Media\HasBeenAdded;
 use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetMetadata;
@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Bus;
 class Process
 {
     /**
-     * @param MediaHasBeenAdded $event
+     * @param HasBeenAdded $event
      *
      * @return void
      */
-    public function handle(MediaHasBeenAdded $event)
+    public function handle(HasBeenAdded $event)
     {
         // e.g. video/mp4 => video
         $type = strtok($event->media->mime_type, '/');

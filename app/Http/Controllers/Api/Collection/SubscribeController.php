@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Collection;
 
-use App\Events\CollectionHasBeenSubscribed;
+use App\Events\Collection\HasBeenSubscribed;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
@@ -26,7 +26,7 @@ class SubscribeController extends Controller
             $user->subscribe($collection);
         }
 
-        event(new CollectionHasBeenSubscribed($collection));
+        event(new HasBeenSubscribed($collection));
 
         return new CollectionResource($collection);
     }

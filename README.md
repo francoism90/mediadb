@@ -129,12 +129,12 @@ set $base /srv/http/mediadb/api/storage/app/streams;
 
 ## Usage
 
-To import files (videos, subtitles/captions, ..) to the library:
+To import files (videos, captions, ..) to the library:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan library:import-video /path/to/import
-php artisan library:import-media /path/to/import <video-id>
+php artisan video:import /path/to/import
+php artisan video:import-caption /path/to/import <video-id>
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Media;
 
 use App\Models\Media;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MediaHasBeenAdded
+class HasBeenAdded
 {
     use Dispatchable;
     use InteractsWithSockets;

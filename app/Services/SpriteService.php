@@ -14,8 +14,8 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class SpriteService
 {
-    public const CONVERSION_NAME = 'sprite.webp';
-    public const CONVERSION_TYPE = 'conversions';
+    public const SPRITE_NAME = 'sprite.webp';
+    public const SPRITE_TYPE = 'conversions';
     public const SPRITE_INTERVAL = 10;
     public const SPRITE_COLUMNS = 20;
     public const SPRITE_WIDTH = 160;
@@ -66,7 +66,7 @@ class SpriteService
      */
     public function create(Media $media): void
     {
-        $path = $this->temporaryDirectory->path(self::CONVERSION_NAME);
+        $path = $this->temporaryDirectory->path(self::SPRITE_NAME);
 
         $imagick = $this->prepareConversion($media);
 
@@ -85,8 +85,8 @@ class SpriteService
         $this->filesystem->copyToMediaLibrary(
             $path,
             $media,
-            self::CONVERSION_TYPE,
-            self::CONVERSION_NAME
+            self::SPRITE_TYPE,
+            self::SPRITE_NAME
         );
     }
 

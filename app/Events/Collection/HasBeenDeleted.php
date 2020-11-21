@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Collection;
 
 use App\Models\Collection;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CollectionHasBeenDeleted implements ShouldBroadcastNow
+class HasBeenDeleted implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;

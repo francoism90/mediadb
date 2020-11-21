@@ -2,38 +2,53 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
+
 trait HasCustomProperties
 {
-    /**
-     * @param string $key
-     * @param mixed  $default
-     *
-     * @return mixed
-     */
-    public function fillCustomProperty(string $key, $default = null)
+    public function hasCustomProperty(string $propertyName): bool
     {
-        return data_fill($this->custom_properties, $key, $default);
+        return Arr::has($this->custom_properties, $propertyName);
     }
 
     /**
-     * @param string $key
+     * Get the value of custom property with the given name.
+     *
+     * @param string $propertyName
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function getCustomProperty(string $key, $default = null)
+    public function getCustomProperty(string $propertyName, $default = null)
     {
-        return data_get($this->custom_properties, $key, $default);
+        return Arr::get($this->custom_properties, $propertyName, $default);
     }
 
     /**
-     * @param string $key
-     * @param mixed  $default
+     * @param string $name
+     * @param mixed  $value
      *
-     * @return mixed
+     * @return $this
      */
-    public function setCustomProperty(string $key, $value = null)
+    public function setCustomProperty(string $name, $value): self
     {
-        return data_set($this->custom_properties, $key, $value);
+        $customProperties = $this->custom_properties;
+
+        Arr::set($customProperties, $name, $value);
+
+        $this->custom_properties = $customProperties;
+
+        return $this;
+    }
+
+    public function forgetCustomProperty(string $name): self
+    {
+        $customProperties = $this->custom_properties;
+
+        Arr::forget($customProperties, $name);
+
+        $this->custom_properties = $customProperties;
+
+        return $this;
     }
 }

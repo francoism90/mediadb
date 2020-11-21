@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Video;
 
-use App\Models\Collection;
+use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CollectionHasBeenSubscribed implements ShouldBroadcastNow
+class HasBeenFavorited implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -21,18 +21,18 @@ class CollectionHasBeenSubscribed implements ShouldBroadcastNow
     public $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Collection
+     * @var Video
      */
-    public $collection;
+    public $video;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Collection $collection)
+    public function __construct(Video $video)
     {
-        $this->collection = $collection;
+        $this->video = $video;
     }
 
     /**
@@ -42,7 +42,7 @@ class CollectionHasBeenSubscribed implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'collection.subscribed';
+        return 'video.favorited';
     }
 
     /**
@@ -53,7 +53,7 @@ class CollectionHasBeenSubscribed implements ShouldBroadcastNow
     public function broadcastOn()
     {
         return new PrivateChannel(
-            'collection.'.$this->collection->getRouteKey()
+            'video.'.$this->video->getRouteKey()
         );
     }
 }

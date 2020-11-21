@@ -14,11 +14,11 @@ class MediaResource extends JsonResource
         return [
             'id' => $this->uuid,
             'name' => $this->name,
+            'kind' => $this->kind,
+            'locale' => $this->locale,
             'mime_type' => $this->mime_type,
             'size' => $this->size,
             'download_url' => $this->download_url,
-            'collection' => $this->collection,
-            'locale' => $this->locale,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

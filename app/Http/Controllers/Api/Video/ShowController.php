@@ -24,6 +24,7 @@ class ShowController extends Controller
                 ->append([
                     'is_favorited',
                     'is_liked',
+                    'tracks',
                     'bitrate',
                     'codec_name',
                     'duration',
@@ -35,7 +36,6 @@ class ShowController extends Controller
                     'stream_url',
                     'thumbnail_url',
                     'titles',
-                    'tracks',
                     'width',
                 ])
         );

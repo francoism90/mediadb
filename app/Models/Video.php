@@ -158,7 +158,7 @@ class Video extends Model implements HasMedia, Viewable
              ->singleFile()
              ->useDisk('media');
 
-        $this->addMediaCollection('tracks')
+        $this->addMediaCollection('caption')
              ->useDisk('media');
     }
 
@@ -182,11 +182,19 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
+     * @return \Illuminate\Support\Collection|null
+     */
+    public function getTracksAttribute()
+    {
+        return $this->getMedia('caption');
+    }
+
+    /**
      * @return int|null
      */
     public function getBitrateAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('metadata.bitrate', 0);
         });
     }
@@ -196,7 +204,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getCodecNameAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('metadata.codec_name', 'N/A');
         });
     }
@@ -206,7 +214,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getDurationAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('metadata.duration', 0);
         });
     }
@@ -216,7 +224,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getHeightAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('metadata.height', 480);
         });
     }
@@ -226,7 +234,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getWidthAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('metadata.width', 768);
         });
     }
@@ -236,7 +244,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getSpriteAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return $clip->getCustomProperty('sprite', []);
         });
     }
@@ -246,7 +254,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getSpriteUrlAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return URL::signedRoute(
                 'api.media.asset',
                 [
@@ -264,7 +272,7 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function getStreamUrlAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return URL::signedRoute(
                 'api.media.stream',
                 [
@@ -276,19 +284,11 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
-     * @return Media|null
-     */
-    public function getTracksAttribute()
-    {
-        return $this->getMedia('tracks');
-    }
-
-    /**
      * @return string|null
      */
     public function getThumbnailUrlAttribute()
     {
-        return optional($this->getFirstMedia('clips'), function ($clip) {
+        return optional($this->getFirstMedia('clip'), function ($clip) {
             return URL::signedRoute(
                 'api.media.asset',
                 [

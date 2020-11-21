@@ -32,9 +32,6 @@ class UpdateRequest extends FormRequest
             'settings.captions' => 'nullable|array|min:0|max:15',
             'settings.captions.*' => 'required|array',
             'settings.captions.*.locale' => 'required|string|in:en-us',
-            'settings.subtitles' => 'nullable|array|min:0|max:15',
-            'settings.subtitles.*' => 'required|array',
-            'settings.subtitles.*.locale' => 'required|string|in:en-us',
         ];
     }
 
@@ -46,7 +43,6 @@ class UpdateRequest extends FormRequest
         return [
             'settings.language' => 'trim|strip_tags|lowercase|slug',
             'settings.captions.*.locale' => 'trim|strip_tags|lowercase|slug',
-            'settings.subtitles.*.locale' => 'trim|strip_tags|lowercase|slug',
         ];
     }
 }

@@ -44,34 +44,6 @@ class UrlGenerator extends BaseUrlGenerator
     /**
      * @return string
      */
-    public function getBasePath(): string
-    {
-        $adapter = $this->getDisk()->getAdapter();
-
-        $cachedAdapter = '\League\Flysystem\Cached\CachedAdapter';
-
-        if ($adapter instanceof $cachedAdapter) {
-            $adapter = $adapter->getAdapter();
-        }
-
-        $pathPrefix = $adapter->getPathPrefix();
-
-        return $pathPrefix;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBaseMediaPath(): string
-    {
-        $pathPrefix = $this->getBasePath();
-
-        return $pathPrefix.$this->pathGenerator->getPath($this->media);
-    }
-
-    /**
-     * @return string
-     */
     public function getBaseMediaDirectoryUrl()
     {
         return $this->getDisk()->url('/');
@@ -82,7 +54,15 @@ class UrlGenerator extends BaseUrlGenerator
      */
     public function getPath(): string
     {
-        $pathPrefix = $this->getBasePath();
+        $adapter = $this->getDisk()->getAdapter();
+
+        $cachedAdapter = '\League\Flysystem\Cached\CachedAdapter';
+
+        if ($adapter instanceof $cachedAdapter) {
+            $adapter = $adapter->getAdapter();
+        }
+
+        $pathPrefix = $adapter->getPathPrefix();
 
         return $pathPrefix.$this->getPathRelativeToRoot();
     }

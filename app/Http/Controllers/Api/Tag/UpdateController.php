@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Tag;
 
-use App\Events\TagHasBeenUpdated;
+use App\Events\Tag\HasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\UpdateRequest;
 use App\Http\Resources\TagResource;
@@ -28,7 +28,7 @@ class UpdateController extends Controller
             'order_column' => $request->input('order_column', $tag->order_column),
         ]);
 
-        event(new TagHasBeenUpdated($tag));
+        event(new HasBeenUpdated($tag));
 
         return new TagResource($tag);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Collection;
 
-use App\Events\CollectionHasBeenUpdated;
+use App\Events\Collection\HasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\UpdateRequest;
 use App\Http\Resources\CollectionResource;
@@ -42,7 +42,7 @@ class UpdateController extends Controller
 
         $collection->setStatus($request->input('status', $collection->status));
 
-        event(new CollectionHasBeenUpdated($collection));
+        event(new HasBeenUpdated($collection));
 
         return new CollectionResource($collection);
     }

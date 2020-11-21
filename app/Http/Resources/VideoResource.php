@@ -25,6 +25,7 @@ class VideoResource extends JsonResource
             'is_favorited' => $this->whenAppended('is_favorited'),
             'is_liked' => $this->whenAppended('is_liked'),
             'overview' => $this->whenAppended('overview'),
+            'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),
             'bitrate' => $this->whenAppended('bitrate'),
             'codec_name' => $this->whenAppended('codec_name'),
             'duration' => $this->whenAppended('duration'),
@@ -35,7 +36,6 @@ class VideoResource extends JsonResource
             'sprite_url' => $this->whenAppended('sprite_url'),
             'stream_url' => $this->whenAppended('stream_url'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
-            'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),
             'relationships' => [
                 'model' => new ModelResource($this->whenLoaded('model')),
                 'collections' => CollectionResource::collection($this->whenLoaded('collections')),

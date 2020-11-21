@@ -28,7 +28,7 @@
     "spatie/laravel-activitylog": "^3.16",
     "spatie/laravel-db-snapshots": "^1.7",
     "spatie/laravel-json-api-paginate": "^1.8",
-    "spatie/laravel-medialibrary": "^8.7",
+    "spatie/laravel-medialibrary": "^9.1",
     "spatie/laravel-model-status": "^1.10",
     "spatie/laravel-permission": "^3.17",
     "spatie/laravel-query-builder": "^3.2",

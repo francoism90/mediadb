@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Tag;
 
 use App\Models\Tag;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TagHasBeenUpdated implements ShouldBroadcastNow
+class HasBeenDeleted implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -42,7 +42,7 @@ class TagHasBeenUpdated implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'tag.updated';
+        return 'tag.deleted';
     }
 
     /**

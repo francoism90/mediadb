@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\MediaHasBeenAdded;
+use App\Events\Media\HasBeenAdded;
 use App\Listeners\Media\Process as ProcessMedia;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        MediaHasBeenAdded::class => [
+        HasBeenAdded::class => [
             ProcessMedia::class,
         ],
     ];

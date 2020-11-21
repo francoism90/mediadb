@@ -12,8 +12,8 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class ThumbnailService
 {
-    public const CONVERSION_NAME = 'thumbnail.webp';
-    public const CONVERSION_TYPE = 'conversions';
+    public const THUMBNAIL_NAME = 'thumbnail.webp';
+    public const THUMBNAIL_TYPE = 'conversions';
     public const THUMBNAIL_FILTER = 'scale=2048:-1';
 
     /**
@@ -70,8 +70,8 @@ class ThumbnailService
         $this->filesystem->copyToMediaLibrary(
             $framePath,
             $media,
-            self::CONVERSION_TYPE,
-            self::CONVERSION_NAME
+            self::THUMBNAIL_TYPE,
+            self::THUMBNAIL_NAME
         );
 
         $media->markAsConversionGenerated('thumbnail', true);

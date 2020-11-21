@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\VideoHasBeenFavorited;
+use App\Events\Video\HasBeenFavorited;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
@@ -26,7 +26,7 @@ class FavoriteController extends Controller
             $user->favorite($video);
         }
 
-        event(new VideoHasBeenFavorited($video));
+        event(new HasBeenFavorited($video));
 
         return new VideoResource($video);
     }

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasHashids;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
-use Spatie\MediaLibrary\Support\UrlGenerator\UrlGeneratorFactory;
 use Spatie\ModelStatus\HasStatuses;
 
 class Media extends BaseMedia
@@ -25,21 +25,9 @@ class Media extends BaseMedia
     /**
      * @return string
      */
-    public function getBasePath(): string
+    public function getKindAttribute(): string
     {
-        $urlGenerator = UrlGeneratorFactory::createForMedia($this);
-
-        return $urlGenerator->getBasePath();
-    }
-
-    /**
-     * @return string
-     */
-    public function getBaseMediaPath(): string
-    {
-        $urlGenerator = UrlGeneratorFactory::createForMedia($this);
-
-        return $urlGenerator->getBaseMediaPath();
+        return Str::plural($this->collection_name);
     }
 
     /**

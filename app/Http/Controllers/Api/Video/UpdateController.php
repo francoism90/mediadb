@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Events\VideoHasBeenUpdated;
+use App\Events\Video\HasBeenUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource;
@@ -56,7 +56,7 @@ class UpdateController extends Controller
 
         $video->setStatus($request->input('status', $video->status));
 
-        event(new VideoHasBeenUpdated($video));
+        event(new HasBeenUpdated($video));
 
         return new VideoResource($video);
     }
