@@ -11,7 +11,7 @@ class ImportCaption extends Command
     /**
      * @var string
      */
-    protected $signature = 'video:import-caption {path} {collection=caption} {locale=en}';
+    protected $signature = 'video:import-caption {path} {id} {collection=caption} {locale=en}';
 
     /**
      * @var string
