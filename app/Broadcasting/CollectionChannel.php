@@ -20,11 +20,11 @@ class CollectionChannel
      * Authenticate the user's access to the channel.
      *
      * @param \App\Models\User       $user
-     * @param \App\Models\Collection $collection
+     * @param \App\Models\Collection $model
      *
      * @return array|bool
      */
-    public function join(User $user, Collection $collection)
+    public function join(User $user, Collection $model)
     {
         return true;
     }

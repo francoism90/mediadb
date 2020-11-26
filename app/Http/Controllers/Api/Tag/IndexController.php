@@ -17,7 +17,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexController extends Controller
 {
     /**
-     * @return TagResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function __invoke()
     {

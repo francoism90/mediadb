@@ -5,6 +5,7 @@ namespace App\Providers;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {

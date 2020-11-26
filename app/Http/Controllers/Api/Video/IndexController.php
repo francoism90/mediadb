@@ -21,7 +21,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexController extends Controller
 {
     /**
-     * @return VideoResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function __invoke()
     {

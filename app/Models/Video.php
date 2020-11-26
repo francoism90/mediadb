@@ -102,11 +102,6 @@ class Video extends Model implements HasMedia, Viewable
             'duration' => [
                 'type' => 'float',
             ],
-            'file_name' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
         ],
     ];
 
@@ -173,7 +168,6 @@ class Video extends Model implements HasMedia, Viewable
             'type' => $this->type,
             'status' => $this->status,
             'release_date' => $this->release_date,
-            'file_name' => $this->file_name,
             'duration' => $this->duration,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,

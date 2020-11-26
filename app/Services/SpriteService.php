@@ -80,7 +80,7 @@ class SpriteService
 
         $montage->writeImage($path);
 
-        $media->markAsConversionGenerated('sprite', true);
+        $media->markAsConversionGenerated('sprite');
 
         $this->filesystem->copyToMediaLibrary(
             $path,

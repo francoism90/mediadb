@@ -9,6 +9,7 @@ use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use ScoutElastic\Searchable;
 use Spatie\Tags\Tag as TagModel;
@@ -55,7 +56,7 @@ class Tag extends TagModel implements Viewable
     }
 
     /**
-     * @return morphedByMany
+     * @return mixed
      */
     public function videos()
     {
@@ -64,7 +65,7 @@ class Tag extends TagModel implements Viewable
     }
 
     /**
-     * @return morphedByMany
+     * @return mixed
      */
     public function collections()
     {
@@ -91,8 +92,12 @@ class Tag extends TagModel implements Viewable
      *
      * @return Builder
      */
-    public function scopeWithSlugTranslated($query, array $tags = [], string $type = null, string $locale = null)
-    {
+    public function scopeWithSlugTranslated(
+        Builder $query,
+        array $tags = [],
+        string $type = null,
+        string $locale = null
+    ): Builder {
         $locale = $locale ?? app()->getLocale();
 
         return $query

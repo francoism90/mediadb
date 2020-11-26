@@ -20,11 +20,11 @@ class TagChannel
      * Authenticate the user's access to the channel.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Tag  $video
+     * @param \App\Models\Tag  $model
      *
      * @return array|bool
      */
-    public function join(User $user, Tag $tag)
+    public function join(User $user, Tag $model)
     {
         return true;
     }

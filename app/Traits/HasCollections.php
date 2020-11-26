@@ -115,9 +115,9 @@ trait HasCollections
     /**
      * @param string $type
      *
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function collectionsWithType(string $type = null): Collection
+    public function collectionsWithType(string $type = null)
     {
         return $this->collections->filter(function (Collection $collection) use ($type) {
             return $collection->type === $type;
@@ -261,7 +261,7 @@ trait HasCollections
     /**
      * Use in place of eloquent's sync() method so that the collection type may be optionally specified.
      *
-     * @param $ids
+     * @param array       $ids
      * @param string|null $type
      * @param bool        $detaching
      */

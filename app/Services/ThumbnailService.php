@@ -74,7 +74,7 @@ class ThumbnailService
             self::THUMBNAIL_NAME
         );
 
-        $media->markAsConversionGenerated('thumbnail', true);
+        $media->markAsConversionGenerated('thumbnail');
     }
 
     public function __destruct()

@@ -115,7 +115,7 @@ class Collection extends Model implements Viewable
     }
 
     /**
-     * @return morphedByMany
+     * @return mixed
      */
     public function videos()
     {
@@ -202,7 +202,7 @@ class Collection extends Model implements Viewable
      * @param mixed $key
      * @param mixed $value
      *
-     * @return void
+     * @return mixed
      */
     public function setAttribute($key, $value)
     {

@@ -4,7 +4,6 @@ namespace App\Support\QueryBuilder\Filters;
 
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\Filters\Filter;
 
@@ -100,14 +99,16 @@ class QueryFilter implements Filter
      *
      * @return self
      */
-    protected function replaceQuery($find = [], $replace = ' '): void
+    protected function replaceQuery($find = [], $replace = ' ')
     {
         $this->query = str_replace($find, $replace, $this->query);
         $this->query = preg_replace('/\s+/', ' ', trim($this->query));
+
+        return $this;
     }
 
     /**
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     protected function getModelsByQuery()
     {
@@ -120,7 +121,7 @@ class QueryFilter implements Filter
     }
 
     /**
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     protected function getModelsByTags()
     {

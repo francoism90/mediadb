@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NotificationResource;
-use App\Http\Resources\VideoResource;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -12,7 +11,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexController extends Controller
 {
     /**
-     * @return VideoResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function __invoke()
     {
