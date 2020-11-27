@@ -10,7 +10,7 @@ class Create extends Command
     /**
      * @var string
      */
-    protected $signature = 'collection:create {name} {type=title} {overview?}';
+    protected $signature = 'collection:create {name} {type=title} {overview?} {status=private}';
 
     /**
      * @var string
@@ -32,6 +32,8 @@ class Create extends Command
             'type' => $this->argument('type'),
             'overview' => $this->argument('overview'),
         ]);
+
+        $model->setStatus($this->argument('status'));
 
         $this->info("Successfully created collection {$model->name} ({$model->id})");
     }
