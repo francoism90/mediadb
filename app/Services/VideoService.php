@@ -76,6 +76,7 @@ class VideoService
     protected function getMissingMetadataModels(): LazyCollection
     {
         return Media::where('model_type', Video::class)
+            ->where('collection_name', 'clip')
             ->WhereNull('custom_properties->metadata')
             ->orWhereNull('custom_properties->metadata->duration')
             ->orWhereNull('custom_properties->metadata->width')
@@ -89,6 +90,7 @@ class VideoService
     protected function getMissingConversionModels(): LazyCollection
     {
         return Media::where('model_type', Video::class)
+            ->where('collection_name', 'clip')
             ->WhereNull('custom_properties->generated_conversions')
             ->orWhereNull('custom_properties->generated_conversions->sprite')
             ->orWhereNull('custom_properties->generated_conversions->thumbnail')

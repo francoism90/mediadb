@@ -67,7 +67,7 @@ class ThumbnailService
             $framePath,
             $media,
             'conversions',
-            config('video.thumbnail_name', 'thumbnail.webp')
+            config('video.thumbnail_name')
         );
 
         $media->markAsConversionGenerated('thumbnail');
