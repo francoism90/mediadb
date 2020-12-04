@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('03:00')
                  ->runInBackground();
 
-        $schedule->command('library:maintenance')
+        $schedule->command('video:maintenance')
                  ->dailyAt('04:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();

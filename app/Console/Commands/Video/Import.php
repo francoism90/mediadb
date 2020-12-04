@@ -4,7 +4,7 @@ namespace App\Console\Commands\Video;
 
 use App\Models\User;
 use App\Models\Video;
-use App\Services\LibraryService;
+use App\Services\MediaService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -31,9 +31,9 @@ class Import extends Command
     /**
      * @return void
      */
-    public function handle(LibraryService $libraryService): void
+    public function handle(MediaService $mediaService): void
     {
-        $files = $libraryService->getFiles(
+        $files = $mediaService->getFiles(
             $this->argument('path')
         );
 
@@ -46,7 +46,7 @@ class Import extends Command
 
             $model->setStatus($this->argument('status'));
 
-            $libraryService->import($model, $file, $this->argument('collection'));
+            $mediaService->import($model, $file, $this->argument('collection'));
         }
     }
 

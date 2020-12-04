@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Video;
 
 use App\Models\Video;
-use App\Services\LibraryService;
+use App\Services\MediaService;
 use Illuminate\Console\Command;
 
 class ImportCaption extends Command
@@ -29,9 +29,9 @@ class ImportCaption extends Command
     /**
      * @return void
      */
-    public function handle(LibraryService $libraryService): void
+    public function handle(MediaService $mediaService): void
     {
-        $files = $libraryService->getFiles(
+        $files = $mediaService->getFiles(
             $this->argument('path')
         );
 
@@ -40,7 +40,7 @@ class ImportCaption extends Command
         foreach ($files as $file) {
             $this->info("Importing {$file->getFilename()}");
 
-            $libraryService->import(
+            $mediaService->import(
                 $model,
                 $file,
                 $this->argument('collection'),

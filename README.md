@@ -61,7 +61,7 @@ php artisan horizon:install
 php artisan telescope:install
 ```
 
-It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/library.php`, `config/vod.php`, `config/hashids.php` and `config/filesystems.php`.
+It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/video.php`, `config/hashids.php`, `config/media-library.php` and `config/filesystems.php`.
 
 #### Indexes
 

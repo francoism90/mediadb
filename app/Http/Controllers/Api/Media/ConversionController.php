@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
-use App\Services\SpriteService;
-use App\Services\ThumbnailService;
 use Illuminate\Filesystem\FilesystemManager;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 
@@ -48,12 +46,12 @@ class ConversionController extends Controller
         $conversionPath = $this->filesystemManager->disk($media->conversions_disk)->path($conversionBasePath);
 
         $conversions = collect([
-            'sprite' => ['name' => SpriteService::SPRITE_NAME],
-            'thumbnail' => ['name' => ThumbnailService::THUMBNAIL_NAME],
+            'sprite' => ['path' => config('video.sprite_name')],
+            'thumbnail' => ['path' => config('video.thumbnail_name')],
         ]);
 
         $conversion = $conversions->get($name) ?? abort(501);
 
-        return response()->download($conversionPath.$conversion['name'], $conversion['name']);
+        return response()->download($conversionPath.$conversion['path'], $conversion['path']);
     }
 }

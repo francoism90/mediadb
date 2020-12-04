@@ -24,19 +24,18 @@ class ShowController extends Controller
                 ->append([
                     'is_favorited',
                     'is_liked',
-                    'tracks',
                     'bitrate',
                     'codec_name',
                     'duration',
-                    'height',
-                    'status',
                     'overview',
+                    'height',
+                    'width',
                     'sprite_url',
                     'sprite',
+                    'status',
                     'stream_url',
                     'thumbnail_url',
-                    'titles',
-                    'width',
+                    'tracks',
                 ])
         );
     }

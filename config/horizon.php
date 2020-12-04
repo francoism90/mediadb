@@ -197,17 +197,6 @@ return [
                 'balanceCooldown' => 3,
                 'tries' => 3,
             ],
-
-            'supervisor-4' => [
-                'connection' => 'redis',
-                'queue' => ['optimize'],
-                'balance' => 'auto',
-                'minProcesses' => 1,
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-                'tries' => 3,
-            ],
         ],
 
         'staging' => [
@@ -243,17 +232,6 @@ return [
                 'balanceCooldown' => 3,
                 'tries' => 3,
             ],
-
-            'supervisor-4' => [
-                'connection' => 'redis',
-                'queue' => ['optimize'],
-                'balance' => 'auto',
-                'minProcesses' => 1,
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-                'tries' => 3,
-            ],
         ],
 
         'local' => [
@@ -282,17 +260,6 @@ return [
             'supervisor-3' => [
                 'connection' => 'redis',
                 'queue' => ['media'],
-                'balance' => 'auto',
-                'minProcesses' => 1,
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-                'tries' => 3,
-            ],
-
-            'supervisor-4' => [
-                'connection' => 'redis',
-                'queue' => ['optimize'],
                 'balance' => 'auto',
                 'minProcesses' => 1,
                 'maxProcesses' => 10,

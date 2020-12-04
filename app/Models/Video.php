@@ -149,12 +149,21 @@ class Video extends Model implements HasMedia, Viewable
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('clip')
-             ->singleFile()
-             ->useDisk('media');
+        $this
+            ->addMediaCollection('clip')
+            ->acceptsMimeTypes(
+                config('video.accept_mimetypes')
+            )
+            ->singleFile()
+            ->useDisk('media');
 
-        $this->addMediaCollection('caption')
-             ->useDisk('media');
+        $this
+            ->addMediaCollection('caption')
+            ->acceptsMimeTypes([
+                'text/plain',
+                'text/vtt',
+            ])
+            ->useDisk('media');
     }
 
     /**

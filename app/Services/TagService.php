@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagService
 {
-    public const TAG_TYPES = [
-        'actor',
-        'genre',
-        'language',
-        'studio',
-    ];
-
     /**
      * @param Model $model
      * @param array $tags
@@ -24,7 +17,9 @@ class TagService
     {
         $collect = collect($tags);
 
-        foreach (self::TAG_TYPES as $type) {
+        $types = config('tag.types');
+
+        foreach ($types as $type) {
             $items = $collect
                 ->where('type', $type)
                 ->pluck('name')

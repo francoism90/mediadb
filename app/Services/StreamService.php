@@ -28,8 +28,8 @@ class StreamService
 
         // Generate nginx expire url
         $id = "{$user->getRouteKey()}_{$media->getRouteKey()}";
-        $expires = time() + config('vod.expire', 60 * 60 * 8);
-        $secret = config('vod.secret');
+        $expires = time() + config('video.vod_expire', 60 * 60 * 8);
+        $secret = config('video.vod_secret');
 
         $md5 = md5("{$expires}{$id} {$secret}", true);
         $md5 = base64_encode($md5);
@@ -63,7 +63,7 @@ class StreamService
 
         $encodedPath = rtrim(strtr(base64_encode($encryptedPath), '+/', '-_'), '=');
 
-        return config('vod.url').'/'.self::MAPPING_PATH."/{$encodedPath}";
+        return config('video.vod_url').'/'.self::MAPPING_PATH."/{$encodedPath}";
     }
 
     /**
@@ -155,7 +155,7 @@ class StreamService
      */
     protected function getStreamKey(): string
     {
-        return pack('H*', config('vod.key'));
+        return pack('H*', config('video.vod_key'));
     }
 
     /**
@@ -163,7 +163,7 @@ class StreamService
      */
     protected function getStreamIV(): string
     {
-        return pack('H*', config('vod.iv'));
+        return pack('H*', config('video.vod_iv'));
     }
 
     /**
@@ -171,7 +171,7 @@ class StreamService
      */
     protected function getStreamHashSize(): int
     {
-        return config('vod.secret.hash_size', 8);
+        return config('video.vod_hash_size', 8);
     }
 
     /**

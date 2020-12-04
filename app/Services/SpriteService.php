@@ -14,14 +14,6 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class SpriteService
 {
-    public const SPRITE_NAME = 'sprite.webp';
-    public const SPRITE_TYPE = 'conversions';
-    public const SPRITE_INTERVAL = 10;
-    public const SPRITE_COLUMNS = 20;
-    public const SPRITE_WIDTH = 160;
-    public const SPRITE_HEIGHT = 90;
-    public const SPRITE_FILTER = 'scale=160:190';
-
     /**
      * @var Filesystem
      */
@@ -66,14 +58,14 @@ class SpriteService
      */
     public function create(Media $media): void
     {
-        $path = $this->temporaryDirectory->path(self::SPRITE_NAME);
+        $path = $this->temporaryDirectory->path(config('video.sprite_name'));
 
         $imagick = $this->prepareConversion($media);
 
         $montage = $imagick->montageImage(
             new ImagickDraw(),
-            self::SPRITE_COLUMNS.'x',
-            self::SPRITE_WIDTH.'x'.self::SPRITE_HEIGHT.'!',
+            config('video.sprite_columns').'x',
+            config('video.sprite_width').'x'.config('video.sprite_height').'!',
             Imagick::MONTAGEMODE_CONCATENATE,
             '0'
         );
@@ -85,8 +77,8 @@ class SpriteService
         $this->filesystem->copyToMediaLibrary(
             $path,
             $media,
-            self::SPRITE_TYPE,
-            self::SPRITE_NAME
+            'conversions',
+            config('video.sprite_name')
         );
     }
 
@@ -102,6 +94,7 @@ class SpriteService
         $timeCodes = $this->getFrameRange($media);
 
         $frames = collect();
+
         $frameCount = 1;
         $framePositionX = 0;
         $framePositionY = 0;
@@ -116,7 +109,7 @@ class SpriteService
             );
 
             $frame->addFilter(
-                new CustomFrameFilter(self::SPRITE_FILTER)
+                new CustomFrameFilter(config('video.sprite_filter'))
             );
 
             $frame->save($framePath);
@@ -128,17 +121,17 @@ class SpriteService
             $frames->push([
                 'id' => $frameCount,
                 'start' => $timeCode,
-                'end' => $timeCode + self::SPRITE_INTERVAL,
+                'end' => $timeCode + config('video.sprite_interval'),
                 'x' => $framePositionX,
                 'y' => $framePositionY,
             ]);
 
             // Set next frame positions
-            if (0 === $frameCount % self::SPRITE_COLUMNS) {
+            if (0 === $frameCount % config('video.sprite_columns')) {
                 $framePositionX = 0;
-                $framePositionY += self::SPRITE_HEIGHT;
+                $framePositionY += config('video.sprite_height');
             } else {
-                $framePositionX += self::SPRITE_WIDTH;
+                $framePositionX += config('video.sprite_width');
             }
 
             ++$frameCount;
@@ -158,7 +151,7 @@ class SpriteService
     {
         $duration = $media->getCustomProperty('metadata.duration', 0);
 
-        return range(0, $duration, self::SPRITE_INTERVAL);
+        return range(0, $duration, config('video.sprite_interval'));
     }
 
     /**

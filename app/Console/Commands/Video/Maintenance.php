@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Console\Commands\Library;
+namespace App\Console\Commands\Video;
 
-use App\Services\LibraryService;
+use App\Services\VideoService;
 use Illuminate\Console\Command;
 
 class Maintenance extends Command
@@ -12,14 +12,14 @@ class Maintenance extends Command
      *
      * @var string
      */
-    protected $signature = 'library:maintenance';
+    protected $signature = 'video:maintenance';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Perform maintenance on library models';
+    protected $description = 'Perform maintenance on video models';
 
     /**
      * Create a new command instance.
@@ -32,8 +32,8 @@ class Maintenance extends Command
     /**
      * @return void
      */
-    public function handle(LibraryService $libraryService): void
+    public function handle(VideoService $videoService): void
     {
-        $libraryService->performMaintenance();
+        $videoService->performMaintenance();
     }
 }

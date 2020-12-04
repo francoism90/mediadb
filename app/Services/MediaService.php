@@ -2,9 +2,14 @@
 
 namespace App\Services;
 
+use App\Events\Media\HasBeenAdded;
 use App\Models\Media;
 use FFMpeg\FFMpeg;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+use Throwable;
 
 class MediaService
 {
@@ -23,6 +28,60 @@ class MediaService
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
             'timeout' => 180,
         ]);
+    }
+
+    /**
+     * @param Model       $model
+     * @param SplFileInfo $file
+     * @param string      $collection
+     * @param array       $properties
+     *
+     * @return void
+     */
+    public function import(
+        Model $model,
+        SplFileInfo $file,
+        string $collection = null,
+        array $properties = []
+    ): void {
+        try {
+            $filePath = $file->getRealPath();
+            $fileExtension = $file->getExtension();
+
+            $media = $model
+                    ->addMedia($filePath)
+                    ->withCustomProperties($properties)
+                    ->toMediaCollection($collection);
+
+            // Force WebVTT
+            if ('vtt' === $fileExtension) {
+                $media->mime_type = 'text/vtt';
+                $media->save();
+            }
+
+            event(new HasBeenAdded($model, $media));
+        } catch (Throwable $e) {
+            report($e);
+        }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Finder
+     */
+    public function getFiles(string $path): Finder
+    {
+        $filter = function (SplFileInfo $file) {
+            return $file->isReadable() && $file->isWritable();
+        };
+
+        return (new Finder())
+            ->files()
+            ->in($path)
+            ->depth('== 0')
+            ->filter($filter)
+            ->sortByName();
     }
 
     /**
@@ -62,6 +121,10 @@ class MediaService
     {
         $format = $this->ffmpeg->getFFProbe()->format($path);
 
+        if (!$format) {
+            return collect();
+        }
+
         return collect([
             'start_time' => $format->get('start_time', 0),
             'duration' => $format->get('duration', 0),
@@ -80,6 +143,10 @@ class MediaService
     public function getVideoAttributes(string $path): Collection
     {
         $stream = $this->ffmpeg->getFFProbe()->streams($path)->videos()->first();
+
+        if (!$stream) {
+            return collect();
+        }
 
         return collect([
             'codec_name' => $stream->get('codec_name', null),

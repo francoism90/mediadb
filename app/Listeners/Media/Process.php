@@ -26,7 +26,7 @@ class Process
                     new SetMetadata($event->media),
                     new CreateThumbnail($event->media),
                     new CreateSprite($event->media),
-                ])->onQueue('optimize')->dispatch($event->media);
+                ])->onQueue('media')->dispatch($event->media);
                 break;
         }
     }
