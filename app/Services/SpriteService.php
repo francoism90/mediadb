@@ -39,10 +39,10 @@ class SpriteService
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
-            'ffmpeg.timeout' => 2700,
+            'ffmpeg.timeout' => 5400,
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 60),
-            'timeout' => 2700,
+            'timeout' => 5400,
         ]);
     }
 
@@ -149,7 +149,7 @@ class SpriteService
      */
     protected function getFrameRange(Media $media): array
     {
-        $duration = $media->getCustomProperty('metadata.duration', 0);
+        $duration = $media->getCustomProperty('metadata.duration', 60);
 
         return range(0, $duration, config('video.sprite_interval'));
     }

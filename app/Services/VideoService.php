@@ -77,10 +77,12 @@ class VideoService
     {
         return Media::where('model_type', Video::class)
             ->where('collection_name', 'clip')
-            ->WhereNull('custom_properties->metadata')
-            ->orWhereNull('custom_properties->metadata->duration')
-            ->orWhereNull('custom_properties->metadata->width')
-            ->orWhereNull('custom_properties->metadata->height')
+            ->where(function ($query) {
+                $query->whereNull('custom_properties->metadata')
+                      ->orWhereNull('custom_properties->metadata->duration')
+                      ->orWhereNull('custom_properties->metadata->width')
+                      ->orWhereNull('custom_properties->metadata->height');
+            })
             ->cursor();
     }
 
@@ -91,9 +93,11 @@ class VideoService
     {
         return Media::where('model_type', Video::class)
             ->where('collection_name', 'clip')
-            ->WhereNull('custom_properties->generated_conversions')
-            ->orWhereNull('custom_properties->generated_conversions->sprite')
-            ->orWhereNull('custom_properties->generated_conversions->thumbnail')
+            ->where(function ($query) {
+                $query->whereNull('custom_properties->generated_conversions')
+                      ->orWhereNull('custom_properties->generated_conversions->sprite')
+                      ->orWhereNull('custom_properties->generated_conversions->thumbnail');
+            })
             ->cursor();
     }
 

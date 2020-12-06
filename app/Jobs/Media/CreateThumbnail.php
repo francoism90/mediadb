@@ -52,4 +52,12 @@ class CreateThumbnail implements ShouldQueue
     {
         $thumbnailService->create($this->media);
     }
+
+    /**
+     * @return array
+     */
+    public function tags()
+    {
+        return ['thumbnail', 'media:'.$this->media->id];
+    }
 }

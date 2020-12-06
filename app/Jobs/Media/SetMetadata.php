@@ -30,7 +30,7 @@ class SetMetadata implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 300;
+    public $timeout = 120;
 
     /**
      * @var Media
@@ -51,5 +51,13 @@ class SetMetadata implements ShouldQueue
     public function handle(MediaService $mediaService)
     {
         $mediaService->setAttributes($this->media);
+    }
+
+    /**
+     * @return array
+     */
+    public function tags()
+    {
+        return ['metadata', 'media:'.$this->media->id];
     }
 }

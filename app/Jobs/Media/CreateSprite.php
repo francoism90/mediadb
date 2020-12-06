@@ -25,12 +25,12 @@ class CreateSprite implements ShouldQueue
     /**
      * @var int
      */
-    public $tries = 3;
+    public $tries = 1;
 
     /**
      * @var int
      */
-    public $timeout = 2700;
+    public $timeout = 5400;
 
     /**
      * @var Media
@@ -51,5 +51,13 @@ class CreateSprite implements ShouldQueue
     public function handle(SpriteService $spriteService)
     {
         $spriteService->create($this->media);
+    }
+
+    /**
+     * @return array
+     */
+    public function tags()
+    {
+        return ['sprite', 'media:'.$this->media->id];
     }
 }
