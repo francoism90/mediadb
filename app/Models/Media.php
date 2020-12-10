@@ -23,6 +23,11 @@ class Media extends BaseMedia
     protected $removeViewsOnDelete = true;
 
     /**
+     * @var array
+     */
+    protected $touches = ['model'];
+
+    /**
      * @return string
      */
     public function getKindAttribute(): string

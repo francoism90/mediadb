@@ -9,7 +9,7 @@ use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
-use App\Support\QueryBuilder\Sorts\Tag\ItemsSorter;
+use App\Support\QueryBuilder\Sorts\Tag\ItemSorter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -35,7 +35,7 @@ class IndexController extends Controller
             ])
             ->AllowedSorts([
                 $defaultSort,
-                AllowedSort::custom('items', new ItemsSorter())->defaultDirection('desc'),
+                AllowedSort::custom('items', new ItemSorter())->defaultDirection('desc'),
                 AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc'),
             ])
             ->defaultSort($defaultSort)

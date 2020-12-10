@@ -22,7 +22,6 @@ class RecommendedSorter implements Sort
         }
 
         // TODO: something useful for the user instead
-
         return $query->inRandomSeedOrder();
     }
 }

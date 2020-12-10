@@ -16,12 +16,13 @@ class TypeFilter implements Filter
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_string($value) ? explode(',', $value) : $value;
+        $types = is_string($value) ? explode(',', $value) : $value;
 
+        // Merge models
         $models = collect();
 
-        foreach ($this->types as $type) {
-            if (!in_array($type, $value)) {
+        foreach ($types as $type) {
+            if (!in_array($type, $this->types)) {
                 continue;
             }
 

@@ -12,17 +12,17 @@ class QueryFilter implements Filter
     /**
      * @var Model
      */
-    protected $model = null;
+    protected $model;
 
     /**
      * @var string
      */
-    protected ?string $query = null;
+    protected string $query = '';
 
     /**
      * @var array
      */
-    protected ?array $tags = [];
+    protected array $tags = [];
 
     /**
      * @param Builder      $query
@@ -35,17 +35,21 @@ class QueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
+        // Set model
         $this->model = $query->getModel();
 
-        $this->setQuery((string) $value);
+        // Set query
+        $this->setQuery($value)
+             ->extractTags();
 
-        $models = $this->getModelsByQuery();
+        // Merge collection models
+        $models = collect();
 
-        $models = $models->merge(
-            $this->getModelsByTags()
-        );
+        foreach ($this->getCollections() as $collection) {
+            $models = $models->merge($collection);
+        }
 
-        $ids = $models->pluck('id')->toArray() ?? [];
+        $ids = $models->pluck('id')->toArray();
         $idsOrder = implode(',', $ids);
 
         return $query
@@ -56,9 +60,9 @@ class QueryFilter implements Filter
     /**
      * @param string $str
      *
-     * @return void
+     * @return self
      */
-    protected function setQuery(string $str = ''): void
+    protected function setQuery(string $str = ''): self
     {
         // Keep ASCII > 127
         $this->query = filter_var(
@@ -68,18 +72,19 @@ class QueryFilter implements Filter
             FILTER_FLAG_STRIP_LOW
         );
 
-        // Remove specials chars
-        $this->replaceQuery(['.', ',', '_', '*']);
+        // Replace specials chars
+        $this->replaceInQuery(['.', ',', '_', '-', '*']);
 
-        $this->extractTags();
+        return $this;
     }
 
     /**
-     * @return void
+     * @doc https://stackoverflow.com/a/35498078
+     *
+     * @return self
      */
-    protected function extractTags(): void
+    protected function extractTags(): self
     {
-        // https://stackoverflow.com/a/35498078
         preg_match_all(
             '/tag:([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u',
             $this->query,
@@ -87,10 +92,23 @@ class QueryFilter implements Filter
         );
 
         // Remove tags from query
-        $this->replaceQuery($matches[0] ?? []);
+        $this->replaceInQuery($matches[0] ?? []);
 
-        // Get unique tag slugs
+        // Keep unique tag slugs
         $this->tags = array_unique($matches[1]) ?? [];
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCollections(): array
+    {
+        return [
+            $this->getModelsByQuery(),
+            $this->getModelsWithTags(),
+        ];
     }
 
     /**
@@ -99,7 +117,7 @@ class QueryFilter implements Filter
      *
      * @return self
      */
-    protected function replaceQuery($find = [], $replace = ' ')
+    protected function replaceInQuery($find = [], $replace = ' '): self
     {
         $this->query = str_replace($find, $replace, $this->query);
         $this->query = preg_replace('/\s+/', ' ', trim($this->query));
@@ -123,15 +141,16 @@ class QueryFilter implements Filter
     /**
      * @return \Illuminate\Support\Collection
      */
-    protected function getModelsByTags()
+    protected function getModelsWithTags()
     {
-        if (!$this->tags || !$this->model->tags) {
+        if (!$this->model->tags || !$this->tags) {
             return collect();
         }
 
         $tags = Tag::withSlugTranslated($this->tags)->get();
 
         return $this->model
+            ->select('id')
             ->withAllTagsOfAnyType($tags)
             ->inRandomSeedOrder()
             ->get();

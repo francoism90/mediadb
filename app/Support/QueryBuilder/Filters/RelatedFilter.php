@@ -16,15 +16,18 @@ class RelatedFilter implements Filter
     /**
      * @var string
      */
-    protected ?string $query = null;
+    protected string $query = '';
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         $value = is_array($value) ? implode(',', $value) : $value;
 
+        // Set model
         $this->model = $query->getModel()->findByHash($value);
+
         $this->setQuery();
 
+        // Merge collection models
         $models = collect();
 
         foreach ($this->getCollections() as $collection) {
@@ -42,12 +45,14 @@ class RelatedFilter implements Filter
     /**
      * @doc https://stackoverflow.com/a/16427088
      *
-     * @return void
+     * @return self
      */
-    protected function setQuery(): void
+    protected function setQuery(): self
     {
         $this->query = preg_replace('~[^\p{L}]++~u', ' ', $this->model->name);
         $this->query = preg_replace('/\s+/', ' ', trim($this->query));
+
+        return $this;
     }
 
     /**
@@ -57,8 +62,8 @@ class RelatedFilter implements Filter
     {
         return [
             $this->getModelsByQuery(),
-            $this->getModelsByTags(),
-            $this->getModelsByCollection(),
+            $this->getModelsWithTags(),
+            $this->getModelsWithCollection(),
         ];
     }
 
@@ -80,7 +85,7 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    protected function getModelsByTags()
+    protected function getModelsWithTags()
     {
         return $this->model
             ->select('id')
@@ -94,7 +99,7 @@ class RelatedFilter implements Filter
     /**
      * @return Collection
      */
-    protected function getModelsByCollection()
+    protected function getModelsWithCollection()
     {
         return $this->model
             ->select('id')

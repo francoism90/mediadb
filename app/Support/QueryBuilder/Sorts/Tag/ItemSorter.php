@@ -5,7 +5,7 @@ namespace App\Support\QueryBuilder\Sorts\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class ItemsSorter implements Sort
+class ItemSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
