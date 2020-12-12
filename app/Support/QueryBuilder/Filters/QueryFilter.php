@@ -68,12 +68,13 @@ class QueryFilter implements Filter
         $this->query = filter_var(
             $str,
             FILTER_SANITIZE_STRING,
-            FILTER_FLAG_NO_ENCODE_QUOTES |
-            FILTER_FLAG_STRIP_LOW
+            FILTER_FLAG_STRIP_LOW |
+            FILTER_FLAG_STRIP_BACKTICK |
+            FILTER_FLAG_NO_ENCODE_QUOTES
         );
 
         // Replace specials chars
-        $this->replaceInQuery(['.', ',', '_', '-', '*']);
+        $this->replaceInQuery(['.', ',', '_', '*']);
 
         return $this;
     }
@@ -95,7 +96,7 @@ class QueryFilter implements Filter
         $this->replaceInQuery($matches[0] ?? []);
 
         // Keep unique tag slugs
-        $this->tags = array_unique($matches[1]) ?? [];
+        $this->tags = array_unique($matches[1] ?? []);
 
         return $this;
     }
