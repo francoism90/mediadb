@@ -5,8 +5,10 @@ namespace App\Support\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use ONGR\ElasticsearchDSL\Query\FullText\MultiMatchQuery;
+use ONGR\ElasticsearchDSL\Search;
 use Spatie\QueryBuilder\Filters\Filter;
-use Str;
 
 class RelatedFilter implements Filter
 {
@@ -50,11 +52,23 @@ class RelatedFilter implements Filter
      */
     protected function getModelsByQuery(Builder $query, Model $model): Collection
     {
-        $value = Str::of($model->name)->replaceMatches(self::NAME_REGEX, ' ')->trim();
+        $value = (string) Str::of($model->name)->replaceMatches(self::NAME_REGEX, ' ')->trim();
 
         return $query
             ->getModel()
-            ->search("name:{$value}")
+            ->search($value, function ($client, $body) use ($query, $value) {
+                $multiMatchQuery = new MultiMatchQuery(
+                    ['name^5', 'description', 'overview'], $value
+                );
+
+                $body = new Search();
+                $body->addQuery($multiMatchQuery);
+
+                return $client->search([
+                    'index' => $query->getModel()->searchableAs(),
+                    'body' => $body->toArray(),
+                ]);
+            })
             ->take(12)
             ->get();
     }

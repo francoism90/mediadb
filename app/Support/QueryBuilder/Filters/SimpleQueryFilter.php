@@ -73,12 +73,14 @@ class SimpleQueryFilter implements Filter
     protected function getModelsByQuery(Builder $query, string $value): Collection
     {
         // Replace tags (if any)
-        $value = (string) Str::of($value)->replaceMatches(self::TAG_REGEX, '');
+        $value = (string) Str::of($value)->replaceMatches(self::TAG_REGEX, '')->trim();
 
         return $query
             ->getModel()
             ->search($value, function ($client, $body) use ($query, $value) {
-                $simpleQueryStringQuery = new SimpleQueryStringQuery($value);
+                $simpleQueryStringQuery = new SimpleQueryStringQuery(
+                    $value, ['fields' => ['name^5', 'description', 'overview']]
+                );
 
                 $body = new Search();
                 $body->addQuery($simpleQueryStringQuery);
