@@ -4,6 +4,8 @@ namespace App\Support\QueryBuilder\Sorts\Video;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use ONGR\ElasticsearchDSL\Query\TermLevel\IdsQuery;
+use ONGR\ElasticsearchDSL\Sort\FieldSort;
 use Spatie\QueryBuilder\Sorts\Sort;
 
 class DurationSorter implements Sort
@@ -38,17 +40,23 @@ class DurationSorter implements Sort
      */
     protected function getModels(Builder $query, string $direction): Collection
     {
-        $filterIds = $query->pluck('id')->toArray();
-
         return $query
             ->getModel()
-            ->search('*')
-            ->select('id')
-            ->whereIn('id', $filterIds)
-            ->collapse('id')
-            ->from(0)
-            ->take(10000)
-            ->orderBy('duration', $direction)
+            ->search('*', function ($client, $body) use ($query, $direction) {
+                $idsQuery = new IdsQuery(
+                    $query->pluck('id')->toArray()
+                );
+
+                $durationSorter = new FieldSort('duration', $direction);
+
+                $body->addQuery($idsQuery);
+                $body->addSort($durationSorter);
+
+                return $client->search([
+                    'index' => $query->getModel()->searchableAs(),
+                    'body' => $body->toArray(),
+                ]);
+            })
             ->get();
     }
 }

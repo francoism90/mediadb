@@ -4,18 +4,7 @@ Because there are many breaking changes an upgrade is not that easy. There are m
 
 ## From v0 to v1
 
-### Elasticsearch
-
-```bash
-php artisan elastic:update-index "App\Support\Scout\CollectionIndexConfigurator"
-php artisan elastic:update-index "App\Support\Scout\TagIndexConfigurator"
-php artisan elastic:update-index "App\Support\Scout\UserIndexConfigurator"
-php artisan elastic:update-index "App\Support\Scout\VideoIndexConfigurator"
-php artisan elastic:update-mapping "App\Models\Collection"
-php artisan elastic:update-mapping "App\Models\Tag"
-php artisan elastic:update-mapping "App\Models\User"
-php artisan elastic:update-mapping "App\Models\Video"
-```
+### Scout
 
 Optional (re-)index the models:
 

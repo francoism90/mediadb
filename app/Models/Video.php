@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\Scout\Rules\MultiMatchRule;
-use App\Support\Scout\VideoIndexConfigurator;
 use App\Traits\HasAcquaintances;
 use App\Traits\HasActivities;
 use App\Traits\HasCollections;
@@ -17,9 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
+use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
-use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -30,11 +28,18 @@ use Spatie\Translatable\HasTranslations;
 
 class Video extends Model implements HasMedia, Viewable
 {
+    use CanBeFavorited;
+    use CanBeLiked;
+    use HasAcquaintances;
     use HasActivities;
     use HasCollections;
     use HasHashids;
     use HasRandomSeed;
     use HasStatuses;
+    use HasTags, InteractsWithTags {
+        InteractsWithTags::getTagClassName insteadof HasTags;
+        InteractsWithTags::tags insteadof HasTags;
+    }
     use HasTranslatableSlug;
     use HasTranslations;
     use HasViews;
@@ -42,13 +47,6 @@ class Video extends Model implements HasMedia, Viewable
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
-    use CanBeFavorited;
-    use CanBeLiked;
-    use HasAcquaintances;
-    use HasTags, InteractsWithTags {
-        InteractsWithTags::getTagClassName insteadof HasTags;
-        InteractsWithTags::tags insteadof HasTags;
-    }
 
     /**
      * @var array
@@ -71,39 +69,6 @@ class Video extends Model implements HasMedia, Viewable
      * @var bool
      */
     protected $removeViewsOnDelete = true;
-
-    /**
-     * @var string
-     */
-    protected $indexConfigurator = VideoIndexConfigurator::class;
-
-    /**
-     * @var array
-     */
-    protected $searchRules = [
-        MultiMatchRule::class,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $mapping = [
-        'properties' => [
-            'name' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-            'overview' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-            'duration' => [
-                'type' => 'float',
-            ],
-        ],
-    ];
 
     /**
      * @return morphTo
@@ -167,6 +132,14 @@ class Video extends Model implements HasMedia, Viewable
     }
 
     /**
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'videos';
+    }
+
+    /**
      * @return array
      */
     public function toSearchableArray(): array
@@ -174,13 +147,7 @@ class Video extends Model implements HasMedia, Viewable
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => $this->type,
-            'status' => $this->status,
-            'release_date' => $this->release_date,
             'duration' => $this->duration,
-            'season_number' => $this->season_number,
-            'episode_number' => $this->episode_number,
-            'overview' => $this->overview,
         ];
     }
 

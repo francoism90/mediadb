@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\Scout\Rules\MultiMatchRule;
-use App\Support\Scout\UserIndexConfigurator;
 use App\Traits\HasActivities;
 use App\Traits\HasCustomProperties;
 use App\Traits\HasHashids;
@@ -17,10 +15,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
 use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
-use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -29,6 +27,9 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
 {
+    use CanFavorite;
+    use CanLike;
+    use CanSubscribe;
     use HasActivities;
     use HasApiTokens;
     use HasCustomProperties;
@@ -42,9 +43,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
-    use CanFavorite;
-    use CanLike;
-    use CanSubscribe;
 
     /**
      * @var array
@@ -75,36 +73,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      * @var bool
      */
     protected $removeViewsOnDelete = true;
-
-    /**
-     * @var string
-     */
-    protected $indexConfigurator = UserIndexConfigurator::class;
-
-    /**
-     * @var array
-     */
-    protected $searchRules = [
-        MultiMatchRule::class,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $mapping = [
-        'properties' => [
-            'name' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-            'description' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-        ],
-    ];
 
     /**
      * Get the user's preferred locale.
@@ -155,16 +123,24 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'users';
+    }
+
+    /**
      * @return array
      */
     public function toSearchableArray(): array
     {
-        return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'name' => $this->name,
-            'description' => $this->description,
-        ];
+        return $this->only([
+            'id',
+            'name',
+            'email',
+            'description',
+        ]);
     }
 
     /**

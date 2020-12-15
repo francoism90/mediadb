@@ -7,7 +7,7 @@ use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
 use App\Support\QueryBuilder\Filters\Collection\VideoFilter;
-use App\Support\QueryBuilder\Filters\QueryFilter;
+use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
 use App\Support\QueryBuilder\Sorts\MostViewsSorter;
 use App\Support\QueryBuilder\Sorts\RecommendedSorter;
@@ -36,7 +36,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*'),
                 AllowedFilter::custom('video', new VideoFilter())->ignore(null, '*'),
             ])
             ->allowedSorts([

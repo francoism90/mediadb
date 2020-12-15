@@ -18,11 +18,6 @@ class Media extends BaseMedia
     protected $guarded = [];
 
     /**
-     * @var bool
-     */
-    protected $removeViewsOnDelete = true;
-
-    /**
      * @var array
      */
     protected $touches = ['model'];
@@ -48,6 +43,6 @@ class Media extends BaseMedia
      */
     public function getLocaleAttribute(): string
     {
-        return $this->getCustomProperty('locale', 'undefined');
+        return $this->getCustomProperty('locale', 'N/A');
     }
 }

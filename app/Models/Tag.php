@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\Scout\Rules\SimpleMatchRule;
-use App\Support\Scout\TagIndexConfigurator;
 use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
@@ -11,7 +9,7 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use ScoutElastic\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Tags\Tag as TagModel;
 
 class Tag extends TagModel implements Viewable
@@ -23,36 +21,22 @@ class Tag extends TagModel implements Viewable
     use Searchable;
 
     /**
-     * @var string
+     * @return string
      */
-    protected $indexConfigurator = TagIndexConfigurator::class;
-
-    /**
-     * @var array
-     */
-    protected $searchRules = [
-        SimpleMatchRule::class,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $mapping = [
-        'properties' => [
-            'name' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-        ],
-    ];
+    public function searchableAs()
+    {
+        return 'tags';
+    }
 
     /**
      * @return array
      */
     public function toSearchableArray(): array
     {
-        return $this->only(['id', 'name']);
+        return $this->only([
+            'id',
+            'name',
+        ]);
     }
 
     /**
@@ -74,9 +58,11 @@ class Tag extends TagModel implements Viewable
     }
 
     /**
+     * @param string $type
+     *
      * @return int
      */
-    public function getItemCountAttribute($type = null): int
+    public function getItemCountAttribute(string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)

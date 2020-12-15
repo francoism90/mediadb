@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Video;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
-use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
+use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
 use App\Support\QueryBuilder\Filters\Video\CollectionFilter;
 use App\Support\QueryBuilder\Filters\Video\TypeFilter;
 use App\Support\QueryBuilder\Sorts\FieldSorter;
@@ -41,7 +41,7 @@ class IndexController extends Controller
                 AllowedFilter::custom('collection', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
+                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
             ])
             ->allowedSorts([
                 $defaultSort,

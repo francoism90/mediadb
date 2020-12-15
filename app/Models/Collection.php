@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\Scout\CollectionIndexConfigurator;
-use App\Support\Scout\Rules\MultiMatchRule;
 use App\Traits\HasAcquaintances;
 use App\Traits\HasActivities;
 use App\Traits\HasHashids;
@@ -13,8 +11,8 @@ use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeSubscribed;
-use ScoutElastic\Searchable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -23,21 +21,21 @@ use Spatie\Translatable\HasTranslations;
 
 class Collection extends Model implements Viewable
 {
+    use CanBeSubscribed;
+    use HasAcquaintances;
     use HasActivities;
     use HasHashids;
     use HasRandomSeed;
     use HasStatuses;
+    use HasTags, InteractsWithTags {
+        InteractsWithTags::getTagClassName insteadof HasTags;
+        InteractsWithTags::tags insteadof HasTags;
+    }
     use HasTranslatableSlug;
     use HasTranslations;
     use HasViews;
     use InteractsWithViews;
     use Searchable;
-    use CanBeSubscribed;
-    use HasAcquaintances;
-    use HasTags, InteractsWithTags {
-        InteractsWithTags::getTagClassName insteadof HasTags;
-        InteractsWithTags::tags insteadof HasTags;
-    }
 
     /**
      * @var array
@@ -62,36 +60,6 @@ class Collection extends Model implements Viewable
     protected $removeViewsOnDelete = true;
 
     /**
-     * @var string
-     */
-    protected $indexConfigurator = CollectionIndexConfigurator::class;
-
-    /**
-     * @var array
-     */
-    protected $searchRules = [
-        MultiMatchRule::class,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $mapping = [
-        'properties' => [
-            'name' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-            'overview' => [
-                'type' => 'text',
-                'analyzer' => 'autocomplete',
-                'search_analyzer' => 'autocomplete_search',
-            ],
-        ],
-    ];
-
-    /**
      * @return SlugOptions
      */
     public function getSlugOptions(): SlugOptions
@@ -102,16 +70,24 @@ class Collection extends Model implements Viewable
     }
 
     /**
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'collections';
+    }
+
+    /**
      * @return array
      */
     public function toSearchableArray(): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'type' => $this->type,
-            'overview' => $this->overview,
-        ];
+        return $this->only([
+            'id',
+            'name',
+            'type',
+            'overview',
+        ]);
     }
 
     /**

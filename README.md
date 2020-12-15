@@ -63,21 +63,6 @@ php artisan telescope:install
 
 It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/video.php`, `config/hashids.php`, `config/media-library.php` and `config/filesystems.php`.
 
-#### Indexes
-
-Note: make sure Elasticsearch is up and running.
-
-```bash
-php artisan elastic:create-index "App\Support\Scout\CollectionIndexConfigurator"
-php artisan elastic:create-index "App\Support\Scout\TagIndexConfigurator"
-php artisan elastic:create-index "App\Support\Scout\UserIndexConfigurator"
-php artisan elastic:create-index "App\Support\Scout\VideoIndexConfigurator"
-php artisan elastic:update-mapping "App\Models\Collection"
-php artisan elastic:update-mapping "App\Models\Tag"
-php artisan elastic:update-mapping "App\Models\User"
-php artisan elastic:update-mapping "App\Models\Video"
-```
-
 #### Seeders
 
 ```bash

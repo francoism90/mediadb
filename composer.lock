@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3321cc45c491ca92a20e36a21eba3b5b",
+    "content-hash": "71e65da8bfd43f788970ee21154df1db",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -127,71 +127,6 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.2"
             },
             "time": "2020-10-29T16:03:21+00:00"
-        },
-        {
-            "name": "babenkoivan/scout-elasticsearch-driver",
-            "version": "v4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/babenkoivan/scout-elasticsearch-driver.git",
-                "reference": "6daad2e7899936c11c227637f0c49a93a86e28b4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/babenkoivan/scout-elasticsearch-driver/zipball/6daad2e7899936c11c227637f0c49a93a86e28b4",
-                "reference": "6daad2e7899936c11c227637f0c49a93a86e28b4",
-                "shasum": ""
-            },
-            "require": {
-                "elasticsearch/elasticsearch": ">=7.0 <7.4.0",
-                "laravel/scout": "^7.0|^8.0",
-                "php": "^7.1.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ScoutElastic\\ScoutElasticServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ScoutElastic\\Tests\\": "tests/",
-                    "ScoutElastic\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Babenko Ivan",
-                    "email": "babenko.i.a@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The Elasticsearch Driver for Laravel Scout",
-            "homepage": "https://babenkoivan.github.io/scout-elasticsearch-driver/",
-            "keywords": [
-                "driver",
-                "elastic",
-                "elasticsearch",
-                "engine",
-                "laravel",
-                "scout",
-                "search"
-            ],
-            "support": {
-                "issues": "https://github.com/babenkoivan/scout-elasticsearch-driver/issues",
-                "source": "https://github.com/babenkoivan/scout-elasticsearch-driver/tree/v4.2.3"
-            },
-            "time": "2020-08-13T17:57:09+00:00"
         },
         {
             "name": "beyondcode/laravel-websockets",
@@ -913,29 +848,31 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v7.3.0",
+            "version": "v7.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "f8b5d2beeeb22a5a59aabb183b5bcd7e70878d2f"
+                "reference": "f4a5741f1d1966a4d0a3a3f68666e6d81432c343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/f8b5d2beeeb22a5a59aabb183b5bcd7e70878d2f",
-                "reference": "f8b5d2beeeb22a5a59aabb183b5bcd7e70878d2f",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/f4a5741f1d1966a4d0a3a3f68666e6d81432c343",
+                "reference": "f4a5741f1d1966a4d0a3a3f68666e6d81432c343",
                 "shasum": ""
             },
             "require": {
                 "ext-json": ">=1.3.7",
-                "guzzlehttp/ringphp": "~1.0",
+                "ezimuel/ringphp": "^1.1.2",
                 "php": "^7.1",
                 "psr/log": "~1.0"
             },
             "require-dev": {
                 "cpliakas/git-wrapper": "~2.0",
                 "doctrine/inflector": "^1.3",
+                "ext-yaml": "*",
+                "ext-zip": "*",
                 "mockery/mockery": "^1.2",
-                "phpstan/phpstan-shim": "^0.11",
+                "phpstan/phpstan": "^0.12",
                 "phpunit/phpunit": "^7.5",
                 "squizlabs/php_codesniffer": "^3.4",
                 "symfony/finder": "~4.0",
@@ -947,6 +884,9 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
                 "psr-4": {
                     "Elasticsearch\\": "src/Elasticsearch/"
                 }
@@ -971,9 +911,9 @@
             ],
             "support": {
                 "issues": "https://github.com/elastic/elasticsearch-php/issues",
-                "source": "https://github.com/elastic/elasticsearch-php/tree/master"
+                "source": "https://github.com/elastic/elasticsearch-php/tree/v7.10.0"
             },
-            "time": "2019-09-30T12:52:38+00:00"
+            "time": "2020-11-11T16:31:00+00:00"
         },
         {
             "name": "elegantweb/sanitizer",
@@ -1090,6 +1030,113 @@
                 "source": "https://github.com/igorw/evenement/tree/master"
             },
             "time": "2017-07-23T21:35:13+00:00"
+        },
+        {
+            "name": "ezimuel/guzzlestreams",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezimuel/guzzlestreams.git",
+                "reference": "abe3791d231167f14eb80d413420d1eab91163a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezimuel/guzzlestreams/zipball/abe3791d231167f14eb80d413420d1eab91163a8",
+                "reference": "abe3791d231167f14eb80d413420d1eab91163a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Stream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Fork of guzzle/streams (abandoned) to be used with elasticsearch-php",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "stream"
+            ],
+            "support": {
+                "source": "https://github.com/ezimuel/guzzlestreams/tree/3.0.1"
+            },
+            "time": "2020-02-14T23:11:50+00:00"
+        },
+        {
+            "name": "ezimuel/ringphp",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezimuel/ringphp.git",
+                "reference": "0b78f89d8e0bb9e380046c31adfa40347e9f663b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezimuel/ringphp/zipball/0b78f89d8e0bb9e380046c31adfa40347e9f663b",
+                "reference": "0b78f89d8e0bb9e380046c31adfa40347e9f663b",
+                "shasum": ""
+            },
+            "require": {
+                "ezimuel/guzzlestreams": "^3.0.1",
+                "php": ">=5.4.0",
+                "react/promise": "~2.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Ring\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Fork of guzzle/RingPHP (abandoned) to be used with elasticsearch-php",
+            "support": {
+                "source": "https://github.com/ezimuel/ringphp/tree/1.1.2"
+            },
+            "time": "2020-02-14T23:51:21+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -1647,117 +1694,6 @@
             "time": "2020-09-30T07:37:11+00:00"
         },
         {
-            "name": "guzzlehttp/ringphp",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/RingPHP.git",
-                "reference": "5e2a174052995663dd68e6b5ad838afd47dd615b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/RingPHP/zipball/5e2a174052995663dd68e6b5ad838afd47dd615b",
-                "reference": "5e2a174052995663dd68e6b5ad838afd47dd615b",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/streams": "~3.0",
-                "php": ">=5.4.0",
-                "react/promise": "~2.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "ext-curl": "Guzzle will use specific adapters if cURL is present"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Ring\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
-            "support": {
-                "issues": "https://github.com/guzzle/RingPHP/issues",
-                "source": "https://github.com/guzzle/RingPHP/tree/1.1.1"
-            },
-            "abandoned": true,
-            "time": "2018-07-31T13:22:33+00:00"
-        },
-        {
-            "name": "guzzlehttp/streams",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/streams.git",
-                "reference": "47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
-                "reference": "47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Stream\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Provides a simple abstraction over streams of data",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "Guzzle",
-                "stream"
-            ],
-            "support": {
-                "issues": "https://github.com/guzzle/streams/issues",
-                "source": "https://github.com/guzzle/streams/tree/master"
-            },
-            "abandoned": true,
-            "time": "2014-10-12T19:18:40+00:00"
-        },
-        {
             "name": "hashids/hashids",
             "version": "4.1.0",
             "source": {
@@ -1952,6 +1888,53 @@
                 "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.103"
             },
             "time": "2020-11-23T19:49:25+00:00"
+        },
+        {
+            "name": "jetbrains/phpstorm-stubs",
+            "version": "v2019.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JetBrains/phpstorm-stubs.git",
+                "reference": "883b6facd78e01c0743b554af86fa590c2573f40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/883b6facd78e01c0743b554af86fa590c2573f40",
+                "reference": "883b6facd78e01c0743b554af86fa590c2573f40",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nikic/php-parser": "^4",
+                "php": "^7.1",
+                "phpdocumentor/reflection-docblock": "^4.3",
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "PhpStormStubsMap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "PHP runtime & extensions header files for PhpStorm",
+            "homepage": "https://www.jetbrains.com/phpstorm",
+            "keywords": [
+                "autocomplete",
+                "code",
+                "inference",
+                "inspection",
+                "jetbrains",
+                "phpstorm",
+                "stubs",
+                "type"
+            ],
+            "support": {
+                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
+            },
+            "time": "2019-12-05T16:56:26+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2850,17 +2833,89 @@
             "time": "2020-05-30T13:11:16+00:00"
         },
         {
-            "name": "monolog/monolog",
-            "version": "2.1.1",
+            "name": "matchish/laravel-scout-elasticsearch",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "f9eee5cec93dfb313a38b6b288741e84e53f02d5"
+                "url": "https://github.com/matchish/laravel-scout-elasticsearch.git",
+                "reference": "84b65da1cc26f0ead6046a346b92a7f19d94fca4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f9eee5cec93dfb313a38b6b288741e84e53f02d5",
-                "reference": "f9eee5cec93dfb313a38b6b288741e84e53f02d5",
+                "url": "https://api.github.com/repos/matchish/laravel-scout-elasticsearch/zipball/84b65da1cc26f0ead6046a346b92a7f19d94fca4",
+                "reference": "84b65da1cc26f0ead6046a346b92a7f19d94fca4",
+                "shasum": ""
+            },
+            "require": {
+                "elasticsearch/elasticsearch": ">=7.2",
+                "laravel/scout": "^8.0",
+                "ongr/elasticsearch-dsl": "^7.0",
+                "php": "^7.2|^7.3",
+                "roave/better-reflection": "^3.3|^4.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.8",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "laravel/legacy-factories": "^1.0",
+                "nunomaduro/larastan": "~0.6",
+                "orchestra/testbench": "^4.0|^5.0",
+                "phpunit/phpunit": "^8.0|~9.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Matchish\\ScoutElasticSearch\\ScoutElasticSearchServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Matchish\\ScoutElasticSearch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Shliakhov",
+                    "email": "shlyakhov.up@gmail.com"
+                }
+            ],
+            "description": "Search among multiple models with ElasticSearch and Laravel Scout",
+            "keywords": [
+                "elasticsearch",
+                "extended",
+                "laravel",
+                "scout",
+                "search"
+            ],
+            "support": {
+                "issues": "https://github.com/matchish/laravel-scout-elasticsearch/issues",
+                "source": "https://github.com/matchish/laravel-scout-elasticsearch/tree/v4.0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/matchish",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-12-14T14:45:07+00:00"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "1cb1cde8e8dd0f70cc0fe51354a59acad9302084"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1cb1cde8e8dd0f70cc0fe51354a59acad9302084",
+                "reference": "1cb1cde8e8dd0f70cc0fe51354a59acad9302084",
                 "shasum": ""
             },
             "require": {
@@ -2873,16 +2928,17 @@
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
                 "doctrine/couchdb": "~1.0@dev",
-                "elasticsearch/elasticsearch": "^6.0",
+                "elasticsearch/elasticsearch": "^7",
                 "graylog2/gelf-php": "^1.4.2",
+                "mongodb/mongodb": "^1.8",
                 "php-amqplib/php-amqplib": "~2.4",
                 "php-console/php-console": "^3.1.3",
-                "php-parallel-lint/php-parallel-lint": "^1.0",
                 "phpspec/prophecy": "^1.6.1",
+                "phpstan/phpstan": "^0.12.59",
                 "phpunit/phpunit": "^8.5",
                 "predis/predis": "^1.1",
                 "rollbar/rollbar": "^1.3",
-                "ruflin/elastica": ">=0.90 <3.0",
+                "ruflin/elastica": ">=0.90 <7.0.1",
                 "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
             "suggest": {
@@ -2902,7 +2958,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.x-dev"
+                    "dev-main": "2.x-dev"
                 }
             },
             "autoload": {
@@ -2918,11 +2974,11 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
+                    "homepage": "https://seld.be"
                 }
             ],
             "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "homepage": "http://github.com/Seldaek/monolog",
+            "homepage": "https://github.com/Seldaek/monolog",
             "keywords": [
                 "log",
                 "logging",
@@ -2930,7 +2986,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.1.1"
+                "source": "https://github.com/Seldaek/monolog/tree/2.2.0"
             },
             "funding": [
                 {
@@ -2942,7 +2998,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-23T08:41:23+00:00"
+            "time": "2020-12-14T13:15:25+00:00"
         },
         {
             "name": "multicaret/laravel-acquaintances",
@@ -3268,6 +3324,62 @@
             "time": "2020-12-03T17:45:45+00:00"
         },
         {
+            "name": "ongr/elasticsearch-dsl",
+            "version": "v7.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ongr-io/ElasticsearchDSL.git",
+                "reference": "8c75b819a32a422c393272295fe5e81e8cbd7ec7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ongr-io/ElasticsearchDSL/zipball/8c75b819a32a422c393272295fe5e81e8cbd7ec7",
+                "reference": "8c75b819a32a422c393272295fe5e81e8cbd7ec7",
+                "shasum": ""
+            },
+            "require": {
+                "elasticsearch/elasticsearch": "^7.0",
+                "paragonie/random_compat": "*",
+                "php": "^7.2",
+                "symfony/serializer": "^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "suggest": {
+                "elasticsearch/elasticsearch": "This library is for elasticsearch/elasticsearch client to enhance it with DSL functionality."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ONGR\\ElasticsearchDSL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ONGR team",
+                    "homepage": "http://www.ongr.io"
+                }
+            ],
+            "description": "Elasticsearch DSL library",
+            "homepage": "http://ongr.io",
+            "support": {
+                "issues": "https://github.com/ongr-io/ElasticsearchDSL/issues",
+                "source": "https://github.com/ongr-io/ElasticsearchDSL/tree/v7.2.1"
+            },
+            "time": "2020-10-25T17:30:14+00:00"
+        },
+        {
             "name": "opis/closure",
             "version": "3.6.1",
             "source": {
@@ -3555,6 +3667,164 @@
                 "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/master"
             },
             "time": "2020-03-29T09:57:10+00:00"
+        },
+        {
+            "name": "phpdocumentor/reflection-common",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
+                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaap van Otterdijk",
+                    "email": "opensource@ijaap.nl"
+                }
+            ],
+            "description": "Common reflection classes used by phpdocumentor to reflect the code structure",
+            "homepage": "http://www.phpdoc.org",
+            "keywords": [
+                "FQSEN",
+                "phpDocumentor",
+                "phpdoc",
+                "reflection",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
+            },
+            "time": "2020-06-27T09:03:43+00:00"
+        },
+        {
+            "name": "phpdocumentor/reflection-docblock",
+            "version": "5.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "shasum": ""
+            },
+            "require": {
+                "ext-filter": "*",
+                "php": "^7.2 || ^8.0",
+                "phpdocumentor/reflection-common": "^2.2",
+                "phpdocumentor/type-resolver": "^1.3",
+                "webmozart/assert": "^1.9.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike van Riel",
+                    "email": "me@mikevanriel.com"
+                },
+                {
+                    "name": "Jaap van Otterdijk",
+                    "email": "account@ijaap.nl"
+                }
+            ],
+            "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
+            },
+            "time": "2020-09-03T19:13:55+00:00"
+        },
+        {
+            "name": "phpdocumentor/type-resolver",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/TypeResolver.git",
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "phpdocumentor/reflection-common": "^2.0"
+            },
+            "require-dev": {
+                "ext-tokenizer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike van Riel",
+                    "email": "me@mikevanriel.com"
+                }
+            ],
+            "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
+            },
+            "time": "2020-09-17T18:55:26+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -4991,6 +5261,124 @@
                 "source": "https://github.com/ringcentral/psr7/tree/master"
             },
             "time": "2018-05-29T20:21:04+00:00"
+        },
+        {
+            "name": "roave/better-reflection",
+            "version": "4.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Roave/BetterReflection.git",
+                "reference": "8e163f6e6b86c4e87e546e259148a41264982a76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/8e163f6e6b86c4e87e546e259148a41264982a76",
+                "reference": "8e163f6e6b86c4e87e546e259148a41264982a76",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "jetbrains/phpstorm-stubs": "2019.3",
+                "nikic/php-parser": "^4.6.0",
+                "php": ">=7.4.1,<7.5.0",
+                "phpdocumentor/reflection-docblock": "^5.2.2",
+                "phpdocumentor/type-resolver": "^1.4.0",
+                "roave/signature": "^1.3"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^8.2.0",
+                "infection/infection": "^0.20.0",
+                "phpstan/phpstan": "0.12.25",
+                "phpunit/phpunit": "^9.4.4",
+                "roave/infection-static-analysis-plugin": "^1.2",
+                "vimeo/psalm": "^4.2"
+            },
+            "suggest": {
+                "composer/composer": "Required to use the ComposerSourceLocator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Roave\\BetterReflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Titcumb",
+                    "email": "james@asgrim.com",
+                    "homepage": "https://github.com/asgrim"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "https://ocramius.github.io/"
+                },
+                {
+                    "name": "Gary Hockin",
+                    "email": "gary@roave.com",
+                    "homepage": "https://github.com/geeh"
+                },
+                {
+                    "name": "Jaroslav Hanslík",
+                    "email": "kukulich@kukulich.cz",
+                    "homepage": "https://github.com/kukulich"
+                }
+            ],
+            "description": "Better Reflection - an improved code reflection API",
+            "support": {
+                "issues": "https://github.com/Roave/BetterReflection/issues",
+                "source": "https://github.com/Roave/BetterReflection/tree/4.12.0"
+            },
+            "time": "2020-12-14T17:38:20+00:00"
+        },
+        {
+            "name": "roave/signature",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Roave/Signature.git",
+                "reference": "bbbcc317dfe3a750e27231c5d2130153aa4c41b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/Signature/zipball/bbbcc317dfe3a750e27231c5d2130153aa4c41b3",
+                "reference": "bbbcc317dfe3a750e27231c5d2130153aa4c41b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "7.4.*"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^8.1",
+                "infection/infection": "^0.17.5",
+                "phpunit/phpunit": "^9.3",
+                "vimeo/psalm": "^3.16"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Roave\\Signature\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Sign and verify stuff",
+            "support": {
+                "issues": "https://github.com/Roave/Signature/issues",
+                "source": "https://github.com/Roave/Signature/tree/1.3.0"
+            },
+            "time": "2020-10-01T08:35:57+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -8096,6 +8484,107 @@
             "time": "2020-11-27T00:39:34+00:00"
         },
         {
+            "name": "symfony/serializer",
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/serializer.git",
+                "reference": "bfb225b1bf797f9d6a3b6a8501927cc72e92b549"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/bfb225b1bf797f9d6a3b6a8501927cc72e92b549",
+                "reference": "bfb225b1bf797f9d6a3b6a8501927cc72e92b549",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-php80": "^1.15"
+            },
+            "conflict": {
+                "phpdocumentor/type-resolver": "<0.2.1",
+                "symfony/dependency-injection": "<4.4",
+                "symfony/property-access": "<4.4",
+                "symfony/property-info": "<4.4",
+                "symfony/yaml": "<4.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.0",
+                "doctrine/cache": "~1.0",
+                "phpdocumentor/reflection-docblock": "^3.0|^4.0|^5.0",
+                "symfony/cache": "^4.4|^5.0",
+                "symfony/config": "^4.4|^5.0",
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/error-handler": "^4.4|^5.0",
+                "symfony/filesystem": "^4.4|^5.0",
+                "symfony/form": "^4.4|^5.0",
+                "symfony/http-foundation": "^4.4|^5.0",
+                "symfony/http-kernel": "^4.4|^5.0",
+                "symfony/mime": "^4.4|^5.0",
+                "symfony/property-access": "^4.4|^5.0",
+                "symfony/property-info": "^4.4|^5.0",
+                "symfony/uid": "^5.1",
+                "symfony/validator": "^4.4|^5.0",
+                "symfony/var-exporter": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0"
+            },
+            "suggest": {
+                "doctrine/annotations": "For using the annotation mapping. You will also need doctrine/cache.",
+                "doctrine/cache": "For using the default cached annotation reader and metadata cache.",
+                "psr/cache-implementation": "For using the metadata cache.",
+                "symfony/config": "For using the XML mapping loader.",
+                "symfony/mime": "For using a MIME type guesser within the DataUriNormalizer.",
+                "symfony/property-access": "For using the ObjectNormalizer.",
+                "symfony/property-info": "To deserialize relations.",
+                "symfony/var-exporter": "For using the metadata compiler.",
+                "symfony/yaml": "For using the default YAML mapping loader."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Serializer\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Serializer Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/serializer/tree/v5.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-11-27T10:27:27+00:00"
+        },
+        {
             "name": "symfony/service-contracts",
             "version": "v2.2.0",
             "source": {
@@ -10410,16 +10899,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "726c026815142e4f8677b7cb7f2249c9ffb7ecae"
+                "reference": "e4782611070e50613683d2b9a57730e9a3ba5451"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/726c026815142e4f8677b7cb7f2249c9ffb7ecae",
-                "reference": "726c026815142e4f8677b7cb7f2249c9ffb7ecae",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/e4782611070e50613683d2b9a57730e9a3ba5451",
+                "reference": "e4782611070e50613683d2b9a57730e9a3ba5451",
                 "shasum": ""
             },
             "require": {
@@ -10455,167 +10944,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.0.3"
+                "source": "https://github.com/phar-io/version/tree/3.0.4"
             },
-            "time": "2020-11-30T09:21:21+00:00"
-        },
-        {
-            "name": "phpdocumentor/reflection-common",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
-                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "phpDocumentor\\Reflection\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jaap van Otterdijk",
-                    "email": "opensource@ijaap.nl"
-                }
-            ],
-            "description": "Common reflection classes used by phpdocumentor to reflect the code structure",
-            "homepage": "http://www.phpdoc.org",
-            "keywords": [
-                "FQSEN",
-                "phpDocumentor",
-                "phpdoc",
-                "reflection",
-                "static analysis"
-            ],
-            "support": {
-                "issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
-            },
-            "time": "2020-06-27T09:03:43+00:00"
-        },
-        {
-            "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
-                "shasum": ""
-            },
-            "require": {
-                "ext-filter": "*",
-                "php": "^7.2 || ^8.0",
-                "phpdocumentor/reflection-common": "^2.2",
-                "phpdocumentor/type-resolver": "^1.3",
-                "webmozart/assert": "^1.9.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "~1.3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "phpDocumentor\\Reflection\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mike van Riel",
-                    "email": "me@mikevanriel.com"
-                },
-                {
-                    "name": "Jaap van Otterdijk",
-                    "email": "account@ijaap.nl"
-                }
-            ],
-            "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "support": {
-                "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
-            },
-            "time": "2020-09-03T19:13:55+00:00"
-        },
-        {
-            "name": "phpdocumentor/type-resolver",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
-                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0",
-                "phpdocumentor/reflection-common": "^2.0"
-            },
-            "require-dev": {
-                "ext-tokenizer": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "phpDocumentor\\Reflection\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mike van Riel",
-                    "email": "me@mikevanriel.com"
-                }
-            ],
-            "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "support": {
-                "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
-            },
-            "time": "2020-09-17T18:55:26+00:00"
+            "time": "2020-12-13T23:18:30+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -10686,16 +11017,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.59",
+            "version": "0.12.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779"
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cf4107257c8ca2ad967efdd6a00f12b21acbb779",
-                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
+                "reference": "632393159335bbbdd7ca07d19b3ad50d76aa7fd8",
                 "shasum": ""
             },
             "require": {
@@ -10726,7 +11057,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.59"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.62"
             },
             "funding": [
                 {
@@ -10742,7 +11073,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-07T14:46:03+00:00"
+            "time": "2020-12-13T13:59:38+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

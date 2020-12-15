@@ -10,7 +10,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "babenkoivan/scout-elasticsearch-driver": "^4.2",
         "beyondcode/laravel-websockets": "^1.8",
         "cyrildewit/eloquent-viewable": "^5.2",
         "elegantweb/sanitizer": "^1.0",
@@ -20,8 +19,10 @@
         "laravel/framework": "^8.12",
         "laravel/horizon": "^5.1",
         "laravel/sanctum": "^2.6",
+        "laravel/scout": "^8.5",
         "laravel/telescope": "^4.0",
         "laravel/tinker": "^2.5",
+        "matchish/laravel-scout-elasticsearch": "^4.0",
         "multicaret/laravel-acquaintances": "^3.3",
         "php-ffmpeg/php-ffmpeg": "^0.16.0",
         "pusher/pusher-php-server": "^4.1",
