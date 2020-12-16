@@ -1938,16 +1938,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.18.1",
+            "version": "v8.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf"
+                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/31747193c26ba0a9cb7929a912895d3cdefd10cf",
-                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
+                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2101,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2020-12-08T22:05:12+00:00"
+            "time": "2020-12-15T16:16:31+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2315,16 +2315,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.3.3",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "cb98594bc53b183f5bf2896e55d5015510941187"
+                "reference": "535889a7585c331854dbdf8ca5e66209588408dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/cb98594bc53b183f5bf2896e55d5015510941187",
-                "reference": "cb98594bc53b183f5bf2896e55d5015510941187",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/535889a7585c331854dbdf8ca5e66209588408dd",
+                "reference": "535889a7585c331854dbdf8ca5e66209588408dd",
                 "shasum": ""
             },
             "require": {
@@ -2373,9 +2373,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.3.3"
+                "source": "https://github.com/laravel/telescope/tree/v4.4.0"
             },
-            "time": "2020-12-08T19:29:18+00:00"
+            "time": "2020-12-15T19:19:38+00:00"
         },
         {
             "name": "laravel/tinker",
