@@ -1938,16 +1938,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.18.1",
+            "version": "v8.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf"
+                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/31747193c26ba0a9cb7929a912895d3cdefd10cf",
-                "reference": "31747193c26ba0a9cb7929a912895d3cdefd10cf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
+                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2101,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2020-12-08T22:05:12+00:00"
+            "time": "2020-12-15T16:16:31+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -5855,16 +5855,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.4.0",
+            "version": "9.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "04434d0a50fb2af31f60fe359e37c37373350e44"
+                "reference": "f4e08f21fe217fff5ba0600b9c8998a5e0d5ad60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/04434d0a50fb2af31f60fe359e37c37373350e44",
-                "reference": "04434d0a50fb2af31f60fe359e37c37373350e44",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/f4e08f21fe217fff5ba0600b9c8998a5e0d5ad60",
+                "reference": "f4e08f21fe217fff5ba0600b9c8998a5e0d5ad60",
                 "shasum": ""
             },
             "require": {
@@ -5943,7 +5943,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.4.0"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.4.1"
             },
             "funding": [
                 {
@@ -5955,7 +5955,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-12-02T16:32:47+00:00"
+            "time": "2020-12-16T14:07:51+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
