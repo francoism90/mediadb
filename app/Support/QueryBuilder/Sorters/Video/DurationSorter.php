@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\QueryBuilder\Sorts\Video;
+namespace App\Support\QueryBuilder\Sorters\Video;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;

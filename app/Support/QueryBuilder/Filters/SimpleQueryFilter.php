@@ -58,6 +58,9 @@ class SimpleQueryFilter implements Filter
             FILTER_FLAG_NO_ENCODE_QUOTES
         );
 
+        // Replace dots and underscores
+        $value = str_replace(['.', ',', '_'], ' ', $value);
+
         // Replace whitespace with a single space
         $value = preg_replace('/\s+/', ' ', $value);
 

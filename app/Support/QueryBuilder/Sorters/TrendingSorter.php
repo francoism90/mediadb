@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Support\QueryBuilder\Sorts;
+namespace App\Support\QueryBuilder\Sorters;
 
+use CyrildeWit\EloquentViewable\Support\Period;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class RecommendedSorter implements Sort
+class TrendingSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -16,12 +17,8 @@ class RecommendedSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Use given order by filter(s)
-        if ($query->getQuery()->orders) {
-            return $query;
-        }
+        $query->getQuery()->orders = null;
 
-        // TODO: something useful for the user instead
-        return $query->inRandomSeedOrder();
+        return $query->orderByViews('DESC', Period::pastDays(3), 'view_count', true);
     }
 }

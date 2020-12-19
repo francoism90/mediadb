@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NotificationResource;
-use App\Support\QueryBuilder\Sorts\FieldSorter;
+use App\Support\QueryBuilder\Sorters\FieldSorter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 

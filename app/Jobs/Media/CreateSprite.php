@@ -20,6 +20,11 @@ class CreateSprite implements ShouldQueue
     /**
      * @var bool
      */
+    public $dispatchAfterCommit = true;
+
+    /**
+     * @var bool
+     */
     public $deleteWhenMissingModels = true;
 
     /**

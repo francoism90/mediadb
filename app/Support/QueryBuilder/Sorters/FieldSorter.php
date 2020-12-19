@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\QueryBuilder\Sorts;
+namespace App\Support\QueryBuilder\Sorters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;

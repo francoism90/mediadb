@@ -58,28 +58,18 @@ class SpriteService
      */
     public function create(Media $media): void
     {
-        $path = $this->temporaryDirectory->path(config('video.sprite_name'));
-
         $imagick = $this->prepareConversion($media);
 
-        $montage = $imagick->montageImage(
-            new ImagickDraw(),
-            config('video.sprite_columns').'x',
-            config('video.sprite_width').'x'.config('video.sprite_height').'!',
-            Imagick::MONTAGEMODE_CONCATENATE,
-            '0'
-        );
-
-        $montage->writeImage($path);
-
-        $media->markAsConversionGenerated('sprite');
+        $spritePath = $this->createSprite($imagick);
 
         $this->filesystem->copyToMediaLibrary(
-            $path,
+            $spritePath,
             $media,
             'conversions',
             config('video.sprite_name')
         );
+
+        $media->markAsConversionGenerated('sprite');
     }
 
     /**
@@ -89,9 +79,9 @@ class SpriteService
      */
     protected function prepareConversion(Media $media): Imagick
     {
-        $video = $this->getVideo($media->getPath());
+        $imagick = new Imagick();
 
-        $timeCodes = $this->getFrameRange($media);
+        $video = $this->getVideoProperties($media);
 
         $frames = collect();
 
@@ -99,25 +89,16 @@ class SpriteService
         $framePositionX = 0;
         $framePositionY = 0;
 
-        $imagick = new Imagick();
+        $timeCodes = $this->getFrameRange($media);
 
         foreach ($timeCodes as $timeCode) {
-            $framePath = $this->temporaryDirectory->path("frames/{$frameCount}.jpg");
-
-            $frame = $video->frame(
-                TimeCode::fromSeconds($timeCode)
-            );
-
-            $frame->addFilter(
-                new CustomFrameFilter(config('video.sprite_filter'))
-            );
-
-            $frame->save($framePath);
+            $framePath = $this->createFrame($video, $timeCode);
 
             $imagick->addImage(
                 new Imagick($framePath)
             );
 
+            // Push to the collection
             $frames->push([
                 'id' => $frameCount,
                 'start' => $timeCode,
@@ -143,6 +124,51 @@ class SpriteService
     }
 
     /**
+     * @param Video $video
+     * @param float $seconds
+     *
+     * @return string
+     */
+    protected function createFrame(Video $video, float $seconds = 0): string
+    {
+        $path = $this->temporaryDirectory->path("frames/{$seconds}.jpg");
+
+        $frame = $video->frame(
+            TimeCode::fromSeconds($seconds)
+        );
+
+        $frame->addFilter(
+            new CustomFrameFilter(config('video.sprite_filter'))
+        );
+
+        $frame->save($path);
+
+        return $path;
+    }
+
+    /**
+     * @param Imagick $imagick
+     *
+     * @return string
+     */
+    protected function createSprite(Imagick $imagick): string
+    {
+        $path = $this->temporaryDirectory->path(config('video.sprite_name'));
+
+        $montage = $imagick->montageImage(
+            new ImagickDraw(),
+            config('video.sprite_columns').'x',
+            config('video.sprite_width').'x'.config('video.sprite_height').'!',
+            Imagick::MONTAGEMODE_CONCATENATE,
+            '0'
+        );
+
+        $montage->writeImage($path);
+
+        return $path;
+    }
+
+    /**
      * @param Media $media
      *
      * @return array
@@ -155,12 +181,12 @@ class SpriteService
     }
 
     /**
-     * @param string $path
+     * @param Media $media
      *
      * @return Video
      */
-    protected function getVideo(string $path): Video
+    protected function getVideoProperties(Media $media): Video
     {
-        return $this->ffmpeg->open($path);
+        return $this->ffmpeg->open($media->getPath());
     }
 }

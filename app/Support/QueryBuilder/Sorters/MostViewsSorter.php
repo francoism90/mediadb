@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Support\QueryBuilder\Sorts\Tag;
+namespace App\Support\QueryBuilder\Sorters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class ItemSorter implements Sort
+class MostViewsSorter implements Sort
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -18,9 +18,6 @@ class ItemSorter implements Sort
     {
         $query->getQuery()->orders = null;
 
-        return $query
-            ->withCount(['collections', 'videos'])
-            ->orderBy('collections_count', 'DESC')
-            ->orderBy('videos_count', 'DESC');
+        return $query->orderByViews('DESC', null, 'view_count', true);
     }
 }
