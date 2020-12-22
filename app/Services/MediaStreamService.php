@@ -6,8 +6,9 @@ use App\Models\Media;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\Finder\Finder;
 
-class StreamService
+class MediaStreamService
 {
     public const MAPPING_PATH = 'dash';
     public const MAPPING_MANIFEST = 'manifest.mpd';
@@ -26,7 +27,7 @@ class StreamService
     ): string {
         $url = $this->getEncryptedUrl($media, $type);
 
-        // Generate nginx expire url
+        // nginx expire url parameters
         $id = "{$user->getRouteKey()}_{$media->getRouteKey()}";
         $expires = time() + config('video.vod_expire', 60 * 60 * 8);
         $secret = config('video.vod_secret');
@@ -183,5 +184,23 @@ class StreamService
     protected function writeMappingFile(string $streamKey, string $contents): bool
     {
         return Storage::disk('streams')->put("{$streamKey}.json", $contents);
+    }
+
+    /**
+     * @return Finder
+     */
+    public function getExpiredMappingFiles(): Finder
+    {
+        $path = Storage::disk('streams')->path(null);
+
+        return (new Finder())
+            ->files()
+            ->in($path)
+            ->depth(0)
+            ->date(
+                config('video.expired_mappings', 'until 3 days ago')
+            )
+            ->name('*.json')
+            ->sortByModifiedTime();
     }
 }

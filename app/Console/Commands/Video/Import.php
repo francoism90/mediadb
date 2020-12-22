@@ -4,7 +4,7 @@ namespace App\Console\Commands\Video;
 
 use App\Models\User;
 use App\Models\Video;
-use App\Services\MediaService;
+use App\Services\MediaImportService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -31,22 +31,22 @@ class Import extends Command
     /**
      * @return void
      */
-    public function handle(MediaService $mediaService): void
+    public function handle(MediaImportService $mediaImportService): void
     {
-        $files = $mediaService->getFiles(
+        $files = $mediaImportService->getValidFiles(
             $this->argument('path')
         );
 
         foreach ($files as $file) {
             $this->info("Importing {$file->getFilename()}");
 
-            $model = $this->createModel([
+            $model = $this->createBaseModel([
                 'name' => Str::title($file->getFilenameWithoutExtension()),
             ]);
 
             $model->setStatus($this->argument('status'));
 
-            $mediaService->import($model, $file, $this->argument('collection'));
+            $mediaImportService->import($model, $file, $this->argument('collection'));
         }
     }
 
@@ -55,7 +55,7 @@ class Import extends Command
      *
      * @return Video
      */
-    protected function createModel(array $attributes): Video
+    protected function createBaseModel(array $attributes): Video
     {
         return $this
             ->getUser()

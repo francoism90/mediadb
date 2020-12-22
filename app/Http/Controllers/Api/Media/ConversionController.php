@@ -43,7 +43,10 @@ class ConversionController extends Controller
 
         $conversionBasePath = $this->basePathGenerator->getPathForConversions($media);
 
-        $conversionPath = $this->filesystemManager->disk($media->conversions_disk)->path($conversionBasePath);
+        $conversionPath = $this
+            ->filesystemManager
+            ->disk($media->conversions_disk)
+            ->path($conversionBasePath);
 
         $conversions = collect([
             'sprite' => ['path' => config('video.sprite_name')],

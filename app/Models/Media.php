@@ -45,4 +45,37 @@ class Media extends BaseMedia
     {
         return $this->getCustomProperty('locale', 'N/A');
     }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMissingMetadata($query)
+    {
+        return $query
+            ->whereIn('collection_name', config('media.metadata_collections', ['clip']))
+            ->where(function ($query) {
+                $query->whereNull('custom_properties->metadata')
+                      ->orWhereNull('custom_properties->metadata->duration')
+                      ->orWhereNull('custom_properties->metadata->width')
+                      ->orWhereNull('custom_properties->metadata->height');
+            });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMissingConversions($query)
+    {
+        return $query
+            ->whereIn('collection_name', config('media.conversion_collections', ['clip']))
+            ->where(function ($query) {
+                $query->whereNull('custom_properties->generated_conversions')
+                      ->orWhereNull('custom_properties->generated_conversions->sprite')
+                      ->orWhereNull('custom_properties->generated_conversions->thumbnail');
+            });
+    }
 }

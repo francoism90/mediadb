@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Models\Media;
-use App\Services\MediaService;
+use App\Services\MediaMetadataService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -51,17 +51,34 @@ class SetMetadata implements ShouldQueue
     }
 
     /**
-     * @return void
+     * @return mixed
      */
-    public function handle(MediaService $mediaService)
+    public function handle(MediaMetadataService $mediaMetadataService)
     {
-        $mediaService->setAttributes($this->media);
+        // e.g. video/mp4 => video
+        $type = strtok($this->media->mime_type, '/');
+
+        $path = $this->media->getPath();
+
+        switch ($type) {
+            case 'video':
+                $format = $mediaMetadataService->getFormatAttributes($path);
+                $video = $mediaMetadataService->getVideoAttributes($path);
+
+                $metadata = $format->merge($video);
+                break;
+        }
+
+        $this
+            ->media
+            ->setCustomProperty('metadata', $metadata->all())
+            ->save();
     }
 
     /**
      * @return array
      */
-    public function tags()
+    public function tags(): array
     {
         return ['metadata', 'media:'.$this->media->id];
     }

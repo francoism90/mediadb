@@ -9,11 +9,13 @@ class ImageService
     /**
      * @param string $path
      *
-     * @return void
+     * @return string
      */
-    public function optimize(string $path): void
+    public function optimize(string $path): string
     {
         $optimizer = OptimizerChainFactory::create();
         $optimizer->optimize($path);
+
+        return $path;
     }
 }

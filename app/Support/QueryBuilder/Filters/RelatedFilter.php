@@ -33,6 +33,7 @@ class RelatedFilter implements Filter
 
         $models = $models->merge($this->getModelsByQuery($query, $model));
         $models = $models->merge($this->getModelsWithTags($query, $model));
+        $models = $models->merge($this->getModelsWithCollections($query, $model));
 
         // Return query
         $ids = $models->pluck('id')->toArray();
@@ -95,7 +96,7 @@ class RelatedFilter implements Filter
      *
      * @return Collection
      */
-    protected function getModelsWithCollection(Builder $query, Model $model)
+    protected function getModelsWithCollections(Builder $query, Model $model)
     {
         return $query
             ->getModel()

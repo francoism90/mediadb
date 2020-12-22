@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'thumbnail_name' => 'thumbnail.webp',
+    'thumbnail_name' => 'thumbnail.jpg',
 
     'thumbnail_filter' => 'scale=2048:-1',
 ];
