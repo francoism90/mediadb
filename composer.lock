@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71e65da8bfd43f788970ee21154df1db",
+    "content-hash": "14833964bd4cf724d4a283d7914ccef5",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -3225,20 +3225,20 @@
         },
         {
             "name": "neutron/temporary-filesystem",
-            "version": "2.4",
+            "version": "3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/romainneutron/Temporary-Filesystem.git",
-                "reference": "3c55497da8d7762fb4dcabc91d54a5de510e3c99"
+                "reference": "60e79adfd16f42f4b888e351ad49f9dcb959e3c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/romainneutron/Temporary-Filesystem/zipball/3c55497da8d7762fb4dcabc91d54a5de510e3c99",
-                "reference": "3c55497da8d7762fb4dcabc91d54a5de510e3c99",
+                "url": "https://api.github.com/repos/romainneutron/Temporary-Filesystem/zipball/60e79adfd16f42f4b888e351ad49f9dcb959e3c2",
+                "reference": "60e79adfd16f42f4b888e351ad49f9dcb959e3c2",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0",
+                "php": ">=5.6",
                 "symfony/filesystem": "^2.3 || ^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
@@ -3263,9 +3263,9 @@
             "description": "Symfony filesystem extension to handle temporary files",
             "support": {
                 "issues": "https://github.com/romainneutron/Temporary-Filesystem/issues",
-                "source": "https://github.com/romainneutron/Temporary-Filesystem/tree/2.4"
+                "source": "https://github.com/romainneutron/Temporary-Filesystem/tree/3.0"
             },
-            "time": "2020-02-17T15:27:36+00:00"
+            "time": "2020-07-27T14:00:33+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3582,29 +3582,29 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v0.16",
+            "version": "v0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "4175c02b7d9f7e1a02cec2ba73474266ba2c5fa1"
+                "reference": "a5147d1ae041e78e7870bf2443d4e2dfa7635856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/4175c02b7d9f7e1a02cec2ba73474266ba2c5fa1",
-                "reference": "4175c02b7d9f7e1a02cec2ba73474266ba2c5fa1",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/a5147d1ae041e78e7870bf2443d4e2dfa7635856",
+                "reference": "a5147d1ae041e78e7870bf2443d4e2dfa7635856",
                 "shasum": ""
             },
             "require": {
                 "alchemy/binary-driver": "^1.5 || ~2.0.0 || ^5.0",
                 "doctrine/cache": "^1.0",
                 "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
-                "neutron/temporary-filesystem": "^2.1.1",
-                "php": "^5.3.9 || ^7.0"
+                "neutron/temporary-filesystem": "^2.1.1 || ^3.0",
+                "php": ">=5.3.9"
             },
             "require-dev": {
-                "sami/sami": "~1.0",
                 "silex/silex": "~1.0",
-                "symfony/phpunit-bridge": "^5.0.4"
+                "symfony/phpunit-bridge": "^5.0.4",
+                "symfony/process": "2.8 || 3.3"
             },
             "suggest": {
                 "php-ffmpeg/extras": "A compilation of common audio & video drivers for PHP-FFMpeg"
@@ -3612,7 +3612,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.7-dev"
+                    "dev-master": "0.x-dev"
                 }
             },
             "autoload": {
@@ -3664,9 +3664,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
-                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/master"
+                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v0.17.0"
             },
-            "time": "2020-03-29T09:57:10+00:00"
+            "time": "2020-12-18T14:31:34+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
