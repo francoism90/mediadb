@@ -244,9 +244,9 @@ class Video extends Model implements HasMedia, Viewable
     {
         return optional($this->getFirstMedia('clip'), function ($clip) {
             return URL::signedRoute(
-                'api.media.stream',
+                'api.vod.stream',
                 [
-                    'media' => $clip,
+                    'video' => $this,
                     'user' => auth()->user(),
                 ]
             );

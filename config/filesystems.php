@@ -60,12 +60,6 @@ return [
             'root' => storage_path('app/media'),
             'visibility' => 'private',
         ],
-
-        'streams' => [
-            'driver' => 'local',
-            'root' => storage_path('app/streams'),
-            'visibility' => 'private',
-        ],
     ],
 
     /*

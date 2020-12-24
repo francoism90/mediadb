@@ -53,7 +53,11 @@ class ConversionController extends Controller
             'thumbnail' => ['path' => config('video.thumbnail_name')],
         ]);
 
-        $conversion = $conversions->get($name) ?? abort(501);
+        $conversion = $conversions->get($name);
+
+        if (!$conversion) {
+            abort(501);
+        }
 
         return response()->download($conversionPath.$conversion['path'], $conversion['path']);
     }

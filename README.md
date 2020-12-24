@@ -20,8 +20,8 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
-- [PHP](https://php.net/) 7.3 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
-- [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v8/converting-images/optimizing-converted-images/)
+- [PHP](https://php.net/) 7.4 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
+- [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v9/converting-images/optimizing-converted-images/)
 - MariaDB/MySQL (with JSON support), Redis and Supervisor.
 - [Elasticsearch](https://www.elastic.co/products/elasticsearch)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing.
@@ -30,7 +30,7 @@ Please consult the upstream documentation of used packages in `composer.json` fo
 
 ### Front-end/app
 
-- <https://github.com/francoism90/mediadb-ui> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar.
+- <https://github.com/francoism90/mediadb-ui> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar. Currently only tested on Android.
 
 Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/srv/http/mediadb/api` (mediadb-api) and `/srv/http/mediadb/ui` (mediadb-ui).
 
@@ -41,10 +41,8 @@ See `doc/nginx` for configuration examples.
 | Site | Domain | Details |
 | - | - | - |
 | mediadb-api.conf | localhost:3000 | API endpoint: Laravel instance, authentication, media processing, etc. |
-| mediadb-ui.conf | mediadb.test:443 mediadb.test:80 | MediaDB Front-end (optional). |
-| vod-json.conf | localhost:8081 | VOD: JSON mapping (media path, sequences, clips, etc.). |
-| vod-mapped.conf | localhost:1935 | VOD: add tokens, streaming (DASH), etc. |
-| vod-stream.conf | stream.test:443 stream.test:80 | VOD: streaming endpoint, validate security tokens, vod-mapped proxy. |
+| mediadb-ui.conf | mediadb.test:443 mediadb.test:80 | MediaDB Front-end, MediaDB-API proxy. |
+| mediadb-vod.conf | stream.test:443 stream.test:80 | VOD: streaming endpoint, local vod-mapping. |
 
 ### Laravel
 
@@ -83,33 +81,28 @@ VOD_KEY=d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793
 VOD_IV=722d4f9191c53d5e934e13719d02cced
 ```
 
-`vod-mapped.conf`:
+`mediadb-vod.conf`:
 
 ```bash
 secure_token_encrypt_uri_key d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793;
 secure_token_encrypt_uri_iv 722d4f9191c53d5e934e13719d02cced;
 ```
 
-### Set VOD security
+### Set DASH encryption key
 
-`.env`:
-
-```env
-VOD_SECRET=secret
-```
-
-`vod-stream.conf`:
+`mediadb-vod.conf`:
 
 ```bash
-secure_link_md5 "$secure_link_expires$arg_id secret";
+vod_secret_key "mysecret-$vod_filepath";
 ```
 
 ### Set VOD path
 
-`vod-json.conf`:
+`mediadb-vod.conf`:
 
 ```bash
-set $base /srv/http/mediadb/api/storage/app/streams;
+vod_base_url "https://stream.test";
+vod_segments_base_url "https://stream.test";
 ```
 
 ## Usage
@@ -151,7 +144,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 - [Kaltura](https://github.com/kaltura)
 - [Koel](https://github.com/koel)
 - [Spatie](https://github.com/spatie)
-- [Developers](composer.json) offering packages and support. :)
+- [Packagers](composer.json)
 
 ## License
 

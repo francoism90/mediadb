@@ -20,11 +20,6 @@ class CreateSprite implements ShouldQueue
     /**
      * @var bool
      */
-    public $dispatchAfterCommit = true;
-
-    /**
-     * @var bool
-     */
     public $deleteWhenMissingModels = true;
 
     /**
@@ -35,7 +30,7 @@ class CreateSprite implements ShouldQueue
     /**
      * @var int
      */
-    public $timeout = 5400;
+    public $timeout = 3600;
 
     /**
      * @var Media

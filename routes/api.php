@@ -72,9 +72,14 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     });
 
     // Media
-    Route::middleware('signed')->name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware('cache.headers:public;max_age=604800;etag')->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
-        Route::middleware('doNotCacheResponse')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
-        Route::middleware('doNotCacheResponse')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+    Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
+        Route::middleware(['cache.headers:public;max_age=604800;etag', 'signed'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
+        Route::middleware(['doNotCacheResponse', 'signed'])->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+    });
+
+    // Video On Demand (VOD)
+    Route::name('vod.')->prefix('vod')->namespace('Video')->group(function () {
+        Route::middleware(['doNotCacheResponse', 'signed'])->get('/stream/{video}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+        Route::middleware('cache.headers:public;max_age=900;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
     });
 });

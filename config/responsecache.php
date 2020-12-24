@@ -39,7 +39,7 @@ return [
      * requests. This can be the name of any store that is
      * configured in app/config/cache.php
      */
-    'cache_store' => env('RESPONSE_CACHE_DRIVER', 'file'),
+    'cache_store' => env('RESPONSE_CACHE_DRIVER', 'redis'),
 
     /*
      * Here you may define replacers that dynamically replace content from the response.
@@ -56,7 +56,7 @@ return [
      *
      * You may use a string or an array here.
      */
-    'cache_tag' => '',
+    'cache_tag' => 'responsecache',
 
     /*
      * This class is responsible for generating a hash for a request. This hash

@@ -19,7 +19,7 @@ class MediaConversionService
     }
 
     /**
-     * @return TemporaryDirectory
+     * @return BaseTemporaryDirectory
      */
     public function temporaryDirectory(): BaseTemporaryDirectory
     {

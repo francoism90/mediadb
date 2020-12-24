@@ -23,10 +23,10 @@ class FFMpegService
         $this->ffmpeg = FFMpeg::create([
             'ffmpeg.binaries' => config('media-library.ffmpeg_path'),
             'ffmpeg.threads' => config('media-library.ffmpeg_threads', 0),
-            'ffmpeg.timeout' => config('media-library.ffmpeg_timeout', 10800),
+            'ffmpeg.timeout' => config('media-library.ffmpeg_timeout', 5400),
             'ffprobe.binaries' => config('media-library.ffprobe_path'),
             'ffprobe.timeout' => config('media-library.ffprobe_timeout', 120),
-            'timeout' => config('media-library.timeout', 10800),
+            'timeout' => config('media-library.timeout', 5400),
         ]);
     }
 

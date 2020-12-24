@@ -20,11 +20,6 @@ class SetMetadata implements ShouldQueue
     /**
      * @var bool
      */
-    public $dispatchAfterCommit = true;
-
-    /**
-     * @var bool
-     */
     public $deleteWhenMissingModels = true;
 
     /**
@@ -60,12 +55,13 @@ class SetMetadata implements ShouldQueue
 
         $path = $this->media->getPath();
 
+        $metadata = $mediaMetadataService->getFormatAttributes($path);
+
         switch ($type) {
             case 'video':
-                $format = $mediaMetadataService->getFormatAttributes($path);
                 $video = $mediaMetadataService->getVideoAttributes($path);
 
-                $metadata = $format->merge($video);
+                $metadata = $metadata->merge($video);
                 break;
         }
 
