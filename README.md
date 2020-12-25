@@ -3,7 +3,7 @@
 **MediaDB** is a web-based media streaming service written in Laravel and Vue.
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
-- [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) and [expire tokens](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html) are used to prevent unwanted access and reading of streams. However a CDN may be preferred, `nginx-secure-token-module` provides support for several token providers.
+- [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred instead, `nginx-secure-token-module` provides support for several token providers.
 - Generates sprites and thumbnails of video files.
 
 Full size [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
@@ -14,7 +14,7 @@ MediaDB is very much in development and may not be suitable for production purpo
 
 MediaDB requires a Laravel compatible development environment like [Homestead](https://laravel.com/docs/8.x/homestead).
 
-- [nginx](https://nginx.org) with `--with-http_secure_link_module`
+- [nginx](https://nginx.org)
 - [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
 - [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
