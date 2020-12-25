@@ -1,7 +1,5 @@
 # MediaDB (API)
 
-[![Build Status](https://travis-ci.com/francoism90/mediadb.svg?branch=master)](https://travis-ci.com/francoism90/mediadb)
-
 **MediaDB** is a web-based media streaming service written in Laravel and Vue.
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
