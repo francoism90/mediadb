@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -47,11 +48,7 @@ class Video extends Model implements HasMedia, Viewable
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
-
-    /**
-     * @var array
-     */
-    public $translatable = ['name', 'slug', 'overview'];
+    use QueryCacheable;
 
     /**
      * @var array
@@ -69,6 +66,21 @@ class Video extends Model implements HasMedia, Viewable
      * @var bool
      */
     protected $removeViewsOnDelete = true;
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'overview'];
+
+    /**
+     * @var int
+     */
+    public $cacheFor = 3600;
 
     /**
      * @return morphTo

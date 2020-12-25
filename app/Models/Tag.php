@@ -10,6 +10,7 @@ use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\Tags\Tag as TagModel;
 
 class Tag extends TagModel implements Viewable
@@ -19,6 +20,17 @@ class Tag extends TagModel implements Viewable
     use HasViews;
     use InteractsWithViews;
     use Searchable;
+    use QueryCacheable;
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
+     * @var int
+     */
+    public $cacheFor = 3600;
 
     /**
      * @return string

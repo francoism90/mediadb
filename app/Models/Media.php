@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasHashids;
 use Illuminate\Support\Str;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
 
@@ -11,6 +12,7 @@ class Media extends BaseMedia
 {
     use HasHashids;
     use HasStatuses;
+    use QueryCacheable;
 
     /**
      * @var array
@@ -21,6 +23,16 @@ class Media extends BaseMedia
      * @var array
      */
     protected $touches = ['model'];
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
+     * @var int
+     */
+    public $cacheFor = 3600;
 
     /**
      * @return string

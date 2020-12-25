@@ -13,6 +13,7 @@ use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeSubscribed;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -36,11 +37,7 @@ class Collection extends Model implements Viewable
     use HasViews;
     use InteractsWithViews;
     use Searchable;
-
-    /**
-     * @var array
-     */
-    public $translatable = ['name', 'slug', 'overview'];
+    use QueryCacheable;
 
     /**
      * @var array
@@ -58,6 +55,21 @@ class Collection extends Model implements Viewable
      * @var bool
      */
     protected $removeViewsOnDelete = true;
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
+     * @var int
+     */
+    public $cacheFor = 3600;
+
+    /**
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'overview'];
 
     /**
      * @return SlugOptions

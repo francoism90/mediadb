@@ -32,16 +32,6 @@ trait HasRandomSeed
     }
 
     /**
-     * @param string $key
-     *
-     * @return int
-     */
-    public static function getRandomSeed(string $key = null): int
-    {
-        return Cache::get(self::getRandomSeedKey($key), 1000);
-    }
-
-    /**
      * @param string $class
      *
      * @return string
@@ -54,14 +44,29 @@ trait HasRandomSeed
     }
 
     /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public static function getRandomSeed(string $key = null): int
+    {
+        return Cache::get(self::getRandomSeedKey($key), 1000);
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeInRandomSeedOrder(Builder $query)
     {
-        return $query->inRandomOrder(
-            self::getRandomSeed()
-        );
+        $seedKey = self::getRandomSeedKey();
+
+        return $query
+            ->inRandomOrder(
+                self::getRandomSeed()
+            )
+            ->cacheFor($this->cacheFor ?? 60 * 60)
+            ->cacheTags(["{$seedKey}:randomize"]);
     }
 }

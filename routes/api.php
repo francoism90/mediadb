@@ -15,12 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // API
-    Route::middleware('doNotCacheResponse')->group(function () {
-        Route::get('/', ['uses' => 'HomeController', 'as' => 'home']);
-    });
+    Route::get('/', ['uses' => 'HomeController', 'as' => 'home']);
 
     // Auth
-    Route::middleware('doNotCacheResponse')->name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
+    Route::name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
         Route::middleware('guest')->post('login', ['uses' => 'LoginController', 'as' => 'login']);
         Route::middleware('auth:sanctum')->post('logout', ['uses' => 'LogoutController', 'as' => 'logout']);
         Route::middleware('auth:sanctum')->get('user', ['uses' => 'UserController', 'as' => 'user']);
@@ -32,8 +30,8 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // Notification
     Route::middleware('auth:sanctum')->name('notifications.')->prefix('notifications')->namespace('Notification')->group(function () {
         Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::middleware('doNotCacheResponse')->post('/read', ['uses' => 'ReadController', 'as' => 'read']);
-        Route::middleware('doNotCacheResponse')->post('/delete', ['uses' => 'DeleteController', 'as' => 'delete']);
+        Route::post('/read', ['uses' => 'ReadController', 'as' => 'read']);
+        Route::post('/delete', ['uses' => 'DeleteController', 'as' => 'delete']);
     });
 
     // Video
@@ -45,9 +43,9 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::put('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
 
         // Misc
-        Route::middleware('doNotCacheResponse')->patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
-        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
-        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{video}/like', ['uses' => 'LikeController', 'as' => 'like']);
+        Route::patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
+        Route::match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
+        Route::match(['delete', 'post'], '/{video}/like', ['uses' => 'LikeController', 'as' => 'like']);
     });
 
     // Collection
@@ -59,7 +57,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::put('/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
 
         // Misc
-        Route::middleware('doNotCacheResponse')->match(['delete', 'post'], '/{collection}/subscribe', ['uses' => 'SubscribeController', 'as' => 'subscribe']);
+        Route::match(['delete', 'post'], '/{collection}/subscribe', ['uses' => 'SubscribeController', 'as' => 'subscribe']);
     });
 
     // Tag
@@ -74,12 +72,12 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
         Route::middleware(['cache.headers:public;max_age=604800;etag', 'signed'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
-        Route::middleware(['doNotCacheResponse', 'signed'])->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+        Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
     });
 
     // Video On Demand (VOD)
     Route::name('vod.')->prefix('vod')->namespace('Video')->group(function () {
-        Route::middleware(['doNotCacheResponse', 'signed'])->get('/stream/{video}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+        Route::middleware('signed')->get('/stream/{video}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
         Route::middleware('cache.headers:public;max_age=900;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
     });
 });

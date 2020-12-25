@@ -28,10 +28,8 @@ class VideoStreamService
      */
     public function getMappingUrl(Video $video, User $user): string
     {
-        $data = ['video' => $video->id, 'user' => $user->id];
-
         $token = $this->tokenizer->create(
-            $data,
+            ['video' => $video, 'user' => $user],
             config('video.vod_expires', 60 * 24)
         );
 

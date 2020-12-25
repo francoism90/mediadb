@@ -19,6 +19,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
 use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
+use Rennokki\QueryCache\Traits\QueryCacheModule;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -43,6 +44,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
+    use QueryCacheModule;
 
     /**
      * @var array
@@ -73,6 +75,16 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      * @var bool
      */
     protected $removeViewsOnDelete = true;
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
+     * @var int
+     */
+    public $cacheFor = 3600;
 
     /**
      * Get the user's preferred locale.

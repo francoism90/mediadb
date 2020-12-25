@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api\Video;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Video;
 use App\Services\VideoStreamService;
 
 class ManifestController extends Controller
@@ -33,17 +31,10 @@ class ManifestController extends Controller
 
         $tokenData = collect($this->videoStreamService->decodeToken($token));
 
-        $collect = cache()->remember("{$token}_data", 300, function () use ($tokenData) {
-            return collect([
-                'video' => Video::findOrFail($tokenData->get('video')),
-                'user' => User::findOrFail($tokenData->get('user')),
-            ]);
-        });
-
         // TODO: Validate user is able to stream (e.g. account subscriptions)
 
         $contents = $this->videoStreamService->getResponseFormat(
-            $collect->get('video')
+            $tokenData->get('video')
         );
 
         return response()->json($contents);
