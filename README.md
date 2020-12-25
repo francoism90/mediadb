@@ -94,7 +94,13 @@ secure_token_encrypt_uri_iv 722d4f9191c53d5e934e13719d02cced;
 vod_secret_key "mysecret-$vod_filepath";
 ```
 
-### Set VOD path
+### Set VOD url
+
+`.env`:
+
+```env
+VOD_URL=https://stream.test
+```
 
 `mediadb-vod.conf`:
 
