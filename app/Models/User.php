@@ -19,7 +19,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
 use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
-use Rennokki\QueryCache\Traits\QueryCacheModule;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -44,7 +44,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
-    use QueryCacheModule;
+    use QueryCacheable;
 
     /**
      * @var array

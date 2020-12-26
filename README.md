@@ -41,6 +41,7 @@ See `doc/nginx` for configuration examples.
 | mediadb-api.conf | localhost:3000 | API endpoint: Laravel instance, authentication, media processing, etc. |
 | mediadb-ui.conf | mediadb.test:443 mediadb.test:80 | MediaDB Front-end, MediaDB-API proxy. |
 | mediadb-vod.conf | stream.test:443 stream.test:80 | VOD: streaming endpoint, local vod-mapping. |
+| mediadb-socket.conf | socket.mediadb.test:443 | Laravel Echo for broadcasting events. |
 
 ### Laravel
 
