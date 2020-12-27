@@ -3,9 +3,15 @@
 namespace App\Traits;
 
 use App\Models\Tag;
+use Spatie\Tags\HasTags;
 
 trait InteractsWithTags
 {
+    use HasTags {
+        HasTags::getTagClassName as private getTagClassNameParent;
+        HasTags::tags as private getTagsParent;
+    }
+
     /**
      * @return string
      */

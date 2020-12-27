@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
+use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,30 +15,31 @@ use Spatie\Tags\Tag as TagModel;
 
 class Tag extends TagModel implements Viewable
 {
-    use HasHashids;
     use HasRandomSeed;
     use HasViews;
+    use InteractsWithHashids;
     use InteractsWithViews;
     use Searchable;
     use QueryCacheable;
 
     /**
+     * Invalidate the cache automatically upon update.
+     *
      * @var bool
      */
     protected static $flushCacheOnUpdate = true;
 
     /**
+     * Delete all views of an viewable Eloquent model on delete.
+     *
+     * @var bool
+     */
+    protected $removeViewsOnDelete = true;
+
+    /**
      * @var int
      */
     public $cacheFor = 3600;
-
-    /**
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'tags';
-    }
 
     /**
      * @return array
@@ -54,19 +55,19 @@ class Tag extends TagModel implements Viewable
     /**
      * @return mixed
      */
-    public function videos()
+    public function collections()
     {
         return $this
-            ->morphedByMany(Video::class, 'taggable', 'taggables');
+            ->morphedByMany(Collection::class, 'taggable', 'taggables');
     }
 
     /**
      * @return mixed
      */
-    public function collections()
+    public function videos()
     {
         return $this
-            ->morphedByMany(Collection::class, 'taggable', 'taggables');
+            ->morphedByMany(Video::class, 'taggable', 'taggables');
     }
 
     /**

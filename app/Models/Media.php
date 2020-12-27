@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\HasHashids;
+use App\Traits\InteractsWithHashids;
 use Illuminate\Support\Str;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
 
 class Media extends BaseMedia
 {
-    use HasHashids;
+    use InteractsWithHashids;
     use HasStatuses;
-    use QueryCacheable;
 
     /**
      * @var array
@@ -25,16 +23,6 @@ class Media extends BaseMedia
     protected $touches = ['model'];
 
     /**
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
-
-    /**
-     * @var int
-     */
-    public $cacheFor = 3600;
-
-    /**
      * @return string
      */
     public function getKindAttribute(): string
@@ -45,9 +33,9 @@ class Media extends BaseMedia
     /**
      * @return string
      */
-    public function getDownloadUrlAttribute(): string
+    public function getUrlAttribute(?string $conversion = null): string
     {
-        return $this->getUrl();
+        return $this->getUrl($conversion);
     }
 
     /**

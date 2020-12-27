@@ -9,16 +9,14 @@ class CollectionService
     /**
      * @param Model $model
      * @param array $collections
-     * @param array $types
      *
      * @return void
      */
-    public function sync(
-        Model $model,
-        array $collections = [],
-        array $types = ['title']
-    ): void {
+    public function sync(Model $model, ?array $collections = []): void
+    {
         $collect = collect($collections);
+
+        $types = config('collection.types');
 
         foreach ($types as $type) {
             $items = $collect

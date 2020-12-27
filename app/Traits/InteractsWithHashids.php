@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-trait HasHashids
+trait InteractsWithHashids
 {
     /**
      * @param string|null $connection

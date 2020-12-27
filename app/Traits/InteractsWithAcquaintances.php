@@ -2,15 +2,17 @@
 
 namespace App\Traits;
 
-trait HasAcquaintances
+use App\Models\User;
+
+trait InteractsWithAcquaintances
 {
     /**
      * @return bool
      */
-    public function getIsFavoritedAttribute(): bool
+    public function getIsFavoritedAttribute(?User $user = null): bool
     {
         return $this->isFavoritedBy(
-            auth()->user()
+            $user ?? auth()->user()
         );
     }
 
@@ -25,10 +27,10 @@ trait HasAcquaintances
     /**
      * @return bool
      */
-    public function getIsLikedAttribute(): bool
+    public function getIsLikedAttribute(?User $user = null): bool
     {
         return $this->isLikedBy(
-            auth()->user()
+            $user ?? auth()->user()
         );
     }
 
@@ -43,10 +45,10 @@ trait HasAcquaintances
     /**
      * @return bool
      */
-    public function getIsSubscribedAttribute(): bool
+    public function getIsSubscribedAttribute(?User $user = null): bool
     {
         return $this->isSubscribedBy(
-            auth()->user()
+            $user ?? auth()->user()
         );
     }
 

@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\HasActivities;
 use App\Traits\HasCustomProperties;
-use App\Traits\HasHashids;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
+use App\Traits\InteractsWithActivities;
+use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -19,7 +19,6 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
 use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -31,20 +30,19 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use CanFavorite;
     use CanLike;
     use CanSubscribe;
-    use HasActivities;
     use HasApiTokens;
     use HasCustomProperties;
     use HasFactory;
-    use HasHashids;
     use HasRandomSeed;
     use HasRoles;
     use HasSlug;
     use HasViews;
+    use InteractsWithActivities;
+    use InteractsWithHashids;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
     use Searchable;
-    use QueryCacheable;
 
     /**
      * @var array
@@ -77,14 +75,12 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     protected $removeViewsOnDelete = true;
 
     /**
-     * @var bool
+     * @return MorphMany
      */
-    protected static $flushCacheOnUpdate = true;
-
-    /**
-     * @var int
-     */
-    public $cacheFor = 3600;
+    public function videos(): MorphMany
+    {
+        return $this->morphMany(Video::class, 'model');
+    }
 
     /**
      * Get the user's preferred locale.
@@ -111,17 +107,9 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      *
      * @return string
      */
-    public function receivesBroadcastNotificationsOn()
+    public function receivesBroadcastNotificationsOn(): string
     {
         return 'user.'.$this->getRouteKey();
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function videos(): MorphMany
-    {
-        return $this->morphMany(Video::class, 'model');
     }
 
     /**
@@ -132,14 +120,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         $this->addMediaCollection('avatar')
              ->singleFile()
              ->useDisk('media');
-    }
-
-    /**
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'users';
     }
 
     /**

@@ -2,85 +2,27 @@
 
 namespace App\Models;
 
-use App\Traits\HasAcquaintances;
-use App\Traits\HasActivities;
 use App\Traits\HasCollections;
-use App\Traits\HasHashids;
-use App\Traits\HasRandomSeed;
-use App\Traits\HasViews;
-use App\Traits\InteractsWithTags;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\InteractsWithAcquaintances;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
-use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Tags\HasTags;
-use Spatie\Translatable\HasTranslations;
 
-class Video extends Model implements HasMedia, Viewable
+class Video extends BaseModel
 {
     use CanBeFavorited;
     use CanBeLiked;
-    use HasAcquaintances;
-    use HasActivities;
     use HasCollections;
-    use HasHashids;
-    use HasRandomSeed;
-    use HasStatuses;
-    use HasTags, InteractsWithTags {
-        InteractsWithTags::getTagClassName insteadof HasTags;
-        InteractsWithTags::tags insteadof HasTags;
-    }
     use HasTranslatableSlug;
-    use HasTranslations;
-    use HasViews;
-    use InteractsWithMedia;
-    use InteractsWithViews;
-    use Notifiable;
-    use Searchable;
-    use QueryCacheable;
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'custom_properties' => 'json',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $guarded = [];
-
-    /**
-     * @var bool
-     */
-    protected $removeViewsOnDelete = true;
-
-    /**
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
+    use InteractsWithAcquaintances;
 
     /**
      * @var array
      */
     public $translatable = ['name', 'slug', 'overview'];
-
-    /**
-     * @var int
-     */
-    public $cacheFor = 3600;
 
     /**
      * @return morphTo
@@ -141,14 +83,6 @@ class Video extends Model implements HasMedia, Viewable
                 'text/vtt',
             ])
             ->useDisk('media');
-    }
-
-    /**
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'videos';
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\User;
 
-trait HasActivities
+trait InteractsWithActivities
 {
     /**
      * @param string    $log

@@ -2,69 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\HasAcquaintances;
-use App\Traits\HasActivities;
-use App\Traits\HasHashids;
-use App\Traits\HasRandomSeed;
-use App\Traits\HasViews;
-use App\Traits\InteractsWithTags;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
+use App\Traits\InteractsWithAcquaintances;
 use Multicaret\Acquaintances\Traits\CanBeSubscribed;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Tags\HasTags;
-use Spatie\Translatable\HasTranslations;
 
-class Collection extends Model implements Viewable
+class Collection extends BaseModel
 {
     use CanBeSubscribed;
-    use HasAcquaintances;
-    use HasActivities;
-    use HasHashids;
-    use HasRandomSeed;
-    use HasStatuses;
-    use HasTags, InteractsWithTags {
-        InteractsWithTags::getTagClassName insteadof HasTags;
-        InteractsWithTags::tags insteadof HasTags;
-    }
     use HasTranslatableSlug;
-    use HasTranslations;
-    use HasViews;
-    use InteractsWithViews;
-    use Searchable;
-    use QueryCacheable;
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'custom_properties' => 'json',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $guarded = [];
-
-    /**
-     * @var bool
-     */
-    protected $removeViewsOnDelete = true;
-
-    /**
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
-
-    /**
-     * @var int
-     */
-    public $cacheFor = 3600;
+    use InteractsWithAcquaintances;
 
     /**
      * @var array
@@ -79,14 +26,6 @@ class Collection extends Model implements Viewable
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    /**
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'collections';
     }
 
     /**

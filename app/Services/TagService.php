@@ -13,7 +13,7 @@ class TagService
      *
      * @return void
      */
-    public function sync(Model $model, array $tags = []): void
+    public function sync(Model $model, ?array $tags = []): void
     {
         $collect = collect($tags);
 
