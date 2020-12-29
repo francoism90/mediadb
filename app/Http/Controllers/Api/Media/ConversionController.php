@@ -59,6 +59,9 @@ class ConversionController extends Controller
             abort(501);
         }
 
-        return response()->download($conversionPath.$conversion['path'], $conversion['path']);
+        return response()->download(
+            $conversionPath.$conversion['path'],
+            basename($conversion['path'])
+        );
     }
 }

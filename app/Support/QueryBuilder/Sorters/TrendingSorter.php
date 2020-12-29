@@ -17,8 +17,10 @@ class TrendingSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $query->getQuery()->orders = null;
+        // Removing existing orderings
+        $query->getQuery()->reorder();
 
-        return $query->orderByViews('DESC', Period::pastDays(3), 'view_count', true);
+        return $query
+            ->orderByViews('DESC', Period::pastDays(3), 'view_count', true);
     }
 }

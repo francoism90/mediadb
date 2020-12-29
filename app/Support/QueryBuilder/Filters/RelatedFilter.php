@@ -3,7 +3,6 @@
 namespace App\Support\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ONGR\ElasticsearchDSL\Query\FullText\MultiMatchQuery;
@@ -12,7 +11,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 class RelatedFilter implements Filter
 {
-    protected const NAME_REGEX = '~[^\p{L}]++~u';
+    protected const NAME_REGEX = '/[^A-Za-z0-9\-]/u';
 
     /**
      * @param Builder      $query
@@ -23,38 +22,63 @@ class RelatedFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_array($value) ? implode(',', $value) : $value;
+        $value = is_string($value) ? explode(',', $value) : $value;
 
-        // Find model by hash
-        $model = $query->getModel()->findByHash($value);
+        $models = $query->getModel()->convertHashidsToModels($value);
 
-        // Merge collection models
-        $models = collect();
+        // Find query matches
+        $results = collect();
 
-        $models = $models->merge($this->getModelsByQuery($query, $model));
-        $models = $models->merge($this->getModelsWithTags($query, $model));
-        $models = $models->merge($this->getModelsWithCollections($query, $model));
+        foreach ($models as $model) {
+            $value = (string) Str::of($model->name)
+                ->replaceMatches(self::NAME_REGEX, ' ')
+                ->trim();
 
-        // Return query
-        $ids = $models->pluck('id')->toArray();
-        $idsOrder = implode(',', $ids);
+            $results = $results->merge(
+                $this->getModelsByQuery($query, $value)
+            );
+        }
 
         return $query
-            ->where('id', '<>', $model->id)
-            ->whereIn('id', $ids)
-            ->orderByRaw("FIELD(id, {$idsOrder})");
+            ->where(function ($query) use ($results, $models) {
+                $query
+                    ->whereIn('id', $results->pluck('id'))
+                    ->whereNotIn('id', $models->pluck('id'));
+            })
+            ->orWhere(function ($query) use ($models) {
+                $query
+                    ->withAllCollectionsOfAnyType(
+                        $models->pluck('collections')->collapse()
+                    )
+                    ->whereNotIn('id', $models->pluck('id'))
+                    ->inRandomSeedOrder()
+                    ->take(12);
+            })
+            ->orWhere(function ($query) use ($models) {
+                $query
+                    ->withAnyTagsOfAnyType(
+                        $models->pluck('tags')->collapse()
+                    )
+                    ->whereNotIn('id', $models->pluck('id'))
+                    ->inRandomSeedOrder()
+                    ->take(12);
+            })
+            ->when($results->isNotEmpty(), function ($query) use ($results) {
+                $idsOrder = $results->implode('id', ',');
+
+                return $query->orderByRaw("FIELD(id, {$idsOrder}) DESC");
+            })
+            ->orderBy('id');
     }
 
     /**
      * @param Builder $query
-     * @param Model   $model
+     * @param sting   $value
      *
      * @return Collection
      */
-    protected function getModelsByQuery(Builder $query, Model $model): Collection
+    protected function getModelsByQuery(Builder $query, string $value): Collection
     {
-        $value = (string) Str::of($model->name)->replaceMatches(self::NAME_REGEX, ' ')->trim();
-
         return $query
             ->getModel()
             ->search($value, function ($client, $body) use ($query, $value) {
@@ -70,38 +94,6 @@ class RelatedFilter implements Filter
                     'body' => $body->toArray(),
                 ]);
             })
-            ->take(12)
-            ->get();
-    }
-
-    /**
-     * @param Builder $query
-     * @param Model   $model
-     *
-     * @return Collection
-     */
-    protected function getModelsWithTags(Builder $query, Model $model): Collection
-    {
-        return $query
-            ->getModel()
-            ->withAnyTagsOfAnyType($model->tags)
-            ->inRandomSeedOrder()
-            ->take(12)
-            ->get();
-    }
-
-    /**
-     * @param Builder $query
-     * @param Model   $model
-     *
-     * @return Collection
-     */
-    protected function getModelsWithCollections(Builder $query, Model $model)
-    {
-        return $query
-            ->getModel()
-            ->withAnyCollectionsOfAnyType($model->collections)
-            ->inRandomSeedOrder()
             ->take(12)
             ->get();
     }

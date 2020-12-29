@@ -16,21 +16,6 @@ return [
                     ],
                 ],
             ],
-            'videos' => [
-                'properties' => [
-                    'id' => [
-                        'type' => 'keyword',
-                    ],
-                    'name' => [
-                        'type' => 'text',
-                        'analyzer' => 'autocomplete',
-                        'search_analyzer' => 'autocomplete_search',
-                    ],
-                    'duration' => [
-                        'type' => 'float',
-                    ],
-                ],
-            ],
         ],
         'settings' => [
             'default' => [

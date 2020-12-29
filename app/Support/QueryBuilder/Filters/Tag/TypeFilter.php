@@ -9,8 +9,15 @@ class TypeFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_string($value) ? explode(',', $value) : $value;
+        $types = is_string($value) ? explode(',', $value) : $value;
 
-        return $query->whereIn('type', $value);
+        $types = collect($value);
+
+        $isValidType = $types->contains(config('tag.types'));
+
+        return $query
+            ->when($isValidType, function ($query) use ($types) {
+                return $query->whereIn('type', $types->toArray());
+            });
     }
 }

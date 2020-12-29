@@ -20,7 +20,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Translatable\HasTranslations;
 
-class BaseModel extends Model implements HasMedia, Viewable
+abstract class BaseModel extends Model implements HasMedia, Viewable
 {
     use HasCustomProperties;
     use HasFactory;

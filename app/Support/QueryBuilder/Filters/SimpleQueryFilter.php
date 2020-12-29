@@ -12,7 +12,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 class SimpleQueryFilter implements Filter
 {
-    protected const TAG_REGEX = '/tag:([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u';
+    public const TAG_REGEX = '/tag:([\p{Pc}\p{Pd}\p{N}\p{L}\p{Mn}]+)/u';
 
     /**
      * @param Builder      $query
@@ -28,19 +28,23 @@ class SimpleQueryFilter implements Filter
 
         $value = $this->sanitize($value);
 
-        // Merge collection models
-        $models = collect();
-
-        $models = $models->merge($this->getModelsByQuery($query, $value));
-        $models = $models->merge($this->getModelsWithTags($query, $value));
-
-        // Return query
-        $ids = $models->pluck('id')->toArray();
-        $idsOrder = implode(',', $ids);
+        // Results
+        $queryModels = $this->getModelsByQuery($query, $value);
+        $tagModels = $this->getTagModels($query, $value);
 
         return $query
-            ->whereIn('id', $ids)
-            ->orderByRaw("FIELD(id, {$idsOrder})");
+            ->when($queryModels->isNotEmpty(), function ($query) use ($queryModels) {
+                $ids = $queryModels->pluck('id');
+                $idsOrder = $queryModels->implode('id', ',');
+
+                return $query
+                    ->whereIn('id', $ids)
+                    ->orderByRaw("FIELD(id, {$idsOrder})");
+            })
+            ->when($tagModels->isNotEmpty(), function ($query) use ($tagModels) {
+                return $query->withAnyTagsOfAnyType($tagModels);
+            })
+            ->orderBy('id');
     }
 
     /**
@@ -75,7 +79,7 @@ class SimpleQueryFilter implements Filter
      */
     protected function getModelsByQuery(Builder $query, string $value): Collection
     {
-        // Replace tags (if any)
+        // Replace tag queries (e.g. tag:foo)
         $value = (string) Str::of($value)->replaceMatches(self::TAG_REGEX, '')->trim();
 
         return $query
@@ -103,7 +107,7 @@ class SimpleQueryFilter implements Filter
      *
      * @return Collection
      */
-    protected function getModelsWithTags(Builder $query, string $value): Collection
+    protected function getTagModels(Builder $query, string $value): Collection
     {
         if (!$query->getModel()->tags) {
             return collect();
@@ -111,13 +115,6 @@ class SimpleQueryFilter implements Filter
 
         $matches = Str::of($value)->matchAll(self::TAG_REGEX)->toArray();
 
-        $tags = Tag::withSlugTranslated($matches)->get();
-
-        return $query
-            ->getModel()
-            ->withAllTagsOfAnyType($tags)
-            ->inRandomSeedOrder()
-            ->take(10000)
-            ->get();
+        return Tag::withSlugTranslated($matches)->get();
     }
 }

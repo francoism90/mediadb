@@ -16,6 +16,11 @@ class Collection extends BaseModel
     /**
      * @var array
      */
+    protected $with = ['media'];
+
+    /**
+     * @var array
+     */
     public $translatable = ['name', 'slug', 'overview'];
 
     /**

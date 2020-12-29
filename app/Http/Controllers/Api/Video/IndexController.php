@@ -38,7 +38,7 @@ class IndexController extends Controller
                 'tags',
             ])
             ->allowedFilters([
-                AllowedFilter::custom('collection', new CollectionFilter())->ignore(null, '*'),
+                AllowedFilter::custom('collections', new CollectionFilter())->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),

@@ -20,7 +20,7 @@ class ShowController extends Controller
 
         return new CollectionResource(
             $collection
-                ->load(['tags', 'videos'])
+                ->load(['tags'])
                 ->append([
                     'is_subscribed',
                     'item_count',

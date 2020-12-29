@@ -22,6 +22,11 @@ class Video extends BaseModel
     /**
      * @var array
      */
+    protected $with = ['media'];
+
+    /**
+     * @var array
+     */
     public $translatable = ['name', 'slug', 'overview'];
 
     /**
@@ -90,11 +95,11 @@ class Video extends BaseModel
      */
     public function toSearchableArray(): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'duration' => $this->duration,
-        ];
+        return $this->only([
+            'id',
+            'name',
+            'overview',
+        ]);
     }
 
     /**

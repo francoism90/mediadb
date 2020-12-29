@@ -21,7 +21,6 @@ class RecommendedSorter implements Sort
             return $query;
         }
 
-        // TODO: something useful for the user instead
         return $query->inRandomSeedOrder();
     }
 }

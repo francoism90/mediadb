@@ -52,23 +52,23 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureModelBinding()
     {
         Route::bind('collection', function ($value) {
-            return \App\Models\Collection::findByHash($value);
+            return \App\Models\Collection::findByHashidOrFail($value);
         });
 
         Route::bind('media', function ($value) {
-            return \App\Models\Media::findByHash($value);
+            return \App\Models\Media::findByHashidOrFail($value);
         });
 
         Route::bind('tag', function ($value) {
-            return \App\Models\Tag::findByHash($value);
+            return \App\Models\Tag::findByHashidOrFail($value);
         });
 
         Route::bind('user', function ($value) {
-            return \App\Models\User::findByHash($value);
+            return \App\Models\User::findByHashidOrFail($value);
         });
 
         Route::bind('video', function ($value) {
-            return \App\Models\Video::findByHash($value);
+            return \App\Models\Video::findByHashidOrFail($value);
         });
     }
 

@@ -6302,16 +6302,16 @@
         },
         {
             "name": "spatie/laravel-tags",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-tags.git",
-                "reference": "e190d1496b4ae18ff13db67086352dec9f594c06"
+                "reference": "164cd45e2798ceba954f5419073de183b5a1df5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/e190d1496b4ae18ff13db67086352dec9f594c06",
-                "reference": "e190d1496b4ae18ff13db67086352dec9f594c06",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/164cd45e2798ceba954f5419073de183b5a1df5f",
+                "reference": "164cd45e2798ceba954f5419073de183b5a1df5f",
                 "shasum": ""
             },
             "require": {
@@ -6358,7 +6358,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-tags/issues",
-                "source": "https://github.com/spatie/laravel-tags/tree/3.0.1"
+                "source": "https://github.com/spatie/laravel-tags/tree/3.0.2"
             },
             "funding": [
                 {
@@ -6366,7 +6366,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-05T10:52:50+00:00"
+            "time": "2020-12-29T08:54:02+00:00"
         },
         {
             "name": "spatie/laravel-translatable",
@@ -10194,16 +10194,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.5.3",
+            "version": "2.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "d8dc4f90ed469f9f9313b976fb078c20585d5c99"
+                "reference": "8e907d81244649c5ea746e2ec30c32c5f59df472"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/d8dc4f90ed469f9f9313b976fb078c20585d5c99",
-                "reference": "d8dc4f90ed469f9f9313b976fb078c20585d5c99",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/8e907d81244649c5ea746e2ec30c32c5f59df472",
+                "reference": "8e907d81244649c5ea746e2ec30c32c5f59df472",
                 "shasum": ""
             },
             "require": {
@@ -10267,7 +10267,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2020-12-09T20:25:45+00:00"
+            "time": "2020-12-29T09:12:55+00:00"
         },
         {
             "name": "fakerphp/faker",

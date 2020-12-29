@@ -10,11 +10,11 @@ class DownloadController extends Controller
 {
     /**
      * @param Media $media
-     * @param User  $user|null
+     * @param User  $user
      *
      * @return mixed
      */
-    public function __invoke(Media $media, ?User $user)
+    public function __invoke(Media $media, User $user)
     {
         $path = $media->getPath();
 
