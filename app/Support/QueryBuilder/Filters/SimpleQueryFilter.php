@@ -42,7 +42,10 @@ class SimpleQueryFilter implements Filter
                     ->orderByRaw("FIELD(id, {$idsOrder})");
             })
             ->when($tagModels->isNotEmpty(), function ($query) use ($tagModels) {
-                return $query->withAnyTagsOfAnyType($tagModels);
+                return $query
+                    ->withAnyTagsOfAnyType($tagModels)
+                    ->inRandomSeedOrder()
+                    ->take(9500);
             })
             ->orderBy('id');
     }
@@ -90,6 +93,7 @@ class SimpleQueryFilter implements Filter
                 );
 
                 $body = new Search();
+                $body->setSize(9500);
                 $body->addQuery($simpleQueryStringQuery);
 
                 return $client->search([
@@ -97,7 +101,6 @@ class SimpleQueryFilter implements Filter
                     'body' => $body->toArray(),
                 ]);
             })
-            ->take(10000)
             ->get();
     }
 

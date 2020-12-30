@@ -19,8 +19,8 @@ class Tag extends TagModel implements Viewable
     use HasViews;
     use InteractsWithHashids;
     use InteractsWithViews;
-    use Searchable;
     use QueryCacheable;
+    use Searchable;
 
     /**
      * Invalidate the cache automatically upon update.

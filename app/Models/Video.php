@@ -6,6 +6,7 @@ use App\Traits\HasCollections;
 use App\Traits\InteractsWithAcquaintances;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\URL;
+use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -18,6 +19,7 @@ class Video extends BaseModel
     use HasCollections;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
+    use Searchable;
 
     /**
      * @var array

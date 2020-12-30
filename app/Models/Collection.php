@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
+use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeSubscribed;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -12,6 +13,7 @@ class Collection extends BaseModel
     use CanBeSubscribed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
+    use Searchable;
 
     /**
      * @var array

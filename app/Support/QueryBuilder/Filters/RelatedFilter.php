@@ -87,6 +87,7 @@ class RelatedFilter implements Filter
                 );
 
                 $body = new Search();
+                $body->setSize(12);
                 $body->addQuery($multiMatchQuery);
 
                 return $client->search([
@@ -94,7 +95,6 @@ class RelatedFilter implements Filter
                     'body' => $body->toArray(),
                 ]);
             })
-            ->take(12)
             ->get();
     }
 }
