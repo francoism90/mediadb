@@ -25,17 +25,17 @@ class Media extends BaseMedia
     /**
      * @return string
      */
-    public function getKindAttribute(): string
+    public function getDownloadUrlAttribute(): string
     {
-        return Str::plural($this->collection_name);
+        return $this->getUrl();
     }
 
     /**
      * @return string
      */
-    public function getUrlAttribute(?string $conversion = null): string
+    public function getKindAttribute(): string
     {
-        return $this->getUrl($conversion);
+        return Str::plural($this->collection_name);
     }
 
     /**

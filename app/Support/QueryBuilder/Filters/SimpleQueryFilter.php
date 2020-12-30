@@ -112,12 +112,12 @@ class SimpleQueryFilter implements Filter
      */
     protected function getTagModels(Builder $query, string $value): Collection
     {
-        if (!$query->getModel()->tags) {
+        $matches = Str::of($value)->matchAll(self::TAG_REGEX);
+
+        if (!$query->getModel()->tags || $matches->isEmpty()) {
             return collect();
         }
 
-        $matches = Str::of($value)->matchAll(self::TAG_REGEX)->toArray();
-
-        return Tag::withSlugTranslated($matches)->get();
+        return Tag::withSlugTranslated($matches->toArray())->get();
     }
 }
