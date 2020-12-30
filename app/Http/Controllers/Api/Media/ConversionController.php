@@ -41,27 +41,30 @@ class ConversionController extends Controller
             abort(404);
         }
 
-        $conversionBasePath = $this->basePathGenerator->getPathForConversions($media);
-
-        $conversionPath = $this
-            ->filesystemManager
-            ->disk($media->conversions_disk)
-            ->path($conversionBasePath);
-
+        // We need to use fixed paths for our own conversions
         $conversions = collect([
-            'sprite' => ['path' => config('video.sprite_name')],
-            'thumbnail' => ['path' => config('video.thumbnail_name')],
+            ['name' => 'sprite', 'path' => config('video.sprite_name')],
+            ['name' => 'thumbnail', 'path' => config('video.thumbnail_name')],
         ]);
 
-        $conversion = $conversions->get($name);
+        $conversion = $conversions->firstWhere('name', $name);
 
         if (!$conversion) {
             abort(501);
         }
 
+        $conversionRelativePath = $this
+            ->basePathGenerator
+            ->getPathForConversions($media);
+
+        $absolutePath = $this
+            ->filesystemManager
+            ->disk($media->conversions_disk)
+            ->path($conversionRelativePath.$conversion['path']);
+
         return response()->download(
-            $conversionPath.$conversion['path'],
-            basename($conversion['path'])
+            $absolutePath,
+            basename($absolutePath)
         );
     }
 }
