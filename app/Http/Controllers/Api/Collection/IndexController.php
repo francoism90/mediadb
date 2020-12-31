@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Support\QueryBuilder\Filters\Collection\TypeFilter;
-use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
+use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
@@ -35,7 +35,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
             ])
             ->allowedSorts([
                 $defaultSort,

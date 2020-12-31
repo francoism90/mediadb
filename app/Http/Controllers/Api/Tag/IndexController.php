@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Tag;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
-use App\Support\QueryBuilder\Filters\SimpleQueryFilter;
+use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
@@ -31,7 +31,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new SimpleQueryFilter())->ignore(null, '*', '#'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
             ])
             ->AllowedSorts([
                 $defaultSort,

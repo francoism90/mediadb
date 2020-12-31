@@ -21,8 +21,7 @@ class DurationSorter implements Sort
 
         // Sort clip duration
         $clips = $query->get()->sortBy(function ($model) {
-            $duration = $model
-                ->media
+            $duration = $model->media
                 ->where('collection_name', 'clip')
                 ->pluck('custom_properties.metadata.duration')
                 ->first();

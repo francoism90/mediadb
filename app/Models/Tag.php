@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
+use App\Traits\InteractsWithElasticsearch;
 use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
@@ -17,6 +18,7 @@ class Tag extends TagModel implements Viewable
 {
     use HasRandomSeed;
     use HasViews;
+    use InteractsWithElasticsearch;
     use InteractsWithHashids;
     use InteractsWithViews;
     use QueryCacheable;

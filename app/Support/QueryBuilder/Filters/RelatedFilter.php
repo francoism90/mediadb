@@ -5,13 +5,11 @@ namespace App\Support\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ONGR\ElasticsearchDSL\Query\FullText\MultiMatchQuery;
-use ONGR\ElasticsearchDSL\Search;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class RelatedFilter implements Filter
 {
-    protected const NAME_REGEX = '/[^A-Za-z0-9\-]/u';
+    public const NAME_REGEX = '/[\p{N}\p{L}]+/u';
 
     /**
      * @param Builder      $query
@@ -22,79 +20,88 @@ class RelatedFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_string($value) ? explode(',', $value) : $value;
-
+        $models = is_string($value) ? explode(',', $value) : $value;
         $models = $query->getModel()->convertHashidsToModels($value);
 
-        // Find query matches
-        $results = collect();
-
-        foreach ($models as $model) {
-            $value = (string) Str::of($model->name)
-                ->replaceMatches(self::NAME_REGEX, ' ')
-                ->trim();
-
-            $results = $results->merge(
-                $this->getModelsByQuery($query, $value)
-            );
+        // Force empty result
+        if ($models->isEmpty()) {
+            return $query->whereNull('id');
         }
 
-        return $query
-            ->where(function ($query) use ($results, $models) {
-                $query
-                    ->whereIn('id', $results->pluck('id'))
-                    ->whereNotIn('id', $models->pluck('id'));
-            })
-            ->orWhere(function ($query) use ($models) {
-                $query
-                    ->withAllCollectionsOfAnyType(
-                        $models->pluck('collections')->collapse()
-                    )
-                    ->whereNotIn('id', $models->pluck('id'))
-                    ->inRandomSeedOrder()
-                    ->take(12);
-            })
-            ->orWhere(function ($query) use ($models) {
-                $query
-                    ->withAnyTagsOfAnyType(
-                        $models->pluck('tags')->collapse()
-                    )
-                    ->whereNotIn('id', $models->pluck('id'))
-                    ->inRandomSeedOrder()
-                    ->take(12);
-            })
-            ->when($results->isNotEmpty(), function ($query) use ($results) {
-                $idsOrder = $results->implode('id', ',');
+        $relatedModels = $this->getQueryModels($query, $models);
+        $relatedModels = $relatedModels->merge($this->getCollectionModels($query, $models));
+        $relatedModels = $relatedModels->merge($this->getTagsModels($query, $models));
 
-                return $query->orderByRaw("FIELD(id, {$idsOrder}) DESC");
+        return $query
+            ->when($relatedModels->isNotEmpty(), function ($query) use ($relatedModels) {
+                $ids = $relatedModels->pluck('id');
+                $idsOrder = $relatedModels->implode('id', ',');
+
+                return $query
+                    ->whereIn('id', $ids)
+                    ->orderByRaw("FIELD(id, {$idsOrder})");
             })
+            ->take(50)
             ->orderBy('id');
     }
 
     /**
-     * @param Builder $query
-     * @param sting   $value
+     * @param Builder    $query
+     * @param Collection $models
      *
      * @return Collection
      */
-    protected function getModelsByQuery(Builder $query, string $value): Collection
+    protected function getCollectionModels(Builder $query, Collection $models): Collection
     {
         return $query
             ->getModel()
-            ->search($value, function ($client, $body) use ($query, $value) {
-                $multiMatchQuery = new MultiMatchQuery(
-                    ['name^5', 'description', 'overview'], $value
-                );
-
-                $body = new Search();
-                $body->setSize(12);
-                $body->addQuery($multiMatchQuery);
-
-                return $client->search([
-                    'index' => $query->getModel()->searchableAs(),
-                    'body' => $body->toArray(),
-                ]);
-            })
+            ->withAllCollectionsOfAnyType(
+                $models->pluck('collections')->collapse()
+            )
+            ->whereNotIn('id', $models->pluck('id'))
+            ->inRandomSeedOrder()
+            ->take(12)
             ->get();
+    }
+
+    /**
+     * @param Builder    $query
+     * @param Collection $models
+     *
+     * @return Collection
+     */
+    protected function getTagsModels(Builder $query, Collection $models): Collection
+    {
+        return $query
+            ->getModel()
+            ->withAnyTagsOfAnyType(
+                $models->pluck('tags')->collapse()
+            )
+            ->whereNotIn('id', $models->pluck('id'))
+            ->inRandomSeedOrder()
+            ->take(12)
+            ->get();
+    }
+
+    /**
+     * @param Builder    $query
+     * @param Collection $models
+     *
+     * @return Collection
+     */
+    protected function getQueryModels(Builder $query, Collection $models): Collection
+    {
+        $names = Str::of($models->pluck('name'))->matchAll(self::NAME_REGEX);
+
+        $queryString = implode(' ', $names->toArray());
+
+        $matches = $query
+            ->getModel()
+            ->multiMatchQuery($queryString, 50)
+            ->get();
+
+        return $matches
+            ->whereNotIn('id', $models->pluck('id'))
+            ->take(12);
     }
 }

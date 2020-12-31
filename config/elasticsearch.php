@@ -2,6 +2,7 @@
 
 return [
     'host' => env('ELASTICSEARCH_HOST'),
+    'query_fields' => ['name^5', 'description', 'overview'],
     'indices' => [
         'mappings' => [
             'default' => [
