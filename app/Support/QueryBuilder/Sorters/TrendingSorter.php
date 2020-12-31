@@ -21,6 +21,6 @@ class TrendingSorter implements Sort
         $query->getQuery()->reorder();
 
         return $query
-            ->orderByViews('DESC', Period::pastDays(3), 'view_count', true);
+            ->orderByUniqueViews('DESC', Period::pastDays(3), 'view_count');
     }
 }

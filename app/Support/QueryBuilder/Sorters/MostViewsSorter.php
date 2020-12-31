@@ -20,6 +20,6 @@ class MostViewsSorter implements Sort
         $query->getQuery()->reorder();
 
         return $query
-            ->orderByViews('DESC', null, 'view_count', true);
+            ->orderByUniqueViews('DESC', null, 'view_count', true);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ebb6da95264a82659f08679ba00dc6c",
+    "content-hash": "6e0e936fff2a145f5bd826bfe439fb13",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -330,16 +330,16 @@
         },
         {
             "name": "cyrildewit/eloquent-viewable",
-            "version": "v5.2.1",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cyrildewit/eloquent-viewable.git",
-                "reference": "77520490ff2c2a6d26e18f7d367c68ddb427aadb"
+                "reference": "fd5fc3dc869a9a3769d7dd9b7b9ba13097ceba1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cyrildewit/eloquent-viewable/zipball/77520490ff2c2a6d26e18f7d367c68ddb427aadb",
-                "reference": "77520490ff2c2a6d26e18f7d367c68ddb427aadb",
+                "url": "https://api.github.com/repos/cyrildewit/eloquent-viewable/zipball/fd5fc3dc869a9a3769d7dd9b7b9ba13097ceba1c",
+                "reference": "fd5fc3dc869a9a3769d7dd9b7b9ba13097ceba1c",
                 "shasum": ""
             },
             "require": {
@@ -351,13 +351,13 @@
                 "illuminate/support": "^6.0|^7.0|^8.0",
                 "jaybizzle/crawler-detect": "^1.0",
                 "nesbot/carbon": "^2.0",
-                "php": "^7.2"
+                "php": "^7.4|^8.0"
             },
             "require-dev": {
                 "illuminate/config": "^6.0|^7.0|^8.0",
                 "mockery/mockery": "^1.2.4",
-                "orchestra/testbench": "^4.0|^5.0|^6.0",
-                "phpunit/phpunit": "^8.4|^9.0"
+                "orchestra/testbench": "^4.9.1|^5.9.1|^6.6.1",
+                "phpunit/phpunit": "^9.3.3"
             },
             "type": "library",
             "extra": {
@@ -401,9 +401,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cyrildewit/eloquent-viewable/issues",
-                "source": "https://github.com/cyrildewit/eloquent-viewable/tree/v5.2.1"
+                "source": "https://github.com/cyrildewit/eloquent-viewable/tree/v6.0.0"
             },
-            "time": "2020-09-22T15:12:40+00:00"
+            "time": "2020-12-30T12:26:25+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2246,16 +2246,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v8.5.1",
+            "version": "v8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "b8b8a35cc3ac82cbc07dfa83955492d2ef6e237b"
+                "reference": "ece6758b82c51ff7f5e011f243a7c6b33711a847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/b8b8a35cc3ac82cbc07dfa83955492d2ef6e237b",
-                "reference": "b8b8a35cc3ac82cbc07dfa83955492d2ef6e237b",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/ece6758b82c51ff7f5e011f243a7c6b33711a847",
+                "reference": "ece6758b82c51ff7f5e011f243a7c6b33711a847",
                 "shasum": ""
             },
             "require": {
@@ -2311,7 +2311,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2020-12-22T17:29:20+00:00"
+            "time": "2020-12-30T15:52:14+00:00"
         },
         {
             "name": "laravel/telescope",

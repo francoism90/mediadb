@@ -26,7 +26,7 @@ trait HasViews
     public function getViewsAttribute(): int
     {
         return views($this)
-            ->remember()
+            ->remember(now()->addHours(6))
             ->collection('view_count')
             ->unique()
             ->count();
