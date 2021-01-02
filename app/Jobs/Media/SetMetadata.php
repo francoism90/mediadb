@@ -20,22 +20,22 @@ class SetMetadata implements ShouldQueue
     /**
      * @var bool
      */
-    public $deleteWhenMissingModels = true;
+    public bool $deleteWhenMissingModels = true;
 
     /**
      * @var int
      */
-    public $tries = 3;
+    public int $tries = 3;
 
     /**
      * @var int
      */
-    public $timeout = 120;
+    public int $timeout = 120;
 
     /**
      * @var Media
      */
-    protected $media;
+    protected Media $media;
 
     /**
      * @return void
@@ -48,7 +48,7 @@ class SetMetadata implements ShouldQueue
     /**
      * @return mixed
      */
-    public function handle(MediaMetadataService $mediaMetadataService)
+    public function handle(MediaMetadataService $mediaMetadataService): void
     {
         // e.g. video/mp4 => video
         $type = strtok($this->media->mime_type, '/');

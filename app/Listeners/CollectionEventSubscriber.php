@@ -4,13 +4,16 @@ namespace App\Listeners;
 
 use App\Events\Collection\HasBeenUpdated;
 use App\Models\Tag;
+use Illuminate\Events\Dispatcher;
 
 class CollectionEventSubscriber
 {
     /**
-     * Handle collection updated events.
+     * @param mixed $event
+     *
+     * @return void
      */
-    public function handleCollectionUpdated($event)
+    public function handleCollectionUpdated($event): void
     {
         Tag::flushQueryCache();
     }
@@ -18,11 +21,11 @@ class CollectionEventSubscriber
     /**
      * Register the listeners for the subscriber.
      *
-     * @param \Illuminate\Events\Dispatcher $events
+     * @param Dispatcher $events
      *
      * @return void
      */
-    public function subscribe($events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(
             HasBeenUpdated::class,

@@ -16,8 +16,6 @@ class TypeFilter implements Filter
         $isValidType = $types->contains(config('tag.types'));
 
         return $query
-            ->when($isValidType, function ($query) use ($types) {
-                return $query->whereIn('type', $types->toArray());
-            });
+            ->when($isValidType, fn ($query) => $query->whereIn('type', $types->toArray()));
     }
 }

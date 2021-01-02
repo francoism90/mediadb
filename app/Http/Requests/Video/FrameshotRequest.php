@@ -14,7 +14,7 @@ class FrameshotRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class FrameshotRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'timecode' => 'required|numeric|min:0|max:28800',
@@ -34,7 +34,7 @@ class FrameshotRequest extends FormRequest
     /**
      *  @return array
      */
-    public function filters()
+    public function filters(): array
     {
         return [
             'timecode' => 'cast:float',

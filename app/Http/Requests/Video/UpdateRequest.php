@@ -14,7 +14,7 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|min:1|max:255',
@@ -42,7 +42,7 @@ class UpdateRequest extends FormRequest
     /**
      *  @return array
      */
-    public function filters()
+    public function filters(): array
     {
         return [
             'name' => 'trim|strip_tags',

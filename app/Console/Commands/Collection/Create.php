@@ -25,7 +25,7 @@ class Create extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $model = Collection::create([
             'name' => $this->argument('name'),

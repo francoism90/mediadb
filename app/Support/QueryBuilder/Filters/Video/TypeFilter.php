@@ -14,15 +14,11 @@ class TypeFilter implements Filter
         $types = collect($types);
 
         return $query
-            ->when($types->contains('favorited'), function ($query) {
-                return $query->whereHas('favoriters', function (Builder $query) {
-                    $query->where('id', auth()->user()->id);
-                });
-            })
-            ->when($types->contains('liked'), function ($query) {
-                return $query->whereHas('likers', function (Builder $query) {
-                    $query->where('id', auth()->user()->id);
-                });
-            });
+            ->when($types->contains('favorited'), fn ($query) => $query->whereHas('favoriters', function (Builder $query) {
+                $query->where('id', auth()->user()->id);
+            }))
+            ->when($types->contains('liked'), fn ($query) => $query->whereHas('likers', function (Builder $query) {
+                $query->where('id', auth()->user()->id);
+            }));
     }
 }

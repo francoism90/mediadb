@@ -14,7 +14,7 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'settings' => 'nullable|array|min:0|max:30',
@@ -38,7 +38,7 @@ class UpdateRequest extends FormRequest
     /**
      *  @return array
      */
-    public function filters()
+    public function filters(): array
     {
         return [
             'settings.language' => 'trim|strip_tags|lowercase|slug',

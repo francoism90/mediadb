@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class SetCacheHeaders
@@ -10,15 +11,15 @@ class SetCacheHeaders
     /**
      * Add cache related HTTP headers.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     * @param string|array             $options
+     * @param Request      $request
+     * @param Closure      $next
+     * @param string|array $options
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \InvalidArgumentException
      */
-    public function handle($request, Closure $next, $options = [])
+    public function handle(Request $request, Closure $next, $options = [])
     {
         $response = $next($request);
 
@@ -53,7 +54,7 @@ class SetCacheHeaders
      *
      * @param string $options
      *
-     * @return array
+     * @return mixed
      */
     protected function parseOptions($options)
     {

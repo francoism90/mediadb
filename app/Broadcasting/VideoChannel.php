@@ -8,23 +8,14 @@ use App\Models\Video;
 class VideoChannel
 {
     /**
-     * Create a new channel instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Video $model
+     * @param User  $user
+     * @param Video $model
      *
      * @return array|bool
      */
-    public function join(User $user, Video $model)
+    public function join(User $user, Video $model): bool
     {
         return true;
     }

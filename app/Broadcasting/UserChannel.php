@@ -7,23 +7,14 @@ use App\Models\User;
 class UserChannel
 {
     /**
-     * Create a new channel instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
+     * @param User $user
+     * @param User $model
      *
      * @return array|bool
      */
-    public function join(User $user, User $model)
+    public function join(User $user, User $model): bool
     {
         return $user->id === $model->id;
     }

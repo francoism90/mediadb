@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Collection;
+use App\Models\Media;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\Video;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -29,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      */
-    public function boot()
+    public function boot(): void
     {
         $this->configureModelBinding();
         $this->configureRateLimiting();
@@ -49,27 +54,13 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function configureModelBinding()
+    protected function configureModelBinding(): void
     {
-        Route::bind('collection', function ($value) {
-            return \App\Models\Collection::findByHashidOrFail($value);
-        });
-
-        Route::bind('media', function ($value) {
-            return \App\Models\Media::findByHashidOrFail($value);
-        });
-
-        Route::bind('tag', function ($value) {
-            return \App\Models\Tag::findByHashidOrFail($value);
-        });
-
-        Route::bind('user', function ($value) {
-            return \App\Models\User::findByHashidOrFail($value);
-        });
-
-        Route::bind('video', function ($value) {
-            return \App\Models\Video::findByHashidOrFail($value);
-        });
+        Route::bind('collection', fn ($value) => Collection::findByHashidOrFail($value));
+        Route::bind('media', fn ($value) => Media::findByHashidOrFail($value));
+        Route::bind('tag', fn ($value) => Tag::findByHashidOrFail($value));
+        Route::bind('user', fn ($value) => User::findByHashidOrFail($value));
+        Route::bind('video', fn ($value) => Video::findByHashidOrFail($value));
     }
 
     /**
@@ -77,10 +68,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configureRateLimiting()
+    protected function configureRateLimiting(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(100);
-        });
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(100));
     }
 }

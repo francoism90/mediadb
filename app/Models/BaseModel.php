@@ -38,18 +38,16 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     use QueryCacheable;
 
     /**
-     * Invalidate the cache automatically upon update.
-     *
-     * @var bool
+     * @var int
      */
-    protected static $flushCacheOnUpdate = true;
+    public int $cacheFor = 3600;
 
     /**
      * Delete all views of an viewable Eloquent model on delete.
      *
      * @var bool
      */
-    protected $removeViewsOnDelete = true;
+    protected bool $removeViewsOnDelete = true;
 
     /**
      * @var array
@@ -64,7 +62,9 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     protected $guarded = [];
 
     /**
-     * @var int
+     * Invalidate the cache automatically upon update.
+     *
+     * @var bool
      */
-    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
 }

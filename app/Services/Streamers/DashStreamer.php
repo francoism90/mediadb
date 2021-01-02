@@ -10,7 +10,7 @@ class DashStreamer implements StreamerInterface
     /**
      * @var string
      */
-    protected $token;
+    protected string $token;
 
     /**
      * @return string
@@ -56,13 +56,13 @@ class DashStreamer implements StreamerInterface
             $this->getStreamHashSize()
         );
 
+        // Add hash prefix
         $path = $hash.$path;
 
         // Add PKCS#7 padding
         $pad = 16 - (strlen($path) % 16);
-        $path .= str_repeat(chr($pad), $pad);
 
-        return $path;
+        return $path.str_repeat(chr($pad), $pad);
     }
 
     /**

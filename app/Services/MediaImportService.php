@@ -15,7 +15,7 @@ class MediaImportService
     /**
      * @var Filesystem
      */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     public function __construct(Filesystem $filesystem)
     {
@@ -81,9 +81,7 @@ class MediaImportService
      */
     public function getValidFiles(string $path): Finder
     {
-        $filter = function (SplFileInfo $file) {
-            return $file->isReadable() && $file->isWritable();
-        };
+        $filter = fn (SplFileInfo $file) => $file->isReadable() && $file->isWritable();
 
         return (new Finder())
             ->files()

@@ -45,6 +45,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use Searchable;
 
     /**
+     * @var bool
+     */
+    protected bool $removeViewsOnDelete = true;
+
+    /**
      * @var array
      */
     protected $casts = [
@@ -70,11 +75,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     ];
 
     /**
-     * @var bool
-     */
-    protected $removeViewsOnDelete = true;
-
-    /**
      * @return MorphMany
      */
     public function videos(): MorphMany
@@ -87,7 +87,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      *
      * @return string
      */
-    public function preferredLocale()
+    public function preferredLocale(): string
     {
         return data_get($this, 'custom_properties.locale', config('app.fallback_locale'));
     }
@@ -138,7 +138,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     /**
      * @return string|null
      */
-    public function getAvatarAttribute()
+    public function getAvatarAttribute(): string
     {
         return $this->getFirstMediaUrl('avatar');
     }
@@ -155,9 +155,9 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
-    public function getSettingsAttribute()
+    public function getSettingsAttribute(): ?array
     {
         return $this->getCustomProperty('settings');
     }

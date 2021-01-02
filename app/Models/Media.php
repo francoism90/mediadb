@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithHashids;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -47,11 +48,11 @@ class Media extends BaseMedia
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
-    public function scopeMissingMetadata($query)
+    public function scopeMissingMetadata(Builder $query): Builder
     {
         return $query
             ->whereIn('collection_name', config('media.metadata_collections', ['clip']))
@@ -64,11 +65,11 @@ class Media extends BaseMedia
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
-    public function scopeMissingConversions($query)
+    public function scopeMissingConversions($query): Builder
     {
         return $query
             ->whereIn('collection_name', config('media.conversion_collections', ['clip']))

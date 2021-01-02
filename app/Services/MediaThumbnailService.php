@@ -9,17 +9,17 @@ class MediaThumbnailService
     /**
      * @var FFMpegService
      */
-    protected $ffmpegService;
+    protected FFMpegService $ffmpegService;
 
     /**
      * @var MediaConversionService
      */
-    protected $conversionService;
+    protected MediaConversionService $conversionService;
 
     /**
      * @var ImageService
      */
-    protected $imageService;
+    protected ImageService $imageService;
 
     public function __construct(
         FFMpegService $ffmpegService,

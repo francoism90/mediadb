@@ -11,6 +11,8 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     /**
      * Bootstrap the application services.
+     *
+     * @return mixed
      */
     public function boot()
     {
@@ -26,7 +28,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     /**
      * Register any application services.
      */
-    public function register()
+    public function register(): void
     {
         // Telescope::night();
 
@@ -48,7 +50,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     /**
      * Prevent sensitive request details from being logged by Telescope.
      */
-    protected function hideSensitiveRequestDetails()
+    protected function hideSensitiveRequestDetails(): void
     {
         if ($this->app->isLocal()) {
             return;

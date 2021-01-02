@@ -8,23 +8,14 @@ use App\Models\User;
 class TagChannel
 {
     /**
-     * Create a new channel instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Tag  $model
+     * @param User $user
+     * @param Tag  $model
      *
      * @return array|bool
      */
-    public function join(User $user, Tag $model)
+    public function join(User $user, Tag $model): bool
     {
         return true;
     }

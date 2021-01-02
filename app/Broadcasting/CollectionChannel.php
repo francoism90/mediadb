@@ -8,23 +8,14 @@ use App\Models\User;
 class CollectionChannel
 {
     /**
-     * Create a new channel instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Authenticate the user's access to the channel.
      *
-     * @param \App\Models\User       $user
-     * @param \App\Models\Collection $model
+     * @param User       $user
+     * @param Collection $model
      *
      * @return array|bool
      */
-    public function join(User $user, Collection $model)
+    public function join(User $user, Collection $model): bool
     {
         return true;
     }

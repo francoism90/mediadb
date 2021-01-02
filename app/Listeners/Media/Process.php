@@ -15,7 +15,7 @@ class Process
      *
      * @return void
      */
-    public function handle(HasBeenAdded $event)
+    public function handle(HasBeenAdded $event): void
     {
         // e.g. video/mp4 => video
         $type = strtok($event->media->mime_type, '/');

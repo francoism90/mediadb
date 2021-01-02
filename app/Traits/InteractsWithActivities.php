@@ -17,7 +17,7 @@ trait InteractsWithActivities
         string $log,
         array $properties = null,
         ?User $user = null
-    ) {
+    ): void {
         activity()
             ->performedOn($this)
             ->causedBy($user ?? auth()->user())

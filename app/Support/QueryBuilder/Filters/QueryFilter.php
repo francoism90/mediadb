@@ -43,11 +43,10 @@ class QueryFilter implements Filter
                     ->whereIn('id', $ids)
                     ->orderByRaw("FIELD(id, {$idsOrder})");
             })
-            ->when($tagModels->isNotEmpty(), function ($query) use ($tagModels) {
-                return $query
-                    ->withAnyTagsOfAnyType($tagModels)
-                    ->inRandomSeedOrder();
-            })
+            ->when($tagModels->isNotEmpty(), fn ($query) => $query
+                ->withAnyTagsOfAnyType($tagModels)
+                ->inRandomSeedOrder()
+            )
             ->take(10000)
             ->orderBy('id');
     }
@@ -97,7 +96,7 @@ class QueryFilter implements Filter
      *
      * @return string
      */
-    protected function sanitize(string $value = ''): string
+    protected function sanitize(string $value = ''): ?string
     {
         $value = filter_var(
             $value,

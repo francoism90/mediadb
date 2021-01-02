@@ -15,12 +15,12 @@ class UpdateController extends Controller
     /**
      * @var CollectionService
      */
-    protected $collectionService;
+    protected CollectionService $collectionService;
 
     /**
      * @var TagService
      */
-    protected $tagService;
+    protected TagService $tagService;
 
     public function __construct(
         CollectionService $collectionService,

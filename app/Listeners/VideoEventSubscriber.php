@@ -5,13 +5,16 @@ namespace App\Listeners;
 use App\Events\Video\HasBeenUpdated;
 use App\Models\Collection;
 use App\Models\Tag;
+use Illuminate\Events\Dispatcher;
 
 class VideoEventSubscriber
 {
     /**
-     * Handle video updated events.
+     * @param mixed $event
+     *
+     * @return void
      */
-    public function handleVideoUpdated($event)
+    public function handleVideoUpdated($event): void
     {
         Collection::flushQueryCache();
         Tag::flushQueryCache();
@@ -20,11 +23,11 @@ class VideoEventSubscriber
     /**
      * Register the listeners for the subscriber.
      *
-     * @param \Illuminate\Events\Dispatcher $events
+     * @param Dispatcher $events
      *
      * @return void
      */
-    public function subscribe($events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(
             HasBeenUpdated::class,

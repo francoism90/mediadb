@@ -20,22 +20,22 @@ class CreateSprite implements ShouldQueue
     /**
      * @var bool
      */
-    public $deleteWhenMissingModels = true;
+    public bool $deleteWhenMissingModels = true;
 
     /**
      * @var int
      */
-    public $tries = 1;
+    public int $tries = 1;
 
     /**
      * @var int
      */
-    public $timeout = 3600;
+    public int $timeout = 3600;
 
     /**
      * @var Media
      */
-    protected $media;
+    protected Media $media;
 
     /**
      * @return void
@@ -48,7 +48,7 @@ class CreateSprite implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MediaSpriteService $mediaSpriteService)
+    public function handle(MediaSpriteService $mediaSpriteService): void
     {
         $mediaSpriteService->create($this->media);
     }

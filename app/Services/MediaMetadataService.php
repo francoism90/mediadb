@@ -9,7 +9,7 @@ class MediaMetadataService
     /**
      * @var FFMpegService
      */
-    protected $ffmpegService;
+    protected FFMpegService $ffmpegService;
 
     public function __construct(FFMpegService $ffmpegService)
     {

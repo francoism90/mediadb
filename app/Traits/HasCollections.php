@@ -29,7 +29,7 @@ trait HasCollections
     /**
      * @param string $locale
      */
-    public function collectionsTranslated($locale = null): MorphToMany
+    public function collectionsTranslated(string $locale = null): MorphToMany
     {
         $locale = !is_null($locale) ? $locale : app()->getLocale();
 
@@ -119,9 +119,7 @@ trait HasCollections
      */
     public function collectionsWithType(string $type = null)
     {
-        return $this->collections->filter(function (Collection $collection) use ($type) {
-            return $collection->type === $type;
-        });
+        return $this->collections->filter(fn (Collection $collection) => $collection->type === $type);
     }
 
     /**
@@ -130,7 +128,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function attachCollections($collections, string $type = null)
+    public function attachCollections($collections, string $type = null): self
     {
         $className = static::getCollectionClassName();
 
@@ -147,7 +145,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function attachCollection($collection, string $type = null)
+    public function attachCollection($collection, string $type = null): self
     {
         return $this->attachCollections([$collection], $type);
     }
@@ -158,7 +156,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function detachCollections($collections, string $type = null)
+    public function detachCollections($collections, string $type = null): self
     {
         $collections = static::convertToCollections($collections, $type);
 
@@ -177,7 +175,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function detachCollection($collection, string $type = null)
+    public function detachCollection($collection, string $type = null): self
     {
         return $this->detachCollections([$collection], $type);
     }
@@ -187,7 +185,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function syncCollections($collections)
+    public function syncCollections($collections): self
     {
         $className = static::getCollectionClassName();
 
@@ -204,7 +202,7 @@ trait HasCollections
      *
      * @return $this
      */
-    public function syncCollectionsWithType($collections, string $type = null)
+    public function syncCollectionsWithType($collections, string $type = null): self
     {
         $className = static::getCollectionClassName();
 
@@ -265,7 +263,7 @@ trait HasCollections
      * @param string|null $type
      * @param bool        $detaching
      */
-    protected function syncCollectionIds($ids, string $type = null, $detaching = true)
+    protected function syncCollectionIds(array $ids, string $type = null, bool $detaching = true)
     {
         $isUpdated = false;
 

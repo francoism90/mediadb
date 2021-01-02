@@ -11,7 +11,7 @@ class MediaConversionService
     /**
      * @var MediaImportService
      */
-    protected $mediaImportService;
+    protected MediaImportService $mediaImportService;
 
     public function __construct(MediaImportService $mediaImportService)
     {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeSubscribed;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -18,12 +19,12 @@ class Collection extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media'];
+    public array $translatable = ['name', 'slug', 'overview'];
 
     /**
      * @var array
      */
-    public $translatable = ['name', 'slug', 'overview'];
+    protected $with = ['media'];
 
     /**
      * @return SlugOptions
@@ -51,7 +52,7 @@ class Collection extends BaseModel
     /**
      * @return mixed
      */
-    public function videos()
+    public function videos(): MorphToMany
     {
         return $this
             ->morphedByMany(Video::class, 'collectable');

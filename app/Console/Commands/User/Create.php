@@ -30,7 +30,7 @@ class Create extends Command
     /**
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $model = User::firstOrCreate(
             [

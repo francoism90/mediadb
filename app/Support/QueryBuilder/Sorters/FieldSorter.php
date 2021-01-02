@@ -8,11 +8,11 @@ use Spatie\QueryBuilder\Sorts\Sort;
 class FieldSorter implements Sort
 {
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param bool                                  $descending
-     * @param string                                $property
+     * @param Builder $query
+     * @param bool    $descending
+     * @param string  $property
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {

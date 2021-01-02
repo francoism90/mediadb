@@ -47,7 +47,7 @@ class VideoStreamService
     {
         $clip = $video->getFirstMedia('clip');
 
-        $collect = collect([
+        return collect([
             'id' => $video->id,
             'sequences' => (array) [
                 [
@@ -62,8 +62,6 @@ class VideoStreamService
                 ],
             ],
         ]);
-
-        return $collect;
     }
 
     /**

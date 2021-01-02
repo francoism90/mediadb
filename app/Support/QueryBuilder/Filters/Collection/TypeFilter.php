@@ -14,10 +14,8 @@ class TypeFilter implements Filter
         $types = collect($types);
 
         return $query
-            ->when($types->contains('subscribed'), function ($query) {
-                return $query->whereHas('subscribers', function (Builder $query) {
-                    $query->where('id', auth()->user()->id);
-                });
-            });
+            ->when($types->contains('subscribed'), fn ($query) => $query->whereHas('subscribers', function (Builder $query): void {
+                $query->where('id', auth()->user()->id);
+            }));
     }
 }

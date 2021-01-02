@@ -13,7 +13,7 @@ class IsExistingTag implements Rule
      *
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         return Tag::findByHashid($value['id'] ?? null)->exists();
     }
@@ -21,7 +21,7 @@ class IsExistingTag implements Rule
     /**
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The given tag does not exists.';
     }

@@ -16,9 +16,9 @@ trait HasRandomSeed
      * @param string $class
      * @param int    $ttl
      *
-     * @return int
+     * @return string|int
      */
-    public static function setRandomSeed(string $class = null, int $ttl = 1800): int
+    public static function setRandomSeed(string $class = null, int $ttl = 1800)
     {
         if (method_exists(static::class, 'getRandomSeedLifetime')) {
             $ttl = parent::getRandomSeedLifetime();
@@ -46,19 +46,19 @@ trait HasRandomSeed
     /**
      * @param string $key
      *
-     * @return int
+     * @return string|int
      */
-    public static function getRandomSeed(string $key = null): int
+    public static function getRandomSeed(string $key = null)
     {
         return Cache::get(self::getRandomSeedKey($key), 1000);
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
-    public function scopeInRandomSeedOrder(Builder $query)
+    public function scopeInRandomSeedOrder(Builder $query): Builder
     {
         $seedKey = self::getRandomSeedKey();
 

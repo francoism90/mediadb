@@ -16,7 +16,7 @@ class FFMpegService
     /**
      * @var FFMpeg
      */
-    protected $ffmpeg;
+    protected FFMpeg $ffmpeg;
 
     public function __construct()
     {

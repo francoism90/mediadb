@@ -14,7 +14,7 @@ class UpdateController extends Controller
     /**
      * @var TagService
      */
-    protected $tagService;
+    protected TagService $tagService;
 
     public function __construct(TagService $tagService)
     {

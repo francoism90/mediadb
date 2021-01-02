@@ -13,12 +13,12 @@ class ConversionController extends Controller
     /**
      * @var DefaultPathGenerator
      */
-    protected $basePathGenerator;
+    protected DefaultPathGenerator $basePathGenerator;
 
     /**
      * @var FilesystemManager
      */
-    protected $filesystemManager;
+    protected FilesystemManager $filesystemManager;
 
     public function __construct(
         DefaultPathGenerator $basePathGenerator,

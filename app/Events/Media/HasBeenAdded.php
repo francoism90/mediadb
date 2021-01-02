@@ -17,12 +17,12 @@ class HasBeenAdded
     /**
      * @var Model
      */
-    public $model;
+    public Model $model;
 
     /**
      * @var Media
      */
-    public $media;
+    public Media $media;
 
     /**
      * Create a new event instance.

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -24,12 +25,12 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media'];
+    public array $translatable = ['name', 'slug', 'overview'];
 
     /**
      * @var array
      */
-    public $translatable = ['name', 'slug', 'overview'];
+    protected $with = ['media'];
 
     /**
      * @return morphTo
@@ -105,9 +106,9 @@ class Video extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Support\Collection|null
+     * @return MediaCollection
      */
-    public function getTracksAttribute()
+    public function getTracksAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
     }
@@ -115,112 +116,112 @@ class Video extends BaseModel
     /**
      * @return int|null
      */
-    public function getBitrateAttribute()
+    public function getBitrateAttribute(): ?int
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.bitrate', 0);
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('metadata.bitrate', 0)
+        );
     }
 
     /**
      * @return string|null
      */
-    public function getCodecNameAttribute()
+    public function getCodecNameAttribute(): ?string
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.codec_name', 'N/A');
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('metadata.codec_name', 'N/A')
+        );
     }
 
     /**
      * @return int|null
      */
-    public function getDurationAttribute()
+    public function getDurationAttribute(): ?int
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.duration', 0);
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('metadata.duration', 0)
+        );
     }
 
     /**
      * @return int|null
      */
-    public function getHeightAttribute()
+    public function getHeightAttribute(): ?int
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.height', 480);
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('metadata.height', 480)
+        );
     }
 
     /**
      * @return int|null
      */
-    public function getWidthAttribute()
+    public function getWidthAttribute(): ?int
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.width', 768);
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('metadata.width', 768)
+        );
     }
 
     /**
      * @return array|null
      */
-    public function getSpriteAttribute()
+    public function getSpriteAttribute(): ?array
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('sprite', []);
-        });
+        return optional(
+            $this->getFirstMedia('clip'),
+            fn ($clip) => $clip->getCustomProperty('sprite', [])
+        );
     }
 
     /**
      * @return string|null
      */
-    public function getSpriteUrlAttribute()
+    public function getSpriteUrlAttribute(): ?string
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return URL::signedRoute(
-                'api.media.asset',
-                [
-                    'media' => $clip,
-                    'user' => auth()->user(),
-                    'name' => 'sprite',
-                    'version' => $clip->updated_at->timestamp,
-                ]
-            );
-        });
+        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $clip,
+                'user' => auth()->user(),
+                'name' => 'sprite',
+                'version' => $clip->updated_at->timestamp,
+            ]
+        ));
     }
 
     /**
      * @return string|null
      */
-    public function getStreamUrlAttribute()
+    public function getStreamUrlAttribute(): ?string
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return URL::signedRoute(
-                'api.vod.stream',
-                [
-                    'video' => $this,
-                    'user' => auth()->user(),
-                ]
-            );
-        });
+        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
+            'api.vod.stream',
+            [
+                'video' => $this,
+                'user' => auth()->user(),
+            ]
+        ));
     }
 
     /**
      * @return string|null
      */
-    public function getThumbnailUrlAttribute()
+    public function getThumbnailUrlAttribute(): ?string
     {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return URL::signedRoute(
-                'api.media.asset',
-                [
-                    'media' => $clip,
-                    'user' => auth()->user(),
-                    'name' => 'thumbnail',
-                    'version' => $clip->updated_at->timestamp,
-                ]
-            );
-        });
+        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $clip,
+                'user' => auth()->user(),
+                'name' => 'thumbnail',
+                'version' => $clip->updated_at->timestamp,
+            ]
+        ));
     }
 }

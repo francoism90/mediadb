@@ -12,12 +12,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    public $bindings = [];
+    public array $bindings = [];
 
     /**
      * Register any application services.
      */
-    public function register()
+    public function register(): void
     {
         \Sanitizer::extend('slug', SlugFilter::class);
     }
@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot()
+    public function boot(): void
     {
     }
 }

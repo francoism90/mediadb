@@ -24,8 +24,8 @@ class UrlGenerator extends BaseUrlGenerator
     }
 
     /**
-     * @param \DateTimeInterface $expiration
-     * @param array              $options
+     * @param DateTimeInterface $expiration
+     * @param array             $options
      *
      * @return string
      */
@@ -44,7 +44,7 @@ class UrlGenerator extends BaseUrlGenerator
     /**
      * @return string
      */
-    public function getBaseMediaDirectoryUrl()
+    public function getBaseMediaDirectoryUrl(): string
     {
         return $this->getDisk()->url('/');
     }

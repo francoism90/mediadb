@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Collection;
 
 class UserNotification extends Notification
 {
@@ -25,7 +26,7 @@ class UserNotification extends Notification
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['broadcast', 'database'];
     }
@@ -33,9 +34,9 @@ class UserNotification extends Notification
     /**
      * @param mixed $notifiable
      *
-     * @return mixed
+     * @return BroadcastMessage
      */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage(
             $this->getMessage()
@@ -65,7 +66,7 @@ class UserNotification extends Notification
      */
     protected function getMessage()
     {
-        if ($this->message instanceof \Illuminate\Support\Collection) {
+        if ($this->message instanceof Collection) {
             return $this->message->toArray();
         }
 

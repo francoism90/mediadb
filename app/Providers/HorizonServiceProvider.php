@@ -10,6 +10,8 @@ class HorizonServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
+     *
+     * @return mixed
      */
     public function boot()
     {
@@ -25,7 +27,7 @@ class HorizonServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
     }
 }

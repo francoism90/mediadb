@@ -10,7 +10,7 @@ class ManifestController extends Controller
     /**
      * @var VideoStreamService
      */
-    protected $videoStreamService;
+    protected VideoStreamService $videoStreamService;
 
     public function __construct(VideoStreamService $videoStreamService)
     {

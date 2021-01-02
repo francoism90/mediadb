@@ -18,12 +18,12 @@ class HasBeenDeleted implements ShouldBroadcastNow
     /**
      * @var string
      */
-    public $broadcastQueue = 'broadcasts';
+    public string $broadcastQueue = 'broadcasts';
 
     /**
      * @var Video
      */
-    public $video;
+    public Video $video;
 
     /**
      * Create a new event instance.
@@ -40,7 +40,7 @@ class HasBeenDeleted implements ShouldBroadcastNow
      *
      * @return string
      */
-    public function broadcastAs()
+    public function broadcastAs(): string
     {
         return 'video.deleted';
     }
@@ -48,9 +48,9 @@ class HasBeenDeleted implements ShouldBroadcastNow
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return PrivateChannel
      */
-    public function broadcastOn()
+    public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
             'video.'.$this->video->getRouteKey()

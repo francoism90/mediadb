@@ -9,6 +9,7 @@ use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -25,23 +26,23 @@ class Tag extends TagModel implements Viewable
     use Searchable;
 
     /**
-     * Invalidate the cache automatically upon update.
-     *
-     * @var bool
+     * @var int
      */
-    protected static $flushCacheOnUpdate = true;
+    public int $cacheFor = 3600;
 
     /**
      * Delete all views of an viewable Eloquent model on delete.
      *
      * @var bool
      */
-    protected $removeViewsOnDelete = true;
+    protected bool $removeViewsOnDelete = true;
 
     /**
-     * @var int
+     * Invalidate the cache automatically upon update.
+     *
+     * @var bool
      */
-    public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
 
     /**
      * @return array
@@ -55,18 +56,18 @@ class Tag extends TagModel implements Viewable
     }
 
     /**
-     * @return mixed
+     * @return MorphToMany
      */
-    public function collections()
+    public function collections(): MorphToMany
     {
         return $this
             ->morphedByMany(Collection::class, 'taggable', 'taggables');
     }
 
     /**
-     * @return mixed
+     * @return MorphToMany
      */
-    public function videos()
+    public function videos(): MorphToMany
     {
         return $this
             ->morphedByMany(Video::class, 'taggable', 'taggables');

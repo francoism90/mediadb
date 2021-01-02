@@ -26,7 +26,7 @@ trait InteractsWithHashids
     {
         $key = static::convertHashidToId($value, $connection);
 
-        $modelInstance = resolve($connection ?? get_called_class());
+        $modelInstance = resolve($connection ?? static::class);
 
         return $modelInstance::find($key);
     }
@@ -41,7 +41,7 @@ trait InteractsWithHashids
     {
         $key = static::convertHashidToId($value, $connection);
 
-        $modelInstance = resolve($connection ?? get_called_class());
+        $modelInstance = resolve($connection ?? static::class);
 
         return $modelInstance::findOrFail($key);
     }
@@ -86,7 +86,7 @@ trait InteractsWithHashids
      */
     protected static function getHashidsConnection(string $connection = null)
     {
-        return Hashids::connection($connection ?? get_called_class());
+        return Hashids::connection($connection ?? static::class);
     }
 
     /**

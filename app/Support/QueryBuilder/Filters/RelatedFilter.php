@@ -21,6 +21,7 @@ class RelatedFilter implements Filter
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         $models = is_string($value) ? explode(',', $value) : $value;
+
         $models = $query->getModel()->convertHashidsToModels($value);
 
         // Force empty result
