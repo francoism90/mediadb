@@ -27,9 +27,6 @@ class Create extends Command
         parent::__construct();
     }
 
-    /**
-     * @return mixed
-     */
     public function handle(): void
     {
         $model = User::firstOrCreate(

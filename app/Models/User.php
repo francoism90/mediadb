@@ -83,13 +83,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     }
 
     /**
-     * Get the user's preferred locale.
-     *
      * @return string
      */
     public function preferredLocale(): string
     {
-        return data_get($this, 'custom_properties.locale', config('app.fallback_locale'));
+        return $this->getCustomProperty('locale', config('app.fallback_locale'));
     }
 
     /**
@@ -138,7 +136,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     /**
      * @return string|null
      */
-    public function getAvatarAttribute(): string
+    public function getAvatarAttribute(): ?string
     {
         return $this->getFirstMediaUrl('avatar');
     }

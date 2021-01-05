@@ -20,17 +20,11 @@ class Regenerate extends Command
      */
     protected $description = 'Regenerate missing conversions on media models';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
     public function handle(): void
     {
         $this->dispatchMissingMetadata();

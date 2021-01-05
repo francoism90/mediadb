@@ -45,9 +45,6 @@ class CreateSprite implements ShouldQueue
         $this->media = $media->withoutRelations();
     }
 
-    /**
-     * @return void
-     */
     public function handle(MediaSpriteService $mediaSpriteService): void
     {
         $mediaSpriteService->create($this->media);

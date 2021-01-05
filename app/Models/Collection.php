@@ -50,7 +50,7 @@ class Collection extends BaseModel
     }
 
     /**
-     * @return mixed
+     * @return MorphToMany
      */
     public function videos(): MorphToMany
     {

@@ -37,16 +37,13 @@ class SetMetadata implements ShouldQueue
      */
     protected Media $media;
 
-    /**
-     * @return void
-     */
     public function __construct(Media $media)
     {
         $this->media = $media->withoutRelations();
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function handle(MediaMetadataService $mediaMetadataService): void
     {

@@ -13,7 +13,7 @@ class VideoChannel
      * @param User  $user
      * @param Video $model
      *
-     * @return array|bool
+     * @return bool
      */
     public function join(User $user, Video $model): bool
     {

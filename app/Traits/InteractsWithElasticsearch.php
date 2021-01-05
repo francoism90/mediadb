@@ -15,11 +15,15 @@ trait InteractsWithElasticsearch
      *
      * @return Builder
      */
-    public function simpleQueryString(string $value = '', int $size = 10): Builder
+    public function queryString(string $value = '', int $size = 10): Builder
     {
         return $this->search($value, function ($client, $body) use ($value, $size) {
             $simpleQueryStringQuery = new SimpleQueryStringQuery(
-                $value, ['fields' => config('elasticsearch.query_fields', [])]
+                $value,
+                [
+                    'fields' => config('elasticsearch.query_fields', []),
+                    'parameters' => config('elasticsearch.query_parameters', []),
+                ],
             );
 
             $body = new Search();
@@ -44,7 +48,8 @@ trait InteractsWithElasticsearch
         return $this->search($value, function ($client, $body) use ($value, $size) {
             $multiMatchQuery = new MultiMatchQuery(
                 config('elasticsearch.query_fields', []),
-                $value
+                $value,
+                config('elasticsearch.query_parameters', []),
             );
 
             $body = new Search();

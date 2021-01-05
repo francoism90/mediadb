@@ -13,7 +13,7 @@ class CollectionChannel
      * @param User       $user
      * @param Collection $model
      *
-     * @return array|bool
+     * @return bool
      */
     public function join(User $user, Collection $model): bool
     {

@@ -3,6 +3,12 @@
 return [
     'host' => env('ELASTICSEARCH_HOST'),
     'query_fields' => ['name^5', 'description', 'overview'],
+    'query_parameters' => [
+        'boost' => 1.0,
+        'fuzziness' => 'AUTO',
+        'prefix_length' => 0,
+        'max_expansions' => 50,
+    ],
     'indices' => [
         'mappings' => [
             'default' => [

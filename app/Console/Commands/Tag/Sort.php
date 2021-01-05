@@ -17,17 +17,11 @@ class Sort extends Command
      */
     protected $description = 'Sort tags by name';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
     public function handle(TagService $tagService): void
     {
         $tagService->sortByName();

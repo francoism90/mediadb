@@ -20,17 +20,11 @@ class Import extends Command
      */
     protected $description = 'Import video files to the library';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
     public function handle(MediaImportService $mediaImportService): void
     {
         $files = $mediaImportService->getValidFiles(

@@ -18,17 +18,11 @@ class ImportCaption extends Command
      */
     protected $description = 'Import caption files to a video model';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
     public function handle(MediaImportService $mediaImportService): void
     {
         $files = $mediaImportService->getValidFiles(

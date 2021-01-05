@@ -13,7 +13,7 @@ class TagChannel
      * @param User $user
      * @param Tag  $model
      *
-     * @return array|bool
+     * @return bool
      */
     public function join(User $user, Tag $model): bool
     {

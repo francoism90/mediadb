@@ -12,7 +12,7 @@ class UserChannel
      * @param User $user
      * @param User $model
      *
-     * @return array|bool
+     * @return bool
      */
     public function join(User $user, User $model): bool
     {

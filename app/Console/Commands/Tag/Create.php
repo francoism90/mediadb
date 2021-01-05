@@ -17,9 +17,6 @@ class Create extends Command
      */
     protected $description = 'Create a tag model';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();

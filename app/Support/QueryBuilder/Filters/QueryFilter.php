@@ -69,7 +69,7 @@ class QueryFilter implements Filter
 
         return $query
             ->getModel()
-            ->simpleQueryString((string) $value, 10000)
+            ->multiMatchQuery((string) $value, 10000)
             ->get();
     }
 
