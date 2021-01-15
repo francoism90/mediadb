@@ -15,7 +15,7 @@ trait InteractsWithElasticsearch
      *
      * @return Builder
      */
-    public function queryString(string $value = '', int $size = 10): Builder
+    public function simpleQueryString(string $value = '', int $size = 10): Builder
     {
         return $this->search($value, function ($client, $body) use ($value, $size) {
             $simpleQueryStringQuery = new SimpleQueryStringQuery(

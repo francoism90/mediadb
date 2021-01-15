@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
@@ -56,7 +55,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureModelBinding(): void
     {
-        Route::bind('collection', fn ($value) => Collection::findByHashidOrFail($value));
         Route::bind('media', fn ($value) => Media::findByHashidOrFail($value));
         Route::bind('tag', fn ($value) => Tag::findByHashidOrFail($value));
         Route::bind('user', fn ($value) => User::findByHashidOrFail($value));

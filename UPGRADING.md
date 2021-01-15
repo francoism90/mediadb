@@ -9,7 +9,6 @@ Because there are many breaking changes an upgrade is not that easy. There are m
 Optional (re-)index the models:
 
 ```bash
-php artisan scout:import "App\Models\Collection"
 php artisan scout:import "App\Models\Tag"
 php artisan scout:import "App\Models\User"
 php artisan scout:import "App\Models\Video"

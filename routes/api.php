@@ -45,19 +45,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Misc
         Route::patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
         Route::match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
-        Route::match(['delete', 'post'], '/{video}/like', ['uses' => 'LikeController', 'as' => 'like']);
-    });
-
-    // Collection
-    Route::middleware('auth:sanctum')->name('collections.')->prefix('collections')->namespace('Collection')->group(function () {
-        // Resource
-        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::get('/{collection}', ['uses' => 'ShowController', 'as' => 'show']);
-        Route::delete('/{collection}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::put('/{collection}', ['uses' => 'UpdateController', 'as' => 'update']);
-
-        // Misc
-        Route::match(['delete', 'post'], '/{collection}/subscribe', ['uses' => 'SubscribeController', 'as' => 'subscribe']);
     });
 
     // Tag

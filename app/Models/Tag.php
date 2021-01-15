@@ -31,6 +31,11 @@ class Tag extends TagModel implements Viewable
     public int $cacheFor = 3600;
 
     /**
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'description'];
+
+    /**
      * Delete all views of an viewable Eloquent model on delete.
      *
      * @var bool
@@ -52,16 +57,8 @@ class Tag extends TagModel implements Viewable
         return $this->only([
             'id',
             'name',
+            'description',
         ]);
-    }
-
-    /**
-     * @return MorphToMany
-     */
-    public function collections(): MorphToMany
-    {
-        return $this
-            ->morphedByMany(Collection::class, 'taggable', 'taggables');
     }
 
     /**
@@ -78,7 +75,7 @@ class Tag extends TagModel implements Viewable
      *
      * @return int
      */
-    public function getItemCountAttribute(string $type = null): int
+    public function getItemsAttribute(string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
@@ -88,26 +85,17 @@ class Tag extends TagModel implements Viewable
 
     /**
      * @param Builder $query
-     * @param array   $tags
-     * @param string  $type
-     * @param string  $locale
+     * @param array   ...$values
      *
      * @return Builder
      */
-    public function scopeWithSlugTranslated(
+    public function scopeWithSlug(
         Builder $query,
-        array $tags = [],
-        string $type = null,
-        string $locale = null
+        ...$values
     ): Builder {
-        $locale = $locale ?? app()->getLocale();
+        $locale = app()->getLocale();
 
         return $query
-            ->when($type, fn ($query, $type) => $query->where('type', $type))
-            ->where(function ($query) use ($tags, $locale) {
-                foreach ($tags as $tag) {
-                    $query->orWhereJsonContains("slug->{$locale}", $tag);
-                }
-            });
+            ->whereIn("slug->{$locale}", $values);
     }
 }

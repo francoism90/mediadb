@@ -23,7 +23,6 @@ class ShowController extends Controller
                 ->append([
                     'views',
                     'items',
-                    'collections',
                     'videos',
                     'thumbnail_url',
                 ])

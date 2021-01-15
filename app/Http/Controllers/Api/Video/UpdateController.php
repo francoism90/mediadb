@@ -7,26 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
-use App\Services\CollectionService;
 use App\Services\TagService;
 
 class UpdateController extends Controller
 {
     /**
-     * @var CollectionService
-     */
-    protected CollectionService $collectionService;
-
-    /**
      * @var TagService
      */
     protected TagService $tagService;
 
-    public function __construct(
-        CollectionService $collectionService,
-        TagService $tagService
-    ) {
-        $this->collectionService = $collectionService;
+    public function __construct(TagService $tagService)
+    {
         $this->tagService = $tagService;
     }
 
@@ -43,11 +34,6 @@ class UpdateController extends Controller
         $video->setTranslation('name', $locale, $request->input('name', $video->name))
               ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
               ->save();
-
-        $this->collectionService->sync(
-            $video,
-            $request->input('collections', [])
-        );
 
         $this->tagService->sync(
             $video,

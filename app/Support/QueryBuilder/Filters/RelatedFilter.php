@@ -30,7 +30,6 @@ class RelatedFilter implements Filter
         }
 
         $relatedModels = $this->getQueryModels($query, $models);
-        $relatedModels = $relatedModels->merge($this->getCollectionModels($query, $models));
         $relatedModels = $relatedModels->merge($this->getTagsModels($query, $models));
 
         return $query
@@ -52,29 +51,11 @@ class RelatedFilter implements Filter
      *
      * @return Collection
      */
-    protected function getCollectionModels(Builder $query, Collection $models): Collection
-    {
-        return $query
-            ->getModel()
-            ->withAllCollectionsOfAnyType(
-                $models->pluck('collections')->collapse()
-            )
-            ->whereNotIn('id', $models->pluck('id'))
-            ->inRandomSeedOrder()
-            ->take(12)
-            ->get();
-    }
-
-    /**
-     * @param Builder    $query
-     * @param Collection $models
-     *
-     * @return Collection
-     */
     protected function getTagsModels(Builder $query, Collection $models): Collection
     {
         return $query
             ->getModel()
+            ->with('tags')
             ->withAnyTagsOfAnyType(
                 $models->pluck('tags')->collapse()
             )

@@ -20,8 +20,7 @@ class ItemSorter implements Sort
         $query->getQuery()->reorder();
 
         return $query
-            ->withCount(['collections', 'videos'])
-            ->orderBy('collections_count', 'DESC')
+            ->withCount('videos')
             ->orderBy('videos_count', 'DESC');
     }
 }

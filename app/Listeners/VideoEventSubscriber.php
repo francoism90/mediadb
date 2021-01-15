@@ -2,9 +2,10 @@
 
 namespace App\Listeners;
 
+use App\Events\Video\HasBeenFavorited;
 use App\Events\Video\HasBeenUpdated;
-use App\Models\Collection;
 use App\Models\Tag;
+use App\Models\Video;
 use Illuminate\Events\Dispatcher;
 
 class VideoEventSubscriber
@@ -16,8 +17,17 @@ class VideoEventSubscriber
      */
     public function handleVideoUpdated($event): void
     {
-        Collection::flushQueryCache();
         Tag::flushQueryCache();
+    }
+
+    /**
+     * @param mixed $event
+     *
+     * @return void
+     */
+    public function handleVideoFavorited($event): void
+    {
+        Video::flushQueryCache();
     }
 
     /**
@@ -32,6 +42,11 @@ class VideoEventSubscriber
         $events->listen(
             HasBeenUpdated::class,
             [VideoEventSubscriber::class, 'handleVideoUpdated']
+        );
+
+        $events->listen(
+            HasBeenFavorited::class,
+            [VideoEventSubscriber::class, 'handleVideoFavorited']
         );
     }
 }

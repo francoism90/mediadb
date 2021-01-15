@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Events\Media\HasBeenAdded;
-use App\Listeners\CollectionEventSubscriber;
 use App\Listeners\Media\Process as ProcessMedia;
 use App\Listeners\VideoEventSubscriber;
 use Illuminate\Auth\Events\Registered;
@@ -33,7 +32,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        CollectionEventSubscriber::class,
         VideoEventSubscriber::class,
     ];
 

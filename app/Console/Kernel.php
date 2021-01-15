@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     /**
      * Get the timezone that should be used by default for scheduled events.
      *
-     * @return sting
+     * @return string
      */
     protected function scheduleTimezone(): string
     {

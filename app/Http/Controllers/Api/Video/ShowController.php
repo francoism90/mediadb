@@ -20,14 +20,14 @@ class ShowController extends Controller
 
         return new VideoResource(
             $video
-                ->load('collections', 'tags')
+                ->load('tags')
                 ->append([
                     'is_favorited',
-                    'is_liked',
                     'bitrate',
                     'codec_name',
                     'duration',
                     'overview',
+                    'resolution',
                     'height',
                     'width',
                     'sprite_url',

@@ -1,6 +1,5 @@
 <?php
 
-use App\Broadcasting\CollectionChannel;
 use App\Broadcasting\TagChannel;
 use App\Broadcasting\UserChannel;
 use App\Broadcasting\VideoChannel;
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('collection.{collection}', CollectionChannel::class);
 Broadcast::channel('tag.{tag}', TagChannel::class);
 Broadcast::channel('user.{user}', UserChannel::class);
 Broadcast::channel('video.{video}', VideoChannel::class);

@@ -27,7 +27,7 @@ class DurationSorter implements Sort
                 ->first();
 
             return $duration ?? 0;
-        }, SORT_REGULAR, $descending);
+        }, SORT_NUMERIC, $descending);
 
         return $query
             ->when($clips->isNotEmpty(), function ($query) use ($clips) {

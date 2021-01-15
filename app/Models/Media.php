@@ -69,7 +69,7 @@ class Media extends BaseMedia
      *
      * @return Builder
      */
-    public function scopeMissingConversions($query): Builder
+    public function scopeMissingConversions(Builder $query): Builder
     {
         return $query
             ->whereIn('collection_name', config('media.conversion_collections', ['clip']))
@@ -77,6 +77,35 @@ class Media extends BaseMedia
                 $query->whereNull('custom_properties->generated_conversions')
                       ->orWhereNull('custom_properties->generated_conversions->sprite')
                       ->orWhereNull('custom_properties->generated_conversions->thumbnail');
+            });
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithDuration(Builder $query, int $min = 0, int $max = 40): Builder
+    {
+        $durations = collect(
+            config('video.filter_durations', [])
+        );
+
+        // Skip query on full ranges
+        if ($min === $durations->first() && $max === $durations->last()) {
+            return $query;
+        }
+
+        $min = $min === $max ? $min - 10 : $min;
+        $max = $durations->last() === $max ? $max * 24 : $max;
+
+        return $query
+            ->whereIn('collection_name', config('media.conversion_collections', ['clip']))
+            ->where(function ($query) use ($min, $max) {
+                $query->whereBetween('custom_properties->metadata->duration', [
+                    $min * 60, // time in secs
+                    $max * 60,
+                ]);
             });
     }
 }

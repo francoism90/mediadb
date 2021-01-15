@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 trait InteractsWithAcquaintances
 {
@@ -17,32 +18,6 @@ trait InteractsWithAcquaintances
     }
 
     /**
-     * @return int
-     */
-    public function getFavoritesAttribute(): int
-    {
-        return $this->favoritersCount();
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsLikedAttribute(?User $user = null): bool
-    {
-        return $this->isLikedBy(
-            $user ?? auth()->user()
-        );
-    }
-
-    /**
-     * @return int
-     */
-    public function getLikedAttribute(): int
-    {
-        return $this->likedCount();
-    }
-
-    /**
      * @return bool
      */
     public function getIsSubscribedAttribute(?User $user = null): bool
@@ -53,10 +28,14 @@ trait InteractsWithAcquaintances
     }
 
     /**
-     * @return int
+     * @param Builder $query
+     *
+     * @return Builder
      */
-    public function getSubscribersAttribute(): int
+    public function scopeWithUserFavorites(Builder $query): Builder
     {
-        return $this->subscribersCount();
+        return $query->whereHas('favoriters', function (Builder $query) {
+            $query->where('id', auth()->user()->id);
+        });
     }
 }

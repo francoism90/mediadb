@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasCollections;
 use App\Traits\InteractsWithAcquaintances;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\URL;
@@ -17,7 +16,6 @@ class Video extends BaseModel
 {
     use CanBeFavorited;
     use CanBeLiked;
-    use HasCollections;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use Searchable;
@@ -136,9 +134,9 @@ class Video extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getDurationAttribute(): ?int
+    public function getDurationAttribute(): ?float
     {
         return optional(
             $this->getFirstMedia('clip'),
@@ -151,10 +149,9 @@ class Video extends BaseModel
      */
     public function getHeightAttribute(): ?int
     {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('metadata.height', 480)
-        );
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.height', 360);
+        });
     }
 
     /**
@@ -162,10 +159,27 @@ class Video extends BaseModel
      */
     public function getWidthAttribute(): ?int
     {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('metadata.width', 768)
+        return optional($this->getFirstMedia('clip'), function ($clip) {
+            return $clip->getCustomProperty('metadata.width', 480);
+        });
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResolutionAttribute(): ?string
+    {
+        $resolutions = collect(
+            config('video.resolutions', [])
         );
+
+        $videoWidth = $this->width ?? 480;
+
+        $resolution = $resolutions
+            ->whereBetween('width', [$videoWidth - 128, $videoWidth + 128])
+            ->last();
+
+        return $resolution['label'] ?? '240p';
     }
 
     /**

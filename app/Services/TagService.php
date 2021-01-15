@@ -35,14 +35,10 @@ class TagService
      */
     public function sortByName(): void
     {
-        $tags = Tag::select(['id', 'name'])
-            ->pluck('name', 'id')
-            ->toArray();
-
-        natcasesort($tags);
+        $tags = Tag::all()->sortBy('name', SORT_NATURAL);
 
         Tag::setNewOrder(
-            array_keys($tags)
+            $tags->pluck('id')->toArray()
         );
     }
 }

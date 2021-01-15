@@ -75,6 +75,19 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     ];
 
     /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only([
+            'id',
+            'name',
+            'email',
+            'description',
+        ]);
+    }
+
+    /**
      * @return MorphMany
      */
     public function videos(): MorphMany
@@ -118,19 +131,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         $this->addMediaCollection('avatar')
              ->singleFile()
              ->useDisk('media');
-    }
-
-    /**
-     * @return array
-     */
-    public function toSearchableArray(): array
-    {
-        return $this->only([
-            'id',
-            'name',
-            'email',
-            'description',
-        ]);
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Filters\Tag\TypeFilter;
 use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
 use App\Support\QueryBuilder\Sorters\Tag\ItemSorter;
@@ -25,13 +24,13 @@ class IndexController extends Controller
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedAppends([
-                'collections',
                 'items',
                 'videos',
             ])
             ->allowedFilters([
-                AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
-                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*', '#'),
+                AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),
+                AllowedFilter::exact('type')->ignore(null, '*'),
+                AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
             ])
             ->AllowedSorts([
                 $defaultSort,
