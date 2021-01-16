@@ -24,7 +24,6 @@ class RelatedFilter implements Filter
 
         $models = $query->getModel()->convertHashidsToModels($value);
 
-        // Force empty result
         if ($models->isEmpty()) {
             return $query->whereNull('id');
         }

@@ -21,18 +21,19 @@ class QueryFilter implements Filter
 
         $value = $this->sanitize($value);
 
-        $queryModels = $this->getQueryModels($query, $value);
-
-        if (0 === $queryModels->count()) {
-            return $query->whereNull('id');
-        }
-
-        $ids = $queryModels->pluck('id');
-        $idsOrder = $queryModels->implode('id', ',');
+        $models = $this->getQueryModels($query, $value);
 
         return $query
-            ->whereIn('id', $ids)
-            ->orderByRaw("FIELD(id, {$idsOrder})");
+            ->when($models->isNotEmpty(), function ($query) use ($models) {
+                $ids = $models->pluck('id');
+                $idsOrder = $models->implode('id', ',');
+
+                return $query
+                    ->whereIn('id', $ids)
+                    ->orderByRaw("FIELD(id, {$idsOrder})");
+            }, function ($query) {
+                return $query->whereNull('id'); // force empty result
+            });
     }
 
     /**
