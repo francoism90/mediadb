@@ -66,8 +66,11 @@ class Tag extends TagModel implements Viewable
      */
     public function videos(): MorphToMany
     {
-        return $this
-            ->morphedByMany(Video::class, 'taggable', 'taggables');
+        return $this->morphedByMany(
+            Video::class,
+            'taggable',
+            'taggables'
+        );
     }
 
     /**
