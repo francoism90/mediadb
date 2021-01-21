@@ -12127,16 +12127,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.9.10",
+            "version": "0.9.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "5f975f48f6de83cf556d44c6178be51aacf228d7"
+                "reference": "87494ce3a69e73ea46b9a712197251aa3b7178fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/5f975f48f6de83cf556d44c6178be51aacf228d7",
-                "reference": "5f975f48f6de83cf556d44c6178be51aacf228d7",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/87494ce3a69e73ea46b9a712197251aa3b7178fa",
+                "reference": "87494ce3a69e73ea46b9a712197251aa3b7178fa",
                 "shasum": ""
             },
             "require": {
@@ -12161,6 +12161,7 @@
                 "symfony/dependency-injection": "^5.1",
                 "symfony/finder": "^4.4.8|^5.1",
                 "symfony/http-kernel": "^4.4.8|^5.1",
+                "symfony/process": "^4.4.8|^5.1",
                 "symplify/astral": "^9.0.34",
                 "symplify/autowire-array-parameter": "^9.0.34",
                 "symplify/console-color-diff": "^9.0.34",
@@ -12204,6 +12205,7 @@
                 ],
                 "psr-4": {
                     "Rector\\Testing\\": "packages/testing/src",
+                    "Rector\\Comments\\": "packages/comments/src",
                     "Rector\\Architecture\\": "rules/architecture/src",
                     "Rector\\AttributeAwarePhpDoc\\": "packages/attribute-aware-php-doc/src",
                     "Rector\\Autodiscovery\\": "rules/autodiscovery/src",
@@ -12328,7 +12330,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.9.10"
+                "source": "https://github.com/rectorphp/rector/tree/0.9.12"
             },
             "funding": [
                 {
@@ -12336,7 +12338,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-17T19:30:11+00:00"
+            "time": "2021-01-20T16:17:59+00:00"
         },
         {
             "name": "sebastian/cli-parser",
