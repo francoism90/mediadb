@@ -19,9 +19,11 @@ class FieldSorter implements Sort
         // Removing existing orderings
         $query->getQuery()->reorder();
 
+        $column = "{$query->getQuery()->from}.{$property}";
+
         $direction = $descending ? 'DESC' : 'ASC';
 
         return $query
-            ->orderBy($property, $direction);
+            ->orderBy($column, $direction);
     }
 }

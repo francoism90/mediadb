@@ -51,9 +51,13 @@ class MediaSpriteService
 
         // Save sprite collection
         $sprite = $frames->map(function ($item, $key) use ($imagick) {
-            $imagick->addImage(
-                new \Imagick($item['path'])
-            );
+            // Workaround for non existing frames
+            try {
+                $frameImage = new \Imagick($item['path'] ?? null);
+
+                $imagick->addImage($frameImage);
+            } catch (\Throwable $e) {
+            }
 
             return collect($item)->except(['path'])->toArray();
         });
@@ -69,7 +73,9 @@ class MediaSpriteService
 
         $montage->writeImage($path);
 
-        $this->imageService->optimize($path);
+        $this
+            ->imageService
+            ->optimize($path);
 
         $this
             ->conversionService

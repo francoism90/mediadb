@@ -34,8 +34,12 @@ trait InteractsWithAcquaintances
      */
     public function scopeWithUserFavorites(Builder $query): Builder
     {
-        return $query->whereHas('favoriters', function (Builder $query) {
-            $query->where('id', auth()->user()->id);
-        });
+        return $query
+            ->with('favoriters')
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->whereHas('favoriters', function (Builder $query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+            ->latest('interactions.created_at');
     }
 }

@@ -66,7 +66,7 @@ class QueryFilter implements Filter
         );
 
         // Replace symbols
-        $value = str_replace(['.', ',', '_'], ' ', $value);
+        $value = str_replace(['.', ',', '_', '-', '+'], ' ', $value);
 
         // Replace whitespace with a single space
         $value = preg_replace('/\s+/', ' ', $value);

@@ -8,6 +8,7 @@ return [
         'fuzziness' => 'AUTO',
         'prefix_length' => 0,
         'max_expansions' => 50,
+        'lenient' => true,
     ],
     'indices' => [
         'mappings' => [

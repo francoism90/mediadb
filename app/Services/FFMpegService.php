@@ -91,7 +91,7 @@ class FFMpegService
     public function createThumbnail(
         Video $video,
         string $path,
-        float $timeCode,
+        float $timeCode = 0,
         string $filter = ''
     ): string {
         $frame = $video->frame(
