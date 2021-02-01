@@ -21,7 +21,7 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 - [PHP](https://php.net/) 7.4 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v9/converting-images/optimizing-converted-images/)
 - MariaDB/MySQL (with JSON support), Redis and Supervisor.
-- [Elasticsearch](https://www.elastic.co/products/elasticsearch)
+- [MeiliSearch](https://www.meilisearch.com/)
 - [Samples](https://gist.github.com/jsturgis/3b19447b304616f18657) for testing.
 
 Please consult the upstream documentation of used packages in `composer.json` for possible other missing (OS) dependencies and/or recommendations.
@@ -54,6 +54,7 @@ composer install
 php artisan migrate
 php artisan key:generate
 php artisan storage:link
+php artisan scout:create-indexes
 php artisan horizon:install
 php artisan telescope:install
 ```

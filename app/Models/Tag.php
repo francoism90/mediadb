@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
-use App\Traits\InteractsWithElasticsearch;
 use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
@@ -19,7 +18,6 @@ class Tag extends TagModel implements Viewable
 {
     use HasRandomSeed;
     use HasViews;
-    use InteractsWithElasticsearch;
     use InteractsWithHashids;
     use InteractsWithViews;
     use QueryCacheable;
@@ -54,11 +52,12 @@ class Tag extends TagModel implements Viewable
      */
     public function toSearchableArray(): array
     {
-        return $this->only([
-            'id',
-            'name',
-            'description',
-        ]);
+        return [
+            'id' => $this->id,
+            'name' => array_values($this->getTranslations('name')),
+            'description' => array_values($this->getTranslations('description')),
+            'type' => $this->type,
+        ];
     }
 
     /**
@@ -78,7 +77,7 @@ class Tag extends TagModel implements Viewable
      *
      * @return int
      */
-    public function getItemsAttribute(string $type = null): int
+    public function getItemCountAttribute(string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
@@ -92,13 +91,10 @@ class Tag extends TagModel implements Viewable
      *
      * @return Builder
      */
-    public function scopeWithSlug(
-        Builder $query,
-        ...$values
-    ): Builder {
+    public function scopeWithSlug(Builder $query, ...$values): Builder
+    {
         $locale = app()->getLocale();
 
-        return $query
-            ->whereIn("slug->{$locale}", $values);
+        return $query->whereIn("slug->{$locale}", $values);
     }
 }

@@ -18,7 +18,7 @@ trait HasRandomSeed
      *
      * @return string|int
      */
-    public static function setRandomSeed(string $class = null, int $ttl = 1800)
+    public static function setRandomSeed(string $class = null, int $ttl = 1800): string | int
     {
         if (method_exists(static::class, 'getRandomSeedLifetime')) {
             $ttl = parent::getRandomSeedLifetime();
@@ -36,7 +36,7 @@ trait HasRandomSeed
      *
      * @return string
      */
-    public static function getRandomSeedKey(string $class = null): string
+    public static function getRandomSeedKey(string $class = null): string | int
     {
         $key = class_basename($class ?? static::class);
 
@@ -48,7 +48,7 @@ trait HasRandomSeed
      *
      * @return string|int
      */
-    public static function getRandomSeed(string $key = null)
+    public static function getRandomSeed(string $key = null): string | int
     {
         return Cache::get(self::getRandomSeedKey($key), 1000);
     }

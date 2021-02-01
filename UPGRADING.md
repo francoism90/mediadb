@@ -6,6 +6,13 @@ Because there are many breaking changes an upgrade is not that easy. There are m
 
 ### Scout
 
+Create/recreate indexes:
+
+```bash
+cd /srv/http/mediadb/api
+php artisan scout:create-indexes
+```
+
 Optional (re-)index the models:
 
 ```bash

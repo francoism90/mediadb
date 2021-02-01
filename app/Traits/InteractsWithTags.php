@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
 
 trait InteractsWithTags
@@ -34,5 +35,36 @@ trait InteractsWithTags
                 'tag_id'
             )
             ->orderBy('order_column');
+    }
+
+    /**
+     * @return MorphToMany
+     */
+    public function tagTranslations(): MorphToMany
+    {
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable')
+            ->select('*')
+            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.*')) as name_translated")
+            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(slug, '$.*')) as slug_translated")
+            ->ordered();
+    }
+
+    /**
+     * @param string $field
+     *
+     * @return array
+     */
+    public function extractTagTranslations(string $field = 'slug'): array
+    {
+        $tagTranslations = $this->tagTranslations()->get();
+
+        $tagSlugs = $tagTranslations->flatMap(function ($items) use ($field) {
+            $tags = json_decode($items["{$field}_translated"], true);
+
+            return array_values($tags);
+        });
+
+        return $tagSlugs->unique()->toArray();
     }
 }

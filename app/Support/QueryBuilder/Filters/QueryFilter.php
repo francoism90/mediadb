@@ -17,11 +17,13 @@ class QueryFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
+        // Sanitize query
         $value = is_array($value) ? implode(' ', $value) : $value;
 
         $value = $this->sanitize($value);
 
-        $models = $this->getQueryModels($query, $value);
+        // Models matching the query
+        $models = $this->getModelsByQuery($query, $value);
 
         return $query
             ->when($models->isNotEmpty(), function ($query) use ($models) {
@@ -42,11 +44,12 @@ class QueryFilter implements Filter
      *
      * @return Collection
      */
-    protected function getQueryModels(Builder $query, string $value = ''): Collection
+    protected function getModelsByQuery(Builder $query, string $value = ''): Collection
     {
         return $query
             ->getModel()
-            ->multiMatchQuery($value, 10000)
+            ->search($value)
+            ->take(10000)
             ->get();
     }
 
@@ -55,7 +58,7 @@ class QueryFilter implements Filter
      *
      * @return string
      */
-    protected function sanitize(string $value = ''): ?string
+    protected function sanitize(string $value = ''): string
     {
         $value = filter_var(
             $value,

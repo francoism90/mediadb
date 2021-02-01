@@ -36,10 +36,10 @@ trait InteractsWithAcquaintances
     {
         return $query
             ->with('favoriters')
-            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->whereHas('favoriters', function (Builder $query) {
                 $query->where('user_id', auth()->user()->id);
             })
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->latest('interactions.created_at');
     }
 }

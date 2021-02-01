@@ -11,7 +11,7 @@ trait InteractsWithHashids
     /**
      * @return string|int
      */
-    public function getRouteKey()
+    public function getRouteKey(): string | int
     {
         return static::convertToHashid($this->getKey());
     }
@@ -95,7 +95,7 @@ trait InteractsWithHashids
      *
      * @return string|int
      */
-    protected static function convertToHashid($value, string $connection = null)
+    protected static function convertToHashid($value, string $connection = null): string | int
     {
         return static::getHashidsConnection($connection)->encode($value);
     }
@@ -106,7 +106,7 @@ trait InteractsWithHashids
      *
      * @return string|int
      */
-    protected static function convertHashidToId(string $value, string $connection = null)
+    protected static function convertHashidToId(string $value, string $connection = null): string | int
     {
         $decoded = static::getHashidsConnection($connection)->decode($value);
 

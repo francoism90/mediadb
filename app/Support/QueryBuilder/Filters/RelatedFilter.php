@@ -20,26 +20,28 @@ class RelatedFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
+        // Convert values to models
         $models = is_string($value) ? explode(',', $value) : $value;
 
         $models = $query->getModel()->convertHashidsToModels($value);
 
-        if ($models->isEmpty()) {
-            return $query->whereNull('id');
-        }
+        // Merge related model matches
+        $matches = $this->getModelsByQuery($query, $models);
 
-        $relatedModels = $this->getQueryModels($query, $models);
-        $relatedModels = $relatedModels->merge($this->getTagsModels($query, $models));
+        $matches = $matches->merge($this->getModelsByTags($query, $matches));
 
         return $query
-            ->when($relatedModels->isNotEmpty(), function ($query) use ($relatedModels) {
-                $ids = $relatedModels->pluck('id');
-                $idsOrder = $relatedModels->implode('id', ',');
+            ->when($models->isNotEmpty(), function ($query) use ($matches) {
+                $ids = $matches->pluck('id');
+                $idsOrder = $matches->implode('id', ',');
 
                 return $query
                     ->whereIn('id', $ids)
                     ->orderByRaw("FIELD(id, {$idsOrder})");
+            }, function ($query) {
+                return $query->whereNull('id'); // force empty result
             })
+            ->whereNotIn('id', $models->pluck('id'))
             ->take(50)
             ->orderBy('id');
     }
@@ -50,7 +52,7 @@ class RelatedFilter implements Filter
      *
      * @return Collection
      */
-    protected function getTagsModels(Builder $query, Collection $models): Collection
+    protected function getModelsByTags(Builder $query, Collection $models): Collection
     {
         return $query
             ->getModel()
@@ -58,9 +60,8 @@ class RelatedFilter implements Filter
             ->withAnyTagsOfAnyType(
                 $models->pluck('tags')->collapse()
             )
-            ->whereNotIn('id', $models->pluck('id'))
             ->inRandomSeedOrder()
-            ->take(12)
+            ->take(25)
             ->get();
     }
 
@@ -70,19 +71,29 @@ class RelatedFilter implements Filter
      *
      * @return Collection
      */
-    protected function getQueryModels(Builder $query, Collection $models): Collection
+    protected function getModelsByQuery(Builder $query, Collection $models): Collection
     {
         $names = Str::of($models->pluck('name'))->matchAll(self::NAME_REGEX);
 
-        $queryString = implode(' ', $names->toArray());
+        $collect = collect();
 
-        $matches = $query
-            ->getModel()
-            ->multiMatchQuery($queryString, 50)
-            ->get();
+        // Inverse name searching (e.g. this book 1, this book, this)
+        for ($i = $names->take(8)->count(); $i >= 1; --$i) {
+            $value = $names->take($i)->implode(' ');
 
-        return $matches
-            ->whereNotIn('id', $models->pluck('id'))
-            ->take(12);
+            if (strlen($value) <= 1) {
+                continue;
+            }
+
+            $collect = $collect->merge(
+                $query
+                    ->getModel()
+                    ->search($value)
+                    ->take(4)
+                    ->get()
+            );
+        }
+
+        return $collect;
     }
 }

@@ -58,13 +58,13 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware(['cache.headers:public;max_age=604800;etag', 'signed'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
+        Route::middleware(['cache.headers:public;max_age=31536000;etag', 'signed'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
         Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
     });
 
     // Video On Demand (VOD)
     Route::name('vod.')->prefix('vod')->namespace('Video')->group(function () {
         Route::middleware('signed')->get('/stream/{video}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
-        Route::middleware('cache.headers:public;max_age=900;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+        Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
     });
 });

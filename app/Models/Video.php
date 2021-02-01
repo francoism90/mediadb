@@ -49,6 +49,23 @@ class Video extends BaseModel
     }
 
     /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => array_values($this->getTranslations('name')),
+            'overview' => array_values($this->getTranslations('overview')),
+            'type' => $this->type,
+            'status' => $this->status,
+            'season_number' => $this->season_number,
+            'episode_number' => $this->episode_number,
+            'tags' => $this->extractTagTranslations(),
+        ];
+    }
+
+    /**
      * We need to register media conversion to use them.
      * Services do the actual conversion.
      *
@@ -89,18 +106,6 @@ class Video extends BaseModel
                 'text/vtt',
             ])
             ->useDisk('media');
-    }
-
-    /**
-     * @return array
-     */
-    public function toSearchableArray(): array
-    {
-        return $this->only([
-            'id',
-            'name',
-            'overview',
-        ]);
     }
 
     /**
