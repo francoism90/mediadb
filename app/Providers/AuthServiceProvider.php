@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Collection;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Video;
-use App\Policies\CollectionPolicy;
 use App\Policies\MediaPolicy;
 use App\Policies\TagPolicy;
 use App\Policies\UserPolicy;
@@ -23,7 +21,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Collection::class => CollectionPolicy::class,
         Media::class => MediaPolicy::class,
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
