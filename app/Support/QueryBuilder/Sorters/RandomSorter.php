@@ -5,7 +5,7 @@ namespace App\Support\QueryBuilder\Sorters;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Sorts\Sort;
 
-class RecommendedSorter implements Sort
+class RandomSorter implements Sort
 {
     /**
      * @param Builder $query
@@ -16,12 +16,9 @@ class RecommendedSorter implements Sort
      */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Use given order by filter(s)
-        if ($query->getQuery()->orders) {
-            return $query;
-        }
+        // Removing existing orderings
+        $query->getQuery()->reorder();
 
-        // TODO: add user preferences
         return $query->inRandomSeedOrder();
     }
 }

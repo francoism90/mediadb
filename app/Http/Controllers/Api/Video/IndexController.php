@@ -9,6 +9,7 @@ use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
+use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
 use App\Support\QueryBuilder\Sorters\TrendingSorter;
 use App\Support\QueryBuilder\Sorters\Video\DurationSorter;
@@ -48,6 +49,7 @@ class IndexController extends Controller
                 AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
                 AllowedSort::custom('duration', new DurationSorter())->defaultDirection('asc'),
+                AllowedSort::custom('random', new RandomSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
                 AllowedSort::custom('views', new MostViewsSorter())->defaultDirection('desc'),
             ])

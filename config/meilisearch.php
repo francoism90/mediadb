@@ -47,22 +47,19 @@ return [
         [
             'name' => 'tags',
             'settings' => [
-                // 'rankingRules' => [],
-                // 'distinctAttribute' => '',
-                // 'searchableAttributes' => ['*'],
-                // 'displayedAttributes' => ['*'],
-                // 'stopWords' => [],
-                // 'synonyms' => [],
-                // 'attributesForFaceting' => [],
+                'searchableAttributes' => ['name', 'description', 'type'],
             ],
         ],
         [
             'name' => 'users',
-            'settings' => [],
+            'settings' => [
+                'searchableAttributes' => ['name', 'email', 'description'],
+            ],
         ],
         [
             'name' => 'videos',
             'settings' => [
+                'searchableAttributes' => ['name', 'overview', 'type', 'tags'],
                 'attributesForFaceting' => ['tags'],
             ],
         ],

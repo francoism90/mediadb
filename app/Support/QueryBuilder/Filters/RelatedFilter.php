@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 class RelatedFilter implements Filter
 {
-    public const NAME_REGEX = '/[\p{N}\p{L}]+/u';
+    public const NAME_REGEX = '/[\p{L}]+/u';
 
     /**
      * @param Builder      $query
@@ -23,12 +23,12 @@ class RelatedFilter implements Filter
         // Convert values to models
         $models = is_string($value) ? explode(',', $value) : $value;
 
-        $models = $query->getModel()->convertHashidsToModels($value);
+        $models = $query->getModel()->convertHashidsToModels($models);
 
         // Merge related model matches
         $matches = $this->getModelsByQuery($query, $models);
 
-        $matches = $matches->merge($this->getModelsByTags($query, $matches));
+        $matches = $matches->merge($this->getModelsByTags($query, $models));
 
         return $query
             ->when($models->isNotEmpty(), function ($query) use ($matches) {
@@ -58,7 +58,7 @@ class RelatedFilter implements Filter
             ->getModel()
             ->with('tags')
             ->withAnyTagsOfAnyType(
-                $models->pluck('tags')->collapse()
+                $models->pluck('tags.*.name')->collapse()
             )
             ->inRandomSeedOrder()
             ->take(25)
