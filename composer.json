@@ -45,7 +45,7 @@
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "nunomaduro/larastan": "^0.6.4",
+        "nunomaduro/larastan": "^0.7.0",
         "phpunit/phpunit": "^9.3.3",
         "rector/rector": "^0.9.7"
     },
