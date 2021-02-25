@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49f03540c382cd5e27e07785774e4a66",
+    "content-hash": "b6c8ae838da18efbd1f626f6bf6b3cd5",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -130,16 +130,16 @@
         },
         {
             "name": "beyondcode/laravel-websockets",
-            "version": "2.0.0-beta.32",
+            "version": "2.0.0-beta.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beyondcode/laravel-websockets.git",
-                "reference": "6be62b149dfeb45b0a5dac52cf38d02a9b9f23ee"
+                "reference": "efb3aa82b9be93fcdabc1c7e089ab6d2d0aa63d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beyondcode/laravel-websockets/zipball/6be62b149dfeb45b0a5dac52cf38d02a9b9f23ee",
-                "reference": "6be62b149dfeb45b0a5dac52cf38d02a9b9f23ee",
+                "url": "https://api.github.com/repos/beyondcode/laravel-websockets/zipball/efb3aa82b9be93fcdabc1c7e089ab6d2d0aa63d5",
+                "reference": "efb3aa82b9be93fcdabc1c7e089ab6d2d0aa63d5",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
                 "illuminate/queue": "^6.3|^7.0|^8.0",
                 "illuminate/routing": "^6.3|^7.0|^8.0",
                 "illuminate/support": "^6.3|^7.0|^8.0",
-                "pusher/pusher-php-server": "^4.0",
+                "pusher/pusher-php-server": "^4.0|^5.0",
                 "react/promise": "^2.0",
                 "symfony/http-kernel": "^4.0|^5.0",
                 "symfony/psr-http-message-bridge": "^1.1|^2.0"
@@ -219,9 +219,9 @@
             ],
             "support": {
                 "issues": "https://github.com/beyondcode/laravel-websockets/issues",
-                "source": "https://github.com/beyondcode/laravel-websockets/tree/2.0.0-beta.32"
+                "source": "https://github.com/beyondcode/laravel-websockets/tree/2.0.0-beta.33"
             },
-            "time": "2020-12-07T18:18:58+00:00"
+            "time": "2021-02-24T20:12:05+00:00"
         },
         {
             "name": "brick/math",
@@ -2238,16 +2238,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.28.1",
+            "version": "v8.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "73dd43d92fcde6c6abc00658ae33391397ca119d"
+                "reference": "d2eba352b3b3a3c515b18c5726b373fe5026733e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/73dd43d92fcde6c6abc00658ae33391397ca119d",
-                "reference": "73dd43d92fcde6c6abc00658ae33391397ca119d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d2eba352b3b3a3c515b18c5726b373fe5026733e",
+                "reference": "d2eba352b3b3a3c515b18c5726b373fe5026733e",
                 "shasum": ""
             },
             "require": {
@@ -2355,7 +2355,7 @@
                 "phpunit/phpunit": "Required to use assertions and run tests (^8.5.8|^9.3.3).",
                 "predis/predis": "Required to use the predis connector (^1.1.2).",
                 "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
-                "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
+                "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0|^5.0).",
                 "symfony/cache": "Required to PSR-6 cache bridge (^5.1.4).",
                 "symfony/filesystem": "Required to enable support for relative symbolic links (^5.1.4).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0).",
@@ -2402,7 +2402,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-02-16T18:07:44+00:00"
+            "time": "2021-02-23T14:27:41+00:00"
         },
         {
             "name": "laravel/horizon",
