@@ -4,29 +4,22 @@ namespace App\Models;
 
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
-use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as TagModel;
 
 class Tag extends TagModel implements Viewable
 {
+    use HasPrefixedId;
     use HasRandomSeed;
     use HasViews;
-    use InteractsWithHashids;
     use InteractsWithViews;
-    use QueryCacheable;
     use Searchable;
-
-    /**
-     * @var int
-     */
-    public int $cacheFor = 3600;
 
     /**
      * @var array
@@ -39,13 +32,6 @@ class Tag extends TagModel implements Viewable
      * @var bool
      */
     protected bool $removeViewsOnDelete = true;
-
-    /**
-     * Invalidate the cache automatically upon update.
-     *
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
 
     /**
      * @return array

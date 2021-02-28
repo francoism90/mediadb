@@ -3,13 +3,18 @@
 namespace App\Support\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\PrefixedIds\PrefixedIds;
+use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class RelatedFilter implements Filter
 {
-    public const NAME_REGEX = '/[\p{L}]+/u';
+    public const NAME_NUMBER_REGEX = '/[\p{N}]+/u';
+
+    public const NAME_WORD_REGEX = '/[\p{L}]+/u';
 
     /**
      * @param Builder      $query
@@ -20,18 +25,21 @@ class RelatedFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        // Convert values to models
-        $models = is_string($value) ? explode(',', $value) : $value;
+        $value = is_array($value) ? implode('', $value) : $value;
 
-        $models = $query->getModel()->convertHashidsToModels($models);
+        // Get Model
+        $model = PrefixedIds::find($value);
 
-        // Merge related model matches
-        $matches = $this->getModelsByQuery($query, $models);
+        throw_if(!$model, InvalidFilterValue::class);
 
-        $matches = $matches->merge($this->getModelsByTags($query, $models));
+        // Merge results
+        $matches = $this->getQueryModels($query, $model);
 
+        $matches = $matches->merge($this->getTaggedModels($query, $model));
+
+        // Build query
         return $query
-            ->when($models->isNotEmpty(), function ($query) use ($matches) {
+            ->when($matches->isNotEmpty(), function ($query) use ($matches) {
                 $ids = $matches->pluck('id');
                 $idsOrder = $matches->implode('id', ',');
 
@@ -41,45 +49,27 @@ class RelatedFilter implements Filter
             }, function ($query) {
                 return $query->whereNull('id'); // force empty result
             })
-            ->whereNotIn('id', $models->pluck('id'))
+            ->where('id', '<>', $model->id)
             ->take(50)
             ->orderBy('id');
     }
 
-    /**
-     * @param Builder    $query
-     * @param Collection $models
-     *
-     * @return Collection
-     */
-    protected function getModelsByTags(Builder $query, Collection $models): Collection
+    protected function getQueryModels(Builder $query, Model $model): Collection
     {
-        return $query
-            ->getModel()
-            ->with('tags')
-            ->withAnyTagsOfAnyType(
-                $models->pluck('tags.*.name')->collapse()
-            )
-            ->inRandomSeedOrder()
-            ->take(25)
-            ->get();
-    }
+        $modelName = Str::ascii($model->name);
 
-    /**
-     * @param Builder    $query
-     * @param Collection $models
-     *
-     * @return Collection
-     */
-    protected function getModelsByQuery(Builder $query, Collection $models): Collection
-    {
-        $names = Str::of($models->pluck('name'))->matchAll(self::NAME_REGEX);
+        // Sort letters before numbers
+        $queryValue = Str::of($modelName)->matchAll(self::NAME_WORD_REGEX);
+
+        $queryValue = $queryValue->merge(
+            Str::of($modelName)->matchAll(self::NAME_NUMBER_REGEX)
+        );
 
         $collect = collect();
 
         // Inverse name searching (e.g. this book 1, this book, this)
-        for ($i = $names->take(8)->count(); $i >= 1; --$i) {
-            $value = $names->take($i)->implode(' ');
+        for ($i = $queryValue->take(8)->count(); $i >= 1; --$i) {
+            $value = $queryValue->take($i)->implode(' ');
 
             if (strlen($value) <= 1) {
                 continue;
@@ -89,11 +79,24 @@ class RelatedFilter implements Filter
                 $query
                     ->getModel()
                     ->search($value)
-                    ->take(4)
+                    ->take(8)
                     ->get()
             );
         }
 
         return $collect;
+    }
+
+    protected function getTaggedModels(Builder $query, Model $model): Collection
+    {
+        return $query
+            ->getModel()
+            ->with('tags')
+            ->withAnyTagsOfAnyType(
+                $model->tags ?? []
+            )
+            ->inRandomSeedOrder()
+            ->take(25)
+            ->get();
     }
 }

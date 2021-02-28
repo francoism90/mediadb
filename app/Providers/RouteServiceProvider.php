@@ -55,10 +55,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureModelBinding(): void
     {
-        Route::bind('media', fn ($value) => Media::findByHashidOrFail($value));
-        Route::bind('tag', fn ($value) => Tag::findByHashidOrFail($value));
-        Route::bind('user', fn ($value) => User::findByHashidOrFail($value));
-        Route::bind('video', fn ($value) => Video::findByHashidOrFail($value));
+        Route::bind('media', fn ($value) => Media::findByUuid($value));
+        Route::bind('tag', fn ($value) => Tag::findByPrefixedId($value));
+        Route::bind('user', fn ($value) => User::findByPrefixedId($value));
+        Route::bind('video', fn ($value) => Video::findByPrefixedId($value));
     }
 
     /**

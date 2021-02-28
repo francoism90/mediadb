@@ -15,7 +15,7 @@ class IsExistingTag implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return Tag::findByHashid($value['id'] ?? null)->exists();
+        return Tag::findByPrefixedId($value['id'] ?? null)->exists();
     }
 
     /**

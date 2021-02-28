@@ -6,7 +6,6 @@ use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use App\Traits\InteractsWithActivities;
-use App\Traits\InteractsWithHashids;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -22,6 +21,7 @@ use Multicaret\Acquaintances\Traits\CanSubscribe;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -33,12 +33,12 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use HasApiTokens;
     use HasCustomProperties;
     use HasFactory;
+    use HasPrefixedId;
     use HasRandomSeed;
     use HasRoles;
     use HasSlug;
     use HasViews;
     use InteractsWithActivities;
-    use InteractsWithHashids;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
@@ -73,6 +73,14 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         'password',
         'remember_token',
     ];
+
+    /**
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'prefixed_id';
+    }
 
     /**
      * @return array

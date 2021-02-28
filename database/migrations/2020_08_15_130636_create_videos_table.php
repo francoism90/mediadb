@@ -15,6 +15,7 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('prefixed_id')->index();
             $table->morphs('model');
             $table->json('name');
             $table->json('slug');

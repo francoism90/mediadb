@@ -12,7 +12,7 @@ class MediaResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->uuid,
+            'id' => $this->getRouteKey(),
             'name' => $this->name,
             'kind' => $this->kind,
             'locale' => $this->locale,

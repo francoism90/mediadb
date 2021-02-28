@@ -24,7 +24,7 @@ class IndexController extends Controller
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedAppends([
-                'items',
+                'item_count',
             ])
             ->allowedFilters([
                 AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),

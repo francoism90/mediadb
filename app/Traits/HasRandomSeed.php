@@ -65,8 +65,6 @@ trait HasRandomSeed
         return $query
             ->inRandomOrder(
                 self::getRandomSeed()
-            )
-            ->cacheFor($this->cacheFor ?? 60 * 60)
-            ->cacheTags(["{$seedKey}:randomize"]);
+            );
     }
 }

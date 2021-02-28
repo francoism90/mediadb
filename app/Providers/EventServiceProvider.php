@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Events\Media\HasBeenAdded;
 use App\Listeners\Media\Process as ProcessMedia;
-use App\Listeners\VideoEventSubscriber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -32,7 +31,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        VideoEventSubscriber::class,
     ];
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\InteractsWithHashids;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
@@ -10,7 +9,6 @@ use Spatie\ModelStatus\HasStatuses;
 
 class Media extends BaseMedia
 {
-    use InteractsWithHashids;
     use HasStatuses;
 
     /**
@@ -22,6 +20,14 @@ class Media extends BaseMedia
      * @var array
      */
     protected $touches = ['model'];
+
+    /**
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
 
     /**
      * @return string

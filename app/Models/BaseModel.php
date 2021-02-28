@@ -6,39 +6,32 @@ use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use App\Traits\InteractsWithActivities;
-use App\Traits\InteractsWithHashids;
 use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Translatable\HasTranslations;
 
 abstract class BaseModel extends Model implements HasMedia, Viewable
 {
     use HasCustomProperties;
     use HasFactory;
+    use HasPrefixedId;
     use HasRandomSeed;
     use HasStatuses;
     use HasTranslations;
     use HasViews;
     use InteractsWithActivities;
-    use InteractsWithHashids;
     use InteractsWithMedia;
     use InteractsWithTags;
     use InteractsWithViews;
     use Notifiable;
-    use QueryCacheable;
-
-    /**
-     * @var int
-     */
-    public int $cacheFor = 3600;
 
     /**
      * Delete all views of an viewable Eloquent model on delete.
@@ -60,9 +53,10 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     protected $guarded = [];
 
     /**
-     * Invalidate the cache automatically upon update.
-     *
-     * @var bool
+     * @return string
      */
-    protected static $flushCacheOnUpdate = true;
+    public function getRouteKeyName(): string
+    {
+        return 'prefixed_id';
+    }
 }
