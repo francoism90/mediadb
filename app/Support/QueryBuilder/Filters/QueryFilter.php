@@ -2,6 +2,7 @@
 
 namespace App\Support\QueryBuilder\Filters;
 
+use App\Services\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -20,21 +21,19 @@ class QueryFilter implements Filter
         // Sanitize query
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $value = $this->sanitize($value);
-
-        // Models matching the query
+        // Get matched models
         $models = $this->getModelsByQuery($query, $value);
 
         return $query
-            ->when($models->isNotEmpty(), function ($query) use ($models) {
+            ->when($models->isEmpty(), function ($query) {
+                return $query->whereNull('id');
+            }, function ($query) use ($models) {
                 $ids = $models->pluck('id');
                 $idsOrder = $models->implode('id', ',');
 
                 return $query
                     ->whereIn('id', $ids)
                     ->orderByRaw("FIELD(id, {$idsOrder})");
-            }, function ($query) {
-                return $query->whereNull('id'); // force empty result
             });
     }
 
@@ -46,34 +45,10 @@ class QueryFilter implements Filter
      */
     protected function getModelsByQuery(Builder $query, string $value = ''): Collection
     {
-        return $query
-            ->getModel()
-            ->search($value)
-            ->take(10000)
-            ->get();
-    }
+        $searchService = new SearchService();
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function sanitize(string $value = ''): string
-    {
-        $value = filter_var(
-            $value,
-            FILTER_SANITIZE_STRING,
-            FILTER_FLAG_STRIP_LOW |
-            FILTER_FLAG_STRIP_BACKTICK |
-            FILTER_FLAG_NO_ENCODE_QUOTES
-        );
+        $searchService->search($query, $value);
 
-        // Replace symbols
-        $value = str_replace(['.', ',', '_', '-', '+'], ' ', $value);
-
-        // Replace whitespace with a single space
-        $value = preg_replace('/\s+/', ' ', $value);
-
-        return $value;
+        return $searchService->getResults();
     }
 }

@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
-use Spatie\Tags\Tag as TagModel;
+use Spatie\Tags\Tag as BaseTag;
 
-class Tag extends TagModel implements Viewable
+class Tag extends BaseTag implements Viewable
 {
     use HasPrefixedId;
     use HasRandomSeed;
@@ -24,7 +24,7 @@ class Tag extends TagModel implements Viewable
     /**
      * @var array
      */
-    public $translatable = ['name', 'slug', 'description'];
+    public array $translatable = ['name', 'slug', 'description'];
 
     /**
      * Delete all views of an viewable Eloquent model on delete.

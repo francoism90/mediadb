@@ -44,6 +44,11 @@ return [
     'enable_temporary_uploads_session_affinity' => true,
 
     /*
+     * When enabled, Media Library pro will generate thumbnails for uploaded file.
+     */
+    'generate_thumbnails_for_temporary_uploads' => false,
+
+    /*
      * This is the class that is responsible for naming generated files.
      */
     'file_namer' => Spatie\MediaLibrary\Support\FileNamer\DefaultFileNamer::class,
@@ -58,6 +63,12 @@ return [
      * if your files are stored locally above the site root or on s3.
      */
     'url_generator' => App\Support\MediaLibrary\UrlGenerator::class,
+
+    /*
+     * Moves media on updating to keep path consistent. Enable it only with a custom
+     * PathGenerator that uses, for example, the media UUID.
+     */
+    'moves_media_on_update' => false,
 
     /*
      * Whether to activate versioning when urls to files get generated.

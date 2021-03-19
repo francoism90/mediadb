@@ -50,15 +50,21 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
-        'snapshots' => [
-            'driver' => 'local',
-            'root' => database_path('snapshots'),
-        ],
-
         'media' => [
             'driver' => 'local',
             'root' => storage_path('app/media'),
             'visibility' => 'private',
+        ],
+
+        'conversions' => [
+            'driver' => 'local',
+            'root' => storage_path('app/conversions'),
+            'visibility' => 'private',
+        ],
+
+        'snapshots' => [
+            'driver' => 'local',
+            'root' => database_path('snapshots'),
         ],
     ],
 

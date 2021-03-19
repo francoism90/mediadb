@@ -23,7 +23,7 @@
         "laravel/telescope": "^4.0",
         "laravel/tinker": "^2.5",
         "meilisearch/meilisearch-laravel-scout": "^0.12.2",
-        "multicaret/laravel-acquaintances": "^3.3",
+        "multicaret/laravel-acquaintances": "^3.4",
         "php-ffmpeg/php-ffmpeg": "^0.17.0",
         "pusher/pusher-php-server": "^5.0",
         "spatie/laravel-activitylog": "^3.16",
@@ -35,7 +35,7 @@
         "spatie/laravel-prefixed-ids": "^1.0",
         "spatie/laravel-query-builder": "^3.2",
         "spatie/laravel-sluggable": "^2.5",
-        "spatie/laravel-tags": "^3.0",
+        "spatie/laravel-tags": "^4.0",
         "spatie/laravel-translatable": "^4.5"
     },
     "require-dev": {

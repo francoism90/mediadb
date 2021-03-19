@@ -2,23 +2,13 @@
 
 namespace App\Traits;
 
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
 
 trait InteractsWithTags
 {
     use HasTags {
-        HasTags::getTagClassName as private getTagClassNameParent;
-        HasTags::tags as private getTagsParent;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getTagClassName(): string
-    {
-        return Tag::class;
+        HasTags::tags as private getBaseTags;
     }
 
     /**

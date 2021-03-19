@@ -222,8 +222,8 @@ class Video extends BaseModel
         return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
             'api.vod.stream',
             [
-                'video' => $this,
                 'user' => auth()->user(),
+                'video' => $this,
             ]
         ));
     }

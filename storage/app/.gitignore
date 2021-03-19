@@ -1,8 +1,5 @@
 *
 !public/
-!images/
+!conversions/
 !media/
-!streams/
-!tmp/
-!uploads/
 !.gitignore

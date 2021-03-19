@@ -43,6 +43,7 @@ class MediaImportService
             $media = $baseModel
                     ->addMedia($filePath)
                     ->withCustomProperties($properties)
+                    ->storingConversionsOnDisk('conversions')
                     ->toMediaCollection($collection);
 
             // Force WebVTT

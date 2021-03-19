@@ -51,12 +51,12 @@ See `doc` for configuration examples.
 cd /srv/http/mediadb/api
 cp .env.example .env
 composer install
+php artisan horizon:install
+php artisan telescope:install
 php artisan migrate
 php artisan key:generate
 php artisan storage:link
 php artisan scout:create-indexes
-php artisan horizon:install
-php artisan telescope:install
 ```
 
 It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/video.php`, `config/media-library.php` and `config/filesystems.php`.

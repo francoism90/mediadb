@@ -11,6 +11,8 @@ class CreateAcquaintancesInteractionsTable extends Migration
     public function up()
     {
         Schema::create(config('acquaintances.tables.interactions', 'interactions'), function (Blueprint $table) {
+            $table->id();
+
             $userModel = config('auth.providers.users.model');
             $userModel = (new $userModel());
 
@@ -20,7 +22,7 @@ class CreateAcquaintancesInteractionsTable extends Migration
             $table->string('relation')->default('follow')->comment('follow/like/subscribe/favorite/upvote/downvote');
             $table->integer('relation_value')->nullable();
             $table->string('relation_type')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamps();
 
             $table->foreign('user_id')
                   ->references($userModel->getKeyName())

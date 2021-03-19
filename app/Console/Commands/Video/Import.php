@@ -60,7 +60,7 @@ class Import extends Command
     /**
      * @return User
      */
-    protected function getUser(): User
+    protected function getUser(): ?User
     {
         return User::findOrFail(
             $this->argument('user')

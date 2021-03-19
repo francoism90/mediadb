@@ -11,7 +11,9 @@ class CreateAcquaintancesFriendshipsGroupsTable extends Migration
     public function up()
     {
         Schema::create(config('acquaintances.tables.friendship_groups'), function (Blueprint $table) {
-            $table->integer('friendship_id')->unsigned();
+            $table->id();
+
+            $table->unsignedBigInteger('friendship_id')->unsigned();
             $table->morphs('friend');
             $table->integer('group_id')->unsigned();
 

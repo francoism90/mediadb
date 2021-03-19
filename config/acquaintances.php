@@ -5,7 +5,24 @@ return [
      * Models Related.
      */
     'model_namespace' => 'App\Models',
-    'user_model_class_name' => 'User',
+    'models' => [
+        /*
+         * Model name of User model
+         */
+        'user' => 'User',
+        /*
+         * Model name of Interaction Relation model
+         */
+        'interaction_relation' => \Multicaret\Acquaintances\Models\InteractionRelation::class,
+        /*
+         * Model name of Interaction Relation model
+         */
+        'friendship' => \Multicaret\Acquaintances\Models\Friendship::class,
+        /*
+         * Model name of Interaction Relation model
+         */
+        'friendship_groups' => \Multicaret\Acquaintances\Models\FriendFriendshipGroups::class,
+    ],
 
     'tables' => [
         /*
@@ -13,7 +30,11 @@ return [
          */
         'interactions' => 'interactions',
         /*
-         * `user_id` foreign key column type within interactions table.
+         * user foreign key column name within interactions table.
+         */
+        'interactions_user_id_fk_column_name' => 'user_id',
+        /*
+         * user foreign key column type within interactions table.
          */
         'interactions_user_id_fk_column_type' => 'unsignedBigInteger',
         /*
@@ -42,7 +63,7 @@ return [
             /* Add any other type that your website/application have here,
              * the following added rating types are for demonstration purposes only.
              * There is no effect on deleting them nor adding to them, however, its a good practice
-             * to not hard code your rating types, hence, pleas use this simple array
+             * to not hard code your rating types, hence, please use this simple array
              */
             'delivery-time',
             'quality',

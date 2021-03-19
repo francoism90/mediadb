@@ -10,7 +10,7 @@ class CreateTagTables extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('prefixed_id')->index();
+            $table->string('prefixed_id')->nullable()->unique();
             $table->json('name');
             $table->json('slug');
             $table->string('type')->nullable();
