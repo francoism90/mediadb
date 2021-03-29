@@ -3341,16 +3341,16 @@
         },
         {
             "name": "multicaret/laravel-acquaintances",
-            "version": "v3.4.6",
+            "version": "v3.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/multicaret/laravel-acquaintances.git",
-                "reference": "90dcdca091a5d4fa35fa7ca6388133102e540ec4"
+                "reference": "0cca83f2b7d2cfbdae649ef788bb0e789b4308f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/90dcdca091a5d4fa35fa7ca6388133102e540ec4",
-                "reference": "90dcdca091a5d4fa35fa7ca6388133102e540ec4",
+                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/0cca83f2b7d2cfbdae649ef788bb0e789b4308f0",
+                "reference": "0cca83f2b7d2cfbdae649ef788bb0e789b4308f0",
                 "shasum": ""
             },
             "require": {
@@ -3405,9 +3405,9 @@
             ],
             "support": {
                 "issues": "https://github.com/multicaret/laravel-acquaintances/issues",
-                "source": "https://github.com/multicaret/laravel-acquaintances/tree/v3.4.6"
+                "source": "https://github.com/multicaret/laravel-acquaintances/tree/v3.4.7"
             },
-            "time": "2021-03-19T03:04:50+00:00"
+            "time": "2021-03-25T13:32:05+00:00"
         },
         {
             "name": "myclabs/deep-copy",
