@@ -34,7 +34,7 @@
         "spatie/laravel-permission": "^4.0",
         "spatie/laravel-prefixed-ids": "^1.0",
         "spatie/laravel-query-builder": "^3.2",
-        "spatie/laravel-sluggable": "^2.5",
+        "spatie/laravel-sluggable": "^3.0",
         "spatie/laravel-tags": "^4.0",
         "spatie/laravel-translatable": "^4.5"
     },
