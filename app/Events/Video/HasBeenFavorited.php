@@ -21,18 +21,12 @@ class HasBeenFavorited implements ShouldBroadcastNow
     public string $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Video
-     */
-    public Video $video;
-
-    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Video $video)
+    public function __construct(public Video $video)
     {
-        $this->video = $video;
     }
 
     /**

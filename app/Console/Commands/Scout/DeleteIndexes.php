@@ -44,7 +44,7 @@ class DeleteIndexes extends Command
         $indexes = collect(config('meilisearch.indexes'));
 
         try {
-            $indexes->each(function ($item) use ($client) {
+            $indexes->each(function ($item) use ($client): void {
                 $client->deleteIndex($item['name']);
 
                 $this->info('Index "'.$item['name'].'" deleted.');

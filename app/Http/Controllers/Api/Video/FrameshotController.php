@@ -8,6 +8,7 @@ use App\Http\Requests\Video\FrameshotRequest;
 use App\Http\Resources\VideoResource;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Video;
+use Illuminate\Http\JsonResponse;
 
 class FrameshotController extends Controller
 {
@@ -17,7 +18,7 @@ class FrameshotController extends Controller
      *
      * @return VideoResource|\Illuminate\Http\JsonResponse
      */
-    public function __invoke(FrameshotRequest $request, Video $video)
+    public function __invoke(FrameshotRequest $request, Video $video): VideoResource | JsonResponse
     {
         $media = $video->getFirstMedia('clip');
 

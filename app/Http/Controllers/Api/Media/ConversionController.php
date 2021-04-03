@@ -10,22 +10,10 @@ use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 
 class ConversionController extends Controller
 {
-    /**
-     * @var DefaultPathGenerator
-     */
-    protected DefaultPathGenerator $basePathGenerator;
-
-    /**
-     * @var FilesystemManager
-     */
-    protected FilesystemManager $filesystemManager;
-
     public function __construct(
-        DefaultPathGenerator $basePathGenerator,
-        FilesystemManager $filesystemManager
+        protected DefaultPathGenerator $basePathGenerator,
+        protected FilesystemManager $filesystemManager
     ) {
-        $this->basePathGenerator = $basePathGenerator;
-        $this->filesystemManager = $filesystemManager;
     }
 
     /**

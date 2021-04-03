@@ -31,7 +31,6 @@ class MediaMetadataService
             'size' => $format->get('size', 0),
             'bitrate' => $format->get('bit_rate', 0),
             'probe_score' => $format->get('probe_score', 0),
-            'tags' => $format->get('tags', []),
         ]);
     }
 

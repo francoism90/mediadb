@@ -13,7 +13,7 @@ class ShowController extends Controller
      *
      * @return VideoResource
      */
-    public function __invoke(Video $video)
+    public function __invoke(Video $video): VideoResource
     {
         $video->recordActivity('viewed');
         $video->recordView('view_count', now()->addYear());

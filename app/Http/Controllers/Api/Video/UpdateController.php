@@ -11,14 +11,9 @@ use App\Services\TagService;
 
 class UpdateController extends Controller
 {
-    /**
-     * @var TagService
-     */
-    protected TagService $tagService;
-
-    public function __construct(TagService $tagService)
-    {
-        $this->tagService = $tagService;
+    public function __construct(
+        protected TagService $tagService
+    ) {
     }
 
     /**
@@ -27,7 +22,7 @@ class UpdateController extends Controller
      *
      * @return VideoResource
      */
-    public function __invoke(UpdateRequest $request, Video $video)
+    public function __invoke(UpdateRequest $request, Video $video): VideoResource
     {
         $locale = app()->getLocale();
 

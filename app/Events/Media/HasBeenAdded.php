@@ -15,23 +15,11 @@ class HasBeenAdded
     use SerializesModels;
 
     /**
-     * @var Model
-     */
-    public Model $model;
-
-    /**
-     * @var Media
-     */
-    public Media $media;
-
-    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Model $model, Media $media)
+    public function __construct(public Model $model, public Media $media)
     {
-        $this->model = $model;
-        $this->media = $media;
     }
 }

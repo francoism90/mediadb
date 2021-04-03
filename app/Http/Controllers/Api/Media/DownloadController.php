@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
+use Http\Discovery\Exception\NotFoundException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DownloadController extends Controller
 {
@@ -14,7 +16,7 @@ class DownloadController extends Controller
      *
      * @return mixed
      */
-    public function __invoke(Media $media, User $user)
+    public function __invoke(Media $media, User $user): BinaryFileResponse | NotFoundException
     {
         $path = $media->getPath();
 

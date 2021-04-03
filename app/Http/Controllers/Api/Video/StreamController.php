@@ -6,17 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Video;
 use App\Services\VideoStreamService;
+use Illuminate\Http\RedirectResponse;
 
 class StreamController extends Controller
 {
-    /**
-     * @var VideoStreamService
-     */
-    protected VideoStreamService $videoStreamService;
-
-    public function __construct(VideoStreamService $videoStreamService)
-    {
-        $this->videoStreamService = $videoStreamService;
+    public function __construct(
+        protected VideoStreamService $videoStreamService
+    ) {
     }
 
     /**
@@ -25,7 +21,7 @@ class StreamController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function __invoke(Video $video, User $user)
+    public function __invoke(Video $video, User $user): RedirectResponse
     {
         $streamUrl = $this->videoStreamService->getMappingUrl($video, $user);
 

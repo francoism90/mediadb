@@ -10,7 +10,7 @@ class HomeController extends Controller
     /**
      * @return JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
         return response()->json([
             'success' => true,

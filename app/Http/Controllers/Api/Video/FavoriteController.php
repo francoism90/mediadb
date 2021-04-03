@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class FavoriteController extends Controller
 {
@@ -16,7 +17,7 @@ class FavoriteController extends Controller
      *
      * @return VideoResource|\Illuminate\Http\JsonResponse
      */
-    public function __invoke(Request $request, Video $video)
+    public function __invoke(Request $request, Video $video): VideoResource | JsonResource
     {
         $user = auth()->user();
 

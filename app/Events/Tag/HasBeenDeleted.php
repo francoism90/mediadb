@@ -21,18 +21,12 @@ class HasBeenDeleted implements ShouldBroadcastNow
     public string $broadcastQueue = 'broadcasts';
 
     /**
-     * @var Tag
-     */
-    public Tag $tag;
-
-    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Tag $tag)
+    public function __construct(public Tag $tag)
     {
-        $this->tag = $tag;
     }
 
     /**

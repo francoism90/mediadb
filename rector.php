@@ -26,15 +26,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // auto import fully qualified class names? [default: false]
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
 
+    // Run Rector only on changed files
+    $parameters->set(Option::ENABLE_CACHE, true);
+
     // Define what rule sets will be applied
     $parameters->set(Option::SETS, [
-        SetList::LARAVEL_60,
-        SetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
-        SetList::LARAVEL_CODE_QUALITY,
-        SetList::PHP_80,
+        SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
         SetList::ORDER,
+        SetList::PHP_80,
         SetList::TYPE_DECLARATION,
     ]);
 };

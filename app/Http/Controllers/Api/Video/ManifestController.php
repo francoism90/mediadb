@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Api\Video;
 
 use App\Http\Controllers\Controller;
 use App\Services\VideoStreamService;
+use Illuminate\Http\JsonResponse;
 
 class ManifestController extends Controller
 {
-    /**
-     * @var VideoStreamService
-     */
-    protected VideoStreamService $videoStreamService;
-
-    public function __construct(VideoStreamService $videoStreamService)
+    public function __construct(protected VideoStreamService $videoStreamService)
     {
-        $this->videoStreamService = $videoStreamService;
     }
 
     /**
@@ -23,7 +18,7 @@ class ManifestController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(string $token, string $type = null)
+    public function __invoke(string $token, string $type = null): JsonResponse
     {
         if (!$this->videoStreamService->validToken($token)) {
             abort(403);

@@ -44,7 +44,7 @@ class CreateIndexes extends Command
         $indexes = collect(config('meilisearch.indexes'));
 
         try {
-            $indexes->each(function ($item) use ($client) {
+            $indexes->each(function ($item) use ($client): void {
                 $index = $client->getOrCreateIndex($item['name'], [
                     'primaryKey' => 'id',
                 ]);
