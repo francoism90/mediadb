@@ -24,7 +24,7 @@
         "laravel/tinker": "^2.5",
         "meilisearch/meilisearch-laravel-scout": "^0.12.2",
         "multicaret/laravel-acquaintances": "^3.4",
-        "php-ffmpeg/php-ffmpeg": "^0.17.0",
+        "php-ffmpeg/php-ffmpeg": "^0.18.0",
         "pusher/pusher-php-server": "^5.0",
         "spatie/laravel-activitylog": "^3.16",
         "spatie/laravel-db-snapshots": "^1.7",

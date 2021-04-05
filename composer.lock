@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d9e5611c88f97dd6ee705ec94c16743",
+    "content-hash": "7bba9b6c75635fa13fc7b60b48c111ef",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -3835,16 +3835,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v0.17.0",
+            "version": "v0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "a5147d1ae041e78e7870bf2443d4e2dfa7635856"
+                "reference": "edc0a7729d8818ed883e77b3d26ceb6d49ec41de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/a5147d1ae041e78e7870bf2443d4e2dfa7635856",
-                "reference": "a5147d1ae041e78e7870bf2443d4e2dfa7635856",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/edc0a7729d8818ed883e77b3d26ceb6d49ec41de",
+                "reference": "edc0a7729d8818ed883e77b3d26ceb6d49ec41de",
                 "shasum": ""
             },
             "require": {
@@ -3917,9 +3917,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
-                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v0.17.0"
+                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v0.18.0"
             },
-            "time": "2020-12-18T14:31:34+00:00"
+            "time": "2021-03-29T20:20:00+00:00"
         },
         {
             "name": "php-http/client-common",
