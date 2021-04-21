@@ -62,6 +62,12 @@ return [
             'visibility' => 'private',
         ],
 
+        'import' => [
+            'driver' => 'local',
+            'root' => storage_path('app/import'),
+            'visibility' => 'private',
+        ],
+
         'snapshots' => [
             'driver' => 'local',
             'root' => database_path('snapshots'),

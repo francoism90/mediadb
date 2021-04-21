@@ -1,1 +1,1 @@
-* * * * * cd /srv/http/mediadb/api && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /var/www/html/api && php artisan schedule:run >> /dev/null 2>&1

@@ -55,8 +55,7 @@ class PermissionsTableSeeder extends Seeder
 
         // Create member role and assign created permissions
         $roleMember = Role::create(['name' => 'member']);
-
-        // $roleMember->givePermissionTo('save videos');
+        // $roleMember->givePermissionTo('bookmark videos');
 
         // Create the admin user
         $user = User::create([

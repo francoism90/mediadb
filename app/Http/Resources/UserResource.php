@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'avatar_url' => $this->whenAppended('avatar_url'),
             'notifications' => $this->whenAppended('notifications', $this->unreadNotifications->count()),
             'roles' => $this->whenAppended('assigned_roles'),
+            'permissions' => $this->whenAppended('assigned_permissions'),
             'settings' => $this->whenAppended('settings'),
         ];
     }

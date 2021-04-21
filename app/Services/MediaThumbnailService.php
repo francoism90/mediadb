@@ -39,7 +39,7 @@ class MediaThumbnailService
     public function create(Media $media): void
     {
         $path = $this->conversionService->temporaryDirectory()->path(
-            config('video.thumbnail_name')
+            config('media.thumbnail_name')
         );
 
         $video = $this->ffmpegService->openFile(
@@ -47,20 +47,20 @@ class MediaThumbnailService
         );
 
         $duration = $media->getCustomProperty('metadata.duration', 60);
-        $timeCode = $media->getCustomProperty('frameshot', $duration / 2);
+        $timeCode = $media->getCustomProperty('thumbnail', $duration / 2);
 
         $this->ffmpegService->createThumbnail(
             $video,
             $path,
             $timeCode,
-            config('video.thumbnail_filter')
+            config('media.thumbnail_filter')
         );
 
         $this->imageService->optimize($path);
 
         $this
             ->conversionService
-            ->importConversion($media, $path, config('video.thumbnail_name'));
+            ->importConversion($media, $path, config('media.thumbnail_name'));
 
         $media->markAsConversionGenerated('thumbnail');
     }

@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required|string|min:1|max:255',
             'overview' => 'nullable|string|min:0|max:1024',
-            'status' => 'required|string|in:private,public',
+            'status' => 'nullable|string|in:private,public',
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*.type' => 'nullable|string|in:actor,genre,language,studio',
             'tags.*.name' => 'required|string|min:1|max:255',

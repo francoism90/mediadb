@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Events\Media\HasBeenAdded;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -76,12 +77,12 @@ class MediaImportService
     }
 
     /**
-     * @param string $path
-     *
      * @return Finder
      */
-    public function getValidFiles(string $path): Finder
+    public function getImportFiles(): Finder
     {
+        $path = Storage::disk('import')->path('');
+
         $filter = fn (SplFileInfo $file) => $file->isReadable() && $file->isWritable();
 
         return (new Finder())

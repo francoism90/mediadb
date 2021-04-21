@@ -13,23 +13,16 @@ class Import extends Command
     /**
      * @var string
      */
-    protected $signature = 'video:import {path} {collection=clip} {status=private} {user=1}';
+    protected $signature = 'video:import {collection=clip} {status=private} {user=1}';
 
     /**
      * @var string
      */
-    protected $description = 'Import video files to the library';
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Import videos to a user';
 
     public function handle(MediaImportService $mediaImportService): void
     {
-        $files = $mediaImportService->getValidFiles(
-            $this->argument('path')
-        );
+        $files = $mediaImportService->getImportFiles();
 
         foreach ($files as $file) {
             $this->info("Importing {$file->getFilename()}");

@@ -4,7 +4,6 @@
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
 - [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred instead, `nginx-secure-token-module` provides support for several token providers.
-- Generates sprites and thumbnails of video files.
 
 Full size [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
 
@@ -12,13 +11,10 @@ MediaDB is very much in development and may not be suitable for production purpo
 
 ## Installation
 
-MediaDB requires a Laravel compatible development environment like [Homestead](https://laravel.com/docs/8.x/homestead).
+MediaDB requires a Laravel compatible development environment like [Laravel Sail](https://laravel.com/docs/8.x/sail) (included).
 
-- [nginx](https://nginx.org)
-- [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
-- [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
 - [ffmpeg](https://www.ffmpeg.org/) including `ffprobe`
-- [PHP](https://php.net/) 7.4 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
+- [PHP](https://php.net/) 8.0 or later, with exif and GD support, including required extensions like `php-redis` and `php-imagick`.
 - [Image optimizers](https://docs.spatie.be/laravel-medialibrary/v9/converting-images/optimizing-converted-images/)
 - MariaDB/MySQL (with JSON support), Redis and Supervisor.
 - [MeiliSearch](https://www.meilisearch.com/)
@@ -26,29 +22,39 @@ MediaDB requires a Laravel compatible development environment like [Homestead](h
 
 Please consult the upstream documentation of used packages in `composer.json` for possible other missing (OS) dependencies and/or recommendations.
 
+### Stream Server
+
+MediaDB requires a DASH compatible nginx streaming environment:
+
+- [nginx](https://nginx.org)
+- [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module)
+- [nginx-vod-module](https://github.com/kaltura/nginx-vod-module)
+
+Please consult the upstream documentation and the provided nginx config examples.
+
 ### Front-end/app
 
-- <https://github.com/francoism90/mediadb-ui> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar. Currently only tested on Android.
+- <https://github.com/francoism90/mediadb-app> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar. Currently only tested on Android.
 
-Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/srv/http/mediadb/api` (mediadb-api) and `/srv/http/mediadb/ui` (mediadb-ui).
+Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/var/www/html/api` (mediadb-api) and `/var/www/html/app` (mediadb-app).
 
 ### Nginx
 
 See `doc/nginx` for configuration examples.
 
-| Site | Domain | Details |
-| - | - | - |
-| mediadb-api.conf | localhost:3000 | API endpoint: Laravel instance, authentication, media processing, etc. |
-| mediadb-ui.conf | mediadb.test:443 mediadb.test:80 | MediaDB Front-end, MediaDB-API proxy. |
-| mediadb-vod.conf | stream.test:443 stream.test:80 | VOD: streaming endpoint, local vod-mapping. |
-| mediadb-socket.conf | socket.mediadb.test:443 | Laravel Echo for broadcasting events. |
+| Site                | Domain                           | Details                                                                |
+| ------------------- | -------------------------------- | ---------------------------------------------------------------------- |
+| mediadb-api.conf    | localhost:3000                   | API endpoint: Laravel instance, authentication, media processing, etc. |
+| mediadb-ui.conf     | mediadb.test:443 mediadb.test:80 | MediaDB Front-end, MediaDB-API proxy.                                  |
+| mediadb-vod.conf    | stream.test:443 stream.test:80   | VOD: streaming endpoint, local vod-mapping.                            |
+| mediadb-socket.conf | socket.mediadb.test:443          | Laravel Echo for broadcasting events.                                  |
 
 ### Laravel
 
 See `doc` for configuration examples.
 
 ```bash
-cd /srv/http/mediadb/api
+cd /var/www/html/api
 cp .env.example .env
 composer install
 php artisan horizon:install
@@ -59,7 +65,7 @@ php artisan storage:link
 php artisan scout:create-indexes
 ```
 
-It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/video.php`, `config/media-library.php` and `config/filesystems.php`.
+It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/media.php`, `config/video.php`, `config/media-library.php` and `config/filesystems.php`.
 
 #### Seeders
 
@@ -116,9 +122,9 @@ vod_segments_base_url "https://stream.test";
 To import files (videos, captions, ..) to the library:
 
 ```bash
-cd /srv/http/mediadb/api
-php artisan video:import /path/to/import
-php artisan video:import-caption /path/to/import <video-id>
+cd /var/www/html/api
+php artisan video:import
+php artisan video:import-caption <video-id>
 ```
 
 Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.

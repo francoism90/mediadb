@@ -41,6 +41,10 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('02:00')
                  ->runInBackground();
 
+        $schedule->command('websockets:clean')
+                 ->dailyAt('02:00')
+                 ->runInBackground();
+
         $schedule->command('activitylog:clean')
                  ->dailyAt('02:30')
                  ->runInBackground();

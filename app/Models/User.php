@@ -154,10 +154,15 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
      */
     public function getAssignedRolesAttribute(): array
     {
-        return [
-            'roles' => $this->getRoleNames()->toArray(),
-            'permissions' => $this->getAllPermissions()->pluck('name')->toArray(),
-        ];
+        return $this->getRoleNames()->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAssignedPermissionsAttribute(): array
+    {
+        return $this->getAllPermissions()->pluck('name')->toArray();
     }
 
     /**

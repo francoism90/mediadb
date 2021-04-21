@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Media;
 
-use App\Jobs\Media\CreateSprite;
 use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetMetadata;
 use App\Models\Media;
@@ -18,7 +17,7 @@ class Regenerate extends Command
     /**
      * @var string
      */
-    protected $description = 'Regenerate missing conversions on media models';
+    protected $description = 'Regenerate media models';
 
     public function __construct()
     {
@@ -53,10 +52,6 @@ class Regenerate extends Command
         foreach ($models as $model) {
             if (!$model->hasGeneratedConversion('thumbnail')) {
                 CreateThumbnail::dispatch($model)->onQueue('media');
-            }
-
-            if (!$model->hasGeneratedConversion('sprite')) {
-                CreateSprite::dispatch($model)->onQueue('media');
             }
         }
     }

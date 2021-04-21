@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Media;
 
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     use SanitizesInput;
 
@@ -27,10 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|string|min:1|max:32',
-            'device_name' => 'string|nullable',
-            'remember_me' => 'boolean|nullable',
+            'thumbnail' => 'nullable|numeric|min:0|max:28800',
         ];
     }
 
@@ -40,10 +37,7 @@ class LoginRequest extends FormRequest
     public function filters(): array
     {
         return [
-            'email' => 'trim|strip_tags',
-            'password' => 'trim|strip_tags',
-            'device_name' => 'trim|strip_tags',
-            'remember' => 'trim|strip_tags|cast:boolean',
+            'thumbnail' => 'cast:float',
         ];
     }
 }

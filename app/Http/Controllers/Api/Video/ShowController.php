@@ -22,19 +22,7 @@ class ShowController extends Controller
             $video
                 ->load('tags')
                 ->append([
-                    'is_favorited',
-                    'bitrate',
-                    'codec_name',
-                    'duration',
-                    'overview',
-                    'resolution',
-                    'height',
-                    'width',
-                    'sprite_url',
-                    'sprite',
-                    'status',
-                    'stream_url',
-                    'thumbnail_url',
+                    'clip',
                     'tracks',
                 ])
         );

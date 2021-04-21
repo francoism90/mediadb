@@ -7,6 +7,7 @@ use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorters\FieldSorter;
+use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
 use App\Support\QueryBuilder\Sorters\Tag\ItemSorter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,7 +25,7 @@ class IndexController extends Controller
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedAppends([
-                'item_count',
+                'items',
             ])
             ->allowedFilters([
                 AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),
@@ -34,7 +35,10 @@ class IndexController extends Controller
             ->AllowedSorts([
                 $defaultSort,
                 AllowedSort::custom('items', new ItemSorter())->defaultDirection('desc'),
+                AllowedSort::custom('random', new RandomSorter())->defaultDirection('asc'),
                 AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc'),
+                AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
+                AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
             ])
             ->defaultSort($defaultSort)
             ->jsonPaginate();
