@@ -127,7 +127,7 @@ php artisan video:import
 php artisan video:import-caption <video-id>
 ```
 
-Use [MediaDB UI](https://github.com/francoism90/mediadb-ui) or any other custom front-end to retrieve the streaming data/manage media.
+Use the [MediaDB app](https://github.com/francoism90/mediadb-app) or any other custom front-end to retrieve the streaming data/manage media.
 
 ### Notes
 
