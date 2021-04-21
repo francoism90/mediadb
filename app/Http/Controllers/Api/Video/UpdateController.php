@@ -27,8 +27,8 @@ class UpdateController extends Controller
         $locale = app()->getLocale();
 
         $video->setTranslation('name', $locale, $request->input('name', $video->name))
-              ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
-              ->save();
+            ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
+            ->save();
 
         $this->tagService->sync(
             $video,
