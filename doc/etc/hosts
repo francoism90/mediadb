@@ -1,3 +1,3 @@
 # local testing
-127.0.0.1 mediadb.test socket.mediadb.test
+127.0.0.1 mediadb.test mediadb-api.test socket.mediadb.test
 127.0.0.1 stream.test
