@@ -7,6 +7,7 @@ use App\Models\Media;
 use App\Models\User;
 use Illuminate\Filesystem\FilesystemManager;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ConversionController extends Controller
 {
@@ -17,28 +18,29 @@ class ConversionController extends Controller
     }
 
     /**
-     * @param Media  $media
-     * @param User   $user
-     * @param string $name
+     * @param Media     $media
+     * @param User|null $user
+     * @param string    $name
      *
-     * @return mixed
+     * @return void
      */
-    public function __invoke(Media $media, User $user, string $name)
+    public function __invoke(Media $media, ?User $user, string $name): BinaryFileResponse
     {
-        if (!$media->hasGeneratedConversion($name)) {
-            abort(404);
+        // Only allow members
+        if (!$user || !$user->hasAnyRole(['member', 'super-admin'])) {
+            abort(403);
         }
 
-        // We need to use fixed paths for our own conversions
+        // We need to use fixed conversions
         $conversions = collect([
-            ['name' => 'sprite', 'path' => config('video.sprite_name')],
-            ['name' => 'thumbnail', 'path' => config('video.thumbnail_name')],
+            ['name' => 'thumbnail', 'path' => config('media.thumbnail_name')],
         ]);
 
         $conversion = $conversions->firstWhere('name', $name);
 
-        if (!$conversion) {
-            abort(501);
+        // Make sure the conversion exists
+        if (!$conversion || !$media->hasGeneratedConversion($name)) {
+            abort(404);
         }
 
         $conversionRelativePath = $this

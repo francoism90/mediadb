@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeLiked;
@@ -28,7 +27,12 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media'];
+    protected $with = ['media', 'tags'];
+
+    /**
+     * @var array
+     */
+    protected $appends = ['clip'];
 
     /**
      * @return morphTo
@@ -74,7 +78,6 @@ class Video extends BaseModel
     public function registerMediaConversions($media = null): void
     {
         $serviceConversions = [
-            'sprite',
             'thumbnail',
         ];
 
@@ -94,7 +97,7 @@ class Video extends BaseModel
         $this
             ->addMediaCollection('clip')
             ->acceptsMimeTypes(
-                config('video.accept_mimetypes')
+                config('video.clip_mimetypes')
             )
             ->singleFile()
             ->useDisk('media');
@@ -102,10 +105,22 @@ class Video extends BaseModel
         $this
             ->addMediaCollection('caption')
             ->acceptsMimeTypes([
-                'text/plain',
-                'text/vtt',
+               config('video.caption_mimetypes'),
             ])
             ->useDisk('media');
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getClipAttribute(): ?Media
+    {
+        return $this->getFirstMedia('clip')?->append([
+            'duration',
+            'resolution',
+            'stream_url',
+            'thumbnail_url',
+        ]);
     }
 
     /**
@@ -114,133 +129,5 @@ class Video extends BaseModel
     public function getTracksAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getBitrateAttribute(): ?int
-    {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('metadata.bitrate', 0)
-        );
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCodecNameAttribute(): ?string
-    {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('metadata.codec_name', 'N/A')
-        );
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getDurationAttribute(): ?float
-    {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('metadata.duration', 0)
-        );
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getHeightAttribute(): ?int
-    {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.height', 360);
-        });
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getWidthAttribute(): ?int
-    {
-        return optional($this->getFirstMedia('clip'), function ($clip) {
-            return $clip->getCustomProperty('metadata.width', 480);
-        });
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getResolutionAttribute(): ?string
-    {
-        $resolutions = collect(
-            config('video.resolutions', [])
-        );
-
-        $videoWidth = $this->width ?? 480;
-
-        $resolution = $resolutions
-            ->whereBetween('width', [$videoWidth - 128, $videoWidth + 128])
-            ->last();
-
-        return $resolution['label'] ?? '240p';
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getSpriteAttribute(): ?array
-    {
-        return optional(
-            $this->getFirstMedia('clip'),
-            fn ($clip) => $clip->getCustomProperty('sprite', [])
-        );
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSpriteUrlAttribute(): ?string
-    {
-        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
-            'api.media.asset',
-            [
-                'media' => $clip,
-                'user' => auth()->user(),
-                'name' => 'sprite',
-                'version' => $clip->updated_at->timestamp,
-            ]
-        ));
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStreamUrlAttribute(): ?string
-    {
-        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
-            'api.vod.stream',
-            [
-                'user' => auth()->user(),
-                'video' => $this,
-            ]
-        ));
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getThumbnailUrlAttribute(): ?string
-    {
-        return optional($this->getFirstMedia('clip'), fn ($clip) => URL::signedRoute(
-            'api.media.asset',
-            [
-                'media' => $clip,
-                'user' => auth()->user(),
-                'name' => 'thumbnail',
-                'version' => $clip->updated_at->timestamp,
-            ]
-        ));
     }
 }

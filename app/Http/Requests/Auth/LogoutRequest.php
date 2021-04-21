@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Video;
+namespace App\Http\Requests\Auth;
 
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FrameshotRequest extends FormRequest
+class LogoutRequest extends FormRequest
 {
     use SanitizesInput;
 
@@ -27,7 +27,7 @@ class FrameshotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'timecode' => 'required|numeric|min:0|max:28800',
+            'token' => 'required|string',
         ];
     }
 
@@ -37,7 +37,7 @@ class FrameshotRequest extends FormRequest
     public function filters(): array
     {
         return [
-            'timecode' => 'cast:float',
+            'token' => 'trim|strip_tags',
         ];
     }
 }

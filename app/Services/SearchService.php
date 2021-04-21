@@ -36,10 +36,6 @@ class SearchService
         for ($i = $value->take(self::QUERY_INPUT_LIMIT)->count(); $i >= 1; --$i) {
             $queryValue = $value->take($i)->implode(' ');
 
-            if (strlen($queryValue) <= 1) {
-                continue;
-            }
-
             $this->results = $this->results->merge(
                 $query
                     ->getModel()

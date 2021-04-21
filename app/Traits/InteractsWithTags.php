@@ -45,16 +45,16 @@ trait InteractsWithTags
      *
      * @return array
      */
-    public function extractTagTranslations(string $field = 'slug'): array
+    public function extractTagTranslations(string $field = 'name'): array
     {
         $tagTranslations = $this->tagTranslations()->get();
 
-        $tagSlugs = $tagTranslations->flatMap(function ($items) use ($field) {
-            $tags = json_decode($items["{$field}_translated"], true);
+        $collection = $tagTranslations->flatMap(function ($tags) use ($field) {
+            $tagTranslated = json_decode($tags["{$field}_translated"], true);
 
-            return array_values($tags);
+            return array_values($tagTranslated);
         });
 
-        return $tagSlugs->unique()->toArray();
+        return $collection->unique()->toArray();
     }
 }

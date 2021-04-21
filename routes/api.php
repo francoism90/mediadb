@@ -19,7 +19,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Auth
     Route::name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
-        Route::middleware('guest')->post('login', ['uses' => 'LoginController', 'as' => 'login']);
+        Route::post('login', ['uses' => 'LoginController', 'as' => 'login']);
         Route::middleware('auth:sanctum')->post('logout', ['uses' => 'LogoutController', 'as' => 'logout']);
         Route::middleware('auth:sanctum')->get('user', ['uses' => 'UserController', 'as' => 'user']);
         Route::middleware('auth:sanctum')->get('refresh', ['uses' => 'RefreshController', 'as' => 'refresh']);
@@ -36,35 +36,28 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
 
     // Video
     Route::middleware('auth:sanctum')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
-        // Resource
         Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
         Route::get('/{video}', ['uses' => 'ShowController', 'as' => 'show']);
         Route::delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::put('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
-
-        // Misc
-        Route::patch('/{video}/frameshot', ['uses' => 'FrameshotController', 'as' => 'frameshot']);
+        Route::patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
         Route::match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
     });
 
     // Tag
     Route::middleware('auth:sanctum')->name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
-        // Resource
         Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
         Route::get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
         Route::delete('/{tag}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::put('/{tag}', ['uses' => 'UpdateController', 'as' => 'update']);
+        Route::patch('/{tag}', ['uses' => 'UpdateController', 'as' => 'update']);
     });
 
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
-        Route::middleware(['cache.headers:public;max_age=31536000;etag', 'signed'])->get('/asset/{media}/{user}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
-        Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
-    });
+        Route::patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
 
-    // Video On Demand (VOD)
-    Route::name('vod.')->prefix('vod')->namespace('Video')->group(function () {
-        Route::middleware('signed')->get('/stream/{video}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
+        Route::middleware(['cache.headers:public;max_age=31536000;etag', 'signed'])->get('/asset/{media}/{user?}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
+        Route::middleware('signed')->get('/download/{media}/{user}', ['uses' => 'DownloadController', 'as' => 'download']);
+        Route::middleware('signed')->get('/stream/{media}/{user}', ['uses' => 'StreamController', 'as' => 'stream']);
         Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
     });
 });

@@ -63,7 +63,7 @@ class Tag extends BaseTag implements Viewable
      *
      * @return int
      */
-    public function getItemCountAttribute(string $type = null): int
+    public function getItemsAttribute(string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)

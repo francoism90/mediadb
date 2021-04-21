@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 use Spatie\ModelStatus\HasStatuses;
@@ -20,6 +21,11 @@ class Media extends BaseMedia
      * @var array
      */
     protected $touches = ['model'];
+
+    /**
+     * @var array
+     */
+    protected $appends = ['thumbnail_url'];
 
     /**
      * @return string
@@ -48,9 +54,105 @@ class Media extends BaseMedia
     /**
      * @return string
      */
-    public function getLocaleAttribute(): string
+    public function getLocaleAttribute(): ?string
     {
-        return $this->getCustomProperty('locale', 'N/A');
+        return $this->getCustomProperty('locale');
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getBitrateAttribute(): ?int
+    {
+        return $this->getCustomProperty('metadata.bitrate');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCodecNameAttribute(): ?string
+    {
+        return $this->getCustomProperty('metadata.codec_name');
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDurationAttribute(): ?float
+    {
+        return $this->getCustomProperty('metadata.duration');
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getHeightAttribute(): ?int
+    {
+        return $this->getCustomProperty('metadata.height');
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWidthAttribute(): ?int
+    {
+        return $this->getCustomProperty('metadata.width');
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getThumbnailAttribute(): ?float
+    {
+        return $this->getCustomProperty('thumbnail');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResolutionAttribute(): ?string
+    {
+        $resolutions = collect(
+            config('media.resolutions', [])
+        );
+
+        $mediaWidth = $this->width ?? 480;
+
+        $resolution = $resolutions
+            ->whereBetween('width', [$mediaWidth - 128, $mediaWidth + 128])
+            ->last();
+
+        return $resolution['label'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreamUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.media.stream',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+            ]
+        );
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getThumbnailUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+                'name' => 'thumbnail',
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
     }
 
     /**
@@ -61,12 +163,12 @@ class Media extends BaseMedia
     public function scopeMissingMetadata(Builder $query): Builder
     {
         return $query
-            ->whereIn('collection_name', config('media.metadata_collections', ['clip']))
+            ->whereIn('collection_name', config('media.collections', ['clip']))
             ->where(function ($query) {
                 $query->whereNull('custom_properties->metadata')
                       ->orWhereNull('custom_properties->metadata->duration')
-                      ->orWhereNull('custom_properties->metadata->width')
-                      ->orWhereNull('custom_properties->metadata->height');
+                      ->orWhereNull('custom_properties->metadata->height')
+                      ->orWhereNull('custom_properties->metadata->width');
             });
     }
 
@@ -78,11 +180,10 @@ class Media extends BaseMedia
     public function scopeMissingConversions(Builder $query): Builder
     {
         return $query
-            ->whereIn('collection_name', config('media.conversion_collections', ['clip']))
+            ->whereIn('collection_name', config('media.collections', ['clip']))
             ->where(function ($query) {
-                $query->whereNull('custom_properties->generated_conversions')
-                      ->orWhereNull('custom_properties->generated_conversions->sprite')
-                      ->orWhereNull('custom_properties->generated_conversions->thumbnail');
+                $query->whereNull('generated_conversions')
+                      ->orWhereNull('generated_conversions->thumbnail');
             });
     }
 
@@ -94,7 +195,7 @@ class Media extends BaseMedia
     public function scopeWithDuration(Builder $query, int $min = 0, int $max = 40): Builder
     {
         $durations = collect(
-            config('video.filter_durations', [])
+            config('media.filter_durations', [])
         );
 
         // Skip query on full ranges
@@ -106,7 +207,7 @@ class Media extends BaseMedia
         $max = $durations->last() === $max ? $max * 24 : $max;
 
         return $query
-            ->whereIn('collection_name', config('media.conversion_collections', ['clip']))
+            ->whereIn('collection_name', config('media.duration_collections', ['clip']))
             ->where(function ($query) use ($min, $max) {
                 $query->whereBetween('custom_properties->metadata->duration', [
                     $min * 60, // time in secs

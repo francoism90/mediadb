@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Media;
 use App\Models\User;
-use App\Models\Video;
 use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Support\Collection;
 
-class VideoStreamService
+class MediaStreamService
 {
     protected $streamer;
 
@@ -21,16 +21,16 @@ class VideoStreamService
     }
 
     /**
-     * @param Video $video
+     * @param Media $media
      * @param User  $user
      *
      * @return string
      */
-    public function getMappingUrl(Video $video, User $user): string
+    public function getMappingUrl(Media $media, User $user): string
     {
         $token = $this->tokenizer->create(
-            ['video' => $video, 'user' => $user],
-            config('video.vod_expires', 60 * 24)
+            ['media' => $media, 'user' => $user],
+            config('media.vod_expires', 60 * 24)
         );
 
         $this->streamer->setToken($token);
@@ -39,24 +39,22 @@ class VideoStreamService
     }
 
     /**
-     * @param Video $video
+     * @param Media $media
      *
      * @return Collection
      */
-    public function getResponseFormat(Video $video): Collection
+    public function getResponseFormat(Media $media): Collection
     {
-        $clip = $video->getFirstMedia('clip');
-
         return collect([
-            'id' => $video->id,
+            'id' => $media->id,
             'sequences' => (array) [
                 [
-                    'id' => $clip->id,
-                    'label' => $clip->name,
+                    'id' => $media->id,
+                    'label' => $media->name,
                     'clips' => (array) [
                         [
                             'type' => 'source',
-                            'path' => $clip->getPath(),
+                            'path' => $media->getPath(),
                         ],
                     ],
                 ],
@@ -89,7 +87,7 @@ class VideoStreamService
      */
     protected function getStreamModule(): string
     {
-        return config('video.vod_stream_module', DashStreamer::class);
+        return config('media.stream_module', DashStreamer::class);
     }
 
     /**
@@ -97,6 +95,6 @@ class VideoStreamService
      */
     protected function getTokenModule(): string
     {
-        return config('video.vod_token_module', LocalTokenizer::class);
+        return config('media.token_module', LocalTokenizer::class);
     }
 }
