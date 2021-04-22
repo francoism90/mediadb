@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
             'email' => 'trim|strip_tags',
             'password' => 'trim|strip_tags',
             'device_name' => 'trim|strip_tags',
-            'remember' => 'trim|strip_tags|cast:boolean',
+            'remember_me' => 'trim|strip_tags|cast:boolean',
         ];
     }
 }

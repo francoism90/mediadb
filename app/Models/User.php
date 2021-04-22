@@ -137,14 +137,14 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')
-             ->singleFile()
-             ->useDisk('media');
+            ->singleFile()
+            ->useDisk('media');
     }
 
     /**
      * @return string|null
      */
-    public function getAvatarAttribute(): ?string
+    public function getAvatarUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('avatar');
     }

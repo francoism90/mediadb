@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,20 +14,19 @@ class UserController extends Controller
      *
      * @return UserResource
      */
-    public function __invoke(Request $request): UserResource
+    public function __invoke(Request $request): JsonResponse
     {
-        // Set the preferred locale
         app()->setLocale($request->user()->preferredLocale());
 
-        return new UserResource(
-            $request
-                ->user()
-                ->append([
-                    'assigned_roles',
-                    'avatar_url',
-                    'notifications',
-                    'settings',
-                ])
-        );
+        $user = $request->user()->append([
+            'assigned_permissions',
+            'assigned_roles',
+            'avatar_url',
+            'settings',
+        ]);
+
+        return response()->json([
+            'user' => new UserResource($user),
+        ]);
     }
 }
