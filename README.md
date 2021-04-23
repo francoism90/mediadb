@@ -5,7 +5,7 @@
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
 - [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred instead, `nginx-secure-token-module` provides support for several token providers.
 
-Full size [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
+Full size (old) [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
 
 MediaDB is very much in development and may not be suitable for production purposes.
 
@@ -34,7 +34,7 @@ Please consult the upstream documentation and the provided nginx config examples
 
 ### Front-end/app
 
-- <https://github.com/francoism90/mediadb-app> - Optional front-end/app (Cordova) for MediaDB written in Vue and Quasar. Currently only tested on Android.
+- <https://github.com/francoism90/mediadb-app> - Optional front-end (SPA/PWA)/app (Capacitor) for MediaDB written in Vue and Quasar. Currently only tested on Android.
 
 Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/var/www/html/api` (mediadb-api) and `/var/www/html/app` (mediadb-app).
 
@@ -42,12 +42,12 @@ Note: it is recommend to clone/install MediaDB projects as subfolders, e.g. `/va
 
 See `doc/nginx` for configuration examples.
 
-| Site                | Domain                           | Details                                                                |
-| ------------------- | -------------------------------- | ---------------------------------------------------------------------- |
+| Site                | Domain                               | Details                                                              |
+| ------------------- | ------------------------------------ | -------------------------------------------------------------------- |
 | mediadb-api.conf    | localhost:3000 mediadb-api.test:3000 | API endpoint: Laravel instance, authentication, media processing, .. |
-| mediadb-app.conf     | mediadb.test:443 mediadb.test:80 | MediaDB SPA/PWA, MediaDB API proxy.                                  |
-| mediadb-vod.conf    | stream.test:443 stream.test:80   | VOD: streaming endpoint, video mapping, thumbnail capture.                            |
-| mediadb-socket.conf | socket.mediadb.test:443          | Laravel Echo (broadcasting events).                                  |
+| mediadb-app.conf    | mediadb.test:443 mediadb.test:80     | MediaDB SPA/PWA, MediaDB API proxy.                                  |
+| mediadb-vod.conf    | stream.test:443 stream.test:80       | VOD: streaming endpoint, video mapping, thumbnail capture.           |
+| mediadb-socket.conf | socket.mediadb.test:443              | Laravel Echo (broadcasting events).                                  |
 
 ### Laravel
 
