@@ -38,7 +38,7 @@ return [
                 'encrypted' => true,
                 'host' => 'localhost',
                 'port' => 6001,
-                'scheme' => 'https', # http on Laravel Sail
+                'scheme' => 'https', // http on Laravel Sail
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,
