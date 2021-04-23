@@ -55,6 +55,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
+EXPOSE 3000
 EXPOSE 6001
 EXPOSE 8000
 
