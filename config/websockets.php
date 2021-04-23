@@ -13,12 +13,12 @@ return [
     'dashboard' => [
         'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
 
-        'domain' => env('LARAVEL_WEBSOCKETS_DOMAIN', 'localhost'),
+        'domain' => env('LARAVEL_WEBSOCKETS_DOMAIN'),
 
         'path' => env('LARAVEL_WEBSOCKETS_PATH', 'laravel-websockets'),
 
         'middleware' => [
-            'web',
+            'auth.basic',
             \BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize::class,
         ],
     ],
