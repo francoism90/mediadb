@@ -21,21 +21,22 @@ class MediaStreamService
     }
 
     /**
-     * @param Media $media
-     * @param User  $user
+     * @param string $location
+     * @param string $uri
+     * @param array $token
      *
      * @return string
      */
-    public function getMappingUrl(Media $media, User $user): string
+    public function getMappingUrl(string $location, string $uri, array $token = []): string
     {
         $token = $this->tokenizer->create(
-            ['media' => $media, 'user' => $user],
+            $token,
             config('media.vod_expires', 60 * 24)
         );
 
         $this->streamer->setToken($token);
 
-        return $this->streamer->getUrl();
+        return $this->streamer->getUrl($location, $uri);
     }
 
     /**

@@ -23,7 +23,12 @@ class StreamController extends Controller
      */
     public function __invoke(Media $media, User $user): RedirectResponse
     {
-        $streamUrl = $this->mediaStreamService->getMappingUrl($media, $user);
+        $streamUrl = $this
+            ->mediaStreamService
+            ->getMappingUrl('dash', 'manifest.mpd', [
+                'media' => $media,
+                'user' => $user
+            ]);
 
         return redirect($streamUrl);
     }

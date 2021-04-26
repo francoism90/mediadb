@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers\Api\Media;
 
-use App\Events\Media\HasBeenUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\ThumbnailRequest;
 use App\Models\Media;
-use Illuminate\Http\JsonResponse;
+use App\Models\User;
+use App\Services\MediaStreamService;
+use Illuminate\Http\RedirectResponse;
 
-class UpdateController extends Controller
+class ThumbnailController extends Controller
 {
+    public function __construct(
+        protected MediaStreamService $mediaStreamService
+    ) {
+    }
+
     /**
-     * @param UpdateRequest $request
-     * @param Media         $media
+     * @param Media $media
+     * @param User  $user
      *
-     * @return void
+     * @return RedirectResponse
      */
-    public function __invoke(ThumbnailRequest $request, Media $media): JsonResponse
+    public function __invoke(Media $media, User $user): RedirectResponse
     {
-        $timecode = $request->input('timecode');
+        $streamUrl = $this
+            ->mediaStreamService
+            ->getMappingUrl('thumb', $media, $user);
 
-        logger($timecode);
-
-        return json()->response();
+        return redirect($streamUrl);
     }
 }
