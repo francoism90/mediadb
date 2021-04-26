@@ -27,13 +27,13 @@ class MediaSpriteService
         $vtt = "WEBVTT\n\n";
 
         foreach ($range as $time) {
-            $startTime = $time * 1000;
-            $endTime = ($time + 30) * 1000;
+            $startTime = gmdate('H:i:s.v', $time);
+            $endTime = gmdate('H:i:s.v', ($time + $interval));
 
             $frame = [
                 'start' => $startTime,
                 'end' => $endTime,
-                'url' => $this->getThumbnailUrl($media, $startTime, $params)
+                'url' => $this->getThumbnailUrl($media, $time * 1000, $params)
             ];
 
             $vtt .= "{$startTime} --> {$endTime}\n";
