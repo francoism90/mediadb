@@ -86,7 +86,7 @@ class MediaStreamService
     /**
      * @return string
      */
-    protected function getStreamModule(): string
+    public function getStreamModule(): string
     {
         return config('media.stream_module', DashStreamer::class);
     }
@@ -94,7 +94,7 @@ class MediaStreamService
     /**
      * @return string
      */
-    protected function getTokenModule(): string
+    public function getTokenModule(): string
     {
         return config('media.token_module', LocalTokenizer::class);
     }

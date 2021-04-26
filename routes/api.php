@@ -54,7 +54,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
-        Route::middleware('auth:sanctum')->patch('/{media}/thumbnail', ['uses' => 'ThumbnailController', 'as' => 'thumbnail']);
+        Route::middleware('auth:sanctum')->get('/{media}/thumbnail/{offset}', ['uses' => 'ThumbnailController', 'as' => 'thumbnail']);
 
         Route::middleware(['cache.headers:public;max_age=31536000;etag', 'signed'])->get('/asset/{media}/{user?}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
         Route::middleware('signed')->get('/download/{media}/{user?}', ['uses' => 'DownloadController', 'as' => 'download']);

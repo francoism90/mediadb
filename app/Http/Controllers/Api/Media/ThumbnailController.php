@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
 use App\Services\MediaStreamService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class ThumbnailController extends Controller
@@ -19,14 +20,22 @@ class ThumbnailController extends Controller
      * @param Media $media
      * @param User  $user
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function __invoke(Media $media, User $user): RedirectResponse
+    public function __invoke(Media $media, float $offset): JsonResponse
     {
-        $streamUrl = $this
+        $thumbnailUrl = $this
             ->mediaStreamService
-            ->getMappingUrl('thumb', $media, $user);
+            ->getMappingUrl('thumb', 'thumb-1000-w150-h100.jpg', [
+                'media' => $media,
+                'user' => auth()->user()
+            ]);
 
-        return redirect($streamUrl);
+        logger($thumbnailUrl);
+
+        return response()->json([
+            'offset' => $offset,
+            'url' => $thumbnailUrl
+        ]);
     }
 }

@@ -7,7 +7,7 @@ class DashStreamer implements StreamerInterface
     /**
      * @var string
      */
-    protected string $token;
+    protected string $token = '';
 
     /**
      * @return string
@@ -18,8 +18,6 @@ class DashStreamer implements StreamerInterface
 
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
-
-        logger($hashPath);
 
         return config('media.vod_url')."/{$location}/{$hashPath}";
     }
