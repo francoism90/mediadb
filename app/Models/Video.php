@@ -119,6 +119,7 @@ class Video extends BaseModel
             'duration',
             'resolution',
             'stream_url',
+            'sprite_url',
             'thumbnail_url',
         ]);
     }

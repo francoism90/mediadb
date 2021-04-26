@@ -27,7 +27,7 @@ class StreamController extends Controller
             ->mediaStreamService
             ->getMappingUrl('dash', 'manifest.mpd', [
                 'media' => $media,
-                'user' => $user
+                'user' => $user,
             ]);
 
         return redirect($streamUrl);

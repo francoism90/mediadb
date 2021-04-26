@@ -140,6 +140,20 @@ class Media extends BaseMedia
     }
 
     /**
+     * @return string
+     */
+    public function getSpriteUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.media.sprite',
+            [
+                'media' => $this,
+                'user' => auth()->user(),
+            ]
+        );
+    }
+
+    /**
      * @return string|null
      */
     public function getThumbnailUrlAttribute(): string

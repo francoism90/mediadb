@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Media;
-use App\Models\User;
 use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Support\Collection;
@@ -23,7 +22,7 @@ class MediaStreamService
     /**
      * @param string $location
      * @param string $uri
-     * @param array $token
+     * @param array  $token
      *
      * @return string
      */

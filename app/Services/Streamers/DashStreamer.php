@@ -45,7 +45,7 @@ class DashStreamer implements StreamerInterface
      */
     protected function getManifestHash(string $uri): string
     {
-        $path = $this->getManifestRoute() . "/{$uri}";
+        $path = $this->getManifestRoute()."/{$uri}";
 
         $hash = substr(
             md5($path, true),
