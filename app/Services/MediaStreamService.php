@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Media;
-use App\Models\User;
 use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Support\Collection;
@@ -21,21 +20,22 @@ class MediaStreamService
     }
 
     /**
-     * @param Media $media
-     * @param User  $user
+     * @param string $location
+     * @param string $uri
+     * @param array  $token
      *
      * @return string
      */
-    public function getMappingUrl(Media $media, User $user): string
+    public function getMappingUrl(string $location, string $uri, array $token = []): string
     {
         $token = $this->tokenizer->create(
-            ['media' => $media, 'user' => $user],
+            $token,
             config('media.vod_expires', 60 * 24)
         );
 
         $this->streamer->setToken($token);
 
-        return $this->streamer->getUrl();
+        return $this->streamer->getUrl($location, $uri);
     }
 
     /**
@@ -85,7 +85,7 @@ class MediaStreamService
     /**
      * @return string
      */
-    protected function getStreamModule(): string
+    public function getStreamModule(): string
     {
         return config('media.stream_module', DashStreamer::class);
     }
@@ -93,7 +93,7 @@ class MediaStreamService
     /**
      * @return string
      */
-    protected function getTokenModule(): string
+    public function getTokenModule(): string
     {
         return config('media.token_module', LocalTokenizer::class);
     }

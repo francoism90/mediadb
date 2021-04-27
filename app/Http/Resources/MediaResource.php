@@ -26,6 +26,7 @@ class MediaResource extends JsonResource
             'width' => $this->whenAppended('width'),
             'download_url' => $this->whenAppended('download_url'),
             'stream_url' => $this->whenAppended('stream_url'),
+            'sprite_url' => $this->whenAppended('sprite_url'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

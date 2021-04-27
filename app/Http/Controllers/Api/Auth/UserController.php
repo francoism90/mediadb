@@ -16,8 +16,6 @@ class UserController extends Controller
      */
     public function __invoke(Request $request): JsonResponse
     {
-        app()->setLocale($request->user()->preferredLocale());
-
         $user = $request->user()->append([
             'assigned_permissions',
             'assigned_roles',

@@ -4,25 +4,22 @@ namespace App\Services\Streamers;
 
 class DashStreamer implements StreamerInterface
 {
-    public const DASH_PATH = 'dash';
-    public const DASH_MANIFEST = 'manifest.mpd';
-
     /**
      * @var string
      */
-    protected string $token;
+    protected string $token = '';
 
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl(string $location, string $uri): string
     {
-        $hash = $this->getManifestHash();
+        $hash = $this->getManifestHash($uri);
 
-        $path = $this->getEncryptedPath($hash);
-        $path = $this->getEncodedPath($path);
+        $hashPath = $this->getEncryptedPath($hash);
+        $hashPath = $this->getEncodedPath($hashPath);
 
-        return config('media.vod_url').'/'.self::DASH_PATH."/{$path}";
+        return config('media.vod_url')."/{$location}/{$hashPath}";
     }
 
     /**
@@ -46,9 +43,9 @@ class DashStreamer implements StreamerInterface
     /**
      * @return string
      */
-    protected function getManifestHash(): string
+    protected function getManifestHash(string $uri): string
     {
-        $path = $this->getManifestPath().'/'.self::DASH_MANIFEST;
+        $path = $this->getManifestRoute()."/{$uri}";
 
         $hash = substr(
             md5($path, true),
@@ -68,7 +65,7 @@ class DashStreamer implements StreamerInterface
     /**
      * @return string
      */
-    protected function getManifestPath(): string
+    protected function getManifestRoute(): string
     {
         $route = route('api.media.manifest', ['token' => $this->token], false);
 
