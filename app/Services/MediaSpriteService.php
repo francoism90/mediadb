@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Media;
-use Illuminate\Support\Collection;
 
 class MediaSpriteService
 {
@@ -19,21 +18,22 @@ class MediaSpriteService
      */
     public function create(Media $media): string
     {
-        $interval = config('media.sprite_intval', 30);
-        $params = config('media.sprite_params', 'w150-h100.jpg');
+        $interval = config('media.sprite_intval', 15);
+        $params = config('media.sprite_params', 'w160-h90.jpg');
 
-        $range = range(0, $media->duration, $interval);
+        $range = range(0, ceil($media->duration), $interval);
 
         $vtt = "WEBVTT\n\n";
 
         foreach ($range as $time) {
-            $startTime = gmdate('H:i:s.v', $time);
-            $endTime = gmdate('H:i:s.v', ($time + $interval));
+            $timeStamp = floor($time);
+            $startTime = gmdate('H:i:s.v', $timeStamp);
+            $endTime = gmdate('H:i:s.v', $timeStamp + $interval);
 
             $frame = [
                 'start' => $startTime,
                 'end' => $endTime,
-                'url' => $this->getThumbnailUrl($media, $time * 1000, $params)
+                'url' => $this->getThumbnailUrl($media, $timeStamp * 1000, $params),
             ];
 
             $vtt .= "{$startTime} --> {$endTime}\n";
