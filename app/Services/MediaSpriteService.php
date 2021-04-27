@@ -18,45 +18,48 @@ class MediaSpriteService
      */
     public function create(Media $media): string
     {
-        $interval = config('media.sprite_intval', 15);
-        $params = config('media.sprite_params', 'w160-h90.jpg');
-
-        $range = range(0, ceil($media->duration), $interval);
-
         $vtt = "WEBVTT\n\n";
 
-        foreach ($range as $time) {
-            $timeStamp = floor($time);
-            $startTime = gmdate('H:i:s.v', $timeStamp);
-            $endTime = gmdate('H:i:s.v', $timeStamp + $interval);
+        $collection = collect($this->generateRange($media->duration));
 
-            $frame = [
-                'start' => $startTime,
-                'end' => $endTime,
-                'url' => $this->getThumbnailUrl($media, $timeStamp * 1000, $params),
-            ];
+        foreach ($collection->values() as $index => $time) {
+            $offset = $time * 1000;
+
+            $thumbnailUrl = $this->mediaStreamService->getMappingUrl(
+                'thumb',
+                "thumb-{$offset}-w160-h90.jpg",
+                ['media' => $media]
+            );
+
+            $next = $collection->get(++$index, $media->duration);
+
+            $startTime = gmdate('H:i:s.v', $time);
+            $endTime = gmdate('H:i:s.v', $next);
 
             $vtt .= "{$startTime} --> {$endTime}\n";
-            $vtt .= json_encode($frame, JSON_UNESCAPED_SLASHES)."\n\n";
+            $vtt .= "{$thumbnailUrl}\n\n";
         }
 
         return $vtt;
     }
 
     /**
-     * @param Media $media
-     * @param float $offset
+     * @param float $duration
      *
-     * @return string
+     * @return array
      */
-    protected function getThumbnailUrl(Media $media, float $offset, string $params): string
+    protected function generateRange(float $duration = 0): array
     {
-        return $this
-            ->mediaStreamService
-            ->getMappingUrl(
-                'thumb',
-                "thumb-{$offset}-{$params}",
-                ['media' => $media]
-            );
+        $divider = config('media.sprite_intval', 30);
+
+        $base = $duration / $divider;
+
+        $range = [];
+
+        for ($i = 0; $i <= $divider; ++$i) {
+            $range[] = round($i * $base);
+        }
+
+        return $range;
     }
 }
