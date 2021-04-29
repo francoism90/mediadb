@@ -1,0 +1,151 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: laravel/framework
+    versions:
+    - 8.25.0
+    - 8.26.1
+    - 8.27.0
+    - 8.28.1
+    - 8.29.0
+    - 8.30.0
+    - 8.30.1
+    - 8.31.0
+    - 8.32.1
+    - 8.33.1
+    - 8.34.0
+    - 8.35.1
+    - 8.36.1
+    - 8.36.2
+    - 8.37.0
+    - 8.39.0
+  - dependency-name: fruitcake/laravel-cors
+    versions:
+    - 2.0.4
+  - dependency-name: rector/rector
+    versions:
+    - 0.10.1
+    - 0.10.11
+    - 0.10.3
+    - 0.9.18
+    - 0.9.19
+    - 0.9.20
+    - 0.9.21
+    - 0.9.26
+    - 0.9.28
+    - 0.9.29
+    - 0.9.30
+    - 0.9.31
+    - 0.9.33
+  - dependency-name: spatie/laravel-sluggable
+    versions:
+    - 2.6.1
+    - 2.6.2
+    - 3.0.0
+    - 3.0.1
+  - dependency-name: laravel/telescope
+    versions:
+    - 4.4.1
+    - 4.4.2
+    - 4.4.3
+    - 4.4.4
+    - 4.4.5
+    - 4.4.6
+    - 4.4.8
+    - 4.4.9
+  - dependency-name: spatie/laravel-medialibrary
+    versions:
+    - 9.4.3
+    - 9.4.4
+    - 9.5.1
+    - 9.5.2
+    - 9.5.3
+    - 9.5.4
+    - 9.5.5
+  - dependency-name: barryvdh/laravel-ide-helper
+    versions:
+    - 2.10.0
+    - 2.9.3
+  - dependency-name: beyondcode/laravel-websockets
+    versions:
+    - 2.0.0-beta.33
+    - 2.0.0-beta.36
+  - dependency-name: laravel/sanctum
+    versions:
+    - 2.9.0
+    - 2.9.1
+    - 2.9.2
+    - 2.9.3
+    - 2.9.4
+  - dependency-name: laravel/horizon
+    versions:
+    - 5.6.6
+    - 5.7.0
+    - 5.7.1
+    - 5.7.2
+    - 5.7.3
+    - 5.7.4
+    - 5.7.5
+  - dependency-name: laravel/scout
+    versions:
+    - 8.6.1
+  - dependency-name: php-ffmpeg/php-ffmpeg
+    versions:
+    - 0.18.0
+  - dependency-name: facade/ignition
+    versions:
+    - 2.5.10
+    - 2.5.12
+    - 2.5.13
+    - 2.5.14
+    - 2.5.9
+    - 2.6.0
+    - 2.7.0
+  - dependency-name: multicaret/laravel-acquaintances
+    versions:
+    - 3.4.7
+  - dependency-name: guzzlehttp/guzzle
+    versions:
+    - 7.3.0
+  - dependency-name: spatie/laravel-permission
+    versions:
+    - 4.0.0
+    - 4.0.1
+  - dependency-name: nunomaduro/larastan
+    versions:
+    - 0.7.0
+    - 0.7.1
+  - dependency-name: spatie/laravel-tags
+    versions:
+    - 3.1.0
+    - 4.0.0
+    - 4.0.1
+  - dependency-name: meilisearch/meilisearch-laravel-scout
+    versions:
+    - 0.12.4
+    - 0.12.5
+  - dependency-name: spatie/laravel-activitylog
+    versions:
+    - 3.17.0
+  - dependency-name: laravel/tinker
+    versions:
+    - 2.6.0
+    - 2.6.1
+  - dependency-name: mockery/mockery
+    versions:
+    - 1.4.3
+  - dependency-name: elegantweb/sanitizer
+    versions:
+    - 1.0.5
+  - dependency-name: rennokki/laravel-eloquent-query-cache
+    versions:
+    - 2.6.0
+  - dependency-name: nunomaduro/collision
+    versions:
+    - 5.3.0
