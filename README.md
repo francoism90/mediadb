@@ -3,7 +3,7 @@
 **MediaDB** is a web-based media streaming service written in Laravel and Vue.
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
-- The [Encryption URL](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred, `nginx-secure-token-module` provides support for several token providers.
+- The [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred, `nginx-secure-token-module` provides support for several token providers.
 
 Full size (old) [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
 
