@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0db4b0c8e5611abadd08dd8a4d96c44c",
+    "content-hash": "bf7b21c116e8fd94186cf65a8cb66548",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2984,21 +2984,21 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.17.2",
+            "version": "v0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "a200a32093ae44c04523f6fd014ec888707ceb9e"
+                "reference": "74eefe5875a2f57382bb5155ed2ed5d4166ab532"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/a200a32093ae44c04523f6fd014ec888707ceb9e",
-                "reference": "a200a32093ae44c04523f6fd014ec888707ceb9e",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/74eefe5875a2f57382bb5155ed2ed5d4166ab532",
+                "reference": "74eefe5875a2f57382bb5155ed2ed5d4166ab532",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=7.2",
+                "php": "^7.3 || ^8.0",
                 "php-http/client-common": "^2.0",
                 "php-http/discovery": "^1.7",
                 "php-http/httplug": "^2.1"
@@ -3007,7 +3007,7 @@
                 "friendsofphp/php-cs-fixer": "^2.16",
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
-                "phpunit/phpunit": "^8.5 || ^9.0"
+                "phpunit/phpunit": "^9.5"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "Use Guzzle ^7 as HTTP client",
@@ -3040,9 +3040,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.17.2"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.18.0"
             },
-            "time": "2021-04-26T18:31:30+00:00"
+            "time": "2021-04-29T13:23:05+00:00"
         },
         {
             "name": "mockery/mockery",
