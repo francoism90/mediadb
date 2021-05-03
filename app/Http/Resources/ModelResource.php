@@ -15,7 +15,7 @@ class ModelResource extends JsonResource
             'id' => $this->getRouteKey(),
             'name' => $this->name,
             'favorite' => $this->favorite,
-            'table' => $this->getTable(),
+            'type' => $this->getTable(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
