@@ -27,11 +27,9 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // Route::middleware('auth:sanctum')->get('unimpersonate', ['uses' => 'UnimpersonateController', 'as' => 'unimpersonate']);
     });
 
-    // Notification
-    Route::middleware('auth:sanctum')->name('notifications.')->prefix('notifications')->namespace('Notification')->group(function () {
-        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::post('/read', ['uses' => 'ReadController', 'as' => 'read']);
-        Route::post('/delete', ['uses' => 'DeleteController', 'as' => 'delete']);
+    // User
+    Route::middleware('auth:sanctum')->name('user.')->prefix('user')->namespace('User')->group(function () {
+        Route::post('/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
     });
 
     // Video
@@ -40,7 +38,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::get('/{video}', ['uses' => 'ShowController', 'as' => 'show']);
         Route::delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
         Route::patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
-        Route::match(['delete', 'post'], '/{video}/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
     });
 
     // Tag

@@ -23,6 +23,7 @@ class VideoResource extends JsonResource
             'views' => $this->views,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'favorite' => $this->whenAppended('favorite'),
             'overview' => $this->whenAppended('overview'),
             'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
             'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),

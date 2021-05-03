@@ -6,7 +6,6 @@ use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
@@ -69,18 +68,5 @@ class Tag extends BaseTag implements Viewable
             ->where('tag_id', $this->id)
             ->when($type, fn ($query, $type) => $query->where('taggable_type', $type))
             ->count();
-    }
-
-    /**
-     * @param Builder $query
-     * @param array   ...$values
-     *
-     * @return Builder
-     */
-    public function scopeWithSlug(Builder $query, ...$values): Builder
-    {
-        $locale = app()->getLocale();
-
-        return $query->whereIn("slug->{$locale}", $values);
     }
 }

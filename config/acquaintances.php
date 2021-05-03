@@ -5,6 +5,7 @@ return [
      * Models Related.
      */
     'model_namespace' => 'App\Models',
+
     'models' => [
         /*
          * Model name of User model
@@ -59,6 +60,7 @@ return [
              */
             'type' => 'general',
         ],
+
         'types' => [
             /* Add any other type that your website/application have here,
              * the following added rating types are for demonstration purposes only.

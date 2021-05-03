@@ -21,19 +21,22 @@ class QueryFilter implements Filter
         // Sanitize query
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        // Get matched models
+        // Get correct table
+        $table = $query->getModel()->getTable();
+
+        // Get matching models
         $models = $this->getModelsByQuery($query, $value);
 
         return $query
             ->when($models->isEmpty(), function ($query) {
                 return $query->whereNull('id');
-            }, function ($query) use ($models) {
+            }, function ($query) use ($models, $table) {
                 $ids = $models->pluck('id');
                 $idsOrder = $models->implode('id', ',');
 
                 return $query
-                    ->whereIn('id', $ids)
-                    ->orderByRaw("FIELD(id, {$idsOrder})");
+                    ->whereIn("{$table}.id", $ids)
+                    ->orderByRaw("FIELD({$table}.id, {$idsOrder})");
             });
     }
 
@@ -46,7 +49,6 @@ class QueryFilter implements Filter
     protected function getModelsByQuery(Builder $query, string $value = ''): Collection
     {
         $searchService = new SearchService();
-
         $searchService->search($query, $value);
 
         return $searchService->getResults();

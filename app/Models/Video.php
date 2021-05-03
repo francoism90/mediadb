@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
-use Multicaret\Acquaintances\Traits\CanBeLiked;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -14,7 +14,6 @@ use Spatie\Sluggable\SlugOptions;
 class Video extends BaseModel
 {
     use CanBeFavorited;
-    use CanBeLiked;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use Searchable;
@@ -130,5 +129,22 @@ class Video extends BaseModel
     public function getTracksAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithFavorites(Builder $query): Builder
+    {
+        return $query
+            ->with('favoriters')
+            ->whereHas('favoriters', function (Builder $query) {
+                $query->where('user_id', auth()?->user()?->id || 0);
+            })
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->select('videos.*')
+            ->latest('interactions.created_at');
     }
 }
