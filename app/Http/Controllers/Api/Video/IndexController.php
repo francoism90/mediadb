@@ -35,7 +35,6 @@ class IndexController extends Controller
                 'tags',
             ])
             ->allowedFilters([
-                AllowedFilter::scope('durations', 'with_durations')->ignore(null, '*'),
                 AllowedFilter::scope('favorites', 'with_favorites')->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
