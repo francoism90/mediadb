@@ -16,7 +16,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
-use Multicaret\Acquaintances\Traits\CanLike;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -28,7 +27,6 @@ use Spatie\Sluggable\SlugOptions;
 class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
 {
     use CanFavorite;
-    use CanLike;
     use CanSubscribe;
     use HasApiTokens;
     use HasCustomProperties;
