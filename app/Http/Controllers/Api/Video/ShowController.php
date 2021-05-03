@@ -23,6 +23,7 @@ class ShowController extends Controller
                 ->load('tags')
                 ->append([
                     'clip',
+                    'favorite',
                     'tracks',
                 ])
         );

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -128,5 +129,21 @@ class Video extends BaseModel
     public function getTracksAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithUserFavorites(Builder $query): Builder
+    {
+        return $query
+            ->with('favoriters')
+            ->whereHas('favoriters', function (Builder $query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->latest('interactions.created_at');
     }
 }
