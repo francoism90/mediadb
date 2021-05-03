@@ -220,13 +220,14 @@ class Media extends BaseMedia
         $min = $min === $max ? $min - 10 : $min;
         $max = $durations->last() === $max ? $max * 24 : $max;
 
-        return $query
-            ->whereIn('collection_name', config('media.duration_collections', ['clip']))
-            ->where(function ($query) use ($min, $max) {
-                $query->whereBetween('custom_properties->metadata->duration', [
-                    $min * 60, // time in secs
-                    $max * 60,
-                ]);
-            });
+
+        return $query;
+            // ->whereIn('media.collection_name', config('media.duration_collections', ['clip']));
+            // ->where(function ($query) use ($min, $max) {
+            //     $query->whereBetween('custom_properties->metadata->duration', [
+            //         $min * 60, // time in secs
+            //         $max * 60,
+            //     ]);
+            // });
     }
 }
