@@ -147,10 +147,4 @@ class Video extends BaseModel
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
-
-    public function scopeWithDurations(Builder $query): Builder
-    {
-
-        return $query;
-    }
 }
