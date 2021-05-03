@@ -70,17 +70,4 @@ class Tag extends BaseTag implements Viewable
             ->when($type, fn ($query, $type) => $query->where('taggable_type', $type))
             ->count();
     }
-
-    /**
-     * @param Builder $query
-     * @param array   ...$values
-     *
-     * @return Builder
-     */
-    public function scopeWithSlug(Builder $query, ...$values): Builder
-    {
-        $locale = app()->getLocale();
-
-        return $query->whereIn("slug->{$locale}", $values);
-    }
 }

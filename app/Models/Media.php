@@ -206,7 +206,7 @@ class Media extends BaseMedia
      *
      * @return Builder
      */
-    public function scopeWithDuration(Builder $query, int $min = 0, int $max = 40): Builder
+    public function scopeWithDurations(Builder $query, int $min = 0, int $max = 40): Builder
     {
         $durations = collect(
             config('media.filter_durations', [])

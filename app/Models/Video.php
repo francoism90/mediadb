@@ -136,14 +136,15 @@ class Video extends BaseModel
      *
      * @return Builder
      */
-    public function scopeWithUserFavorites(Builder $query): Builder
+    public function scopeWithFavorites(Builder $query): Builder
     {
         return $query
             ->with('favoriters')
             ->whereHas('favoriters', function (Builder $query) {
-                $query->where('user_id', auth()->user()->id);
+                $query->where('user_id', auth()?->user()?->id || 0);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->select('videos.*')
             ->latest('interactions.created_at');
     }
 }
