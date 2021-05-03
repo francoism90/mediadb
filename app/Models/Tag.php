@@ -6,7 +6,6 @@ use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
