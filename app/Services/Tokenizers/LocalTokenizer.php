@@ -13,13 +13,14 @@ class LocalTokenizer implements TokenizerInterface
      *
      * @return string
      */
-    public function create(array $data = [], int $expires = 60): string
+    public function create(array $data = []): string
     {
-        $tokenKey = Str::uuid();
+        $key = Str::uuid();
+        $expires = config('media.vod_expires', 60 * 24);
 
-        Cache::tags(['tokens', 'local'])->put($tokenKey, $data, $expires);
+        Cache::tags(['tokens', 'local'])->put($key, $data, $expires);
 
-        return $tokenKey;
+        return $key;
     }
 
     /**

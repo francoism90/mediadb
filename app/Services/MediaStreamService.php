@@ -47,11 +47,11 @@ class MediaStreamService
     {
         return collect([
             'id' => $media->id,
-            'sequences' => (array) [
+            'sequences' => [
                 [
                     'id' => $media->id,
                     'label' => $media->name,
-                    'clips' => (array) [
+                    'clips' => [
                         [
                             'type' => 'source',
                             'path' => $media->getPath(),

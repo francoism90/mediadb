@@ -4,7 +4,7 @@ namespace App\Services\Tokenizers;
 
 interface TokenizerInterface
 {
-    public function create(array $data = [], int $expires = 60): string;
+    public function create(array $data = []): string;
 
     public function exists(string $token): bool;
 
