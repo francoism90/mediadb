@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
-use App\Traits\InteractsWithActivities;
 use App\Traits\InteractsWithTags;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
@@ -27,7 +26,6 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     use HasStatuses;
     use HasTranslations;
     use HasViews;
-    use InteractsWithActivities;
     use InteractsWithMedia;
     use InteractsWithTags;
     use InteractsWithViews;

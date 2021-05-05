@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
-use App\Traits\InteractsWithActivities;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -36,7 +35,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use HasRoles;
     use HasSlug;
     use HasViews;
-    use InteractsWithActivities;
     use InteractsWithMedia;
     use InteractsWithViews;
     use Notifiable;
