@@ -5891,16 +5891,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.5.6",
+            "version": "9.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "f2c3ed9a6a7420c27d76c68892f93bca8b5c99d5"
+                "reference": "c875ce4be6925f87011fb00a5e33c367fafcbdd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/f2c3ed9a6a7420c27d76c68892f93bca8b5c99d5",
-                "reference": "f2c3ed9a6a7420c27d76c68892f93bca8b5c99d5",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/c875ce4be6925f87011fb00a5e33c367fafcbdd6",
+                "reference": "c875ce4be6925f87011fb00a5e33c367fafcbdd6",
                 "shasum": ""
             },
             "require": {
@@ -5979,7 +5979,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.5.6"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.6.1"
             },
             "funding": [
                 {
@@ -5991,7 +5991,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-20T06:17:46+00:00"
+            "time": "2021-05-06T11:20:40+00:00"
         },
         {
             "name": "spatie/laravel-model-status",
