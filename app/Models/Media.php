@@ -200,33 +200,4 @@ class Media extends BaseMedia
                       ->orWhereNull('generated_conversions->thumbnail');
             });
     }
-
-    /**
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeWithDurations(Builder $query, int $min = 0, int $max = 40): Builder
-    {
-        $durations = collect(
-            config('media.filter_durations', [])
-        );
-
-        // Skip query on full ranges
-        if ($min === $durations->first() && $max === $durations->last()) {
-            return $query;
-        }
-
-        $min = $min === $max ? $min - 10 : $min;
-        $max = $durations->last() === $max ? $max * 24 : $max;
-
-        return $query
-            ->whereIn('media.collection_name', config('media.duration_collections', ['clip']))
-            ->where(function ($query) use ($min, $max) {
-                $query->whereBetween('custom_properties->metadata->duration', [
-                    $min * 60, // time in secs
-                    $max * 60,
-                ]);
-            });
-    }
 }

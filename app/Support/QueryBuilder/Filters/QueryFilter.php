@@ -2,13 +2,17 @@
 
 namespace App\Support\QueryBuilder\Filters;
 
-use App\Services\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class QueryFilter implements Filter
 {
+    public const FILTER_WORD_REGEX = '/[\p{L}\p{N}]+/u';
+    public const QUERY_WORD_LIMIT = 8;
+    public const QUERY_RESULT_LIMIT = 10000;
+
     /**
      * @param Builder      $query
      * @param string|array $value
@@ -21,15 +25,15 @@ class QueryFilter implements Filter
         // Sanitize query
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        // Get correct table
+        // Get target table
         $table = $query->getModel()->getTable();
 
         // Get matching models
         $models = $this->getModelsByQuery($query, $value);
 
         return $query
-            ->when($models->isEmpty(), function ($query) {
-                return $query->whereNull('id');
+            ->when($models->isEmpty(), function ($query) use ($table) {
+                return $query->whereNull("{$table}.id");
             }, function ($query) use ($models, $table) {
                 $ids = $models->pluck('id');
                 $idsOrder = $models->implode('id', ',');
@@ -48,9 +52,36 @@ class QueryFilter implements Filter
      */
     protected function getModelsByQuery(Builder $query, string $value = ''): Collection
     {
-        $searchService = new SearchService();
-        $searchService->search($query, $value);
+        $models = collect();
 
-        return $searchService->getResults();
+        $value = $this->sanitizeQuery($value);
+
+        // Perform partial searching (e.g. this book 1, this book, this)
+        for ($i = $value->take(self::QUERY_WORD_LIMIT)->count(); $i >= 1; --$i) {
+            $queryValue = $value->take($i)->implode(' ');
+
+            $models = $models->merge(
+                $query
+                    ->getModel()
+                    ->search($queryValue)
+                    ->take(self::QUERY_RESULT_LIMIT)
+                    ->get()
+            );
+        }
+
+        return $models;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return Collection
+     */
+    protected function sanitizeQuery(string $value = ''): Collection
+    {
+        // Improve matching by converting to ascii
+        $value = Str::ascii($value);
+
+        return Str::of($value)->matchAll(self::FILTER_WORD_REGEX);
     }
 }

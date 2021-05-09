@@ -19,8 +19,11 @@ class DurationSorter implements Sort
         // Removing existing orderings
         $query->getQuery()->reorder();
 
+        // Get target table
+        $table = $query->getModel()->getTable();
+
         // Sort clip duration
-        $clips = $query->get()->sortBy(function ($model) {
+        $models = $query->get()->sortBy(function ($model) {
             $duration = $model->media
                 ->where('collection_name', 'clip')
                 ->pluck('custom_properties.metadata.duration')
@@ -30,13 +33,13 @@ class DurationSorter implements Sort
         }, SORT_NUMERIC, $descending);
 
         return $query
-            ->when($clips->isNotEmpty(), function ($query) use ($clips) {
-                $ids = $clips->pluck('id');
-                $idsOrder = $clips->implode('id', ',');
+            ->when($models->isNotEmpty(), function ($query) use ($models, $table) {
+                $ids = $models->pluck('id');
+                $idsOrder = $models->implode('id', ',');
 
                 return $query
-                    ->whereIn('id', $ids)
-                    ->orderByRaw("FIELD(id, {$idsOrder})");
+                    ->whereIn("{$table}.id", $ids)
+                    ->orderByRaw("FIELD({$table}.id, {$idsOrder})");
             });
     }
 }

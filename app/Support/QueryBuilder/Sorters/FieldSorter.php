@@ -20,7 +20,6 @@ class FieldSorter implements Sort
         $query->getQuery()->reorder();
 
         $column = "{$query->getQuery()->from}.{$property}";
-
         $direction = $descending ? 'DESC' : 'ASC';
 
         return $query
