@@ -6066,16 +6066,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "1150930205dbe32f4e594ba2805cd56563120145"
+                "reference": "cf4c4cec220575e2864c6082842d76822421f1b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/1150930205dbe32f4e594ba2805cd56563120145",
-                "reference": "1150930205dbe32f4e594ba2805cd56563120145",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/cf4c4cec220575e2864c6082842d76822421f1b1",
+                "reference": "cf4c4cec220575e2864c6082842d76822421f1b1",
                 "shasum": ""
             },
             "require": {
@@ -6114,7 +6114,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.8.0"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.9.0"
             },
             "funding": [
                 {
@@ -6122,7 +6122,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-22T09:13:53+00:00"
+            "time": "2021-05-23T15:12:33+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -6272,22 +6272,22 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "1bd3682c3640b905de4868c413e7eda44ed21e9b"
+                "reference": "6c09f1f9d6c988bf2e1220be072c7bd1ac958cc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/1bd3682c3640b905de4868c413e7eda44ed21e9b",
-                "reference": "1bd3682c3640b905de4868c413e7eda44ed21e9b",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/6c09f1f9d6c988bf2e1220be072c7bd1ac958cc9",
+                "reference": "6c09f1f9d6c988bf2e1220be072c7bd1ac958cc9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^6.0|^7.0|^8.0",
-                "illuminate/http": "^6.0|^7.0|^8.0",
-                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.20.13|^7.30.4|^8.22.2",
+                "illuminate/http": "^6.20.13|7.30.4|^8.22.2",
+                "illuminate/support": "^6.20.13|7.30.4|^8.22.2",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
@@ -6338,7 +6338,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-05-20T09:15:38+00:00"
+            "time": "2021-05-24T10:13:32+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
