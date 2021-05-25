@@ -2984,16 +2984,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.18.0",
+            "version": "v0.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "74eefe5875a2f57382bb5155ed2ed5d4166ab532"
+                "reference": "f8b9831d635443b5fd28b83b4675c43f9b4b3c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/74eefe5875a2f57382bb5155ed2ed5d4166ab532",
-                "reference": "74eefe5875a2f57382bb5155ed2ed5d4166ab532",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/f8b9831d635443b5fd28b83b4675c43f9b4b3c2c",
+                "reference": "f8b9831d635443b5fd28b83b4675c43f9b4b3c2c",
                 "shasum": ""
             },
             "require": {
@@ -3004,9 +3004,14 @@
                 "php-http/httplug": "^2.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^0.12.87",
+                "phpstan/phpstan-deprecation-rules": "^0.12.6",
+                "phpstan/phpstan-phpunit": "^0.12.19",
+                "phpstan/phpstan-strict-rules": "^0.12.9",
                 "phpunit/phpunit": "^9.5"
             },
             "suggest": {
@@ -3040,9 +3045,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.18.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.18.1"
             },
-            "time": "2021-04-29T13:23:05+00:00"
+            "time": "2021-05-24T10:30:27+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -4032,16 +4037,16 @@
         },
         {
             "name": "php-http/message",
-            "version": "1.11.0",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "fb0dbce7355cad4f4f6a225f537c34d013571f29"
+                "reference": "887734d9c515ad9a564f6581a682fff87a6253cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/fb0dbce7355cad4f4f6a225f537c34d013571f29",
-                "reference": "fb0dbce7355cad4f4f6a225f537c34d013571f29",
+                "url": "https://api.github.com/repos/php-http/message/zipball/887734d9c515ad9a564f6581a682fff87a6253cc",
+                "reference": "887734d9c515ad9a564f6581a682fff87a6253cc",
                 "shasum": ""
             },
             "require": {
@@ -4100,9 +4105,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/message/issues",
-                "source": "https://github.com/php-http/message/tree/1.11.0"
+                "source": "https://github.com/php-http/message/tree/1.11.1"
             },
-            "time": "2021-02-01T08:54:58+00:00"
+            "time": "2021-05-24T18:11:08+00:00"
         },
         {
             "name": "php-http/message-factory",
