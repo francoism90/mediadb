@@ -3,20 +3,19 @@
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
-$finder = PhpCsFixer\Finder::create()
+$finder = Finder::create()
+    ->in(__DIR__)
     ->exclude('_ide_helper.php')
     ->exclude('bootstrap')
     ->exclude('storage')
     ->exclude('vendor')
-    ->in(__DIR__)
-    ->ignoreDotFiles(true)
-    ->ignoreVCS(true);
+;
 
-return PhpCsFixer\Config::create()
-    ->setRules([
+$config = new Config();
+
+return $config->setRules([
         '@Symfony' => true,
         'no_superfluous_phpdoc_tags' => false,
     ])
     ->setRiskyAllowed(true)
-    ->setFinder($finder)
-;
+    ->setFinder($finder);
