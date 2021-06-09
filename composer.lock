@@ -2392,16 +2392,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.1.0",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "b31bc1edb6498ae5807011091cb41624f109e0d5"
+                "reference": "ce621bee3c41aad981cde75adcf751d4cea69646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/b31bc1edb6498ae5807011091cb41624f109e0d5",
-                "reference": "b31bc1edb6498ae5807011091cb41624f109e0d5",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/ce621bee3c41aad981cde75adcf751d4cea69646",
+                "reference": "ce621bee3c41aad981cde75adcf751d4cea69646",
                 "shasum": ""
             },
             "require": {
@@ -2460,7 +2460,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2021-05-13T07:57:29+00:00"
+            "time": "2021-06-08T14:48:33+00:00"
         },
         {
             "name": "laravel/telescope",
