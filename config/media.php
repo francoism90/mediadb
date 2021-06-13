@@ -3,6 +3,23 @@
 return [
     /*
     |--------------------------------------------------------------------------
+    | Media Streaming
+    |--------------------------------------------------------------------------
+    |
+    | This controls media streaming.
+    |
+    */
+
+    'vod_url' => env('VOD_URL'),
+
+    'vod_key' => env('VOD_KEY'),
+
+    'vod_iv' => env('VOD_IV'),
+
+    'vod_expire' => env('VOD_EXPIRE', 60 * 24),
+
+    /*
+    |--------------------------------------------------------------------------
     | Media Sync
     |--------------------------------------------------------------------------
     |
@@ -17,31 +34,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | VOD Settings
+    | Media Conversions
     |--------------------------------------------------------------------------
     |
-    | This controls the video-on-demand (VOD) server.
-    |
-    */
-
-    /*
-     * @reminder update the .env file and the streaming server.
-    */
-
-    'vod_url' => env('VOD_URL'),
-
-    'vod_key' => env('VOD_KEY'),
-
-    'vod_iv' => env('VOD_IV'),
-
-    'vod_expire' => env('VOD_EXPIRE', 60 * 24),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Thumbnail Conversion
-    |--------------------------------------------------------------------------
-    |
-    | This controls the thumbnail conversion process.
+    | This controls media conversions.
     |
     */
 

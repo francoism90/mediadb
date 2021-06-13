@@ -98,7 +98,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | MeiliSearch Stop words (global)
+    | MeiliSearch Stop words
     |--------------------------------------------------------------------------
     |
     | The stop-words route allows you to add a list of words ignored in your search queries.
