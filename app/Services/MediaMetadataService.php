@@ -6,14 +6,10 @@ use Illuminate\Support\Collection;
 
 class MediaMetadataService
 {
-    /**
-     * @var FFMpegService
-     */
-    protected FFMpegService $ffmpegService;
-
-    public function __construct(FFMpegService $ffmpegService)
-    {
-        $this->ffmpegService = $ffmpegService;
+    public function __construct(
+        protected FFMpegService $ffmpegService,
+    ) {
+        //
     }
 
     /**
