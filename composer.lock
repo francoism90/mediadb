@@ -11403,16 +11403,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.11.16",
+            "version": "0.11.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "5c030ad7cefa59075e0fe14604cd4982ceaa2bd0"
+                "reference": "f6ecb021820b175f8d24072a9beb5c45262c5dce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/5c030ad7cefa59075e0fe14604cd4982ceaa2bd0",
-                "reference": "5c030ad7cefa59075e0fe14604cd4982ceaa2bd0",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/f6ecb021820b175f8d24072a9beb5c45262c5dce",
+                "reference": "f6ecb021820b175f8d24072a9beb5c45262c5dce",
                 "shasum": ""
             },
             "require": {
@@ -11451,7 +11451,7 @@
             "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.11.16"
+                "source": "https://github.com/rectorphp/rector/tree/0.11.18"
             },
             "funding": [
                 {
@@ -11459,7 +11459,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-08T08:41:04+00:00"
+            "time": "2021-06-12T16:42:59+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11967,16 +11967,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "a90ccbddffa067b51f574dea6eb25d5680839455"
+                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/a90ccbddffa067b51f574dea6eb25d5680839455",
-                "reference": "a90ccbddffa067b51f574dea6eb25d5680839455",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23bd5951f7ff26f12d4e3242864df3e08dec4e49",
+                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49",
                 "shasum": ""
             },
             "require": {
@@ -12019,7 +12019,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
-                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.2"
+                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.3"
             },
             "funding": [
                 {
@@ -12027,7 +12027,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-26T15:55:19+00:00"
+            "time": "2021-06-11T13:31:12+00:00"
         },
         {
             "name": "sebastian/lines-of-code",
