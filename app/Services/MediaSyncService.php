@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Events\Media\HasBeenAdded;
-use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Log\Logger;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
@@ -17,7 +16,6 @@ class MediaSyncService
         protected Filesystem $filesystem,
         protected Logger $logger
     ) {
-        //
     }
 
     /**
@@ -31,8 +29,8 @@ class MediaSyncService
     public function add(
         Model $model,
         SplFileInfo $file,
-        ?string $collection = null,
-        ?array $properties = null
+        string $collection = null,
+        array $properties = []
     ): void {
         $path = $file->getRealPath();
         $extension = $file->getExtension();
@@ -50,23 +48,6 @@ class MediaSyncService
         }
 
         event(new HasBeenAdded($model, $media));
-    }
-
-    /**
-     * @param Media  $media
-     * @param string $path
-     * @param string $name
-     *
-     * @return void
-     */
-    public function copyToConversions(Media $media, string $path, string $name): void
-    {
-        $this->filesystem->copyToMediaLibrary(
-            $path,
-            $media,
-            'conversions',
-            $name
-        );
     }
 
     /**

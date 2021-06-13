@@ -26,7 +26,7 @@ class Tag extends BaseTag implements Viewable
     public array $translatable = [
         'name',
         'slug',
-        'description'
+        'description',
     ];
 
     /**

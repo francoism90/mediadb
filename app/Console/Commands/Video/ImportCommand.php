@@ -27,8 +27,7 @@ class ImportCommand extends Command
 
     public function handle(
         VideoService $videoService
-    ): void
-    {
+    ): void {
         $this->info('Starting videos import..');
 
         $user = $this->getUser();

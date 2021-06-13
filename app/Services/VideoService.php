@@ -13,13 +13,12 @@ class VideoService
     public function __construct(
         protected MediaSyncService $syncService
     ) {
-        //
     }
 
     /**
-     * @param Model $model
-     * @param string|null $path
-     * @param string|null $collection
+     * @param Model              $model
+     * @param string|null        $path
+     * @param string|null        $collection
      * @param ImportCommand|null $command
      *
      * @return void
@@ -29,9 +28,8 @@ class VideoService
         ?string $path = null,
         ?string $collection = null,
         ?ImportCommand $command = null
-    ): void
-    {
-         $results = [
+    ): void {
+        $results = [
             'success' => [],
             'bad_files' => [],
         ];
