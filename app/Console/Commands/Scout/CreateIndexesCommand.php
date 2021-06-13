@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use MeiliSearch\Client;
 use Throwable;
 
-class CreateIndexes extends Command
+class CreateIndexesCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -49,25 +49,16 @@ class CreateIndexes extends Command
                     'primaryKey' => 'id',
                 ]);
 
-                // Reset index settings
                 if ($this->option('reset')) {
                     $index->resetSettings();
 
                     $this->info('Index "'.$item['name'].'" has been reset.');
                 }
 
-                // Set index settings
                 $index->updateSettings($item['settings']);
 
-                // Apply global synonyms
-                $index->updateSynonyms(
-                    config('meilisearch.synonyms')
-                );
-
-                // Apply global stop words
-                $index->updateStopWords(
-                    config('meilisearch.stop_words')
-                );
+                $index->updateSynonyms(config('meilisearch.synonyms'));
+                $index->updateStopWords(config('meilisearch.stop_words'));
 
                 $this->info('Index "'.$item['name'].'" created.');
             });

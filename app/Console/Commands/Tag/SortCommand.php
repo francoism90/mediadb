@@ -5,7 +5,7 @@ namespace App\Console\Commands\Tag;
 use App\Services\TagService;
 use Illuminate\Console\Command;
 
-class Sort extends Command
+class SortCommand extends Command
 {
     /**
      * @var string
@@ -22,8 +22,9 @@ class Sort extends Command
         parent::__construct();
     }
 
-    public function handle(TagService $tagService): void
-    {
+    public function handle(
+        TagService $tagService
+    ): void {
         $tagService->sortByName();
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Events\Media\HasBeenAdded;
+use App\Jobs\Media\CreateThumbnail;
+use App\Jobs\Media\SetMetadata;
+use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Log\Logger;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
@@ -48,6 +51,32 @@ class MediaSyncService
         }
 
         event(new HasBeenAdded($model, $media));
+    }
+
+    /**
+     * @return void
+     */
+    public function handleMissingMetadata(): void
+    {
+        $models = Media::missingMetadata()->cursor();
+
+        foreach ($models as $model) {
+            SetMetadata::dispatch($model)->onQueue('media');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function handleMissingConversions(): void
+    {
+        $models = Media::missingConversions()->cursor();
+
+        foreach ($models as $model) {
+            if (!$model->hasGeneratedConversion('thumbnail')) {
+                CreateThumbnail::dispatch($model)->onQueue('media');
+            }
+        }
     }
 
     /**
