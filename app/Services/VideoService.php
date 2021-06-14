@@ -29,10 +29,7 @@ class VideoService
         ?string $collection = null,
         ?ImportCommand $command = null
     ): void {
-        $results = [
-            'success' => [],
-            'bad_files' => [],
-        ];
+        $results = collect();
 
         $path = $path ?: Storage::disk('import')->path('');
 
@@ -54,11 +51,17 @@ class VideoService
 
                 $this->syncService->add($baseModel, $file, $collection);
 
-                $results['success'][] = $filePath;
+                $results->push([
+                    'path' => $filePath,
+                    'success' => true,
+                ]);
             } catch (Throwable $e) {
                 report($e);
 
-                $results['bad_files'][] = $filePath;
+                $results->push([
+                    'path' => $filePath,
+                    'success' => false,
+                ]);
             }
 
             if ($command) {

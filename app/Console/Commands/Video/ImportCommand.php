@@ -5,6 +5,7 @@ namespace App\Console\Commands\Video;
 use App\Models\User;
 use App\Services\VideoService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class ImportCommand extends Command
@@ -13,6 +14,7 @@ class ImportCommand extends Command
      * @var string
      */
     protected $signature = 'video:import
+        {path? : Import path to use}
         {collection=clip : Import to collection}
         {user=1 : Import to user}';
 
@@ -21,7 +23,7 @@ class ImportCommand extends Command
      */
     protected $description = 'Import videos to a user';
 
-    protected array $results = [];
+    protected Collection $results;
 
     protected ?ProgressBar $progressBar = null;
 
@@ -32,12 +34,22 @@ class ImportCommand extends Command
 
         $user = $this->getUser();
 
-        $videoService->import($user);
+        $videoService->import(
+            $user,
+            $this->argument('path'),
+            $this->argument('collection'),
+            $this
+        );
     }
 
-    public function logStatusToConsole(array $results): void
+    public function logStatusToConsole(Collection $results): void
     {
         $this->results = $results;
+
+        $this->table(
+            ['Name', 'Success'],
+            $this->results->toArray()
+        );
     }
 
     public function createProgressBar(int $max): void
