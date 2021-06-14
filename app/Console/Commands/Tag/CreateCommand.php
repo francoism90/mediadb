@@ -5,7 +5,7 @@ namespace App\Console\Commands\Tag;
 use App\Models\Tag;
 use Illuminate\Console\Command;
 
-class Create extends Command
+class CreateCommand extends Command
 {
     /**
      * @var string

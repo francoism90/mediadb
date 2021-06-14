@@ -6,29 +6,11 @@ use App\Models\Media;
 
 class MediaThumbnailService
 {
-    /**
-     * @var FFMpegService
-     */
-    protected FFMpegService $ffmpegService;
-
-    /**
-     * @var MediaConversionService
-     */
-    protected MediaConversionService $conversionService;
-
-    /**
-     * @var ImageService
-     */
-    protected ImageService $imageService;
-
     public function __construct(
-        FFMpegService $ffmpegService,
-        MediaConversionService $conversionService,
-        ImageService $imageService
+        protected FFMpegService $ffmpegService,
+        protected MediaConversionService $conversionService,
+        protected ImageService $imageService
     ) {
-        $this->ffmpegService = $ffmpegService;
-        $this->conversionService = $conversionService;
-        $this->imageService = $imageService;
     }
 
     /**
@@ -58,9 +40,11 @@ class MediaThumbnailService
 
         $this->imageService->optimize($path);
 
-        $this
-            ->conversionService
-            ->importConversion($media, $path, config('media.thumbnail_name'));
+        $this->conversionService->import(
+            $media,
+            $path,
+            config('media.thumbnail_name')
+        );
 
         $media->markAsConversionGenerated('thumbnail');
     }

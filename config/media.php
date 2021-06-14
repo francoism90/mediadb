@@ -3,15 +3,11 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | VOD Settings
+    | Media Streaming
     |--------------------------------------------------------------------------
     |
-    | This controls the video-on-demand (VOD) server.
+    | This controls media streaming.
     |
-    */
-
-    /*
-     * @reminder update the .env file and the streaming server.
     */
 
     'vod_url' => env('VOD_URL'),
@@ -24,10 +20,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Thumbnail Conversion
+    | Media Sync
     |--------------------------------------------------------------------------
     |
-    | This controls the thumbnail conversion process.
+    | This controls media syncing.
+    |
+    */
+
+    'importable' => [
+        '*.mp4',
+        '*.m4v',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Media Conversions
+    |--------------------------------------------------------------------------
+    |
+    | This controls media conversions.
     |
     */
 

@@ -23,7 +23,11 @@ class Tag extends BaseTag implements Viewable
     /**
      * @var array
      */
-    public array $translatable = ['name', 'slug', 'description'];
+    public array $translatable = [
+        'name',
+        'slug',
+        'description',
+    ];
 
     /**
      * Delete all views of an viewable Eloquent model on delete.

@@ -119,22 +119,21 @@ vod_segments_base_url "https://stream.test";
 
 ## Usage
 
-To import files (videos, captions, ..) to the library:
+To import files (videos, ..) to the library:
 
 ```bash
 cd /var/www/html/api
-php artisan video:import
-php artisan video:import-caption <video-id>
+php artisan video:import <path?>
 ```
 
 Use the [MediaDB app](https://github.com/francoism90/mediadb-app) or any other custom front-end to retrieve the streaming data/manage media.
 
 ### Notes
 
-- Make sure files in the import and destination path are writeable by `http` (or the running user), the importer will skip non writable files.
+- Make sure files in the import and destination path are writeable by `http` (running user).
 - Make sure videos can be played in the browser/target device as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Video/Import.php` and `app/Console/Commands/Video/ImportCaption.php` for more details.
+- See `app/Console/Commands/Video/ImportCommand.php` for more details.
 
 ## Optimizing
 

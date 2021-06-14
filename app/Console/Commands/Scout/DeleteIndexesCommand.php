@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use MeiliSearch\Client;
 use Throwable;
 
-class DeleteIndexes extends Command
+class DeleteIndexesCommand extends Command
 {
     /**
      * The name and signature of the console command.

@@ -21,17 +21,21 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    public array $translatable = ['name', 'slug', 'overview'];
-
-    /**
-     * @var array
-     */
     protected $with = ['media', 'tags'];
 
     /**
      * @var array
      */
     protected $appends = ['clip'];
+
+    /**
+     * @var array
+     */
+    public array $translatable = [
+        'name',
+        'slug',
+        'overview',
+    ];
 
     /**
      * @return morphTo
@@ -69,8 +73,8 @@ class Video extends BaseModel
     }
 
     /**
-     * We need to register media conversion to use them.
-     * Services do the actual conversion.
+     * We need to register media conversion ourselves.
+     * Services perform the actual conversion.
      *
      * @param Media $media
      */
@@ -83,7 +87,7 @@ class Video extends BaseModel
         foreach ($serviceConversions as $conversion) {
             $this->addMediaConversion($conversion)
                  ->withoutManipulations()
-                 ->performOnCollections('service-collection')
+                 ->performOnCollections('conversion-service')
                  ->nonQueued();
         }
     }
@@ -95,17 +99,13 @@ class Video extends BaseModel
     {
         $this
             ->addMediaCollection('clip')
-            ->acceptsMimeTypes(
-                config('video.clip_mimetypes')
-            )
+            ->acceptsMimeTypes(config('video.clip_mimetypes'))
             ->singleFile()
             ->useDisk('media');
 
         $this
             ->addMediaCollection('caption')
-            ->acceptsMimeTypes([
-               config('video.caption_mimetypes'),
-            ])
+            ->acceptsMimeTypes(config('video.caption_mimetypes'))
             ->useDisk('media');
     }
 

@@ -10,7 +10,7 @@ Create/recreate indexes:
 
 ```bash
 cd /srv/http/mediadb/api
-php artisan scout:create-indexes
+php artisan scout:create-indexes -r
 ```
 
 Optional (re-)index the models:

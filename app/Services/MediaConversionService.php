@@ -3,19 +3,15 @@
 namespace App\Services;
 
 use App\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Spatie\MediaLibrary\Support\TemporaryDirectory;
 use Spatie\TemporaryDirectory\TemporaryDirectory as BaseTemporaryDirectory;
 
 class MediaConversionService
 {
-    /**
-     * @var MediaImportService
-     */
-    protected MediaImportService $mediaImportService;
-
-    public function __construct(MediaImportService $mediaImportService)
-    {
-        $this->mediaImportService = $mediaImportService;
+    public function __construct(
+        protected Filesystem $filesystem,
+    ) {
     }
 
     /**
@@ -33,9 +29,14 @@ class MediaConversionService
      *
      * @return self
      */
-    public function importConversion(Media $media, string $path, string $name): self
+    public function import(Media $media, string $path, string $name): self
     {
-        $this->mediaImportService->copyToConversions($media, $path, $name);
+        $this->filesystem->copyToMediaLibrary(
+            $path,
+            $media,
+            'conversions',
+            $name
+        );
 
         unlink($path);
 
