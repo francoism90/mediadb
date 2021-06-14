@@ -123,7 +123,7 @@ To import files (videos, ..) to the library:
 
 ```bash
 cd /var/www/html/api
-php artisan video:import
+php artisan video:import <path?>
 ```
 
 Use the [MediaDB app](https://github.com/francoism90/mediadb-app) or any other custom front-end to retrieve the streaming data/manage media.
@@ -133,7 +133,7 @@ Use the [MediaDB app](https://github.com/francoism90/mediadb-app) or any other c
 - Make sure files in the import and destination path are writeable by `http` (running user).
 - Make sure videos can be played in the browser/target device as they aren't being encoded (yet).
 - Make sure there is enough space on the disk to import and process the media.
-- See `app/Console/Commands/Video/Import.php` for more details.
+- See `app/Console/Commands/Video/ImportCommand.php` for more details.
 
 ## Optimizing
 
