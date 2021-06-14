@@ -62,8 +62,8 @@ class Video extends BaseModel
     {
         return [
             'id' => $this->id,
-            'name' => array_values($this->getTranslations('name')),
-            'overview' => array_values($this->getTranslations('overview')),
+            'name' => $this->extractTranslations('name'),
+            'overview' => $this->extractTranslations('overview'),
             'type' => $this->type,
             'status' => $this->status,
             'season_number' => $this->season_number,

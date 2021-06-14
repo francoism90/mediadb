@@ -6,6 +6,7 @@ use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
 use App\Traits\InteractsWithTags;
+use App\Traits\InteractsWithTranslations;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,7 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     use HasViews;
     use InteractsWithMedia;
     use InteractsWithTags;
+    use InteractsWithTranslations;
     use InteractsWithViews;
     use Notifiable;
 

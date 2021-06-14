@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasRandomSeed;
 use App\Traits\HasViews;
+use App\Traits\InteractsWithTranslations;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -17,6 +18,7 @@ class Tag extends BaseTag implements Viewable
     use HasPrefixedId;
     use HasRandomSeed;
     use HasViews;
+    use InteractsWithTranslations;
     use InteractsWithViews;
     use Searchable;
 
@@ -43,8 +45,8 @@ class Tag extends BaseTag implements Viewable
     {
         return [
             'id' => $this->id,
-            'name' => array_values($this->getTranslations('name')),
-            'description' => array_values($this->getTranslations('description')),
+            'name' => $this->extractTranslations('name'),
+            'description' => $this->extractTranslations('description'),
             'type' => $this->type,
         ];
     }
@@ -66,7 +68,7 @@ class Tag extends BaseTag implements Viewable
      *
      * @return int
      */
-    public function getItemsAttribute(string $type = null): int
+    public function getItemsAttribute(?string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
