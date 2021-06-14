@@ -43,8 +43,8 @@ class Tag extends BaseTag implements Viewable
     {
         return [
             'id' => $this->id,
-            'name' => $this->getTranslations('name'),
-            'description' => $this->getTranslations('description'),
+            'name' => array_values($this->getTranslations('name')),
+            'description' => array_values($this->getTranslations('description')),
             'type' => $this->type,
         ];
     }
