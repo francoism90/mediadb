@@ -14,12 +14,10 @@ class VideoFilter extends ModelFilter
 
     public function handle()
     {
-        if ($this->input('query')) {
-            // Overwrite QueryBuilder with ScoutBuilder
-            $this->query = forward_static_call(
-                [$this->getModel(), 'search'], $this->input('query')
-            );
-        }
+        // Overwrite QueryBuilder with ScoutBuilder
+        $this->query = forward_static_call(
+            [$this->getModel(), 'search'], $this->input('query')
+        );
 
         return parent::handle();
     }
@@ -37,6 +35,6 @@ class VideoFilter extends ModelFilter
     {
         // return $this->where('id', 3);
 
-        return $this->orderBy('name', $this->input('direction', 'desc'));
+        return $this->orderBy('name->en', $this->input('direction', 'asc'));
     }
 }
