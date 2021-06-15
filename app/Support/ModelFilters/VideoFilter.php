@@ -14,18 +14,29 @@ class VideoFilter extends ModelFilter
 
     public function handle()
     {
+        parent::handle();
+
+        // Build MeiliSearch filter
+        $filters = $this->query->get()->map(function ($model) {
+            return 'id = '.$model->id;
+        })->join(' OR ');
+
         // Overwrite QueryBuilder with ScoutBuilder
-        $this->query = forward_static_call(
-            [$this->getModel(), 'search'], $this->input('query')
+        $this->query = $this->getModel()->search(
+            $this->input('query', ''),
+            function ($engine, string $query, array $options) use ($filters) {
+                $options['filters'] = $filters;
+
+                return $engine->search($query, $options);
+            }
         );
 
-        return parent::handle();
+        return $this->query;
     }
 
     public function bookmarks($value)
     {
-        // return $this->withFavorites();
-        return $this;
+        return $this->withFavorites();
     }
 
     public function sort($column)

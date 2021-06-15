@@ -7,13 +7,11 @@ use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use App\Support\ModelFilters\VideoFilter;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class IndexController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function __invoke(Request $request, )
+    public function __invoke(Request $request): ResourceCollection
     {
         $videos = Video::filter($request->all(), VideoFilter::class)->simplePaginateFilter();
 
