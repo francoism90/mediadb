@@ -22,6 +22,12 @@ class VideoFilter extends ModelFilter
         return parent::handle();
     }
 
+    public function bookmarks($value)
+    {
+        // return $this->withFavorites();
+        return $this;
+    }
+
     public function sort($column)
     {
         if (method_exists($this, $method = 'sortBy'.Str::studly($column))) {
@@ -33,8 +39,11 @@ class VideoFilter extends ModelFilter
 
     public function sortByName()
     {
-        // return $this->where('id', 3);
-
         return $this->orderBy('name->en', $this->input('direction', 'asc'));
+    }
+
+    public function sortByRecommended()
+    {
+        return $this;
     }
 }

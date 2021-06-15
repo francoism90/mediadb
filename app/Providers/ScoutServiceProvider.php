@@ -24,7 +24,7 @@ class ScoutServiceProvider extends ServiceProvider
     public function boot()
     {
         Builder::macro('simplePaginateFilter', function () {
-            $paginator = call_user_func_array([$this, 'paginate'], func_get_args());
+            $paginator = call_user_func_array([$this, 'simplePaginate'], func_get_args());
             $paginator->appends([]);
 
             return $paginator;
