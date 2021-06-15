@@ -163,6 +163,7 @@ return [
         /*
          * Package Service Providers...
          */
+        EloquentFilter\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -173,6 +174,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ScoutServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
     ],
 

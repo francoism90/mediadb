@@ -37,7 +37,8 @@
         "spatie/laravel-sluggable": "^3.0",
         "spatie/laravel-tags": "^4.0",
         "spatie/laravel-translatable": "^5.0",
-        "spatie/temporary-directory": "^2.0"
+        "spatie/temporary-directory": "^2.0",
+        "tucker-eric/eloquentfilter": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

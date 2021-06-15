@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
@@ -14,6 +15,7 @@ use Spatie\Sluggable\SlugOptions;
 class Video extends BaseModel
 {
     use CanBeFavorited;
+    use Filterable;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use Searchable;
@@ -62,8 +64,8 @@ class Video extends BaseModel
     {
         return [
             'id' => $this->id,
-            'name' => $this->extractTranslations('name'),
-            'overview' => $this->extractTranslations('overview'),
+            'name' => $this->name,
+            'overview' => $this->overview,
             'type' => $this->type,
             'status' => $this->status,
             'season_number' => $this->season_number,
