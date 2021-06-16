@@ -34,27 +34,26 @@ class VideoFilter extends ModelFilter
         return $this->query;
     }
 
-    public function bookmarks($value)
+    public function bookmarks()
     {
         return $this->withFavorites();
     }
 
-    public function sort($column)
+    public function sort(?string $column = null)
     {
+        if (!empty($this->query->orders) || !empty($this->query->unionOrders)) {
+            return $this;
+        }
+
         if (method_exists($this, $method = 'sortBy'.Str::studly($column))) {
             return $this->$method();
         }
 
-        return $this->orderBy('name', $this->input('direction', 'asc'));
+        return $this->inRandomSeedOrder();
     }
 
     public function sortByName()
     {
         return $this->orderBy('name->en', $this->input('direction', 'asc'));
-    }
-
-    public function sortByRecommended()
-    {
-        return $this;
     }
 }
