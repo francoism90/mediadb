@@ -41,12 +41,12 @@ class VideoFilter extends ModelFilter
 
     public function sort(?string $column = null)
     {
-        if (!empty($this->query->orders) || !empty($this->query->unionOrders)) {
-            return $this;
-        }
-
         if (method_exists($this, $method = 'sortBy'.Str::studly($column))) {
             return $this->$method();
+        }
+
+        if (!empty($this->query->orders) || !empty($this->query->unionOrders)) {
+            return $this;
         }
 
         return $this->inRandomSeedOrder();
