@@ -45,7 +45,7 @@ class VideoFilter extends ModelFilter
             return $this->$method();
         }
 
-        if (!empty($this->query->orders) || !empty($this->query->unionOrders)) {
+        if ($this->input('query') || (!empty($this->query->orders) || !empty($this->query->unionOrders))) {
             return $this;
         }
 
