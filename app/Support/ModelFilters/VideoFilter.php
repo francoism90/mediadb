@@ -16,20 +16,17 @@ class VideoFilter extends ModelFilter
     {
         parent::handle();
 
-        // Build MeiliSearch filters
-        $filters = $this->query->get()->map(function ($model) {
-            return 'id = '.$model->id;
-        })->join(' OR ');
+        $this->query->simplePaginate(
+            $this->getModel()->getPerPage(),
+            ['*'],
+            'page',
+            $this->input('page', 1)
+        );
+
+        logger($this->query->toSql());
 
         /** @var \Laravel\Scout\Builder */
-        $this->query = $this->getModel()->search(
-            $this->input('query', ''),
-            function ($engine, string $query, array $options) use ($filters) {
-                $options['filters'] = $filters;
-
-                return $engine->search($query, $options);
-            }
-        );
+        $this->query = $this->getModel()->search($this->input('query', ''));
 
         return $this->query;
     }
