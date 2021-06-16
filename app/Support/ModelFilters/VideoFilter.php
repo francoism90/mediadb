@@ -16,12 +16,12 @@ class VideoFilter extends ModelFilter
     {
         parent::handle();
 
-        // Build MeiliSearch filter
+        // Build MeiliSearch filters
         $filters = $this->query->get()->map(function ($model) {
             return 'id = '.$model->id;
         })->join(' OR ');
 
-        // Overwrite QueryBuilder with ScoutBuilder
+        /** @var \Laravel\Scout\Builder */
         $this->query = $this->getModel()->search(
             $this->input('query', ''),
             function ($engine, string $query, array $options) use ($filters) {
