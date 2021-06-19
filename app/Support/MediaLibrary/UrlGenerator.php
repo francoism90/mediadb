@@ -9,9 +9,6 @@ use Spatie\MediaLibrary\Support\UrlGenerator\BaseUrlGenerator;
 
 class UrlGenerator extends BaseUrlGenerator
 {
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return URL::signedRoute(
@@ -23,12 +20,6 @@ class UrlGenerator extends BaseUrlGenerator
         );
     }
 
-    /**
-     * @param DateTimeInterface $expiration
-     * @param array             $options
-     *
-     * @return string
-     */
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return URL::temporarySignedRoute(
@@ -41,17 +32,11 @@ class UrlGenerator extends BaseUrlGenerator
         );
     }
 
-    /**
-     * @return string
-     */
     public function getBaseMediaDirectoryUrl(): string
     {
         return $this->getDisk()->url('/');
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         $adapter = $this->getDisk()->getAdapter();
@@ -67,9 +52,6 @@ class UrlGenerator extends BaseUrlGenerator
         return $pathPrefix.$this->getPathRelativeToRoot();
     }
 
-    /**
-     * @return string
-     */
     public function getResponsiveImagesDirectoryUrl(): string
     {
         $base = Str::finish($this->getBaseMediaDirectoryUrl(), '/');

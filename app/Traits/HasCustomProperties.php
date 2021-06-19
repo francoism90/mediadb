@@ -11,25 +11,11 @@ trait HasCustomProperties
         return Arr::has($this->custom_properties, $propertyName);
     }
 
-    /**
-     * Get the value of custom property with the given name.
-     *
-     * @param string $propertyName
-     * @param mixed  $default
-     *
-     * @return mixed
-     */
     public function getCustomProperty(string $propertyName, $default = null)
     {
         return Arr::get($this->custom_properties, $propertyName, $default);
     }
 
-    /**
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return $this
-     */
     public function setCustomProperty(string $name, $value): self
     {
         $customProperties = $this->custom_properties;

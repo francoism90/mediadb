@@ -13,22 +13,12 @@ class QueryFilter implements Filter
     public const QUERY_WORD_LIMIT = 8;
     public const QUERY_RESULT_LIMIT = 10000;
 
-    /**
-     * @param Builder      $query
-     * @param string|array $value
-     * @param string       $property
-     *
-     * @return Builder
-     */
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        // Sanitize query
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        // Get target table
         $table = $query->getModel()->getTable();
 
-        // Get matching models
         $models = $this->getModelsByQuery($query, $value);
 
         return $query
@@ -44,12 +34,6 @@ class QueryFilter implements Filter
             });
     }
 
-    /**
-     * @param Builder $query
-     * @param string  $value
-     *
-     * @return Collection
-     */
     protected function getModelsByQuery(Builder $query, string $value = ''): Collection
     {
         $models = collect();
@@ -72,11 +56,6 @@ class QueryFilter implements Filter
         return $models;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return Collection
-     */
     protected function sanitizeQuery(string $value = ''): Collection
     {
         $value = Str::ascii($value);
