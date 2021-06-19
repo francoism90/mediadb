@@ -8,17 +8,10 @@ use App\Http\Requests\Media\UpdateRequest;
 use App\Http\Resources\MediaResource;
 use App\Jobs\Media\CreateThumbnail;
 use App\Models\Media;
-use Illuminate\Http\JsonResponse;
 
 class UpdateController extends Controller
 {
-    /**
-     * @param UpdateRequest $request
-     * @param Media         $media
-     *
-     * @return void
-     */
-    public function __invoke(UpdateRequest $request, Media $media): MediaResource | JsonResponse
+    public function __invoke(UpdateRequest $request, Media $media): MediaResource
     {
         $media
             ->setCustomProperty('thumbnail', $request->input('thumbnail', $media->thumbnail))

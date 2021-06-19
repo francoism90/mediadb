@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * @param Request $request
-     *
-     * @return UserResource
-     */
     public function __invoke(Request $request): JsonResponse
     {
         $user = $request->user()->append([

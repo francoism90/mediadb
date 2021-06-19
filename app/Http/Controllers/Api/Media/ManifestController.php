@@ -13,21 +13,13 @@ class ManifestController extends Controller
     ) {
     }
 
-    /**
-     * @param string      $token
-     * @param string|null $type
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function __invoke(string $token, string $type = null): JsonResponse
     {
-        if (!$this->mediaStreamService->validToken($token)) {
-            abort(403);
-        }
-
-        $tokenData = collect($this->mediaStreamService->decodeToken($token));
+        abort_if(!$this->mediaStreamService->validToken($token), 403);
 
         // TODO: Validate user is able to stream (e.g. account subscriptions)
+
+        $tokenData = collect($this->mediaStreamService->decodeToken($token));
 
         $contents = $this->mediaStreamService->getResponseFormat(
             $tokenData->get('media')

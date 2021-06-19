@@ -10,13 +10,6 @@ class VideoPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param User $user
-     *
-     * @return bool
-     */
     public function viewAny(?User $user): bool
     {
         if (null === $user) {
@@ -26,14 +19,6 @@ class VideoPolicy
         return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param User  $user
-     * @param Video $model
-     *
-     * @return bool
-     */
     public function view(?User $user, Video $model): bool
     {
         if (null === $user) {
@@ -47,13 +32,6 @@ class VideoPolicy
         return $user->id === $model->model->id;
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param User $user
-     *
-     * @return bool
-     */
     public function create(User $user): bool
     {
         if ($user->can('create video')) {
@@ -63,14 +41,6 @@ class VideoPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param User  $user
-     * @param Video $model
-     *
-     * @return bool
-     */
     public function update(User $user, Video $model): bool
     {
         if ($user->can('edit video')) {
@@ -80,14 +50,6 @@ class VideoPolicy
         return $user->id === $model->model->id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param User  $user
-     * @param Video $model
-     *
-     * @return bool
-     */
     public function delete(User $user, Video $model): bool
     {
         if ($user->can('delete video')) {
@@ -97,14 +59,6 @@ class VideoPolicy
         return $user->id === $model->model->id;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User  $user
-     * @param Video $model
-     *
-     * @return bool
-     */
     public function restore(User $user, Video $model): bool
     {
         if ($user->can('restore video')) {
@@ -114,14 +68,6 @@ class VideoPolicy
         return $user->id === $model->model->id;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User  $user
-     * @param Video $model
-     *
-     * @return bool
-     */
     public function forceDelete(User $user, Video $model): bool
     {
         if ($user->can('delete video')) {

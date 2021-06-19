@@ -10,13 +10,7 @@ use App\Models\Tag;
 
 class UpdateController extends Controller
 {
-    /**
-     * @param UpdateRequest $request
-     * @param Tag           $tag
-     *
-     * @return TagResource
-     */
-    public function __invoke(UpdateRequest $request, Tag $tag)
+    public function __invoke(UpdateRequest $request, Tag $tag): TagResource
     {
         $locale = app()->getLocale();
 

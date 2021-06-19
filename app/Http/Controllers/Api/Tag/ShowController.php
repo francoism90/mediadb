@@ -8,23 +8,17 @@ use App\Models\Tag;
 
 class ShowController extends Controller
 {
-    /**
-     * @param Tag $tag
-     *
-     * @return TagResource
-     */
-    public function __invoke(Tag $tag)
+    public function __invoke(Tag $tag): TagResource
     {
         $tag->recordView('view_count', now()->addYear());
 
         return new TagResource(
-            $tag
-                ->append([
-                    'views',
-                    'items',
-                    'videos',
-                    'thumbnail_url',
-                ])
+            $tag->append([
+                'views',
+                'items',
+                'videos',
+                'thumbnail_url',
+            ])
         );
     }
 }

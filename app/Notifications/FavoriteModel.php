@@ -11,43 +11,21 @@ class FavoriteModel extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
     public function __construct(public Model $model)
     {
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param mixed $notifiable
-     *
-     * @return array
-     */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['broadcast', 'database'];
     }
 
-    /**
-     * Get the type of the notification being broadcast.
-     *
-     * @return string
-     */
-    public function broadcastType()
+    public function broadcastType(): string
     {
         return 'broadcast.message';
     }
 
-    /**
-     * @param mixed $notifiable
-     *
-     * @return BroadcastMessage
-     */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'id' => $this->model->id,
@@ -55,14 +33,7 @@ class FavoriteModel extends Notification
         ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return array
-     */
-    public function toDatabase($notifiable)
+    public function toDatabase($notifiable): array
     {
         return [
             'id' => $this->model->id,

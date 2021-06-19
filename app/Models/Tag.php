@@ -22,9 +22,6 @@ class Tag extends BaseTag implements Viewable
     use InteractsWithViews;
     use Searchable;
 
-    /**
-     * @var array
-     */
     public array $translatable = [
         'name',
         'slug',

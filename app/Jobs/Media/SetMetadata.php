@@ -17,24 +17,12 @@ class SetMetadata implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * @var bool
-     */
     public bool $deleteWhenMissingModels = true;
 
-    /**
-     * @var int
-     */
     public int $tries = 3;
 
-    /**
-     * @var int
-     */
     public int $timeout = 120;
 
-    /**
-     * @var Media
-     */
     protected Media $media;
 
     public function __construct(Media $media)
@@ -45,8 +33,9 @@ class SetMetadata implements ShouldQueue
     /**
      * @return void
      */
-    public function handle(MediaMetadataService $mediaMetadataService): void
-    {
+    public function handle(
+        MediaMetadataService $mediaMetadataService
+    ): void {
         // e.g. video/mp4 => video
         $type = strtok($this->media->mime_type, '/');
 
@@ -68,9 +57,6 @@ class SetMetadata implements ShouldQueue
             ->save();
     }
 
-    /**
-     * @return array
-     */
     public function tags(): array
     {
         return ['metadata', 'media:'.$this->media->id];

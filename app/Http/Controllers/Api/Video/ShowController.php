@@ -8,11 +8,6 @@ use App\Models\Video;
 
 class ShowController extends Controller
 {
-    /**
-     * @param Video $video
-     *
-     * @return VideoResource
-     */
     public function __invoke(Video $video): VideoResource
     {
         $video->recordView('view_count', now()->addYear());

@@ -16,17 +16,12 @@ class UpdateController extends Controller
     ) {
     }
 
-    /**
-     * @param UpdateRequest $request
-     * @param Video         $video
-     *
-     * @return VideoResource
-     */
     public function __invoke(UpdateRequest $request, Video $video): VideoResource
     {
         $locale = app()->getLocale();
 
-        $video->setTranslation('name', $locale, $request->input('name', $video->name))
+        $video
+            ->setTranslation('name', $locale, $request->input('name', $video->name))
             ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
             ->save();
 

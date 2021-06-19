@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Bus;
 
 class Process
 {
-    /**
-     * @param HasBeenAdded $event
-     *
-     * @return void
-     */
     public function handle(HasBeenAdded $event): void
     {
         // e.g. video/mp4 => video

@@ -16,9 +16,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function __invoke()
     {
         $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');

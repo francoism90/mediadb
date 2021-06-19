@@ -17,31 +17,18 @@ class ConversionController extends Controller
     ) {
     }
 
-    /**
-     * @param Media     $media
-     * @param User|null $user
-     * @param string    $name
-     *
-     * @return void
-     */
     public function __invoke(Media $media, ?User $user, string $name): BinaryFileResponse
     {
-        // Only allow members
-        if (!$user || !$user->hasAnyRole(['member', 'super-admin'])) {
-            abort(403);
-        }
+        abort_if(!$user || !$user->hasAnyRole(['member', 'super-admin']), 403);
 
-        // We need to use fixed conversions
+        // We need to define conversions
         $conversions = collect([
             ['name' => 'thumbnail', 'path' => config('media.thumbnail_name')],
         ]);
 
         $conversion = $conversions->firstWhere('name', $name);
 
-        // Make sure the conversion exists
-        if (!$conversion || !$media->hasGeneratedConversion($name)) {
-            abort(404);
-        }
+        abort_if(!$conversion || !$media->hasGeneratedConversion($name), 404);
 
         $conversionRelativePath = $this
             ->basePathGenerator

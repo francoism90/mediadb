@@ -15,12 +15,6 @@ class StreamController extends Controller
     ) {
     }
 
-    /**
-     * @param Media $media
-     * @param User  $user
-     *
-     * @return RedirectResponse
-     */
     public function __invoke(Media $media, User $user): RedirectResponse
     {
         $streamUrl = $this

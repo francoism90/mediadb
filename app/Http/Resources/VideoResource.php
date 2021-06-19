@@ -6,9 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class VideoResource extends JsonResource
 {
-    /**
-     * @return array
-     */
     public function toArray($request): array
     {
         return [
