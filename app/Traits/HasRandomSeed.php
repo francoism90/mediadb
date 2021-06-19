@@ -12,13 +12,7 @@ trait HasRandomSeed
         self::setRandomSeed();
     }
 
-    /**
-     * @param string $class
-     * @param int    $ttl
-     *
-     * @return string|int
-     */
-    public static function setRandomSeed(string $class = null, int $ttl = 1800): string | int
+    public static function setRandomSeed(?string $class = null, int $ttl = 1800): string | int
     {
         if (method_exists(static::class, 'getRandomSeedLifetime')) {
             $ttl = parent::getRandomSeedLifetime();
@@ -31,40 +25,22 @@ trait HasRandomSeed
         );
     }
 
-    /**
-     * @param string $class
-     *
-     * @return string
-     */
-    public static function getRandomSeedKey(string $class = null): string | int
+    public static function getRandomSeedKey(?string $class = null): string | int
     {
-        $key = class_basename($class ?? static::class);
+        $class = class_basename($class ?? static::class);
 
-        return "randomSeed{$key}";
+        return "randomSeed{$class}";
     }
 
-    /**
-     * @param string $key
-     *
-     * @return string|int
-     */
-    public static function getRandomSeed(string $key = null): string | int
+    public static function getRandomSeed(?string $class = null): string | int
     {
-        return Cache::get(self::getRandomSeedKey($key), 1000);
+        return Cache::get(self::getRandomSeedKey($class), 1000);
     }
 
-    /**
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeInRandomSeedOrder(Builder $query): Builder
+    public function scopeInRandomSeedOrder(Builder $query, ?string $class = null): Builder
     {
-        $seedKey = self::getRandomSeedKey();
-
-        return $query
-            ->inRandomOrder(
-                self::getRandomSeed()
-            );
+        return $query->inRandomOrder(
+            self::getRandomSeed($class)
+        );
     }
 }

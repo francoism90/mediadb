@@ -6,9 +6,6 @@ use App\Models\User;
 
 trait InteractsWithAcquaintances
 {
-    /**
-     * @return bool
-     */
     public function getFavoriteAttribute(?User $user = null): bool
     {
         return $this->isFavoritedBy(
@@ -16,9 +13,6 @@ trait InteractsWithAcquaintances
         );
     }
 
-    /**
-     * @return bool
-     */
     public function getSubscribedAttribute(?User $user = null): bool
     {
         return $this->isSubscribedBy(

@@ -11,9 +11,6 @@ trait InteractsWithTags
         HasTags::tags as private getBaseTags;
     }
 
-    /**
-     * @return mixed
-     */
     public function tags()
     {
         return $this
@@ -27,9 +24,6 @@ trait InteractsWithTags
             ->orderBy('order_column');
     }
 
-    /**
-     * @return MorphToMany
-     */
     public function tagTranslations(): MorphToMany
     {
         return $this
@@ -40,11 +34,6 @@ trait InteractsWithTags
             ->ordered();
     }
 
-    /**
-     * @param string $field
-     *
-     * @return array
-     */
     public function extractTagTranslations(string $field = 'name'): array
     {
         $tagTranslations = $this->tagTranslations()->get();

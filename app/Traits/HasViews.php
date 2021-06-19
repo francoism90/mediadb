@@ -6,12 +6,6 @@ use Illuminate\Support\Carbon;
 
 trait HasViews
 {
-    /**
-     * @param string $collection
-     * @param Carbon $expireAt
-     *
-     * @return void
-     */
     public function recordView(string $collection = null, Carbon $expireAt): void
     {
         views($this)
@@ -20,9 +14,6 @@ trait HasViews
             ->record();
     }
 
-    /**
-     * @return int
-     */
     public function getViewsAttribute(): int
     {
         return views($this)
