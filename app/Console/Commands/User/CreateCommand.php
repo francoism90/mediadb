@@ -19,9 +19,6 @@ class CreateCommand extends Command
      */
     protected $description = 'Create an user model';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();

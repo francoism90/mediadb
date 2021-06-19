@@ -22,9 +22,8 @@ class SortCommand extends Command
         parent::__construct();
     }
 
-    public function handle(
-        TagService $tagService
-    ): void {
+    public function handle(TagService $tagService): void
+    {
         $tagService->sortByName();
     }
 }

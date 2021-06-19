@@ -15,35 +15,16 @@ class HasBeenUpdated implements ShouldBroadcastNow
     use InteractsWithSockets;
     use SerializesModels;
 
-    /**
-     * @var string
-     */
-    public string $broadcastQueue = 'broadcasts';
-
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct(public Tag $tag)
-    {
+    public function __construct(
+        public Tag $tag
+    ) {
     }
 
-    /**
-     * The event's broadcast name.
-     *
-     * @return string
-     */
     public function broadcastAs(): string
     {
         return 'tag.updated';
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return PrivateChannel
-     */
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(

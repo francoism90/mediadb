@@ -9,34 +9,21 @@ use Throwable;
 class CreateIndexesCommand extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
-    protected $signature = 'scout:create-indexes {--r|reset : Reset settings of an existing index}';
+    protected $signature = 'scout:create-indexes
+        {--r|reset : Reset settings of an existing index}';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = 'Creates or recreates scout indexes';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
     public function handle(): void
     {
         $client = new Client(config('meilisearch.host'), config('meilisearch.key'));
@@ -52,7 +39,7 @@ class CreateIndexesCommand extends Command
                 if ($this->option('reset')) {
                     $index->resetSettings();
 
-                    $this->info('Index "'.$item['name'].'" has been reset.');
+                    $this->info("Index {$item['name']} has been reset.");
                 }
 
                 $index->updateSettings($item['settings']);
@@ -60,7 +47,7 @@ class CreateIndexesCommand extends Command
                 $index->updateSynonyms(config('meilisearch.synonyms'));
                 $index->updateStopWords(config('meilisearch.stop_words'));
 
-                $this->info('Index "'.$item['name'].'" created.');
+                $this->info("Index {$item['name']} has been created.");
             });
         } catch (Throwable $e) {
             $this->error($e->getMessage());

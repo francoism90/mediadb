@@ -34,18 +34,22 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('horizon:snapshot')
+                 ->withoutOverlapping()
                  ->everyFiveMinutes()
                  ->runInBackground();
 
         $schedule->command('telescope:prune')
+                 ->withoutOverlapping()
                  ->dailyAt('02:00')
                  ->runInBackground();
 
         $schedule->command('websockets:clean')
+                 ->withoutOverlapping()
                  ->dailyAt('02:00')
                  ->runInBackground();
 
         $schedule->command('media:regenerate')
+                 ->withoutOverlapping()
                  ->dailyAt('03:00')
                  ->environments(['staging', 'production'])
                  ->runInBackground();
