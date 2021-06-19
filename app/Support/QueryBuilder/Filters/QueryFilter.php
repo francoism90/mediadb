@@ -79,7 +79,6 @@ class QueryFilter implements Filter
      */
     protected function sanitizeQuery(string $value = ''): Collection
     {
-        // Improve matching by converting to ascii
         $value = Str::ascii($value);
 
         return Str::of($value)->matchAll(self::FILTER_WORD_REGEX);

@@ -34,13 +34,6 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
     use Notifiable;
 
     /**
-     * Delete all views of an viewable Eloquent model on delete.
-     *
-     * @var bool
-     */
-    protected bool $removeViewsOnDelete = true;
-
-    /**
      * @var array
      */
     protected $casts = [
@@ -52,9 +45,8 @@ abstract class BaseModel extends Model implements HasMedia, Viewable
      */
     protected $guarded = [];
 
-    /**
-     * @return string
-     */
+    protected bool $removeViewsOnDelete = true;
+
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';

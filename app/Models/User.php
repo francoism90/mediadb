@@ -41,11 +41,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use Searchable;
 
     /**
-     * @var bool
-     */
-    protected bool $removeViewsOnDelete = true;
-
-    /**
      * @var array
      */
     protected $casts = [
@@ -70,17 +65,13 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         'remember_token',
     ];
 
-    /**
-     * @return string
-     */
+    protected bool $removeViewsOnDelete = true;
+
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';
     }
 
-    /**
-     * @return array
-     */
     public function toSearchableArray(): array
     {
         return $this->only([
@@ -91,25 +82,16 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         ]);
     }
 
-    /**
-     * @return MorphMany
-     */
     public function videos(): MorphMany
     {
         return $this->morphMany(Video::class, 'model');
     }
 
-    /**
-     * @return string
-     */
     public function preferredLocale(): string
     {
         return $this->getCustomProperty('locale', config('app.fallback_locale'));
     }
 
-    /**
-     * @return SlugOptions
-     */
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -117,19 +99,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * The channels the user receives notification broadcasts on.
-     *
-     * @return string
-     */
     public function receivesBroadcastNotificationsOn(): string
     {
         return 'user.'.$this->getRouteKey();
     }
 
-    /**
-     * @return void
-     */
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')
@@ -137,33 +111,21 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             ->useDisk('media');
     }
 
-    /**
-     * @return string|null
-     */
     public function getAvatarUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('avatar');
     }
 
-    /**
-     * @return array
-     */
     public function getAssignedRolesAttribute(): array
     {
         return $this->getRoleNames()->toArray();
     }
 
-    /**
-     * @return array
-     */
     public function getAssignedPermissionsAttribute(): array
     {
         return $this->getAllPermissions()->pluck('name')->toArray();
     }
 
-    /**
-     * @return array|null
-     */
     public function getSettingsAttribute(): ?array
     {
         return $this->getCustomProperty('settings');

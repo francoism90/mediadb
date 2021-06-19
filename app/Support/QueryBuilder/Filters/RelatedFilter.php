@@ -30,6 +30,7 @@ class RelatedFilter implements Filter
 
         // Find model by given value (if exists)
         $model = PrefixedIds::find($value);
+
         throw_if(!$model, InvalidFilterValue::class);
 
         // Get target table

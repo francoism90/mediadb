@@ -27,89 +27,56 @@ class Media extends BaseMedia
      */
     protected $appends = ['thumbnail_url'];
 
-    /**
-     * @return string
-     */
     public function getRouteKeyName(): string
     {
         return 'uuid';
     }
 
-    /**
-     * @return string
-     */
     public function getDownloadUrlAttribute(): string
     {
         return $this->getUrl();
     }
 
-    /**
-     * @return string
-     */
     public function getKindAttribute(): string
     {
         return Str::plural($this->collection_name);
     }
 
-    /**
-     * @return string
-     */
     public function getLocaleAttribute(): ?string
     {
         return $this->getCustomProperty('locale');
     }
 
-    /**
-     * @return int|null
-     */
     public function getBitrateAttribute(): ?int
     {
         return $this->getCustomProperty('metadata.bitrate');
     }
 
-    /**
-     * @return string|null
-     */
     public function getCodecNameAttribute(): ?string
     {
         return $this->getCustomProperty('metadata.codec_name');
     }
 
-    /**
-     * @return float|null
-     */
     public function getDurationAttribute(): ?float
     {
         return $this->getCustomProperty('metadata.duration');
     }
 
-    /**
-     * @return int|null
-     */
     public function getHeightAttribute(): ?int
     {
         return $this->getCustomProperty('metadata.height');
     }
 
-    /**
-     * @return int|null
-     */
     public function getWidthAttribute(): ?int
     {
         return $this->getCustomProperty('metadata.width');
     }
 
-    /**
-     * @return float|null
-     */
     public function getThumbnailAttribute(): ?float
     {
         return $this->getCustomProperty('thumbnail');
     }
 
-    /**
-     * @return string|null
-     */
     public function getResolutionAttribute(): ?string
     {
         $resolutions = collect(
@@ -125,9 +92,6 @@ class Media extends BaseMedia
         return $resolution['label'] ?? null;
     }
 
-    /**
-     * @return string
-     */
     public function getStreamUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -139,9 +103,6 @@ class Media extends BaseMedia
         );
     }
 
-    /**
-     * @return string
-     */
     public function getSpriteUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -153,9 +114,6 @@ class Media extends BaseMedia
         );
     }
 
-    /**
-     * @return string|null
-     */
     public function getThumbnailUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -169,11 +127,6 @@ class Media extends BaseMedia
         );
     }
 
-    /**
-     * @param Builder $query
-     *
-     * @return Builder
-     */
     public function scopeMissingMetadata(Builder $query): Builder
     {
         return $query
@@ -186,11 +139,6 @@ class Media extends BaseMedia
             });
     }
 
-    /**
-     * @param Builder $query
-     *
-     * @return Builder
-     */
     public function scopeMissingConversions(Builder $query): Builder
     {
         return $query

@@ -21,33 +21,24 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media', 'tags'];
+    protected $with = ['media', 'statuses', 'tags'];
 
     /**
      * @var array
      */
     protected $appends = ['clip'];
 
-    /**
-     * @var array
-     */
     public array $translatable = [
         'name',
         'slug',
         'overview',
     ];
 
-    /**
-     * @return morphTo
-     */
     public function model(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * @return SlugOptions
-     */
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -55,9 +46,6 @@ class Video extends BaseModel
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * @return array
-     */
     public function toSearchableArray(): array
     {
         return [
@@ -72,12 +60,6 @@ class Video extends BaseModel
         ];
     }
 
-    /**
-     * We need to register media conversion ourselves.
-     * Services perform the actual conversion.
-     *
-     * @param Media $media
-     */
     public function registerMediaConversions($media = null): void
     {
         $serviceConversions = [
@@ -92,9 +74,6 @@ class Video extends BaseModel
         }
     }
 
-    /**
-     * @return void
-     */
     public function registerMediaCollections(): void
     {
         $this
@@ -109,9 +88,6 @@ class Video extends BaseModel
             ->useDisk('media');
     }
 
-    /**
-     * @return Media|null
-     */
     public function getClipAttribute(): ?Media
     {
         return $this->getFirstMedia('clip')?->append([
@@ -123,19 +99,11 @@ class Video extends BaseModel
         ]);
     }
 
-    /**
-     * @return MediaCollection
-     */
     public function getTracksAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
     }
 
-    /**
-     * @param Builder $query
-     *
-     * @return Builder
-     */
     public function scopeWithFavorites(Builder $query): Builder
     {
         return $query

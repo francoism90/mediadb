@@ -31,16 +31,8 @@ class Tag extends BaseTag implements Viewable
         'description',
     ];
 
-    /**
-     * Delete all views of an viewable Eloquent model on delete.
-     *
-     * @var bool
-     */
     protected bool $removeViewsOnDelete = true;
 
-    /**
-     * @return array
-     */
     public function toSearchableArray(): array
     {
         return [
@@ -51,23 +43,13 @@ class Tag extends BaseTag implements Viewable
         ];
     }
 
-    /**
-     * @return MorphToMany
-     */
     public function videos(): MorphToMany
     {
         return $this->morphedByMany(
-            Video::class,
-            'taggable',
-            'taggables'
+            Video::class, 'taggable', 'taggables'
         );
     }
 
-    /**
-     * @param string $type
-     *
-     * @return int
-     */
     public function getItemsAttribute(?string $type = null): int
     {
         return DB::table('taggables')
