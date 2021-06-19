@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Media;
 
-use App\Services\MediaSyncService;
+use App\Services\SyncService;
 use Illuminate\Console\Command;
 
 class RegenerateCommand extends Command
@@ -23,7 +23,7 @@ class RegenerateCommand extends Command
     }
 
     public function handle(
-        MediaSyncService $syncService
+        SyncService $syncService
     ): void {
         $syncService->handleMissingMetadata();
         $syncService->handleMissingConversions();

@@ -4,18 +4,13 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 
-class MediaMetadataService
+class MetadataService
 {
     public function __construct(
         protected FFMpegService $ffmpegService,
     ) {
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Collection
-     */
     public function getFormatAttributes(string $path): Collection
     {
         $format = $this->ffmpegService->getFileFormat($path);
@@ -29,11 +24,6 @@ class MediaMetadataService
         ]);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Collection
-     */
     public function getVideoAttributes(string $path): Collection
     {
         $stream = $this->ffmpegService->getVideoStreams($path)->first();

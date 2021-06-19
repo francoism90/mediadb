@@ -13,9 +13,6 @@ use FFMpeg\Media\Video;
 
 class FFMpegService
 {
-    /**
-     * @var FFMpeg
-     */
     protected FFMpeg $ffmpeg;
 
     public function __construct()
@@ -30,34 +27,16 @@ class FFMpegService
         ]);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     public function isValidFile(string $path): bool
     {
-        return $this
-            ->ffmpeg
-            ->getFFProbe()
-            ->isValid($path);
+        return $this->ffmpeg->getFFProbe()->isValid($path);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Audio|Video
-     */
-    public function openFile(string $path)
+    public function openFile(string $path): Audio | Video
     {
         return $this->ffmpeg->open($path);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Format
-     */
     public function getFileFormat(string $path): Format
     {
         throw_if(!$this->isValidFile($path), InvalidFileException::class);
@@ -65,11 +44,6 @@ class FFMpegService
         return $this->ffmpeg->getFFProbe()->format($path);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return StreamCollection
-     */
     public function getVideoStreams(string $path): StreamCollection
     {
         throw_if(!$this->isValidFile($path), InvalidFileException::class);
@@ -81,13 +55,6 @@ class FFMpegService
             ->videos();
     }
 
-    /**
-     * @param string $path
-     * @param float  $timeCode
-     * @param string $filter
-     *
-     * @return string
-     */
     public function createThumbnail(
         Video $video,
         string $path,

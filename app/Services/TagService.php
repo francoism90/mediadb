@@ -7,12 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagService
 {
-    /**
-     * @param Model $model
-     * @param array $tags
-     *
-     * @return void
-     */
     public function sync(Model $model, ?array $tags = []): void
     {
         $collect = collect($tags);
@@ -30,9 +24,6 @@ class TagService
         }
     }
 
-    /**
-     * @return void
-     */
     public function sortByName(): void
     {
         $tags = Tag::all()->sortBy('name', SORT_NATURAL);

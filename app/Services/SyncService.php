@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class MediaSyncService
+class SyncService
 {
     public function __construct(
         protected Finder $finder,
@@ -21,14 +21,6 @@ class MediaSyncService
     ) {
     }
 
-    /**
-     * @param Model       $model
-     * @param SplFileInfo $file
-     * @param string      $collection
-     * @param array       $properties
-     *
-     * @return void
-     */
     public function add(
         Model $model,
         SplFileInfo $file,
@@ -53,9 +45,6 @@ class MediaSyncService
         event(new HasBeenAdded($model, $media));
     }
 
-    /**
-     * @return void
-     */
     public function handleMissingMetadata(): void
     {
         $models = Media::missingMetadata()->cursor();
@@ -65,9 +54,6 @@ class MediaSyncService
         }
     }
 
-    /**
-     * @return void
-     */
     public function handleMissingConversions(): void
     {
         $models = Media::missingConversions()->cursor();
@@ -79,11 +65,6 @@ class MediaSyncService
         }
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Finder
-     */
     public function gatherFiles(string $path): Finder
     {
         return $this->finder->create()

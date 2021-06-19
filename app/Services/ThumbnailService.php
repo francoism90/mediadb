@@ -4,20 +4,15 @@ namespace App\Services;
 
 use App\Models\Media;
 
-class MediaThumbnailService
+class ThumbnailService
 {
     public function __construct(
         protected FFMpegService $ffmpegService,
-        protected MediaConversionService $conversionService,
+        protected ConversionService $conversionService,
         protected ImageService $imageService
     ) {
     }
 
-    /**
-     * @param Media $media
-     *
-     * @return void
-     */
     public function create(Media $media): void
     {
         $path = $this->conversionService->temporaryDirectory()->path(

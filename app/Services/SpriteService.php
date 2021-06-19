@@ -4,18 +4,13 @@ namespace App\Services;
 
 use App\Models\Media;
 
-class MediaSpriteService
+class SpriteService
 {
     public function __construct(
-        protected MediaStreamService $mediaStreamService
+        protected StreamService $streamService
     ) {
     }
 
-    /**
-     * @param Media $media
-     *
-     * @return string
-     */
     public function create(Media $media): string
     {
         $vtt = "WEBVTT\n\n";
@@ -25,7 +20,7 @@ class MediaSpriteService
         foreach ($collection->values() as $index => $time) {
             $offset = $time * 1000;
 
-            $thumbnailUrl = $this->mediaStreamService->getMappingUrl(
+            $thumbnailUrl = $this->streamService->getMappingUrl(
                 'thumb',
                 "thumb-{$offset}-w160-h90.jpg",
                 ['media' => $media]
@@ -43,11 +38,6 @@ class MediaSpriteService
         return $vtt;
     }
 
-    /**
-     * @param float $duration
-     *
-     * @return array
-     */
     protected function generateRange(float $duration = 0): array
     {
         $divider = config('media.sprite_intval', 30);

@@ -7,7 +7,7 @@ use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Support\Collection;
 
-class MediaStreamService
+class StreamService
 {
     protected $streamer;
 
@@ -19,13 +19,6 @@ class MediaStreamService
         $this->tokenizer = resolve($this->getTokenModule());
     }
 
-    /**
-     * @param string $location
-     * @param string $uri
-     * @param array  $token
-     *
-     * @return string
-     */
     public function getMappingUrl(string $location, string $uri, array $token = []): string
     {
         $token = $this->tokenizer->create(
@@ -38,11 +31,6 @@ class MediaStreamService
         return $this->streamer->getUrl($location, $uri);
     }
 
-    /**
-     * @param Media $media
-     *
-     * @return Collection
-     */
     public function getResponseFormat(Media $media): Collection
     {
         return collect([
@@ -62,37 +50,21 @@ class MediaStreamService
         ]);
     }
 
-    /**
-     * @param string $token
-     *
-     * @return bool
-     */
     public function validToken(string $token): bool
     {
         return $this->tokenizer->exists($token);
     }
 
-    /**
-     * @param string $token
-     *
-     * @return array
-     */
     public function decodeToken(string $token): array
     {
         return $this->tokenizer->find($token);
     }
 
-    /**
-     * @return string
-     */
     public function getStreamModule(): string
     {
         return config('media.stream_module', DashStreamer::class);
     }
 
-    /**
-     * @return string
-     */
     public function getTokenModule(): string
     {
         return config('media.token_module', LocalTokenizer::class);
