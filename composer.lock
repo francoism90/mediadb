@@ -3219,16 +3219,16 @@
         },
         {
             "name": "multicaret/laravel-acquaintances",
-            "version": "v3.5.2",
+            "version": "v3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/multicaret/laravel-acquaintances.git",
-                "reference": "d7759225c9c8f4a393b580dd6f4ab431e2834957"
+                "reference": "4ae397c5285550bdb818298dc7be611a585fe10b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/d7759225c9c8f4a393b580dd6f4ab431e2834957",
-                "reference": "d7759225c9c8f4a393b580dd6f4ab431e2834957",
+                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/4ae397c5285550bdb818298dc7be611a585fe10b",
+                "reference": "4ae397c5285550bdb818298dc7be611a585fe10b",
                 "shasum": ""
             },
             "require": {
@@ -3283,9 +3283,9 @@
             ],
             "support": {
                 "issues": "https://github.com/multicaret/laravel-acquaintances/issues",
-                "source": "https://github.com/multicaret/laravel-acquaintances/tree/v3.5.2"
+                "source": "https://github.com/multicaret/laravel-acquaintances/tree/v3.5.3"
             },
-            "time": "2021-06-07T14:39:37+00:00"
+            "time": "2021-06-20T09:08:16+00:00"
         },
         {
             "name": "myclabs/php-enum",
