@@ -33,6 +33,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::scope('favorites', 'with_favorites')->ignore(null, '*'),
+                AllowedFilter::scope('tags', 'tags.with_slug')->ignore(null, '*'),
                 AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
             ])
