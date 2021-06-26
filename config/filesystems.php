@@ -52,7 +52,7 @@ return [
 
         'media' => [
             'driver' => 'local',
-            'root' => storage_path('app/media'),
+            'root' => '/mnt/data/private/Videos/mediadbv2',
             'visibility' => 'private',
         ],
 
