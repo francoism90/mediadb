@@ -31,6 +31,11 @@ class Tag extends BaseTag implements Viewable
 
     protected bool $removeViewsOnDelete = true;
 
+    public function getRouteKeyName(): string
+    {
+        return 'prefixed_id';
+    }
+
     public function toSearchableArray(): array
     {
         return [
