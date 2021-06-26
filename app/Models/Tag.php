@@ -8,6 +8,7 @@ use App\Traits\InteractsWithTranslations;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
@@ -53,5 +54,12 @@ class Tag extends BaseTag implements Viewable
             ->where('tag_id', $this->id)
             ->when($type, fn ($query, $type) => $query->where('taggable_type', $type))
             ->count();
+    }
+
+    public function scopeWithSlug(Builder $query, ...$values): Builder
+    {
+        $locale = app()->getLocale();
+
+        return $query->whereIn("slug->{$locale}", $values);
     }
 }
