@@ -19,6 +19,7 @@ class UserController extends Controller
         ]);
 
         return response()->json([
+            'token' => $request->bearerToken(),
             'user' => new UserResource($user),
         ]);
     }
