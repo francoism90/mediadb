@@ -19,7 +19,6 @@ class FavoriteController extends Controller
         abort_if(!$model, 404);
 
         $user->toggleFavorite($model);
-
         $model->refresh();
 
         $user->notify(new FavoriteModel($model));
