@@ -43,6 +43,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     /**
      * @var array
      */
+    protected $with = ['media', 'views'];
+
+    /**
+     * @var array
+     */
     protected $casts = [
         'custom_properties' => 'json',
         'email_verified_at' => 'datetime',

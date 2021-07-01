@@ -21,7 +21,7 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media', 'statuses', 'tags'];
+    protected $with = ['media', 'statuses', 'tags', 'views'];
 
     /**
      * @var array
@@ -44,6 +44,11 @@ class Video extends BaseModel
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('media', 'statuses', 'tags');
     }
 
     public function toSearchableArray(): array
