@@ -34,7 +34,7 @@ class RelatedFilter implements Filter
         $table = $query->getModel()->getTable();
 
         $models = $this->getRelatedByQuery($query, $model->name);
-        $models = $models->merge($this->getModelsByTags($query, $model->tags));
+        $models = $models->merge($this->getRelatedByTags($query, $model->tags));
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
@@ -74,14 +74,14 @@ class RelatedFilter implements Filter
         return $models;
     }
 
-    protected function getModelsByTags(Builder $query, Collection $tags): Collection
+    protected function getRelatedByTags(Builder $query, Collection $tags): Collection
     {
         return $query
             ->getModel()
             ->with('tags')
             ->withAnyTagsOfAnyType($tags)
             ->inRandomSeedOrder()
-            ->take(50)
+            ->take(60)
             ->get();
     }
 
