@@ -15,7 +15,6 @@ class RelatedFilter implements Filter
     public const FILTER_PUNCTUATION_REGEX = '/[\p{P}]+/u';
     public const FILTER_WORD_REGEX = '/[\p{L}]+/u';
     public const QUERY_WORD_LIMIT = 8;
-    public const QUERY_RESULT_LIMIT = 50;
 
     /**
      * @param Builder      $query
@@ -66,7 +65,7 @@ class RelatedFilter implements Filter
                 $query
                     ->getModel()
                     ->search($queryValue)
-                    ->take(self::QUERY_RESULT_LIMIT)
+                    ->take(60)
                     ->get()
             );
         }
