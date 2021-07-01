@@ -19,7 +19,7 @@ class QueryFilter implements Filter
 
         $table = $query->getModel()->getTable();
 
-        $models = $this->getModelsByQuery($query, $value);
+        $models = $this->getModels($query, $value);
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
@@ -34,20 +34,20 @@ class QueryFilter implements Filter
             });
     }
 
-    protected function getModelsByQuery(Builder $query, string $value = ''): Collection
+    protected function getModels(Builder $query, string $value = ''): Collection
     {
+        $value = $this->sanitize($value);
+
         $models = collect();
 
-        $value = $this->sanitizeQuery($value);
-
-        // Perform partial searching (e.g. this book 1, this book, this)
+        // e.g. this book 1, this book, this
         for ($i = $value->take(self::QUERY_WORD_LIMIT)->count(); $i >= 1; --$i) {
-            $queryValue = $value->take($i)->implode(' ');
+            $terms = $value->take($i)->implode(' ');
 
             $models = $models->merge(
                 $query
                     ->getModel()
-                    ->search($queryValue)
+                    ->search($terms)
                     ->take(self::QUERY_RESULT_LIMIT)
                     ->get()
             );
@@ -56,7 +56,7 @@ class QueryFilter implements Filter
         return $models;
     }
 
-    protected function sanitizeQuery(string $value = ''): Collection
+    protected function sanitize(string $value = ''): Collection
     {
         $value = Str::ascii($value);
 

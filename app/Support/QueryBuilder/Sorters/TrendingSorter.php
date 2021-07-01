@@ -20,7 +20,6 @@ class TrendingSorter implements Sort
         // Removing existing orderings
         $query->getQuery()->reorder();
 
-        return $query
-            ->orderByUniqueViews('DESC', Period::pastDays(3), 'view_count');
+        return $query->orderByUniqueViews('DESC', Period::pastDays(3), 'view_count');
     }
 }

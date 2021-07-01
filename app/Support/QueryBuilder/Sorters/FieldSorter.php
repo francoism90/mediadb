@@ -22,7 +22,6 @@ class FieldSorter implements Sort
         $column = "{$query->getQuery()->from}.{$property}";
         $direction = $descending ? 'DESC' : 'ASC';
 
-        return $query
-            ->orderBy($column, $direction);
+        return $query->orderBy($column, $direction);
     }
 }
