@@ -31,17 +31,19 @@ trait InteractsWithTags
             ->select('*')
             ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.*')) as name_translated")
             ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(slug, '$.*')) as slug_translated")
+            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(description, '$.*')) as description_translated")
             ->ordered();
     }
 
-    public function extractTagTranslations(string $field = 'name'): array
+    public function extractTagTranslations(): array
     {
         $tagTranslations = $this->tagTranslations()->get();
 
-        $collection = $tagTranslations->flatMap(function ($tags) use ($field) {
-            $tagTranslated = json_decode($tags[sprintf('%s_translated', $field)], true);
+        $collection = $tagTranslations->flatMap(function ($tags) {
+            $names = json_decode($tags['name_translated'], true);
+            $descriptions = json_decode($tags['description_translated'], true);
 
-            return array_values($tagTranslated);
+            return array_merge($names, $descriptions);
         });
 
         return $collection->unique()->toArray();
