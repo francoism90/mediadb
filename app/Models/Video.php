@@ -102,12 +102,12 @@ class Video extends BaseModel
         return $this->getMedia('caption');
     }
 
-    public function scopeWithFavorites(Builder $query, ?User $user = null): Builder
+    public function scopeWithFavorites(Builder $query): Builder
     {
         return $query
             ->with('favoriters')
-            ->whereHas('favoriters', function (Builder $query) use ($user) {
-                $query->where('user_id', $user?->id ?? auth()->user()?->id);
+            ->whereHas('favoriters', function (Builder $query) {
+                $query->where('user_id', auth()->user()?->id);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->select('videos.*')
