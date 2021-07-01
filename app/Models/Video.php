@@ -62,11 +62,9 @@ class Video extends BaseModel
 
     public function registerMediaConversions($media = null): void
     {
-        $serviceConversions = [
-            'thumbnail',
-        ];
+        $conversions = config('video.conversions', []);
 
-        foreach ($serviceConversions as $conversion) {
+        foreach ($conversions as $conversion) {
             $this->addMediaConversion($conversion)
                  ->withoutManipulations()
                  ->performOnCollections('conversion-service')
@@ -104,12 +102,12 @@ class Video extends BaseModel
         return $this->getMedia('caption');
     }
 
-    public function scopeWithFavorites(Builder $query): Builder
+    public function scopeWithFavorites(Builder $query, ?User $user = null): Builder
     {
         return $query
             ->with('favoriters')
-            ->whereHas('favoriters', function (Builder $query) {
-                $query->where('user_id', auth()?->user()?->id || 0);
+            ->whereHas('favoriters', function (Builder $query) use ($user) {
+                $query->where('user_id', $user?->id ?? auth()->user()?->id);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->select('videos.*')

@@ -7,11 +7,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This controls the video importing process.
+    | @doc https://github.com/kaltura/nginx-vod-module/issues/427
     |
-    */
-
-    /*
-     * @doc https://github.com/kaltura/nginx-vod-module/issues/427
     */
 
     'clip_mimetypes' => [
@@ -32,5 +29,18 @@ return [
     'caption_mimetypes' => [
         'text/plain',
         'text/vtt',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Conversions
+    |--------------------------------------------------------------------------
+    |
+    | This controls media conversions.
+    |
+    */
+
+    'conversions' => [
+        'thumbnail'
     ],
 ];
