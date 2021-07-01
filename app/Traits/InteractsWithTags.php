@@ -35,15 +35,14 @@ trait InteractsWithTags
             ->ordered();
     }
 
-    public function extractTagTranslations(): array
+    public function extractTagTranslations(string $field = 'name'): array
     {
         $tagTranslations = $this->tagTranslations()->get();
 
-        $collection = $tagTranslations->flatMap(function ($tags) {
-            $names = json_decode($tags['name_translated'], true);
-            $descriptions = json_decode($tags['description_translated'], true);
+        $collection = $tagTranslations->flatMap(function ($tags) use ($field) {
+            $translations = (array) json_decode($tags[sprintf('%s_translated', $field)], true);
 
-            return array_merge($names, $descriptions);
+            return array_values($translations);
         });
 
         return $collection->unique()->toArray();

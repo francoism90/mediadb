@@ -56,7 +56,8 @@ class Video extends BaseModel
             'status' => $this->status,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
-            'tags' => $this->extractTagTranslations(),
+            'tags' => $this->extractTagTranslations('name'),
+            'tags_description' => $this->extractTagTranslations('description'),
         ];
     }
 

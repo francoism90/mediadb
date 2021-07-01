@@ -59,7 +59,7 @@ return [
         [
             'name' => 'videos',
             'settings' => [
-                'searchableAttributes' => ['name', 'overview', 'type', 'tags'],
+                'searchableAttributes' => ['name', 'overview', 'type', 'tags', 'tags_description'],
                 'attributesForFaceting' => ['tags'],
             ],
         ],
@@ -94,6 +94,9 @@ return [
         '07' => ['7'],
         '08' => ['8'],
         '09' => ['9'],
+        '&' => ['and'],
+        'and' => ['&'],
+        '#' => ['hash', 'hashtag'],
     ],
 
     /*
@@ -107,18 +110,17 @@ return [
     */
 
     'stop_words' => [
-        '&',
-        'a',
-        'an',
-        'and',
-        'for',
-        'i',
-        'it',
-        'of',
-        'on',
-        'or',
-        'so',
-        'the',
-        'to',
+        // 'a',
+        // 'an',
+        // 'and',
+        // 'for',
+        // 'i',
+        // 'it',
+        // 'of',
+        // 'on',
+        // 'or',
+        // 'so',
+        // 'the',
+        // 'to',
     ],
 ];
