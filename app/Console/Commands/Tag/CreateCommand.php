@@ -17,11 +17,6 @@ class CreateCommand extends Command
      */
     protected $description = 'Create a tag model';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $model = Tag::create([
@@ -29,6 +24,6 @@ class CreateCommand extends Command
             'type' => $this->argument('type'),
         ]);
 
-        $this->info("Successfully created tag {$model->name} ({$model->id})");
+        $this->info(sprintf('Successfully created tag %s (%s)', $model->name, $model->id));
     }
 }

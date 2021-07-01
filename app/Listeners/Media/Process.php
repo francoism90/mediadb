@@ -14,13 +14,11 @@ class Process
         // e.g. video/mp4 => video
         $type = strtok($event->media->mime_type, '/');
 
-        switch ($type) {
-            case 'video':
-                Bus::chain([
-                    new SetMetadata($event->media),
-                    new CreateThumbnail($event->media),
-                ])->onQueue('media')->dispatch($event->media);
-                break;
+        if ('video' === $type) {
+            Bus::chain([
+                new SetMetadata($event->media),
+                new CreateThumbnail($event->media),
+            ])->onQueue('media')->dispatch($event->media);
         }
     }
 }

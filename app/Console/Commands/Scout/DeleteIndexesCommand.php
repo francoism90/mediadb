@@ -18,11 +18,6 @@ class DeleteIndexesCommand extends Command
      */
     protected $description = 'Delete scout indexes';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $client = new Client(config('meilisearch.host'), config('meilisearch.key'));
@@ -33,10 +28,10 @@ class DeleteIndexesCommand extends Command
             $indexes->each(function ($item) use ($client): void {
                 $client->deleteIndex($item['name']);
 
-                $this->info("Index {$item['name']} has been deleted.");
+                $this->info(sprintf('Index %s has been deleted.', $item['name']));
             });
-        } catch (Throwable $e) {
-            $this->error($e->getMessage());
+        } catch (Throwable $throwable) {
+            $this->error($throwable->getMessage());
         }
     }
 }

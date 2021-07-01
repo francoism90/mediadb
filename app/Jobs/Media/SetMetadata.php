@@ -43,18 +43,14 @@ class SetMetadata implements ShouldQueue
 
         $metadata = $metadataService->getFormatAttributes($path);
 
-        switch ($type) {
-            case 'video':
-                $video = $metadataService->getVideoAttributes($path);
-
-                $metadata = $metadata->merge($video);
-                break;
+        if ('video' === $type) {
+            $video = $metadataService->getVideoAttributes($path);
+            $metadata = $metadata->merge($video);
         }
 
-        $this
-            ->media
-            ->setCustomProperty('metadata', $metadata->all())
-            ->save();
+        $this->media
+             ->setCustomProperty('metadata', $metadata->all())
+             ->save();
     }
 
     public function tags(): array

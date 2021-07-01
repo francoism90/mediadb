@@ -19,11 +19,6 @@ class CreateCommand extends Command
      */
     protected $description = 'Create an user model';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $model = User::firstOrCreate(
@@ -40,6 +35,6 @@ class CreateCommand extends Command
 
         // TODO: send welcome mail
 
-        $this->info("Successfully created user {$model->name} ({$model->id})");
+        $this->info(sprintf('Successfully created user %s (%s)', $model->name, $model->id));
     }
 }

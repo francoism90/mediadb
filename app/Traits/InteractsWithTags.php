@@ -39,7 +39,7 @@ trait InteractsWithTags
         $tagTranslations = $this->tagTranslations()->get();
 
         $collection = $tagTranslations->flatMap(function ($tags) use ($field) {
-            $tagTranslated = json_decode($tags["{$field}_translated"], true);
+            $tagTranslated = json_decode($tags[sprintf('%s_translated', $field)], true);
 
             return array_values($tagTranslated);
         });

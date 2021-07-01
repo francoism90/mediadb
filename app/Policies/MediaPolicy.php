@@ -17,55 +17,31 @@ class MediaPolicy
 
     public function view(?User $user, Media $model): bool
     {
-        if (null === $user) {
-            return false;
-        }
-
-        return true;
+        return null !== $user;
     }
 
     public function create(User $user): bool
     {
-        if ($user->can('create media')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('create media');
     }
 
     public function update(User $user, Media $model): bool
     {
-        if ($user->can('edit media')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('edit media');
     }
 
     public function delete(User $user, Media $model): bool
     {
-        if ($user->can('delete media')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('delete media');
     }
 
     public function restore(User $user, Media $model): bool
     {
-        if ($user->can('restore media')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('restore media');
     }
 
     public function forceDelete(User $user, Media $model): bool
     {
-        if ($user->can('delete media')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('delete media');
     }
 }

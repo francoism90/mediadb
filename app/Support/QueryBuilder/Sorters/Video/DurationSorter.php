@@ -7,23 +7,14 @@ use Spatie\QueryBuilder\Sorts\Sort;
 
 class DurationSorter implements Sort
 {
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param bool                                  $descending
-     * @param string                                $property
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Removing existing orderings
         $query->getQuery()->reorder();
 
-        // Get target table
         $table = $query->getModel()->getTable();
 
-        // Sort clip duration
-        $models = $query->get()->sortBy(function ($model) {
+        // Sort by clip duration
+        $models = $query->take(1500)->get()->sortBy(function ($model) {
             $duration = $model->media
                 ->where('collection_name', 'clip')
                 ->pluck('custom_properties.metadata.duration')
@@ -38,8 +29,8 @@ class DurationSorter implements Sort
                 $idsOrder = $models->implode('id', ',');
 
                 return $query
-                    ->whereIn("{$table}.id", $ids)
-                    ->orderByRaw("FIELD({$table}.id, {$idsOrder})");
+                    ->whereIn(sprintf('%s.id', $table), $ids)
+                    ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             });
     }
 }

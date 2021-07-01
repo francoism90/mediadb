@@ -131,7 +131,7 @@ class Media extends BaseMedia
     {
         return $query
             ->whereIn('collection_name', config('media.collections', ['clip']))
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query->whereNull('custom_properties->metadata')
                       ->orWhereNull('custom_properties->metadata->duration')
                       ->orWhereNull('custom_properties->metadata->height')
@@ -143,7 +143,7 @@ class Media extends BaseMedia
     {
         return $query
             ->whereIn('collection_name', config('media.collections', ['clip']))
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query->whereNull('generated_conversions')
                       ->orWhereNull('generated_conversions->thumbnail');
             });

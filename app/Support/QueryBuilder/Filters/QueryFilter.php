@@ -23,14 +23,14 @@ class QueryFilter implements Filter
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
-                return $query->whereNull("{$table}.id");
+                return $query->whereNull(sprintf('%s.id', $table));
             }, function ($query) use ($models, $table) {
                 $ids = $models->pluck('id');
                 $idsOrder = $models->implode('id', ',');
 
                 return $query
-                    ->whereIn("{$table}.id", $ids)
-                    ->orderByRaw("FIELD({$table}.id, {$idsOrder})");
+                    ->whereIn(sprintf('%s.id', $table), $ids)
+                    ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             });
     }
 

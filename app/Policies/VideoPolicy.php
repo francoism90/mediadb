@@ -12,11 +12,7 @@ class VideoPolicy
 
     public function viewAny(?User $user): bool
     {
-        if (null === $user) {
-            return false;
-        }
-
-        return true;
+        return null !== $user;
     }
 
     public function view(?User $user, Video $model): bool
@@ -25,7 +21,7 @@ class VideoPolicy
             return false;
         }
 
-        if ($model->latestStatus(['private'])->exists()) {
+        if ($model->latestStatus('private')->exists()) {
             return false;
         }
 
@@ -34,11 +30,7 @@ class VideoPolicy
 
     public function create(User $user): bool
     {
-        if ($user->can('create video')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('create video');
     }
 
     public function update(User $user, Video $model): bool

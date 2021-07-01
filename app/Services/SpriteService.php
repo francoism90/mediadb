@@ -22,7 +22,7 @@ class SpriteService
 
             $thumbnailUrl = $this->streamService->getMappingUrl(
                 'thumb',
-                "thumb-{$offset}-w160-h90.jpg",
+                sprintf('thumb-%s-w160-h90.jpg', $offset),
                 ['media' => $media]
             );
 
@@ -31,7 +31,7 @@ class SpriteService
             $startTime = gmdate('H:i:s.v', $time);
             $endTime = gmdate('H:i:s.v', $next);
 
-            $vtt .= "{$startTime} --> {$endTime}\n";
+            $vtt .= sprintf('%s --> %s%s', $startTime, $endTime, PHP_EOL);
             $vtt .= "{$thumbnailUrl}\n\n";
         }
 

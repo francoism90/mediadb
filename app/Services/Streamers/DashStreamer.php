@@ -13,7 +13,7 @@ class DashStreamer implements StreamerInterface
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
 
-        return config('media.vod_url')."/{$location}/{$hashPath}";
+        return config('media.vod_url').sprintf('/%s/%s', $location, $hashPath);
     }
 
     public function setToken(string $token): void
@@ -28,7 +28,7 @@ class DashStreamer implements StreamerInterface
 
     protected function getManifestHash(string $uri): string
     {
-        $path = $this->getManifestRoute()."/{$uri}";
+        $path = $this->getManifestRoute().sprintf('/%s', $uri);
 
         $hash = substr(
             md5($path, true),

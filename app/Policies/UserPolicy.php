@@ -25,11 +25,7 @@ class UserPolicy
 
     public function create(User $user): bool
     {
-        if ($user->can('create user')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('create user');
     }
 
     public function update(User $user, User $model): bool

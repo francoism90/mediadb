@@ -17,11 +17,6 @@ class SortCommand extends Command
      */
     protected $description = 'Sort tags by name';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(TagService $tagService): void
     {
         $tagService->sortByName();

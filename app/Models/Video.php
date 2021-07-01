@@ -106,7 +106,7 @@ class Video extends BaseModel
     {
         return $query
             ->with('favoriters')
-            ->whereHas('favoriters', function (Builder $query) {
+            ->whereHas('favoriters', function (Builder $query): void {
                 $query->where('user_id', auth()->user()?->id);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')

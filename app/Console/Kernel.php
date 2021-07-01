@@ -16,8 +16,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Get the timezone that should be used by default for scheduled events.
-     *
-     * @return string
      */
     protected function scheduleTimezone(): string
     {
@@ -26,10 +24,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Define the application's command schedule.
-     *
-     * @param Schedule $schedule
-     *
-     * @return void
      */
     protected function schedule(Schedule $schedule): void
     {

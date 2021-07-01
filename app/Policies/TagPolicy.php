@@ -12,11 +12,7 @@ class TagPolicy
 
     public function viewAny(?User $user): bool
     {
-        if (null === $user) {
-            return false;
-        }
-
-        return true;
+        return null !== $user;
     }
 
     public function view(?User $user, Tag $model): bool
@@ -26,46 +22,26 @@ class TagPolicy
 
     public function create(User $user): bool
     {
-        if ($user->can('create tag')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('create tag');
     }
 
     public function update(User $user, Tag $model): bool
     {
-        if ($user->can('edit tag')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('edit tag');
     }
 
     public function delete(User $user, Tag $model): bool
     {
-        if ($user->can('delete tag')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('delete tag');
     }
 
     public function restore(User $user, Tag $model): bool
     {
-        if ($user->can('restore tag')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('restore tag');
     }
 
     public function forceDelete(User $user, Tag $model): bool
     {
-        if ($user->can('delete tag')) {
-            return true;
-        }
-
-        return false;
+        return $user->can('delete tag');
     }
 }

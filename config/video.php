@@ -41,6 +41,6 @@ return [
     */
 
     'conversions' => [
-        'thumbnail'
+        'thumbnail',
     ],
 ];

@@ -17,11 +17,6 @@ class RegenerateCommand extends Command
      */
     protected $description = 'Regenerate media models';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(
         SyncService $syncService
     ): void {

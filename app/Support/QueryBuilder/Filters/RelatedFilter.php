@@ -38,17 +38,17 @@ class RelatedFilter implements Filter
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
-                return $query->whereNull("{$table}.id");
+                return $query->whereNull(sprintf('%s.id', $table));
             }, function ($query) use ($models, $table) {
                 $ids = $models->pluck('id');
                 $idsOrder = $models->implode('id', ',');
 
                 return $query
-                    ->whereIn("{$table}.id", $ids)
-                    ->orderByRaw("FIELD({$table}.id, {$idsOrder})");
+                    ->whereIn(sprintf('%s.id', $table), $ids)
+                    ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             })
             ->where('id', '<>', $model->id)
-            ->take(50)
+            ->take(60)
             ->orderBy('id');
     }
 
@@ -87,18 +87,14 @@ class RelatedFilter implements Filter
 
     protected function sanitizeQuery(string $value = ''): Collection
     {
-        $query = Str::ascii($value);
-
         $query = Str::of($value)->matchAll(self::FILTER_WORD_REGEX);
 
         $query = $query->merge(
             Str::of($value)->matchAll(self::FILTER_NUMBER_REGEX)
         );
 
-        $query = $query->merge(
+        return $query->merge(
             Str::of($value)->matchAll(self::FILTER_PUNCTUATION_REGEX)
         );
-
-        return $query;
     }
 }

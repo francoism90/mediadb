@@ -29,7 +29,7 @@ trait HasRandomSeed
     {
         $class = class_basename($class ?? static::class);
 
-        return "randomSeed{$class}";
+        return sprintf('randomSeed%s', $class);
     }
 
     public static function getRandomSeed(?string $class = null): string | int

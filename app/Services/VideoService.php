@@ -29,7 +29,7 @@ class VideoService
 
         $files = $this->syncService->gatherFiles($path);
 
-        if ($command) {
+        if (null !== $command) {
             $command->createProgressBar(count($files));
         }
 
@@ -47,8 +47,8 @@ class VideoService
                     'path' => $filePath,
                     'success' => true,
                 ]);
-            } catch (Throwable $e) {
-                report($e);
+            } catch (Throwable $throwable) {
+                report($throwable);
 
                 $results->push([
                     'path' => $filePath,
@@ -56,7 +56,7 @@ class VideoService
                 ]);
             }
 
-            if ($command) {
+            if (null !== $command) {
                 $command->advanceProgressBar();
                 $command->logStatusToConsole($results);
             }

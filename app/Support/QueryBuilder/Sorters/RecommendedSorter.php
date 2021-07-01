@@ -7,16 +7,8 @@ use Spatie\QueryBuilder\Sorts\Sort;
 
 class RecommendedSorter implements Sort
 {
-    /**
-     * @param Builder $query
-     * @param bool    $descending
-     * @param string  $property
-     *
-     * @return Builder
-     */
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        // Use given orders by filter(s)
         if ($query->getQuery()->orders) {
             return $query;
         }

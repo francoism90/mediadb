@@ -65,6 +65,6 @@ class Tag extends BaseTag implements Viewable
     {
         $locale = app()->getLocale();
 
-        return $query->whereIn("slug->{$locale}", $values);
+        return $query->whereIn(sprintf('slug->%s', $locale), $values);
     }
 }

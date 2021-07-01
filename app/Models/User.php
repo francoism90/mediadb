@@ -111,7 +111,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             ->useDisk('media');
     }
 
-    public function getAvatarUrlAttribute(): ?string
+    public function getAvatarUrlAttribute(): string
     {
         return $this->getFirstMediaUrl('avatar');
     }

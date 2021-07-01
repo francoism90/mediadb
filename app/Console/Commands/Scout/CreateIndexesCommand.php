@@ -19,11 +19,6 @@ class CreateIndexesCommand extends Command
      */
     protected $description = 'Creates or recreates scout indexes';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $client = new Client(config('meilisearch.host'), config('meilisearch.key'));
@@ -39,7 +34,7 @@ class CreateIndexesCommand extends Command
                 if ($this->option('reset')) {
                     $index->resetSettings();
 
-                    $this->info("Index {$item['name']} has been reset.");
+                    $this->info(sprintf('Index %s has been reset.', $item['name']));
                 }
 
                 $index->updateSettings($item['settings']);
@@ -47,10 +42,10 @@ class CreateIndexesCommand extends Command
                 $index->updateSynonyms(config('meilisearch.synonyms'));
                 $index->updateStopWords(config('meilisearch.stop_words'));
 
-                $this->info("Index {$item['name']} has been created.");
+                $this->info(sprintf('Index %s has been created.', $item['name']));
             });
-        } catch (Throwable $e) {
-            $this->error($e->getMessage());
+        } catch (Throwable $throwable) {
+            $this->error($throwable->getMessage());
         }
     }
 }
