@@ -45,21 +45,36 @@ return [
 
     'indexes' => [
         [
-            'name' => 'tags',
+            'name' => 'tags_index',
             'settings' => [
-                'searchableAttributes' => ['name', 'description', 'type'],
+                'searchableAttributes' => [
+                    'name',
+                    'description',
+                    'type',
+                ],
             ],
         ],
         [
-            'name' => 'users',
+            'name' => 'users_index',
             'settings' => [
-                'searchableAttributes' => ['name', 'email', 'description'],
+                'searchableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
             ],
         ],
         [
-            'name' => 'videos',
+            'name' => 'videos_index',
             'settings' => [
-                'searchableAttributes' => ['name', 'overview', 'type', 'tags', 'tags_description'],
+                'searchableAttributes' => [
+                    'name',
+                    'season_number',
+                    'episode_number',
+                    'overview',
+                    'tags',
+                    'tags_description',
+                ],
                 'attributesForFaceting' => ['tags'],
             ],
         ],
@@ -96,6 +111,8 @@ return [
         '09' => ['9'],
         '&' => ['and'],
         'and' => ['&'],
+        '@' => ['at'],
+        'at' => ['@'],
         '#' => ['hash', 'hashtag'],
     ],
 

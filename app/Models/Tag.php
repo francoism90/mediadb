@@ -36,6 +36,11 @@ class Tag extends BaseTag implements Viewable
         return 'prefixed_id';
     }
 
+    public function searchableAs(): string
+    {
+        return 'tags_index';
+    }
+
     public function toSearchableArray(): array
     {
         return [
@@ -44,6 +49,11 @@ class Tag extends BaseTag implements Viewable
             'description' => $this->extractTranslations('description'),
             'type' => $this->type,
         ];
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 
     public function videos(): MorphToMany

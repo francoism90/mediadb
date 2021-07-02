@@ -8,6 +8,7 @@ use App\Traits\HasViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -77,6 +78,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
         return 'prefixed_id';
     }
 
+    public function searchableAs(): string
+    {
+        return 'users_index';
+    }
+
     public function toSearchableArray(): array
     {
         return $this->only([
@@ -85,6 +91,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
             'email',
             'description',
         ]);
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 
     public function videos(): MorphMany

@@ -13,11 +13,11 @@ class UserResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'views' => $this->views,
-            'created_at' => $this->created_at,
             'avatar_url' => $this->whenAppended('avatar_url'),
             'roles' => $this->whenAppended('assigned_roles'),
             'permissions' => $this->whenAppended('assigned_permissions'),
             'settings' => $this->whenAppended('settings'),
+            'created_at' => $this->created_at,
         ];
     }
 }

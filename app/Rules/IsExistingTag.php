@@ -15,7 +15,7 @@ class IsExistingTag implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return Tag::findByPrefixedId($value['id'] ?? null)->exists();
+        return Tag::findByPrefixedId($value ?? null)->exists();
     }
 
     /**
@@ -23,6 +23,6 @@ class IsExistingTag implements Rule
      */
     public function message(): string
     {
-        return 'The given tag does not exists.';
+        return 'The given tag(s) does not exists.';
     }
 }

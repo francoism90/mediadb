@@ -21,12 +21,19 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $with = ['media', 'statuses', 'tags', 'views'];
+    protected $with = [
+        'media',
+        'statuses',
+        'tags',
+        'views',
+    ];
 
     /**
      * @var array
      */
-    protected $appends = ['clip'];
+    protected $appends = [
+        'clip',
+    ];
 
     public array $translatable = [
         'name',
@@ -46,9 +53,9 @@ class Video extends BaseModel
             ->saveSlugsTo('slug');
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
+    public function searchableAs(): string
     {
-        return $query->with('media', 'statuses', 'tags');
+        return 'videos_index';
     }
 
     public function toSearchableArray(): array
@@ -57,13 +64,16 @@ class Video extends BaseModel
             'id' => $this->id,
             'name' => $this->extractTranslations('name'),
             'overview' => $this->extractTranslations('overview'),
-            'type' => $this->type,
-            'status' => $this->status,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'tags' => $this->extractTagTranslations('name'),
             'tags_description' => $this->extractTagTranslations('description'),
         ];
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 
     public function registerMediaConversions($media = null): void

@@ -19,12 +19,12 @@ class CreateVideosTable extends Migration
             $table->morphs('model');
             $table->json('name');
             $table->json('slug');
-            $table->string('type')->index()->nullable();
-            $table->string('status')->index()->nullable();
-            $table->timestamp('release_date')->index()->nullable();
-            $table->unsignedInteger('season_number')->index()->nullable();
-            $table->unsignedInteger('episode_number')->index()->nullable();
             $table->json('overview')->nullable();
+            $table->string('status')->index()->nullable();
+            $table->string('type')->index()->nullable();
+            $table->string('season_number')->index()->nullable();
+            $table->string('episode_number')->index()->nullable();
+            $table->timestamp('release_date')->index()->nullable();
             $table->json('custom_properties')->nullable();
             $table->nullableTimestamps();
         });
