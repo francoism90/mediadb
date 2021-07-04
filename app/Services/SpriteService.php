@@ -40,16 +40,6 @@ class SpriteService
 
     protected function generateRange(float $duration = 0): array
     {
-        $divider = config('media.sprite_intval', 30);
-
-        $base = $duration / $divider;
-
-        $range = [];
-
-        for ($i = 0; $i <= $divider; ++$i) {
-            $range[] = round($i * $base);
-        }
-
-        return $range;
+        return range(0, ceil($duration), config('media.sprite_intval', 30));
     }
 }
