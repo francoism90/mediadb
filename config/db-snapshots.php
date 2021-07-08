@@ -20,5 +20,5 @@ return [
     /*
      * Create dump files that are gzipped
      */
-    'compress' => false,
+    'compress' => true,
 ];
