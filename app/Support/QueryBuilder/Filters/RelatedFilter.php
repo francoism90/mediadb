@@ -32,8 +32,8 @@ class RelatedFilter implements Filter
 
         $table = $query->getModel()->getTable();
 
-        $models = $this->getRelatedByQuery($query, $model->name);
-        $models = $models->merge($this->getRelatedByTags($query, $model->tags));
+        $models = $this->getRelatedModels($query, $model->name);
+        $models = $models->merge($this->getRelatedTagModels($query, $model->tags));
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
@@ -51,11 +51,11 @@ class RelatedFilter implements Filter
             ->orderBy('id');
     }
 
-    protected function getRelatedByQuery(Builder $query, string $value): Collection
+    protected function getRelatedModels(Builder $query, string $value): Collection
     {
-        $models = collect();
+        $value = $this->sanitize($value);
 
-        $value = $this->sanitizeQuery($value);
+        $models = collect();
 
         // e.g. this book 1, this book, this
         for ($i = $value->take(self::QUERY_WORD_LIMIT)->count(); $i >= 1; --$i) {
@@ -73,7 +73,7 @@ class RelatedFilter implements Filter
         return $models;
     }
 
-    protected function getRelatedByTags(Builder $query, Collection $tags): Collection
+    protected function getRelatedTagModels(Builder $query, Collection $tags): Collection
     {
         return $query
             ->getModel()
@@ -84,7 +84,7 @@ class RelatedFilter implements Filter
             ->get();
     }
 
-    protected function sanitizeQuery(string $value = ''): Collection
+    protected function sanitize(string $value = ''): Collection
     {
         $query = Str::of($value)->matchAll(self::FILTER_WORD_REGEX);
 
