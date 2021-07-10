@@ -18,6 +18,7 @@ class ShowController extends Controller
                 ->append([
                     'clip',
                     'favorite',
+                    'following',
                     'tracks',
                 ])
         );
