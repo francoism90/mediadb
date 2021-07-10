@@ -30,6 +30,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // User
     Route::middleware('auth:sanctum')->name('user.')->prefix('user')->namespace('User')->group(function () {
         Route::post('/favorite', ['uses' => 'FavoriteController', 'as' => 'favorite']);
+        Route::post('/follow', ['uses' => 'FollowController', 'as' => 'follow']);
     });
 
     // Video

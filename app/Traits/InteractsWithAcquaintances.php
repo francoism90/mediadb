@@ -13,6 +13,13 @@ trait InteractsWithAcquaintances
         );
     }
 
+    public function getFollowingAttribute(?User $user = null): bool
+    {
+        return $this->isFollowedBy(
+            $user ?? auth()->user()
+        );
+    }
+
     public function getSubscribedAttribute(?User $user = null): bool
     {
         return $this->isSubscribedBy(

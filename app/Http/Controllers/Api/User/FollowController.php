@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\FavoriteRequest;
+use App\Http\Requests\User\FollowRequest;
 use App\Http\Resources\ModelResource;
-use App\Notifications\FavoriteModel;
+use App\Notifications\FollowModel;
 use Spatie\PrefixedIds\PrefixedIds;
 
-class FavoriteController extends Controller
+class FollowController extends Controller
 {
-    public function __invoke(FavoriteRequest $request): ModelResource
+    public function __invoke(FollowRequest $request): ModelResource
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
@@ -18,10 +18,10 @@ class FavoriteController extends Controller
 
         abort_if(!$model, 404);
 
-        $user->toggleFavorite($model);
+        $user->toggleFollow($model);
 
         $model->refresh();
-        $user->notify(new FavoriteModel($model));
+        $user->notify(new FollowModel($model));
 
         return new ModelResource($model);
     }

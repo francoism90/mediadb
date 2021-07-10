@@ -12,7 +12,7 @@ class ModelResource extends JsonResource
             'id' => $this->getRouteKey(),
             'name' => $this->name,
             'favorite' => $this->favorite,
-            'type' => $this->getTable(),
+            'following' => $this->following,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

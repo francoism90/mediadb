@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
+use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -15,6 +16,7 @@ use Spatie\Sluggable\SlugOptions;
 class Video extends BaseModel
 {
     use CanBeFavorited;
+    use CanBeFollowed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use InteractsWithScout;
@@ -125,6 +127,18 @@ class Video extends BaseModel
         return $query
             ->with('favoriters')
             ->whereHas('favoriters', function (Builder $query): void {
+                $query->where('user_id', auth()->user()?->id);
+            })
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->select('videos.*')
+            ->latest('interactions.created_at');
+    }
+
+    public function scopeWithFollowings(Builder $query): Builder
+    {
+        return $query
+            ->with('followers')
+            ->whereHas('followers', function (Builder $query): void {
                 $query->where('user_id', auth()->user()?->id);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
