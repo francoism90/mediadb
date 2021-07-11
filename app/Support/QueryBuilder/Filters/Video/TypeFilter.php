@@ -7,19 +7,17 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 class TypeFilter implements Filter
 {
-    public const TYPES = [
-        ['key' => 'favorites', 'scope' => 'withFavorites'],
-        ['key' => 'followings', 'scope' => 'withFollowings'],
+    public const SCOPES = [
+        ['key' => 'favorites', 'value' => 'withFavorites'],
+        ['key' => 'followings', 'value' => 'withFollowings'],
     ];
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
-        $value = is_array($value) ? implode(' ', $value) : $value;
+        $value = is_string($value) ? explode(',', $value) : $value;
 
-        $types = collect(self::TYPES);
+        $scopes = collect(self::SCOPES)->whereIn('key', $value);
 
-        $type = $types->firstWhere('key', $value) ?? [];
-
-        return $query->scopes($type['scope']);
+        return $query->scopes($scopes->implode('value'));
     }
 }
