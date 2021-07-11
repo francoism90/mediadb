@@ -29,7 +29,6 @@ class Video extends BaseModel
      */
     protected $with = [
         'media',
-        'statuses',
         'tags',
     ];
 

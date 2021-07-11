@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\ModelStatus\HasStatuses;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Translatable\HasTranslations;
 
@@ -21,7 +20,6 @@ abstract class BaseModel extends Model implements HasMedia
     use HasFactory;
     use HasPrefixedId;
     use HasRandomSeed;
-    use HasStatuses;
     use HasTranslations;
     use InteractsWithMedia;
     use InteractsWithTags;

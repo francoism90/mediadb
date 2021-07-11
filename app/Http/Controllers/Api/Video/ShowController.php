@@ -14,12 +14,13 @@ class ShowController extends Controller
 
         return new VideoResource(
             $video
-                ->load('tags')
+                ->load('tags', 'viewers')
                 ->append([
                     'clip',
                     'favorite',
                     'following',
                     'tracks',
+                    'views',
                 ])
         );
     }
