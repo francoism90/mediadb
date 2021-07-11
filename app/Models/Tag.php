@@ -70,6 +70,8 @@ class Tag extends BaseTag
     {
         $locale = app()->getLocale();
 
-        return $query->whereIn(sprintf('slug->%s', $locale), $values);
+        return $query
+            ->whereIn(sprintf('slug->%s', $locale), $values)
+            ->inRandomSeedOrder();
     }
 }
