@@ -21,7 +21,7 @@ class VideoPolicy
             return false;
         }
 
-        return $video->getAttribute('status') !== 'private';
+        return 'private' !== $video->getAttribute('status');
     }
 
     public function create(User $user): bool
@@ -35,10 +35,10 @@ class VideoPolicy
             return true;
         }
 
-        return (
+        return
             $video->model->type === get_class($user) &&
             $video->model->id === $user->id
-        );
+        ;
     }
 
     public function delete(User $user, Video $video): bool
@@ -47,10 +47,10 @@ class VideoPolicy
             return true;
         }
 
-        return (
+        return
             $video->model->type === get_class($user) &&
             $video->model->id === $user->id
-        );
+        ;
     }
 
     public function restore(User $user, Video $video): bool
@@ -59,10 +59,10 @@ class VideoPolicy
             return true;
         }
 
-        return (
+        return
             $video->model->type === get_class($user) &&
             $video->model->id === $user->id
-        );
+        ;
     }
 
     public function forceDelete(User $user, Video $video): bool
@@ -71,9 +71,9 @@ class VideoPolicy
             return true;
         }
 
-        return (
+        return
             $video->model->type === get_class($user) &&
             $video->model->id === $user->id
-        );
+        ;
     }
 }
