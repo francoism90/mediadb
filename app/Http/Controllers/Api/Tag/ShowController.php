@@ -12,7 +12,7 @@ class ShowController extends Controller
     {
         return new TagResource(
             $tag->append([
-                'views',
+                'items',
             ])
         );
     }
