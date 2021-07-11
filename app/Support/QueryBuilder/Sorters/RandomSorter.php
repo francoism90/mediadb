@@ -9,8 +9,8 @@ class RandomSorter implements Sort
 {
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $query->getQuery()->reorder();
-
-        return $query->inRandomSeedOrder();
+        return $query
+            ->reorder()
+            ->inRandomSeedOrder();
     }
 }

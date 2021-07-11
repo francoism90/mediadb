@@ -4,9 +4,6 @@ namespace App\Models;
 
 use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
-use App\Traits\HasViews;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +15,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
 use Multicaret\Acquaintances\Traits\CanFollow;
 use Multicaret\Acquaintances\Traits\CanSubscribe;
+use Multicaret\Acquaintances\Traits\CanView;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -25,11 +23,12 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class User extends Authenticatable implements HasLocalePreference, HasMedia, Viewable
+class User extends Authenticatable implements HasLocalePreference, HasMedia
 {
     use CanFavorite;
     use CanFollow;
     use CanSubscribe;
+    use CanView;
     use HasApiTokens;
     use HasCustomProperties;
     use HasFactory;
@@ -37,16 +36,16 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia, Vie
     use HasRandomSeed;
     use HasRoles;
     use HasSlug;
-    use HasViews;
     use InteractsWithMedia;
-    use InteractsWithViews;
     use Notifiable;
     use Searchable;
 
     /**
      * @var array
      */
-    protected $with = ['media', 'views'];
+    protected $with = [
+        'media',
+    ];
 
     /**
      * @var array

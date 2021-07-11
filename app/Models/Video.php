@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
+use Multicaret\Acquaintances\Traits\CanBeViewed;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -17,6 +18,7 @@ class Video extends BaseModel
 {
     use CanBeFavorited;
     use CanBeFollowed;
+    use CanBeViewed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use InteractsWithScout;
@@ -29,7 +31,6 @@ class Video extends BaseModel
         'media',
         'statuses',
         'tags',
-        'views',
     ];
 
     /**

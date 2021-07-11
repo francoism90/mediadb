@@ -8,7 +8,6 @@ use App\Models\Video;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Video\TypeFilter;
-use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
@@ -40,9 +39,9 @@ class IndexController extends Controller
             ])
             ->allowedSorts([
                 $defaultSort,
-                AllowedSort::custom('name', new FieldSorter())->defaultDirection('asc'),
-                AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
-                AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
+                AllowedSort::field('name')->defaultDirection('asc'),
+                AllowedSort::field('created_at')->defaultDirection('asc'),
+                AllowedSort::field('updated_at')->defaultDirection('asc'),
                 AllowedSort::custom('duration', new DurationSorter())->defaultDirection('asc'),
                 AllowedSort::custom('random', new RandomSorter())->defaultDirection('asc'),
                 AllowedSort::custom('trending', new TrendingSorter())->defaultDirection('desc'),
