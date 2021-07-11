@@ -11,6 +11,6 @@ class ItemSorter implements Sort
     {
         return $query
             ->withCount('videos')
-            ->orderBy('videos_count', 'DESC');
+            ->orderByDesc('videos_count');
     }
 }
