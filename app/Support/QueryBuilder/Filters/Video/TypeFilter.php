@@ -9,7 +9,8 @@ class TypeFilter implements Filter
 {
     public const SCOPES = [
         ['key' => 'favorites', 'value' => 'withFavorites'],
-        ['key' => 'followings', 'value' => 'withFollowings'],
+        ['key' => 'following', 'value' => 'withFollowing'],
+        ['key' => 'viewed', 'value' => 'withViewed'],
     ];
 
     public function __invoke(Builder $query, $value, string $property): Builder

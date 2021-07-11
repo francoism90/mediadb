@@ -10,14 +10,9 @@ class ShowController extends Controller
 {
     public function __invoke(Tag $tag): TagResource
     {
-        $tag->recordView('view_count', now()->addYear());
-
         return new TagResource(
             $tag->append([
-                'views',
                 'items',
-                'videos',
-                'thumbnail_url',
             ])
         );
     }

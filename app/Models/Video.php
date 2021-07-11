@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
+use Multicaret\Acquaintances\Traits\CanBeViewed;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -17,6 +18,7 @@ class Video extends BaseModel
 {
     use CanBeFavorited;
     use CanBeFollowed;
+    use CanBeViewed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use InteractsWithScout;
@@ -27,9 +29,7 @@ class Video extends BaseModel
      */
     protected $with = [
         'media',
-        'statuses',
         'tags',
-        'views',
     ];
 
     /**
@@ -127,19 +127,31 @@ class Video extends BaseModel
         return $query
             ->with('favoriters')
             ->whereHas('favoriters', function (Builder $query): void {
-                $query->where('user_id', auth()->user()?->id);
+                $query->where('user_id', auth()?->user()?->id ?? 0);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
 
-    public function scopeWithFollowings(Builder $query): Builder
+    public function scopeWithFollowing(Builder $query): Builder
     {
         return $query
             ->with('followers')
             ->whereHas('followers', function (Builder $query): void {
-                $query->where('user_id', auth()->user()?->id);
+                $query->where('user_id', auth()?->user()?->id ?? 0);
+            })
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->select('videos.*')
+            ->latest('interactions.created_at');
+    }
+
+    public function scopeWithViewed(Builder $query): Builder
+    {
+        return $query
+            ->with('viewers')
+            ->whereHas('viewers', function (Builder $query): void {
+                $query->where('user_id', auth()?->user()?->id ?? 0);
             })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->select('videos.*')

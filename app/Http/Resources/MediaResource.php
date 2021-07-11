@@ -15,6 +15,8 @@ class MediaResource extends JsonResource
             'locale' => $this->locale,
             'mime_type' => $this->mime_type,
             'size' => $this->size,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'bitrate' => $this->whenAppended('bitrate'),
             'codec_name' => $this->whenAppended('codec_name'),
             'duration' => $this->whenAppended('duration'),
@@ -25,8 +27,6 @@ class MediaResource extends JsonResource
             'stream_url' => $this->whenAppended('stream_url'),
             'sprite_url' => $this->whenAppended('sprite_url'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

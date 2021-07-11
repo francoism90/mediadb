@@ -10,16 +10,17 @@ class ShowController extends Controller
 {
     public function __invoke(Video $video): VideoResource
     {
-        $video->recordView('view_count', now()->addYear());
+        auth()?->user()?->view($video);
 
         return new VideoResource(
             $video
-                ->load('tags')
+                ->load('tags', 'viewers')
                 ->append([
                     'clip',
                     'favorite',
                     'following',
                     'tracks',
+                    'views',
                 ])
         );
     }

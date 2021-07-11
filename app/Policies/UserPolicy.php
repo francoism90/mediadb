@@ -9,18 +9,14 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(?User $user): bool
+    public function viewAny(User $user): bool
     {
-        return false;
+        return null !== $user;
     }
 
-    public function view(?User $user, User $model): bool
+    public function view(User $user): bool
     {
-        if (null === $user) {
-            return false;
-        }
-
-        return $user->id === $model->id;
+        return null !== $user;
     }
 
     public function create(User $user): bool

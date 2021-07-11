@@ -23,16 +23,15 @@ class UpdateController extends Controller
         $video
             ->setTranslation('name', $locale, $request->input('name', $video->name))
             ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
-            ->setAttribute('season_number', $request->input('season_number'))
-            ->setAttribute('episode_number', $request->input('episode_number'));
+            ->setAttribute('status', $request->input('status'))
+            ->setAttribute('episode_number', $request->input('episode_number'))
+            ->setAttribute('episode_number', $request->input('episode_number'))
+            ->save();
 
         $this->tagService->sync(
             $video,
             $request->input('tags', [])
         );
-
-        $video->setStatus($request->input('status', $video->status));
-        $video->save();
 
         event(new HasBeenUpdated($video));
 

@@ -3,10 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasRandomSeed;
-use App\Traits\HasViews;
 use App\Traits\InteractsWithTranslations;
-use CyrildeWit\EloquentViewable\Contracts\Viewable;
-use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
@@ -14,13 +11,11 @@ use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as BaseTag;
 
-class Tag extends BaseTag implements Viewable
+class Tag extends BaseTag
 {
     use HasPrefixedId;
     use HasRandomSeed;
-    use HasViews;
     use InteractsWithTranslations;
-    use InteractsWithViews;
     use Searchable;
 
     public array $translatable = [

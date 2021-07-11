@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Sorters\FieldSorter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RecommendedSorter;
 use App\Support\QueryBuilder\Sorters\Tag\ItemSorter;
@@ -18,7 +17,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $defaultSort = AllowedSort::custom('name', new FieldSorter(), 'order_column')->defaultDirection('asc');
+        $defaultSort = AllowedSort::field('name', 'order_column')->defaultDirection('asc');
 
         $query = QueryBuilder::for(Tag::class)
             ->allowedAppends([
@@ -35,8 +34,8 @@ class IndexController extends Controller
                 AllowedSort::custom('items', new ItemSorter())->defaultDirection('desc'),
                 AllowedSort::custom('random', new RandomSorter())->defaultDirection('asc'),
                 AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc'),
-                AllowedSort::custom('created_at', new FieldSorter())->defaultDirection('desc'),
-                AllowedSort::custom('updated_at', new FieldSorter())->defaultDirection('desc'),
+                AllowedSort::field('created_at')->defaultDirection('asc'),
+                AllowedSort::field('updated_at')->defaultDirection('asc'),
             ])
             ->defaultSort($defaultSort)
             ->jsonPaginate();
