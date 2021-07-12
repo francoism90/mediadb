@@ -1173,16 +1173,16 @@
         },
         {
             "name": "elegantweb/sanitizer",
-            "version": "v1.0.5",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elegantweb/sanitizer.git",
-                "reference": "8960dcf0579836206ad3b3d8ad19718c9c054f8f"
+                "reference": "d8bc9dbbfb8beb22dcb026173a5b0c507281ddaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elegantweb/sanitizer/zipball/8960dcf0579836206ad3b3d8ad19718c9c054f8f",
-                "reference": "8960dcf0579836206ad3b3d8ad19718c9c054f8f",
+                "url": "https://api.github.com/repos/elegantweb/sanitizer/zipball/d8bc9dbbfb8beb22dcb026173a5b0c507281ddaa",
+                "reference": "d8bc9dbbfb8beb22dcb026173a5b0c507281ddaa",
                 "shasum": ""
             },
             "require": {
@@ -1236,9 +1236,9 @@
             ],
             "support": {
                 "issues": "https://github.com/elegantweb/sanitizer/issues",
-                "source": "https://github.com/elegantweb/sanitizer/tree/v1.0.5"
+                "source": "https://github.com/elegantweb/sanitizer/tree/v1.1.0"
             },
-            "time": "2021-02-17T09:47:07+00:00"
+            "time": "2021-07-11T14:49:06+00:00"
         },
         {
             "name": "evenement/evenement",
