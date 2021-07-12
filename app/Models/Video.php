@@ -126,10 +126,9 @@ class Video extends BaseModel
     {
         return $query
             ->with('favoriters')
-            ->whereHas('favoriters', function (Builder $query): void {
-                $query->where('user_id', auth()?->user()?->id ?? 0);
-            })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('relation', 'favorite')
+            ->where('user_id', auth()?->user()?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
@@ -138,10 +137,9 @@ class Video extends BaseModel
     {
         return $query
             ->with('followers')
-            ->whereHas('followers', function (Builder $query): void {
-                $query->where('user_id', auth()?->user()?->id ?? 0);
-            })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('relation', 'follow')
+            ->where('user_id', auth()?->user()?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
@@ -150,10 +148,9 @@ class Video extends BaseModel
     {
         return $query
             ->with('viewers')
-            ->whereHas('viewers', function (Builder $query): void {
-                $query->where('user_id', auth()?->user()?->id ?? 0);
-            })
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('relation', 'view')
+            ->where('user_id', auth()?->user()?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
