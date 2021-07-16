@@ -6375,16 +6375,16 @@
         },
         {
             "name": "spatie/laravel-translatable",
-            "version": "5.0.0",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-translatable.git",
-                "reference": "dee1a11a7bff406976337d4cae66f53816637e73"
+                "reference": "c1c201ff3ddff767ab53da2faf78ba141518ae69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/dee1a11a7bff406976337d4cae66f53816637e73",
-                "reference": "dee1a11a7bff406976337d4cae66f53816637e73",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/c1c201ff3ddff767ab53da2faf78ba141518ae69",
+                "reference": "c1c201ff3ddff767ab53da2faf78ba141518ae69",
                 "shasum": ""
             },
             "require": {
@@ -6446,7 +6446,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-translatable/issues",
-                "source": "https://github.com/spatie/laravel-translatable/tree/5.0.0"
+                "source": "https://github.com/spatie/laravel-translatable/tree/5.0.1"
             },
             "funding": [
                 {
@@ -6454,7 +6454,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-03-26T16:54:50+00:00"
+            "time": "2021-07-15T10:30:08+00:00"
         },
         {
             "name": "spatie/temporary-directory",
