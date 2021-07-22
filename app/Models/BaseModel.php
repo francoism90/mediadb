@@ -38,8 +38,6 @@ abstract class BaseModel extends Model implements HasMedia
      */
     protected $guarded = [];
 
-    protected bool $removeViewsOnDelete = true;
-
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';

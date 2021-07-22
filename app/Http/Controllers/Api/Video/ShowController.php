@@ -19,7 +19,6 @@ class ShowController extends Controller
                     'clip',
                     'favorite',
                     'following',
-                    'tracks',
                     'views',
                 ])
         );

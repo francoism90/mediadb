@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\Media;
+namespace App\Http\Controllers\Api\Vod;
 
 use App\Http\Controllers\Controller;
-use App\Models\Media;
-use App\Models\User;
+use App\Models\Video;
 use App\Services\SpriteService;
 use Illuminate\Http\Response;
 
@@ -15,9 +14,9 @@ class SpriteController extends Controller
     ) {
     }
 
-    public function __invoke(Media $media, User $user): Response
+    public function __invoke(Video $video): Response
     {
-        $contents = $this->spriteService->create($media);
+        $contents = $this->spriteService->create($video);
 
         return response($contents)
             ->withHeaders([

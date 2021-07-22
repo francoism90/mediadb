@@ -8,7 +8,7 @@ use App\Models\User;
 use Http\Discovery\Exception\NotFoundException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class DownloadController extends Controller
+class AssetController extends Controller
 {
     public function __invoke(Media $media, User $user): BinaryFileResponse | NotFoundException
     {
@@ -16,8 +16,12 @@ class DownloadController extends Controller
 
         abort_if(!$path || !file_exists($path), 404);
 
-        return response()->download($path, $media->file_name, [
-            'Content-Type' => $media->mime_type,
-        ]);
+        return response()->download(
+            $path,
+            $media->file_name,
+            [
+                'Content-Type' => $media->mime_type,
+            ]
+        );
     }
 }

@@ -2,25 +2,27 @@
 
 namespace App\Services;
 
-use App\Models\Media;
+use App\Models\Video;
 
 class SpriteService
 {
     public function __construct(
-        protected StreamService $streamService
+        protected VodService $vodService
     ) {
     }
 
-    public function create(Media $media): string
+    public function create(Video $video): string
     {
-        $vtt = "WEBVTT\n\n";
+        $media = $video->getFirstMedia('clip');
 
-        $collection = collect($this->generateRange($media->duration));
+        $collection = collect($this->generateRange($media->duration ?? 0));
+
+        $vtt = "WEBVTT\n\n";
 
         foreach ($collection->values() as $index => $time) {
             $offset = $time * 1000;
 
-            $thumbnailUrl = $this->streamService->getMappingUrl(
+            $thumbnailUrl = $this->vodService->getTemporaryUrl(
                 'thumb',
                 sprintf('thumb-%s-w160-h90.jpg', $offset),
                 ['media' => $media]
@@ -38,8 +40,8 @@ class SpriteService
         return $vtt;
     }
 
-    protected function generateRange(float $duration = 0): array
+    protected function generateRange(float $duration): array
     {
-        return range(0, ceil($duration), config('media.sprite_intval', 30));
+        return range(0, ceil($duration), config('api.sprite_intval', 30));
     }
 }

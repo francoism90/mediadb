@@ -12,10 +12,9 @@ class UrlGenerator extends BaseUrlGenerator
     public function getUrl(): string
     {
         return URL::signedRoute(
-            'api.media.download',
+            'api.media.asset',
             [
                 $this->media,
-                auth()->user(),
             ]
         );
     }
@@ -23,11 +22,10 @@ class UrlGenerator extends BaseUrlGenerator
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return URL::temporarySignedRoute(
-            'api.media.download',
+            'api.media.asset',
             $expiration,
             [
                 $this->media,
-                auth()->user(),
             ]
         );
     }

@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Media;
+use App\Models\Video;
 use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Support\Collection;
 
-class StreamService
+class VodService
 {
-    protected $streamer;
-
-    protected $tokenizer;
+    protected DashStreamer $streamer;
+    protected LocalTokenizer $tokenizer;
 
     public function __construct()
     {
@@ -19,30 +18,26 @@ class StreamService
         $this->tokenizer = resolve($this->getTokenModule());
     }
 
-    public function getMappingUrl(string $location, string $uri, array $token = []): string
+    public function getTemporaryUrl(string $location, string $uri, array $token = []): string
     {
-        $token = $this->tokenizer->create(
-            $token,
-            config('media.vod_expires', 60 * 24)
-        );
+        $tokenKey = $this->tokenizer->create($token);
 
-        $this->streamer->setToken($token);
+        $this->streamer->setToken($tokenKey);
 
         return $this->streamer->getUrl($location, $uri);
     }
 
-    public function getResponseFormat(Media $media): Collection
+    public function getSequencesFormat(Video $video, string $collection = 'clip'): Collection
     {
         return collect([
-            'id' => $media->id,
+            'id' => $video->getRouteKey(),
             'sequences' => [
                 [
-                    'id' => $media->id,
-                    'label' => $media->name,
+                    'label' => $video->name,
                     'clips' => [
                         [
                             'type' => 'source',
-                            'path' => $media->getPath(),
+                            'path' => $video->getFirstMediaPath($collection),
                         ],
                     ],
                 ],
@@ -60,12 +55,12 @@ class StreamService
         return $this->tokenizer->find($token);
     }
 
-    public function getStreamModule(): string
+    protected function getStreamModule(): string
     {
         return config('media.stream_module', DashStreamer::class);
     }
 
-    public function getTokenModule(): string
+    protected function getTokenModule(): string
     {
         return config('media.token_module', LocalTokenizer::class);
     }

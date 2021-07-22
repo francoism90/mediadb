@@ -82,10 +82,10 @@ class Video extends BaseModel
 
     public function registerMediaConversions($media = null): void
     {
-        $conversions = config('video.conversions', []);
+        $conversions = config('api.video_conversions');
 
-        foreach ($conversions as $conversion) {
-            $this->addMediaConversion($conversion)
+        foreach ($conversions as $key => $value) {
+            $this->addMediaConversion($key)
                  ->withoutManipulations()
                  ->performOnCollections('conversion-service')
                  ->nonQueued();
@@ -96,13 +96,13 @@ class Video extends BaseModel
     {
         $this
             ->addMediaCollection('clip')
-            ->acceptsMimeTypes(config('video.clip_mimetypes'))
+            ->acceptsMimeTypes(config('api.sync.video_mimetypes'))
             ->singleFile()
             ->useDisk('media');
 
         $this
             ->addMediaCollection('caption')
-            ->acceptsMimeTypes(config('video.caption_mimetypes'))
+            ->acceptsMimeTypes(config('api.sync.caption_mimetypes'))
             ->useDisk('media');
     }
 
@@ -111,15 +111,32 @@ class Video extends BaseModel
         return $this->getFirstMedia('clip')?->append([
             'duration',
             'resolution',
-            'stream_url',
-            'sprite_url',
-            'thumbnail_url',
         ]);
     }
 
-    public function getTracksAttribute(): MediaCollection
+    public function getCaptionsAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
+    }
+
+    public function getSpriteUrlAttribute(): string
+    {
+        return url('api.vod.sprite', [
+            'video' => $this,
+        ]);
+    }
+
+
+    public function getThumbnailUrlAttribute(): string
+    {
+        return $this->getFirstMediaUrl('clip', 'thumbnail');
+    }
+
+    public function getVodUrlAttribute(): string
+    {
+        return url('api.vod.stream', [
+            'video' => $this,
+        ]);
     }
 
     public function scopeWithFavorites(Builder $query): Builder
