@@ -46,8 +46,8 @@ See `doc/nginx` for configuration examples.
 | ------------------- | -------------------------------- | -------------------------------------------------------------------- |
 | mediadb-api.conf    | localhost:3000                   | API endpoint: Laravel instance, authentication, media processing, .. |
 | mediadb-app.conf    | mediadb.test:443 mediadb.test:80 | MediaDB SPA/PWA, MediaDB API proxy.                                  |
-| mediadb-vod.conf    | stream.test:443 stream.test:80   | VOD: streaming endpoint, video mapping, thumbnail capture.           |
-| mediadb-socket.conf | socket.mediadb.test:443          | Laravel Echo (broadcasting events).                                  |
+| mediadb-vod.conf    | stream.test:443 stream.test:80   | VOD: streaming endpoint, json mapping, thumbnail capture.            |
+| mediadb-socket.conf | socket.mediadb.test:443          | Laravel Echo: broadcasting events/notifications.                     |
 
 ### Laravel
 
@@ -63,15 +63,10 @@ php artisan migrate
 php artisan key:generate
 php artisan storage:link
 php artisan scout:create-indexes
-```
-
-It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/media.php`, `config/video.php`, `config/media-library.php` and `config/filesystems.php`.
-
-#### Seeders
-
-```bash
 php artisan db:seed
 ```
+
+It is advisable to checkout all configuration files and change them when necessary, especially `.env`, `config/api.php` and `config/filesystems.php`.
 
 ### Generating VOD key + IV
 
