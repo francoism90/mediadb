@@ -18,7 +18,7 @@ class VodService
         $this->tokenizer = resolve($this->getTokenModule());
     }
 
-    public function getTemporaryUrl(string $location, string $uri, array $token = []): string
+    public function generateUrl(string $location, string $uri, array $token = []): string
     {
         $tokenKey = $this->tokenizer->create($token);
 

@@ -16,15 +16,15 @@ class StreamController extends Controller
 
     public function __invoke(Video $video): RedirectResponse
     {
+        logger('hallo');
+
         $streamUrl = $this
             ->vodService
-            ->getTemporaryUrl(
-                'dash',
-                'manifest.mpd',
-                [
-                    'video' => $video,
-                ]
-            );
+            ->generateUrl('dash', 'manifest.mpd', [
+                'video' => $video,
+            ]);
+
+        logger($streamUrl);
 
         return redirect($streamUrl);
     }

@@ -121,11 +121,10 @@ class Video extends BaseModel
 
     public function getSpriteUrlAttribute(): string
     {
-        return url('api.vod.sprite', [
+        return route('api.vod.sprite', [
             'video' => $this,
         ]);
     }
-
 
     public function getThumbnailUrlAttribute(): string
     {
@@ -134,7 +133,7 @@ class Video extends BaseModel
 
     public function getVodUrlAttribute(): string
     {
-        return url('api.vod.stream', [
+        return route('api.vod.stream', [
             'video' => $this,
         ]);
     }
