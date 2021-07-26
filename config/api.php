@@ -16,7 +16,7 @@ return [
 
     'vod_iv' => env('VOD_IV'),
 
-    'vod_expire' => env('VOD_EXPIRE', 60 * 24),
+    'vod_expires' => env('VOD_EXPIRES', 60 * 24),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'video_conversions' => [
+    'conversions' => [
         'thumbnail' => [
             'path' => 'thumbnail.jpg',
             'filter' => 'scale=2048:-1',
@@ -79,7 +79,7 @@ return [
     |
     */
 
-    'video_resolutions' => [
+    'resolutions' => [
         ['width' => 352, 'label' => '240p'],
         ['width' => 480, 'label' => '360p'],
         ['width' => 858, 'label' => '480p'],
@@ -90,5 +90,21 @@ return [
         ['width' => 1920, 'label' => '1080p'],
         ['width' => 2560, 'label' => '4K'],
         ['width' => 3840, 'label' => '4K UHD'],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tag Attributes
+    |--------------------------------------------------------------------------
+    |
+    | This controls tag attributes.
+    |
+    */
+
+    'tag_types' => [
+        'actor',
+        'genre',
+        'language',
+        'studio',
     ],
 ];

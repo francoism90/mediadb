@@ -7,6 +7,7 @@ use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithScout;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
@@ -83,7 +84,7 @@ class Video extends BaseModel
 
     public function registerMediaConversions($media = null): void
     {
-        $conversions = config('api.video_conversions');
+        $conversions = config('api.conversions');
 
         foreach ($conversions as $key => $value) {
             $this->addMediaConversion($key)
@@ -122,14 +123,22 @@ class Video extends BaseModel
 
     public function getThumbnailUrlAttribute(): string
     {
-        return $this->getFirstMediaUrl('clip', 'thumbnail');
+        return URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $this->getFirstMedia('clip'),
+                'name' => 'thumbnail',
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
     }
 
     public function getVodUrlAttribute(): string
     {
-        return app(VodService::class)->generateUrl('dash', 'manifest.mpd', [
-            'video' => $this,
-        ]);
+        return app(VodService::class)
+            ->generateUrl('dash', 'manifest.mpd', [
+                'video' => $this,
+            ]);
     }
 
     public function scopeWithFavorites(Builder $query): Builder

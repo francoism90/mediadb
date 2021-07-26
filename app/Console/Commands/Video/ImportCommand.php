@@ -15,7 +15,6 @@ class ImportCommand extends Command
      */
     protected $signature = 'video:import
         {path? : Import path to use}
-        {collection=clip : Import to collection}
         {user=1 : Import to user}';
 
     /**
@@ -37,7 +36,6 @@ class ImportCommand extends Command
         $videoService->import(
             $user,
             $this->argument('path'),
-            $this->argument('collection'),
             $this
         );
     }

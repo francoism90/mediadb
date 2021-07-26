@@ -66,7 +66,7 @@ class Media extends BaseMedia
     public function getResolutionAttribute(): ?string
     {
         $resolutions = collect(
-            config('media.resolutions', [])
+            config('api.resolutions', [])
         );
 
         $mediaWidth = $this->width ?? 480;

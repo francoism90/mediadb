@@ -24,7 +24,7 @@ class VideoResource extends JsonResource
             'overview' => $this->whenAppended('overview'),
             'thumbnail_url' => $this->whenAppended('thumbnail_url'),
             'vod_url' => $this->whenAppended('vod_url'),
-            'views' => $this->whenAppended('views', $this->viewersCount()),
+            'views' => $this->whenAppended('views'),
             'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
             'captions' => $this->whenAppended('captions', MediaResource::collection($this->captions)),
             'model' => new ModelResource($this->whenLoaded('model')),

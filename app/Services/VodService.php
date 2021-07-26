@@ -57,11 +57,11 @@ class VodService
 
     protected function getStreamModule(): string
     {
-        return config('media.stream_module', DashStreamer::class);
+        return config('api.stream_module', DashStreamer::class);
     }
 
     protected function getTokenModule(): string
     {
-        return config('media.token_module', LocalTokenizer::class);
+        return config('api.token_module', LocalTokenizer::class);
     }
 }

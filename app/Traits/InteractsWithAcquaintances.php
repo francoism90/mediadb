@@ -26,4 +26,9 @@ trait InteractsWithAcquaintances
             $user ?? auth()->user()
         );
     }
+
+    public function getViewsAttribute(): ?int
+    {
+        return $this->viewersCount();
+    }
 }
