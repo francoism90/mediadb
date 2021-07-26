@@ -58,7 +58,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // VOD
     Route::name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
         Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}', ['uses' => 'ManifestController', 'as' => 'manifest']);
-        Route::middleware('auth:sanctum')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
-        Route::middleware('auth:sanctum')->get('/stream/{video}', ['uses' => 'StreamController', 'as' => 'stream']);
+        Route::middleware('auth:sanctum')->get('/capture/{video}/{offset}', ['uses' => 'CaptureController', 'as' => 'capture']);
     });
 });

@@ -14,8 +14,8 @@ class VodService
 
     public function __construct()
     {
-        $this->streamer = resolve($this->getStreamModule());
-        $this->tokenizer = resolve($this->getTokenModule());
+        $this->streamer = app($this->getStreamModule());
+        $this->tokenizer = app($this->getTokenModule());
     }
 
     public function generateUrl(string $location, string $uri, array $token = []): string
@@ -27,7 +27,7 @@ class VodService
         return $this->streamer->getUrl($location, $uri);
     }
 
-    public function getSequencesFormat(Video $video, string $collection = 'clip'): Collection
+    public function getFormat(Video $video, string $collection = 'clip'): Collection
     {
         return collect([
             'id' => $video->getRouteKey(),

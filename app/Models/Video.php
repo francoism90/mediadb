@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\VodService;
 use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithScout;
 use Illuminate\Database\Eloquent\Builder;
@@ -119,13 +120,6 @@ class Video extends BaseModel
         return $this->getMedia('caption');
     }
 
-    public function getSpriteUrlAttribute(): string
-    {
-        return route('api.vod.sprite', [
-            'video' => $this,
-        ]);
-    }
-
     public function getThumbnailUrlAttribute(): string
     {
         return $this->getFirstMediaUrl('clip', 'thumbnail');
@@ -133,7 +127,7 @@ class Video extends BaseModel
 
     public function getVodUrlAttribute(): string
     {
-        return route('api.vod.stream', [
+        return app(VodService::class)->generateUrl('dash', 'manifest.mpd', [
             'video' => $this,
         ]);
     }
