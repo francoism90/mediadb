@@ -13,7 +13,7 @@ class DashStreamer implements StreamerInterface
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
 
-        return config('media.vod_url').sprintf('/%s/%s', $location, $hashPath);
+        return config('api.vod_url').sprintf('/%s/%s', $location, $hashPath);
     }
 
     public function setToken(string $token): void
@@ -47,7 +47,7 @@ class DashStreamer implements StreamerInterface
 
     protected function getManifestRoute(): string
     {
-        $route = route('api.media.manifest', ['token' => $this->token], false);
+        $route = route('api.vod.manifest', ['token' => $this->token], false);
 
         return trim($route, '/');
     }
@@ -70,16 +70,16 @@ class DashStreamer implements StreamerInterface
 
     protected function getStreamKey(): string
     {
-        return pack('H*', config('media.vod_key'));
+        return pack('H*', config('api.vod_key'));
     }
 
     protected function getStreamIV(): string
     {
-        return pack('H*', config('media.vod_iv'));
+        return pack('H*', config('api.vod_iv'));
     }
 
     protected function getStreamHashSize(): int
     {
-        return config('media.vod_hash_size', 8);
+        return config('api.vod_hash_size', 8);
     }
 }

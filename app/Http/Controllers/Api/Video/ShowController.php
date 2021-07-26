@@ -19,8 +19,9 @@ class ShowController extends Controller
                     'clip',
                     'favorite',
                     'following',
-                    'tracks',
                     'views',
+                    'thumbnail_url',
+                    'vod_url',
                 ])
         );
     }

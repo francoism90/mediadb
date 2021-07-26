@@ -22,9 +22,11 @@ class VideoResource extends JsonResource
             'following' => $this->whenAppended('following'),
             'status' => $this->whenAppended('status'),
             'overview' => $this->whenAppended('overview'),
-            'views' => $this->whenAppended('views', $this->viewersCount()),
+            'thumbnail_url' => $this->whenAppended('thumbnail_url'),
+            'vod_url' => $this->whenAppended('vod_url'),
+            'views' => $this->whenAppended('views'),
             'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
-            'tracks' => $this->whenAppended('tracks', MediaResource::collection($this->tracks)),
+            'captions' => $this->whenAppended('captions', MediaResource::collection($this->captions)),
             'model' => new ModelResource($this->whenLoaded('model')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
         ];

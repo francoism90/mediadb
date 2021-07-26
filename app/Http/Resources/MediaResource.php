@@ -23,10 +23,6 @@ class MediaResource extends JsonResource
             'resolution' => $this->whenAppended('resolution'),
             'height' => $this->whenAppended('height'),
             'width' => $this->whenAppended('width'),
-            'download_url' => $this->whenAppended('download_url'),
-            'stream_url' => $this->whenAppended('stream_url'),
-            'sprite_url' => $this->whenAppended('sprite_url'),
-            'thumbnail_url' => $this->whenAppended('thumbnail_url'),
         ];
     }
 }

@@ -16,7 +16,7 @@ class ThumbnailService
     public function create(Media $media): void
     {
         $path = $this->conversionService->temporaryDirectory()->path(
-            config('media.thumbnail_name')
+            config('api.conversions.thumbnail.path')
         );
 
         $video = $this->ffmpegService->openFile(
@@ -30,7 +30,7 @@ class ThumbnailService
             $video,
             $path,
             $timeCode,
-            config('media.thumbnail_filter')
+            config('api.conversions.thumbnail.filter')
         );
 
         $this->imageService->optimize($path);
@@ -38,7 +38,7 @@ class ThumbnailService
         $this->conversionService->import(
             $media,
             $path,
-            config('media.thumbnail_name')
+            config('api.conversions.thumbnail.path')
         );
 
         $media->markAsConversionGenerated('thumbnail');

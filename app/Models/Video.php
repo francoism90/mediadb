@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\VodService;
 use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithScout;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
@@ -82,10 +84,10 @@ class Video extends BaseModel
 
     public function registerMediaConversions($media = null): void
     {
-        $conversions = config('video.conversions', []);
+        $conversions = config('api.conversions');
 
-        foreach ($conversions as $conversion) {
-            $this->addMediaConversion($conversion)
+        foreach ($conversions as $key => $value) {
+            $this->addMediaConversion($key)
                  ->withoutManipulations()
                  ->performOnCollections('conversion-service')
                  ->nonQueued();
@@ -96,13 +98,13 @@ class Video extends BaseModel
     {
         $this
             ->addMediaCollection('clip')
-            ->acceptsMimeTypes(config('video.clip_mimetypes'))
+            ->acceptsMimeTypes(config('api.sync.video_mimetypes'))
             ->singleFile()
             ->useDisk('media');
 
         $this
             ->addMediaCollection('caption')
-            ->acceptsMimeTypes(config('video.caption_mimetypes'))
+            ->acceptsMimeTypes(config('api.sync.caption_mimetypes'))
             ->useDisk('media');
     }
 
@@ -111,15 +113,32 @@ class Video extends BaseModel
         return $this->getFirstMedia('clip')?->append([
             'duration',
             'resolution',
-            'stream_url',
-            'sprite_url',
-            'thumbnail_url',
         ]);
     }
 
-    public function getTracksAttribute(): MediaCollection
+    public function getCaptionsAttribute(): MediaCollection
     {
         return $this->getMedia('caption');
+    }
+
+    public function getThumbnailUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.media.asset',
+            [
+                'media' => $this->getFirstMedia('clip'),
+                'name' => 'thumbnail',
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
+    }
+
+    public function getVodUrlAttribute(): string
+    {
+        return app(VodService::class)
+            ->generateUrl('dash', 'manifest.mpd', [
+                'video' => $this,
+            ]);
     }
 
     public function scopeWithFavorites(Builder $query): Builder

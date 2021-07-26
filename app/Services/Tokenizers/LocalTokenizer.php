@@ -10,7 +10,7 @@ class LocalTokenizer implements TokenizerInterface
     public function create(array $data = []): string
     {
         $key = Str::uuid();
-        $expires = config('media.vod_expires', 60 * 24);
+        $expires = config('api.vod_expires');
 
         Cache::tags(['tokens', 'local'])->put($key, $data, $expires);
 

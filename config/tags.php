@@ -11,14 +11,4 @@ return [
      * The fully qualified class name of the tag model.
      */
     'tag_model' => App\Models\Tag::class,
-
-    /*
-     * The default types to sync.
-     */
-    'types' => [
-        'actor',
-        'genre',
-        'language',
-        'studio',
-    ],
 ];

@@ -18,14 +18,11 @@ class VideoService
     public function import(
         Model $model,
         ?string $path = null,
-        ?string $collection = null,
         ?ImportCommand $command = null
     ): void {
         $results = collect();
 
         $path = $path ?: Storage::disk('import')->path('');
-
-        $collection = $collection ?: config('video.default_collection', 'clip');
 
         $files = $this->syncService->gatherFiles($path);
 
@@ -41,7 +38,7 @@ class VideoService
                     'name' => Str::title($file->getFilenameWithoutExtension()),
                 ]);
 
-                $this->syncService->add($baseModel, $file, $collection);
+                $this->syncService->add($baseModel, $file, 'clip');
 
                 $results->push([
                     'path' => $filePath,

@@ -11,7 +11,7 @@ class TagService
     {
         $collect = collect($tags);
 
-        $types = config('tags.types');
+        $types = config('api.tag_types');
 
         foreach ($types as $type) {
             $items = $collect

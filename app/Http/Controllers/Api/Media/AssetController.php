@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Api\Media;
 
 use App\Http\Controllers\Controller;
 use App\Models\Media;
-use App\Models\User;
 use Illuminate\Filesystem\FilesystemManager;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ConversionController extends Controller
+class AssetController extends Controller
 {
     public function __construct(
         protected DefaultPathGenerator $basePathGenerator,
@@ -17,16 +16,9 @@ class ConversionController extends Controller
     ) {
     }
 
-    public function __invoke(Media $media, ?User $user, string $name): BinaryFileResponse
+    public function __invoke(Media $media, string $name): BinaryFileResponse
     {
-        abort_if(!$user || !$user->hasAnyRole(['member', 'super-admin']), 403);
-
-        // We need to define conversions
-        $conversions = collect([
-            ['name' => 'thumbnail', 'path' => config('media.thumbnail_name')],
-        ]);
-
-        $conversion = $conversions->firstWhere('name', $name);
+        $conversion = collect(config('api.conversions'))->first(fn ($value, $key) => $key === $name);
 
         abort_if(!$conversion || !$media->hasGeneratedConversion($name), 404);
 

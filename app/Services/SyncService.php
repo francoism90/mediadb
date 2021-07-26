@@ -70,7 +70,7 @@ class SyncService
         return $this->finder->create()
             ->files()
             ->followLinks()
-            ->name(config('media.importable'))
+            ->name(config('api.sync.extensions'))
             ->in($path);
     }
 }

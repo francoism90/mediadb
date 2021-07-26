@@ -52,11 +52,12 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
+        Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/asset/{media?}/{name}', ['uses' => 'AssetController', 'as' => 'asset']);
+    });
 
-        Route::middleware(['cache.headers:public;max_age=31536000;etag', 'signed'])->get('/asset/{media}/{user?}/{name}/{version?}', ['uses' => 'ConversionController', 'as' => 'asset']);
-        Route::middleware('signed')->get('/download/{media}/{user?}', ['uses' => 'DownloadController', 'as' => 'download']);
-        Route::middleware('signed')->get('/stream/{media}/{user?}', ['uses' => 'StreamController', 'as' => 'stream']);
-        Route::middleware('signed')->get('/sprite/{media}/{user?}', ['uses' => 'SpriteController', 'as' => 'sprite']);
-        Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}/{type?}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+    // VOD
+    Route::name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
+        Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+        Route::middleware('auth:sanctum')->get('/capture/{video}/{offset}', ['uses' => 'CaptureController', 'as' => 'capture']);
     });
 });
