@@ -19,7 +19,7 @@ class ConversionService
         return (new TemporaryDirectory())->create();
     }
 
-    public function import(Media $media, string $path, string $name): self
+    public function move(Media $media, string $path, string $name): self
     {
         $this->filesystem->copyToMediaLibrary(
             $path,

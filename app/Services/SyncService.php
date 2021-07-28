@@ -31,10 +31,10 @@ class SyncService
         $extension = $file->getExtension();
 
         $media = $model
-                ->addMedia($path)
-                ->withCustomProperties($properties)
-                ->storingConversionsOnDisk('conversions')
-                ->toMediaCollection($collection);
+            ->addMedia($path)
+            ->withCustomProperties($properties)
+            ->storingConversionsOnDisk('conversions')
+            ->toMediaCollection($collection);
 
         // Force WebVTT
         if ('vtt' === $extension) {
@@ -45,7 +45,16 @@ class SyncService
         event(new HasBeenAdded($model, $media));
     }
 
-    public function handleMissingMetadata(): void
+    public function gatherFiles(string $path): Finder
+    {
+        return $this->finder->create()
+            ->files()
+            ->followLinks()
+            ->name(config('api.sync.extensions'))
+            ->in($path);
+    }
+
+    public static function handleMissingMetadata(): void
     {
         $models = Media::missingMetadata()->cursor();
 
@@ -54,7 +63,7 @@ class SyncService
         }
     }
 
-    public function handleMissingConversions(): void
+    public static function handleMissingConversions(): void
     {
         $models = Media::missingConversions()->cursor();
 
@@ -63,14 +72,5 @@ class SyncService
                 CreateThumbnail::dispatch($model)->onQueue('media');
             }
         }
-    }
-
-    public function gatherFiles(string $path): Finder
-    {
-        return $this->finder->create()
-            ->files()
-            ->followLinks()
-            ->name(config('api.sync.extensions'))
-            ->in($path);
     }
 }

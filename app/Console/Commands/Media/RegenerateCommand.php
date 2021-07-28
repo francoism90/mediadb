@@ -17,10 +17,9 @@ class RegenerateCommand extends Command
      */
     protected $description = 'Regenerate media models';
 
-    public function handle(
-        SyncService $syncService
-    ): void {
-        $syncService->handleMissingMetadata();
-        $syncService->handleMissingConversions();
+    public function handle(): void
+    {
+        SyncService::handleMissingMetadata();
+        SyncService::handleMissingConversions();
     }
 }

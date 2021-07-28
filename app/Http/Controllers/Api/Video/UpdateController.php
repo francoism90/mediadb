@@ -11,11 +11,6 @@ use App\Services\TagService;
 
 class UpdateController extends Controller
 {
-    public function __construct(
-        protected TagService $tagService
-    ) {
-    }
-
     public function __invoke(UpdateRequest $request, Video $video): VideoResource
     {
         $locale = app()->getLocale();
@@ -25,13 +20,10 @@ class UpdateController extends Controller
             ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
             ->setAttribute('status', $request->input('status'))
             ->setAttribute('episode_number', $request->input('episode_number'))
-            ->setAttribute('episode_number', $request->input('episode_number'))
+            ->setAttribute('season_number', $request->input('season_number'))
             ->save();
 
-        $this->tagService->sync(
-            $video,
-            $request->input('tags', [])
-        );
+        TagService::sync($video, $request->input('tags', []));
 
         event(new HasBeenUpdated($video));
 

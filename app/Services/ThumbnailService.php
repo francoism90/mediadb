@@ -9,7 +9,6 @@ class ThumbnailService
     public function __construct(
         protected FFMpegService $ffmpegService,
         protected ConversionService $conversionService,
-        protected ImageService $imageService
     ) {
     }
 
@@ -33,9 +32,9 @@ class ThumbnailService
             config('api.conversions.thumbnail.filter')
         );
 
-        $this->imageService->optimize($path);
+        ImageService::optimize($path);
 
-        $this->conversionService->import(
+        $this->conversionService->move(
             $media,
             $path,
             config('api.conversions.thumbnail.path')
