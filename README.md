@@ -3,11 +3,11 @@
 **MediaDB** is a web-based media streaming service written in Laravel and Vue.
 
 - The [nginx-vod-module](https://github.com/kaltura/nginx-vod-module) is used for on-the-fly repackaging of MP4 files to DASH.
-- The [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module) is used to prevent unwanted access and reading of streams. However CDN solutions may be preferred, `nginx-secure-token-module` provides support for several token providers.
+- The [nginx-secure-token-module](https://github.com/kaltura/nginx-secure-token-module) is used to encrypt stream urls. CDN solutions may be preferred, `nginx-secure-token-module` provides support for several token providers (Akamai/CloudFront).
 
 Full size (old) [screenshots](https://github.com/francoism90/.github/tree/master/screens/mediadb) are available on my Github repo.
 
-MediaDB is very much in development and may not be suitable for production purposes. It is recommended to fork the project.
+Note: MediaDB is very much in development and may not be suitable for production purposes. It is recommended to fork the project.
 
 ## Installation
 
@@ -75,14 +75,14 @@ dd if=/dev/urandom bs=1 count=32 2> /dev/null | xxd -p -c32
 dd if=/dev/urandom bs=1 count=16 2> /dev/null | xxd -p -c32
 ```
 
-`.env`:
+Update `.env`:
 
 ```env
 VOD_KEY=d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793
 VOD_IV=722d4f9191c53d5e934e13719d02cced
 ```
 
-`mediadb-vod.conf`:
+Update `mediadb-vod.conf`:
 
 ```bash
 secure_token_encrypt_uri_key d5460ef7a5c2bece2d1b24e0d9959e5ea9beb9dd449080147bdba001e9106793;
@@ -91,7 +91,7 @@ secure_token_encrypt_uri_iv 722d4f9191c53d5e934e13719d02cced;
 
 ### Set DASH encryption key
 
-`mediadb-vod.conf`:
+Update `mediadb-vod.conf`:
 
 ```bash
 vod_secret_key "mysecret-$vod_filepath";
@@ -99,17 +99,17 @@ vod_secret_key "mysecret-$vod_filepath";
 
 ### Set VOD url
 
-`.env`:
+Update `.env`:
 
 ```env
-VOD_URL=https://stream.test
+VOD_URL=https://mediadb.test
 ```
 
-`mediadb-vod.conf`:
+Update `mediadb-vod.conf`:
 
 ```bash
-vod_base_url "https://stream.test";
-vod_segments_base_url "https://stream.test";
+vod_base_url "https://mediadb.test";
+vod_segments_base_url "https://mediadb.test";
 ```
 
 ## Usage
