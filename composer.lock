@@ -2044,16 +2044,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.52.0",
+            "version": "v8.53.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8fe9877d52e25f8aed36c51734e5a8510be967e6"
+                "reference": "4b2e3e7317da82dd9f5b88d477abd93444748b43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8fe9877d52e25f8aed36c51734e5a8510be967e6",
-                "reference": "8fe9877d52e25f8aed36c51734e5a8510be967e6",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4b2e3e7317da82dd9f5b88d477abd93444748b43",
+                "reference": "4b2e3e7317da82dd9f5b88d477abd93444748b43",
                 "shasum": ""
             },
             "require": {
@@ -2126,7 +2126,7 @@
                 "illuminate/view": "self.version"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "^3.155",
+                "aws/aws-sdk-php": "^3.186.4",
                 "doctrine/dbal": "^2.6|^3.0",
                 "filp/whoops": "^2.8",
                 "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
@@ -2139,7 +2139,7 @@
                 "symfony/cache": "^5.1.4"
             },
             "suggest": {
-                "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.155).",
+                "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.186.4).",
                 "brianium/paratest": "Required to run tests in parallel (^6.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6|^3.0).",
                 "ext-ftp": "Required to use the Flysystem FTP driver.",
@@ -2208,7 +2208,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-07-27T13:03:29+00:00"
+            "time": "2021-08-03T14:36:33+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2425,16 +2425,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.6.0",
+            "version": "v4.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "67bc1819a3f9b6cd3bac3c1fae506dcd7a8d8a48"
+                "reference": "0ad3dfd523f6fda6fa5e7adaa6a72a5d8921f752"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/67bc1819a3f9b6cd3bac3c1fae506dcd7a8d8a48",
-                "reference": "67bc1819a3f9b6cd3bac3c1fae506dcd7a8d8a48",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/0ad3dfd523f6fda6fa5e7adaa6a72a5d8921f752",
+                "reference": "0ad3dfd523f6fda6fa5e7adaa6a72a5d8921f752",
                 "shasum": ""
             },
             "require": {
@@ -2483,9 +2483,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.6.0"
+                "source": "https://github.com/laravel/telescope/tree/v4.6.1"
             },
-            "time": "2021-07-13T14:59:41+00:00"
+            "time": "2021-08-03T18:44:23+00:00"
         },
         {
             "name": "laravel/tinker",
