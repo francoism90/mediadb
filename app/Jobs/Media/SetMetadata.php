@@ -30,9 +30,6 @@ class SetMetadata implements ShouldQueue
         $this->media = $media->withoutRelations();
     }
 
-    /**
-     * @return void
-     */
     public function handle(
         MetadataService $metadataService
     ): void {

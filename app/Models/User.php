@@ -72,8 +72,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         'remember_token',
     ];
 
-    protected bool $removeViewsOnDelete = true;
-
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';

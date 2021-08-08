@@ -24,8 +24,6 @@ class Tag extends BaseTag
         'description',
     ];
 
-    protected bool $removeViewsOnDelete = true;
-
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';

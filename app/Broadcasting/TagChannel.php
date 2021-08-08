@@ -7,7 +7,7 @@ use App\Models\User;
 
 class TagChannel
 {
-    public function join(User $user, Tag $model): bool
+    public function join(User $user, Tag $tag): bool
     {
         return true;
     }

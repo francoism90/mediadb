@@ -7,7 +7,7 @@ use App\Models\Video;
 
 class VideoChannel
 {
-    public function join(User $user, Video $model): bool
+    public function join(User $user, Video $video): bool
     {
         return true;
     }

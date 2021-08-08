@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class SlugFilter implements Filter
 {
-    public function apply($value, array $options = []): ?string
+    public function apply($value, array $options = []): string
     {
         return Str::slug($value);
     }

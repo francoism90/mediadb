@@ -33,7 +33,6 @@ class RelatedFilter implements Filter
                     ->whereIn(sprintf('%s.id', $table), $ids)
                     ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             })
-            ->where('id', '<>', $model->id)
-            ->take(60);
+            ->where('id', '<>', $model->id);
     }
 }

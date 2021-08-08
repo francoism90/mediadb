@@ -12,7 +12,7 @@ class TrendingSorter implements Sort
     {
         return $query
             ->with('viewers')
-            ->withCount(['viewers' => function (Builder $query) {
+            ->withCount(['viewers' => function (Builder $query): void {
                 $query->where('interactions.created_at', '>=', Carbon::now()->subDays(3));
             }])
             ->orderByDesc('viewers_count');
