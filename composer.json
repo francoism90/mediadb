@@ -44,8 +44,9 @@
         "laravel/sail": "^1.8",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.5",
+        "phpstan/phpstan": "^0.12.94",
         "phpunit/phpunit": "^9.5",
-        "rector/rector": "^0.11.36"
+        "rector/rector": "^0.11.43"
     },
     "config": {
         "optimize-autoloader": true,
