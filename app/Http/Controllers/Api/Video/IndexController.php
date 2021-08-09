@@ -10,7 +10,7 @@ use App\Support\QueryBuilder\Filters\RelatedFilter;
 use App\Support\QueryBuilder\Filters\Video\TypeFilter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
-use App\Support\QueryBuilder\Sorters\RecommendedSorter;
+use App\Support\QueryBuilder\Sorters\RelevanceSorter;
 use App\Support\QueryBuilder\Sorters\TrendingSorter;
 use App\Support\QueryBuilder\Sorters\Video\DurationSorter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -21,9 +21,13 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $defaultSort = AllowedSort::custom('recommended', new RecommendedSorter())->defaultDirection('desc');
+        $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter())
+            ->defaultDirection('desc');
 
-        $videos = QueryBuilder::for(Video::class)
+        $query = Video::cacheFor(config('api.listing.cache_expires', 60 * 60))
+            ->cacheTags(['videos']);
+
+        $videos = QueryBuilder::for($query)
             ->allowedAppends([
                 'clip',
                 'thumbnail_url',

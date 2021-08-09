@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as BaseTag;
 
@@ -17,6 +18,7 @@ class Tag extends BaseTag
     use HasRandomSeed;
     use InteractsWithTranslations;
     use Searchable;
+    use QueryCacheable;
 
     public array $translatable = [
         'name',

@@ -45,6 +45,8 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
      */
     protected $with = [
         'media',
+        'permissions',
+        'roles',
     ];
 
     /**
