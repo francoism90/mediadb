@@ -20,6 +20,11 @@ class Tag extends BaseTag
     use Searchable;
     use QueryCacheable;
 
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
     public array $translatable = [
         'name',
         'slug',
@@ -29,6 +34,14 @@ class Tag extends BaseTag
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';
+    }
+
+    public function getCacheTagsToInvalidateOnUpdate($relation = null, $pivotedModels = null): array
+    {
+        return [
+            "tag:{$this->id}",
+            'tags',
+        ];
     }
 
     public function searchableAs(): string

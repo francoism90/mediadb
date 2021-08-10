@@ -25,6 +25,11 @@ class Video extends BaseModel
     use Searchable;
 
     /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
+    /**
      * @var array
      */
     protected $with = [
@@ -55,6 +60,14 @@ class Video extends BaseModel
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    public function getCacheTagsToInvalidateOnUpdate($relation = null, $pivotedModels = null): array
+    {
+        return [
+            "video:{$this->id}",
+            'videos',
+        ];
     }
 
     public function searchableAs(): string
