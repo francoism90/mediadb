@@ -29,9 +29,9 @@ class IndexController extends Controller
                 'views',
             ])
             ->allowedFilters([
-                AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),
-                AllowedFilter::exact('type')->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
+                AllowedFilter::exact('type')->ignore(null, '*'),
+                AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),
             ])
             ->AllowedSorts([
                 $defaultSort,

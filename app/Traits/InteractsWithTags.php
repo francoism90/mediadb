@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
 
@@ -46,5 +47,10 @@ trait InteractsWithTags
         });
 
         return $collection->unique()->toArray();
+    }
+
+    public function scopeWithTags(Builder $query, ...$values)
+    {
+        return $this->scopeWithAllTagsOfAnyType($query, $values);
     }
 }

@@ -78,13 +78,4 @@ class Tag extends BaseTag
             ->when($type, fn ($query, $type) => $query->where('taggable_type', $type))
             ->count();
     }
-
-    public function scopeWithSlug(Builder $query, ...$values): Builder
-    {
-        $locale = app()->getLocale();
-
-        return $query
-            ->whereIn(sprintf('slug->%s', $locale), $values)
-            ->inRandomSeedOrder();
-    }
 }
