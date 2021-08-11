@@ -24,10 +24,7 @@ class IndexController extends Controller
         $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter())
             ->defaultDirection('desc');
 
-        $query = Video::cacheFor(config('api.listing.cache_expires', 60 * 60))
-            ->cacheTags(['videos']);
-
-        $videos = QueryBuilder::for($query)
+        $videos = QueryBuilder::for(Video::class)
             ->allowedAppends([
                 'clip',
                 'thumbnail_url',

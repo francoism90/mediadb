@@ -20,10 +20,7 @@ class IndexController extends Controller
         $defaultSort = AllowedSort::field('name', 'order_column')
             ->defaultDirection('asc');
 
-        $query = Tag::cacheFor(config('api.listing.cache_expires', 60 * 60))
-            ->cacheTags(['tags']);
-
-        $tags = QueryBuilder::for($query)
+        $tags = QueryBuilder::for(Tag::class)
             ->allowedAppends([
                 'items',
                 'views',
