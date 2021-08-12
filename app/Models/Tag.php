@@ -18,11 +18,6 @@ class Tag extends BaseTag
     use InteractsWithTranslations;
     use Searchable;
 
-    /**
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
-
     public array $translatable = [
         'name',
         'slug',
