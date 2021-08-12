@@ -28,7 +28,6 @@ class IndexController extends Controller
             ->allowedFilters([
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
                 AllowedFilter::exact('type')->ignore(null, '*'),
-                AllowedFilter::scope('id', 'with_slug')->ignore(null, '*'),
             ])
             ->AllowedSorts([
                 $defaultSort,
