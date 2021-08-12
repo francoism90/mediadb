@@ -29,14 +29,6 @@ class Tag extends BaseTag
         return 'prefixed_id';
     }
 
-    public function getCacheTagsToInvalidateOnUpdate($relation = null, $pivotedModels = null): array
-    {
-        return [
-            "tag:{$this->id}",
-            'tags',
-        ];
-    }
-
     public function searchableAs(): string
     {
         return 'tags_index';
