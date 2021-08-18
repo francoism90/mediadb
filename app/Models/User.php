@@ -105,7 +105,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function preferredLocale(): string
     {
-        return $this->getCustomProperty('locale', config('app.fallback_locale'));
+        return $this->extra_attributes->get('locale', config('app.fallback_locale'));
     }
 
     public function getSlugOptions(): SlugOptions
