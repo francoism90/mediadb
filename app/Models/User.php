@@ -144,6 +144,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function getSettingsAttribute(): ?array
     {
-        return $this->getCustomProperty('settings');
+        return $this->extra_attributes->get('settings', config('api.default_settings'));
     }
 }
