@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
+use App\Traits\HasSchemalessAttributes;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,11 +30,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
     use CanSubscribe;
     use CanView;
     use HasApiTokens;
-    use HasCustomProperties;
     use HasFactory;
     use HasPrefixedId;
     use HasRandomSeed;
     use HasRoles;
+    use HasSchemalessAttributes;
     use HasSlug;
     use InteractsWithMedia;
     use Notifiable;
@@ -53,7 +53,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
      * @var array
      */
     protected $casts = [
-        'custom_properties' => 'json',
         'email_verified_at' => 'datetime',
     ];
 

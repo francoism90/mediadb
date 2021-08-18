@@ -13,10 +13,10 @@ class CreateTagTables extends Migration
             $table->string('prefixed_id')->nullable()->unique();
             $table->json('name');
             $table->json('slug');
-            $table->string('type')->nullable();
             $table->json('description')->nullable();
-            $table->json('custom_properties')->nullable();
+            $table->string('type')->nullable();
             $table->integer('order_column')->nullable();
+            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
         });
 

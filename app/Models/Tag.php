@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasRandomSeed;
+use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -15,6 +16,7 @@ class Tag extends BaseTag
 {
     use HasPrefixedId;
     use HasRandomSeed;
+    use HasSchemalessAttributes;
     use InteractsWithTranslations;
     use Searchable;
 

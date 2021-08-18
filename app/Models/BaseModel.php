@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasCustomProperties;
 use App\Traits\HasRandomSeed;
+use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithTags;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,22 +16,15 @@ use Spatie\Translatable\HasTranslations;
 
 abstract class BaseModel extends Model implements HasMedia
 {
-    use HasCustomProperties;
     use HasFactory;
     use HasPrefixedId;
     use HasRandomSeed;
+    use HasSchemalessAttributes;
     use HasTranslations;
     use InteractsWithMedia;
     use InteractsWithTags;
     use InteractsWithTranslations;
     use Notifiable;
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'custom_properties' => 'json',
-    ];
 
     /**
      * @var array

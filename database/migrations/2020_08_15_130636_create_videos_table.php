@@ -25,7 +25,7 @@ class CreateVideosTable extends Migration
             $table->string('season_number')->index()->nullable();
             $table->string('episode_number')->index()->nullable();
             $table->timestamp('release_date')->index()->nullable();
-            $table->json('custom_properties')->nullable();
+            $table->schemalessAttributes('extra_attributes');
             $table->nullableTimestamps();
         });
     }
