@@ -18,9 +18,9 @@ class UpdateController extends Controller
         $video
             ->setTranslation('name', $locale, $request->input('name', $video->name))
             ->setTranslation('overview', $locale, $request->input('overview', $video->overview))
-            ->setAttribute('status', $request->input('status'))
-            ->setAttribute('episode_number', $request->input('episode_number'))
-            ->setAttribute('season_number', $request->input('season_number'))
+            ->setAttribute('status', $request->input('status', $video->status))
+            ->setAttribute('episode_number', $request->input('episode_number', $video->episode_number))
+            ->setAttribute('season_number', $request->input('season_number', $video->season_number))
             ->save();
 
         TagService::sync($video, $request->input('tags', []));

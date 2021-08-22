@@ -36,8 +36,8 @@ class UpdateRequest extends FormRequest
             'season_number' => 'trim|strip_tags',
             'episode_number' => 'trim|strip_tags',
             'overview' => 'trim|strip_tags',
-            'status' => 'trim|escape|lowercase',
-            'type' => 'trim|escape|lowercase',
+            'status' => 'trim|strip_tags|lowercase',
+            'type' => 'trim|strip_tags|lowercase',
             'tags.*.id' => 'trim|strip_tags',
         ];
     }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagService
 {
-    public static function sync(Model $model, ?array $tags = []): void
+    public static function sync(Model $model, array $tags = []): void
     {
         $collect = collect($tags);
 

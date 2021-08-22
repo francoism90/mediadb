@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'type' => 'trim|escape|lowercase',
+            'type' => 'trim|strip_tags|lowercase',
             'order_column' => 'cast:int',
         ];
     }
