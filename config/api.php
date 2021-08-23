@@ -80,16 +80,16 @@ return [
     */
 
     'resolutions' => [
-        ['width' => 352, 'label' => '240p'],
-        ['width' => 480, 'label' => '360p'],
-        ['width' => 858, 'label' => '480p'],
-        ['width' => 576, 'label' => '576p'],
-        ['width' => 640, 'label' => '640p'],
-        ['width' => 960, 'label' => '720p'],
-        ['width' => 1280, 'label' => '720p'],
-        ['width' => 1920, 'label' => '1080p'],
-        ['width' => 2560, 'label' => '4K'],
-        ['width' => 3840, 'label' => '4K UHD'],
+        ['width' => 352, 'label' => '240p', 'icon' => 'sd'],
+        ['width' => 480, 'label' => '360p', 'icon' => 'sd'],
+        ['width' => 858, 'label' => '480p', 'icon' => 'sd'],
+        ['width' => 576, 'label' => '576p', 'icon' => 'sd'],
+        ['width' => 640, 'label' => '640p', 'icon' => 'sd'],
+        ['width' => 960, 'label' => '720p', 'icon' => 'hd'],
+        ['width' => 1280, 'label' => '720p', 'icon' => 'hd'],
+        ['width' => 1920, 'label' => '1080p', 'icon' => 'hd'],
+        ['width' => 2560, 'label' => '4K', 'icon' => '4k'],
+        ['width' => 3840, 'label' => '4K UHD', 'icon' => '4k_plus'],
     ],
 
     /*

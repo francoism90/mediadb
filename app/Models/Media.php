@@ -63,19 +63,13 @@ class Media extends BaseMedia
         return $this->getCustomProperty('thumbnail');
     }
 
-    public function getResolutionAttribute(): ?string
+    public function getResolutionAttribute(): ?array
     {
-        $resolutions = collect(
-            config('api.resolutions', [])
-        );
-
         $mediaWidth = $this->width ?? 480;
 
-        $resolution = $resolutions
+        return collect(config('api.resolutions'))
             ->whereBetween('width', [$mediaWidth - 128, $mediaWidth + 128])
             ->last();
-
-        return $resolution['label'] ?? null;
     }
 
     public function scopeMissingMetadata(Builder $query): Builder
