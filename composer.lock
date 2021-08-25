@@ -2048,16 +2048,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.55.0",
+            "version": "v8.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "997e2aa23e9103137715018ae926c52f8a1703f2"
+                "reference": "d700f336dc672dcbfe46db05d4e5fe9347b3a5b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/997e2aa23e9103137715018ae926c52f8a1703f2",
-                "reference": "997e2aa23e9103137715018ae926c52f8a1703f2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d700f336dc672dcbfe46db05d4e5fe9347b3a5b6",
+                "reference": "d700f336dc672dcbfe46db05d4e5fe9347b3a5b6",
                 "shasum": ""
             },
             "require": {
@@ -2212,7 +2212,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-08-17T14:13:34+00:00"
+            "time": "2021-08-24T13:46:30+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2357,16 +2357,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.2.6",
+            "version": "v9.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "35db193a88f150e64951ebd29b4a294a91d87dbd"
+                "reference": "0c2e25a431113cc0510ddc9680cdec6ef115be4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/35db193a88f150e64951ebd29b4a294a91d87dbd",
-                "reference": "35db193a88f150e64951ebd29b4a294a91d87dbd",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/0c2e25a431113cc0510ddc9680cdec6ef115be4e",
+                "reference": "0c2e25a431113cc0510ddc9680cdec6ef115be4e",
                 "shasum": ""
             },
             "require": {
@@ -2425,7 +2425,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2021-08-17T16:06:22+00:00"
+            "time": "2021-08-24T12:57:33+00:00"
         },
         {
             "name": "laravel/telescope",
