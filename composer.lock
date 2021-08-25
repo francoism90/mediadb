@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73b4c819f4c48d3bf121ce106e73c2fa",
+    "content-hash": "40674b48b59bdeae606dc4b780b43656",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -3040,16 +3040,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.18.3",
+            "version": "v0.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "8d649236dde23292d2f4b637dc3f71d1d56437f5"
+                "reference": "71c1899beff8ad36a2beca7a63d82b05b57d31d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/8d649236dde23292d2f4b637dc3f71d1d56437f5",
-                "reference": "8d649236dde23292d2f4b637dc3f71d1d56437f5",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/71c1899beff8ad36a2beca7a63d82b05b57d31d2",
+                "reference": "71c1899beff8ad36a2beca7a63d82b05b57d31d2",
                 "shasum": ""
             },
             "require": {
@@ -3101,9 +3101,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.18.3"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.19.0"
             },
-            "time": "2021-06-30T14:17:44+00:00"
+            "time": "2021-08-24T14:11:09+00:00"
         },
         {
             "name": "mockery/mockery",
