@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\FollowRequest;
 use App\Http\Resources\ModelResource;
 use App\Notifications\FollowModel;
-use Spatie\PrefixedIds\PrefixedIds;
+use Illuminate\Database\Eloquent\Model;
 
 class FollowController extends Controller
 {
-    public function __invoke(FollowRequest $request): ModelResource
+    public function __invoke(Model $model): ModelResource
     {
+        throw_if(!method_exists($model, 'followers'));
+
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $model = PrefixedIds::find($request->input('id'));
-
-        abort_if(!$model, 404);
-
         $user->toggleFollow($model);
 
         $model->refresh();

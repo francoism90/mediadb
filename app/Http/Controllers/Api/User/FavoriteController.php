@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\FavoriteRequest;
 use App\Http\Resources\ModelResource;
 use App\Notifications\FavoriteModel;
-use Spatie\PrefixedIds\PrefixedIds;
+use Illuminate\Database\Eloquent\Model;
 
 class FavoriteController extends Controller
 {
-    public function __invoke(FavoriteRequest $request): ModelResource
+    public function __invoke(Model $model): ModelResource
     {
+        throw_if(!method_exists($model, 'favoriters'));
+
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $model = PrefixedIds::find($request->input('id'));
-
-        abort_if(!$model, 404);
-
         $user->toggleFavorite($model);
 
         $model->refresh();
