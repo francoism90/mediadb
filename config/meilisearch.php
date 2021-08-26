@@ -75,7 +75,7 @@ return [
                     'tags',
                     'tags_description',
                 ],
-                'attributesForFaceting' => ['tags'],
+                'filterableAttributes' => ['tags'],
             ],
         ],
     ],
