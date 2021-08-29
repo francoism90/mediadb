@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Api\Tag;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TagResource;
+use App\Http\Resources\TagCollection;
 use App\Models\Tag;
 use App\Support\QueryBuilder\Filters\QueryFilter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RelevanceSorter;
 use App\Support\QueryBuilder\Sorters\Tag\ItemSorter;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): ResourceCollection
     {
         $defaultSort = AllowedSort::field('name', 'order_column')
             ->defaultDirection('asc');
@@ -40,6 +41,6 @@ class IndexController extends Controller
             ->defaultSort($defaultSort)
             ->jsonPaginate();
 
-        return TagResource::collection($tags);
+        return new TagCollection($tags);
     }
 }

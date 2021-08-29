@@ -24,6 +24,8 @@ class FavoriteController extends Controller
         $model->refresh();
         $user->notify(new FavoriteModel($model));
 
-        return new ModelResource($model);
+        return new ModelResource(
+            $model->append('favorite')
+        );
     }
 }

@@ -18,17 +18,17 @@ class VideoResource extends JsonResource
             'release_date' => $this->release_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'captions' => $this->whenAppended('captions', new MediaCollection($this->captions)),
+            'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
             'favorite' => $this->whenAppended('favorite'),
             'following' => $this->whenAppended('following'),
-            'status' => $this->whenAppended('status'),
             'overview' => $this->whenAppended('overview'),
-            'thumbnail_url' => $this->whenAppended('thumbnail_url'),
-            'vod_url' => $this->whenAppended('vod_url'),
+            'poster_url' => $this->whenAppended('poster_url'),
+            'status' => $this->whenAppended('status'),
             'views' => $this->whenAppended('views'),
-            'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
-            'captions' => $this->whenAppended('captions', MediaResource::collection($this->captions)),
+            'vod_url' => $this->whenAppended('vod_url'),
             'model' => new ModelResource($this->whenLoaded('model')),
-            'tags' => TagResource::collection($this->whenLoaded('tags')),
+            'tags' => new TagCollection($this->whenLoaded('tags')),
         ];
     }
 }

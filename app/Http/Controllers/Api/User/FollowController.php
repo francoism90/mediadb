@@ -24,6 +24,8 @@ class FollowController extends Controller
         $model->refresh();
         $user->notify(new FollowModel($model));
 
-        return new ModelResource($model);
+        return new ModelResource(
+            $model->append('following')
+        );
     }
 }

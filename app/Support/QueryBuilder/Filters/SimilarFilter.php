@@ -8,7 +8,7 @@ use Spatie\PrefixedIds\PrefixedIds;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class RelatedFilter implements Filter
+class SimilarFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property): Builder
     {
@@ -17,12 +17,13 @@ class RelatedFilter implements Filter
         $model = PrefixedIds::find($value);
         throw_if(!$model, InvalidFilterValue::class);
 
-        $models = (new SearchService())->excerptSearch($query->getModel(), $model->name ?? '');
+        $models = (new SearchService())->excerptSearch($query->getModel(), $model->name);
         $models = $models->merge((new SearchService())->getTagResults($query->getModel(), $model->tags ?? []));
 
         $table = $query->getModel()->getTable();
 
         return $query
+            ->where('id', '<>', $model->id)
             ->when($models->isEmpty(), function ($query) use ($table) {
                 return $query->whereNull(sprintf('%s.id', $table));
             }, function ($query) use ($models, $table) {
@@ -32,7 +33,6 @@ class RelatedFilter implements Filter
                 return $query
                     ->whereIn(sprintf('%s.id', $table), $ids)
                     ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
-            })
-            ->where('id', '<>', $model->id);
+            });
     }
 }

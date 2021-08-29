@@ -119,7 +119,7 @@ class Video extends BaseModel
         return $this->getMedia('caption');
     }
 
-    public function getThumbnailUrlAttribute(): string
+    public function getPosterUrlAttribute(): string
     {
         return URL::signedRoute(
             'api.media.asset',

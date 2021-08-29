@@ -3,23 +3,24 @@
 namespace App\Http\Controllers\Api\Video;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\VideoResource;
+use App\Http\Resources\VideoCollection;
 use App\Models\Video;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Filters\RelatedFilter;
+use App\Support\QueryBuilder\Filters\SimilarFilter;
 use App\Support\QueryBuilder\Filters\Video\TypeFilter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
 use App\Support\QueryBuilder\Sorters\RelevanceSorter;
 use App\Support\QueryBuilder\Sorters\TrendingSorter;
 use App\Support\QueryBuilder\Sorters\Video\DurationSorter;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): ResourceCollection
     {
         $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter())
             ->defaultDirection('desc');
@@ -29,7 +30,7 @@ class IndexController extends Controller
                 'clip',
                 'favorite',
                 'following',
-                'thumbnail_url',
+                'poster_url',
                 'views',
             ])
             ->allowedIncludes([
@@ -38,7 +39,7 @@ class IndexController extends Controller
             ])
             ->allowedFilters([
                 AllowedFilter::scope('tags', 'withTags')->ignore(null, '*'),
-                AllowedFilter::custom('related', new RelatedFilter())->ignore(null, '*'),
+                AllowedFilter::custom('similar', new SimilarFilter())->ignore(null, '*'),
                 AllowedFilter::custom('type', new TypeFilter())->ignore(null, '*'),
                 AllowedFilter::custom('query', new QueryFilter())->ignore(null, '*'),
             ])
@@ -55,6 +56,6 @@ class IndexController extends Controller
             ->defaultSort($defaultSort)
             ->jsonPaginate();
 
-        return VideoResource::collection($videos);
+        return new VideoCollection($videos);
     }
 }

@@ -12,11 +12,11 @@ class UserResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
-            'avatar_url' => $this->whenAppended('avatar_url'),
-            'roles' => $this->whenAppended('assigned_roles'),
-            'permissions' => $this->whenAppended('assigned_permissions'),
-            'settings' => $this->whenAppended('settings'),
             'created_at' => $this->created_at,
+            'avatar_url' => $this->whenAppended('avatar_url'),
+            'permissions' => $this->whenAppended('assigned_permissions'),
+            'roles' => $this->whenAppended('assigned_roles'),
+            'settings' => $this->whenAppended('settings'),
         ];
     }
 }
