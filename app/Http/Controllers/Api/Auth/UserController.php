@@ -15,6 +15,7 @@ class UserController extends Controller
             'assigned_permissions',
             'assigned_roles',
             'avatar_url',
+            'email',
             'settings',
         ]);
 
