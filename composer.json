@@ -16,7 +16,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^8.57",
+        "laravel/framework": "^8.58",
         "laravel/horizon": "^5.7",
         "laravel/sanctum": "^2.11",
         "laravel/scout": "^9.2",
