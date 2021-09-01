@@ -70,8 +70,11 @@ class Video extends BaseModel
             'overview' => $this->extractTranslations('overview'),
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
-            'tags' => $this->extractTagTranslations('name'),
-            'tags_description' => $this->extractTagTranslations('description'),
+            'actors' => $this->extractTagTranslations('name', 'actor'),
+            'studios' => $this->extractTagTranslations('name', 'studio'),
+            'genres' => $this->extractTagTranslations('name', 'genre'),
+            'languages' => $this->extractTagTranslations('name', 'language'),
+            'tags' => $this->extractTagTranslations('description'),
         ];
     }
 
