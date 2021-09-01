@@ -22,12 +22,6 @@ class PermissionsTableSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'create collections']);
-        Permission::create(['name' => 'edit collections']);
-        Permission::create(['name' => 'delete collections']);
-        Permission::create(['name' => 'publish collections']);
-        Permission::create(['name' => 'unpublish collections']);
-
         Permission::create(['name' => 'create tags']);
         Permission::create(['name' => 'edit tags']);
         Permission::create(['name' => 'delete tags']);
@@ -46,9 +40,6 @@ class PermissionsTableSeeder extends Seeder
 
         // Create moderator role and assign created permissions
         $roleModerator = Role::create(['name' => 'moderator']);
-
-        $roleModerator->givePermissionTo('edit collections');
-        $roleModerator->givePermissionTo('unpublish collections');
 
         $roleModerator->givePermissionTo('edit videos');
         $roleModerator->givePermissionTo('unpublish videos');

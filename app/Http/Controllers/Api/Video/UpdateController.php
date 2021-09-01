@@ -21,7 +21,7 @@ class UpdateController extends Controller
             ->setAttribute('status', $request->input('status', $video->status))
             ->setAttribute('episode_number', $request->input('episode_number', $video->episode_number))
             ->setAttribute('season_number', $request->input('season_number', $video->season_number))
-            ->save();
+            ->saveOrFail();
 
         TagService::sync($video, $request->input('tags', []));
 

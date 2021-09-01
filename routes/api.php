@@ -45,8 +45,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
         Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
         Route::get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
-        Route::delete('/{tag}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::patch('/{tag}', ['uses' => 'UpdateController', 'as' => 'update']);
     });
 
     // Media
