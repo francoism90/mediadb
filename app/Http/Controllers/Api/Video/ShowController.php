@@ -20,7 +20,7 @@ class ShowController extends Controller
                     'favorite',
                     'following',
                     'views',
-                    'thumbnail_url',
+                    'poster_url',
                     'vod_url',
                 ])
         );

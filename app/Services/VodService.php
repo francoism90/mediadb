@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Media;
 use App\Models\Video;
 use App\Services\Streamers\DashStreamer;
 use App\Services\Tokenizers\LocalTokenizer;
@@ -27,24 +28,6 @@ class VodService
         return $this->streamer->getUrl($location, $uri);
     }
 
-    public function getFormat(Video $video, string $collection = 'clip'): Collection
-    {
-        return collect([
-            'id' => $video->getRouteKey(),
-            'sequences' => [
-                [
-                    'label' => $video->name,
-                    'clips' => [
-                        [
-                            'type' => 'source',
-                            'path' => $video->getFirstMediaPath($collection),
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-    }
-
     public function validToken(string $token): bool
     {
         return $this->tokenizer->exists($token);
@@ -53,6 +36,36 @@ class VodService
     public function decodeToken(string $token): array
     {
         return $this->tokenizer->find($token);
+    }
+
+    public function getMapping(Video $video): Collection
+    {
+        $sequences = collect([
+            $this->getSequence($video, 'clip')->toArray(),
+            $this->getSequence($video, 'caption')->toArray(),
+        ]);
+
+        return collect([
+            'id' => $video->getRouteKey(),
+            'sequences' => $sequences->filter()->toArray(),
+        ]);
+    }
+
+    protected function getSequence(Video $video, string $collection): Collection
+    {
+        return $video->getMedia($collection)->flatMap(function (Media $media) {
+            return [
+                'id' => $media->id,
+                'language' => $media->getCustomProperty('locale', 'eng'),
+                'label' => $media->name,
+                'clips' => [
+                    [
+                        'type' => 'source',
+                        'path' => $media->getPath(),
+                    ],
+                ],
+            ];
+        });
     }
 
     protected function getStreamModule(): string

@@ -19,7 +19,7 @@ class ManifestController extends Controller
 
         $tokenData = collect($this->vodService->decodeToken($token));
 
-        $contents = $this->vodService->getFormat(
+        $contents = $this->vodService->getMapping(
             $tokenData->get('video')
         );
 
