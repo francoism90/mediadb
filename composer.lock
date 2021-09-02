@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47cc98d5b7885c5fa15128ce16282b9d",
+    "content-hash": "2d41b6ec95fa5451a7a4e70bbe40e36b",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -6049,6 +6049,84 @@
                 "source": "https://github.com/spatie/image-optimizer/tree/1.4.0"
             },
             "time": "2021-04-22T06:17:27+00:00"
+        },
+        {
+            "name": "spatie/laravel-collection-macros",
+            "version": "7.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-collection-macros.git",
+                "reference": "6e39f61d8de3487b01031d50adea15c64e1f3507"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-collection-macros/zipball/6e39f61d8de3487b01031d50adea15c64e1f3507",
+                "reference": "6e39f61d8de3487b01031d50adea15c64e1f3507",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "amphp/parallel": "^0.2.5",
+                "amphp/parallel-functions": "^0.1.3",
+                "mockery/mockery": "^1.4.2",
+                "orchestra/testbench": "^5.5|^6.5",
+                "phpunit/phpunit": "^9.4.4",
+                "symfony/stopwatch": "^5.2"
+            },
+            "suggest": {
+                "amphp/parallel-functions": "Required when using the parallel*-macros."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\CollectionMacros\\CollectionMacroServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\CollectionMacros\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://github.com/freekmurze",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://github.com/sebastiandedeyne",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A set of useful Laravel collection macros",
+            "homepage": "https://github.com/spatie/laravel-collection-macros",
+            "keywords": [
+                "laravel-collection-macros",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-collection-macros/issues",
+                "source": "https://github.com/spatie/laravel-collection-macros/tree/7.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-15T10:58:15+00:00"
         },
         {
             "name": "spatie/laravel-db-snapshots",

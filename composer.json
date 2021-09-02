@@ -26,6 +26,7 @@
         "multicaret/laravel-acquaintances": "^3.5",
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
         "pusher/pusher-php-server": "^5.0",
+        "spatie/laravel-collection-macros": "^7.3",
         "spatie/laravel-db-snapshots": "^2.0",
         "spatie/laravel-json-api-paginate": "^1.10",
         "spatie/laravel-medialibrary": "^9.7",

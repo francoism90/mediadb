@@ -37,18 +37,14 @@ class DashStreamer implements StreamerInterface
     {
         $sequences = collect([
             $this->getSequence($model, 'clip')->toArray(),
-            $this->getSequence($model, 'caption')->toArray(),
             $this->getSpriteSequence($model)->toArray(),
+            $this->getSequence($model, 'caption')->toArray(),
         ]);
 
-        $foo = collect([
+        return collect([
             'id' => $model->getRouteKey(),
             'sequences' => $sequences->filter()->values(),
         ]);
-
-        logger($foo->toArray());
-
-        return $foo;
     }
 
     protected function getSequence(Model $model, string $collection): Collection

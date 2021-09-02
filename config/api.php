@@ -64,6 +64,11 @@ return [
     */
 
     'conversions' => [
+        'sprite' => [
+            'path' => 'sprite.vtt',
+            'steps' => 10,
+        ],
+
         'thumbnail' => [
             'path' => 'thumbnail.jpg',
             'filter' => 'scale=2048:-1',
