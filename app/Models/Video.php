@@ -136,10 +136,7 @@ class Video extends BaseModel
 
     public function getVodUrlAttribute(): string
     {
-        return app(VodService::class)
-            ->generateUrl('dash', 'manifest.mpd', [
-                'video' => $this,
-            ]);
+        return app(VodService::class, ['model' => $this])->getManifestUrl();
     }
 
     public function scopeWithFavorites(Builder $query): Builder

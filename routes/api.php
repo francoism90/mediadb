@@ -54,8 +54,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     });
 
     // VOD
-    Route::name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
-        Route::middleware('cache.headers:public;max_age=86400;etag')->get('/manifest/{token}', ['uses' => 'ManifestController', 'as' => 'manifest']);
-        Route::middleware('auth:sanctum')->get('/capture/{video}/{offset}', ['uses' => 'CaptureController', 'as' => 'capture']);
+    Route::middleware('auth:sanctum')->name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
+        Route::get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
     });
 });

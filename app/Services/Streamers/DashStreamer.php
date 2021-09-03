@@ -3,55 +3,44 @@
 namespace App\Services\Streamers;
 
 use App\Models\Media;
-use App\Services\SpriteService;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class DashStreamer implements StreamerInterface
 {
-    protected string $token = '';
+    public function __construct(
+        protected Model $model
+    ) {}
 
     public function getUrl(string $location, string $uri): string
     {
-        $url = config('api.vod_url');
-
         $hash = $this->getManifestHash($uri);
 
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
 
-        return sprintf('%s/%s/%s', $url, $location, $hashPath);
+        return sprintf('%s/%s/%s', config('api.vod_url'), $location, $hashPath);
     }
 
-    public function setToken(string $token): void
-    {
-        $this->token = $token;
-    }
-
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    public function getMapping(Model $model): Collection
+    public function getManifestContents(): Collection
     {
         $sequences = collect([
-            $this->getSequence($model, 'clip')->toArray(),
-            $this->getSpriteSequence($model)->toArray(),
-            $this->getSequence($model, 'caption')->toArray(),
+            $this->getVideoSequence()->toArray(),
+            $this->getCaptionSequence()->toArray(),
         ]);
 
         return collect([
-            'id' => $model->getRouteKey(),
+            'id' => $this->model->getRouteKey(),
             'sequences' => $sequences->filter()->values(),
         ]);
     }
 
-    protected function getSequence(Model $model, string $collection): Collection
+    protected function getVideoSequence(): Collection
     {
-        return $model->getMedia($collection)->flatMap(function (Media $media) {
+        return $this->model->getMedia('clip')->flatMap(function (Media $media) {
             return [
-                'language' => $media->getCustomProperty('locale', 'eng'),
+                'label' => $media->getRouteKey(),
                 'clips' => [
                     [
                         'type' => 'source',
@@ -62,19 +51,21 @@ class DashStreamer implements StreamerInterface
         });
     }
 
-    protected function getSpriteSequence(Model $model): Collection
+    protected function getCaptionSequence(): Collection
     {
-        $path = app(SpriteService::class)->create($model);
-
-        return collect([
-            'label' => 'sprite',
-            'clips' => [
-                [
-                    'type' => 'source',
-                    'path' => $path,
+        return $this->model->getMedia('caption')->flatMap(function (Media $media, $index) {
+            return [
+                'id' => sprintf('CC%d', $index + 1),
+                'label' => $media->getRouteKey(),
+                'language' => $media->getCustomProperty('locale', 'eng'),
+                'clips' => [
+                    [
+                        'type' => 'source',
+                        'path' => $media->getPath(),
+                    ],
                 ],
-            ],
-        ]);
+            ];
+        });
     }
 
     protected function getManifestHash(string $uri): string
@@ -98,7 +89,7 @@ class DashStreamer implements StreamerInterface
 
     protected function getManifestRoute(): string
     {
-        $route = route('api.vod.manifest', ['token' => $this->token], false);
+        $route = route('api.vod.manifest', [$this->model], false);
 
         return trim($route, '/');
     }
