@@ -56,5 +56,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     // VOD
     Route::middleware('auth:sanctum')->name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
         Route::get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+        Route::get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
     });
 });

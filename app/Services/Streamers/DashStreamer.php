@@ -3,7 +3,6 @@
 namespace App\Services\Streamers;
 
 use App\Models\Media;
-use App\Models\Video;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -11,16 +10,24 @@ class DashStreamer implements StreamerInterface
 {
     public function __construct(
         protected Model $model
-    ) {}
+    ) {
+    }
 
-    public function getUrl(string $location, string $uri): string
+    public function getManifestUrl(): string
     {
-        $hash = $this->getManifestHash($uri);
+        return $this->getUrl('dash', 'manifest.mpd');
+    }
 
-        $hashPath = $this->getEncryptedPath($hash);
-        $hashPath = $this->getEncodedPath($hashPath);
+    public function getThumbnailUrl(float $timeSecs): string
+    {
+        $uri = sprintf(
+            'thumb-%s-w%d-h%d.jpg',
+            $timeSecs * 1000,
+            config('api.conversions.sprite.width', 160),
+            config('api.conversions.sprite.height', 90),
+        );
 
-        return sprintf('%s/%s/%s', config('api.vod_url'), $location, $hashPath);
+        return $this->getUrl('thumb', $uri);
     }
 
     public function getManifestContents(): Collection
@@ -34,6 +41,30 @@ class DashStreamer implements StreamerInterface
             'id' => $this->model->getRouteKey(),
             'sequences' => $sequences->filter()->values(),
         ]);
+    }
+
+    public function getSpriteContents(): string
+    {
+        $duration = $this->model->duration ?? $this->model->clip?->duration ?? 0;
+
+        $steps = config('api.conversions.sprite.steps', 5);
+
+        $range = collect(range(1, $duration, $steps));
+
+        $vtt = "WEBVTT\n\n";
+
+        foreach ($range as $timeCode) {
+            $next = $range->after($timeCode, $duration);
+
+            $vtt .= sprintf(
+                "%s --> %s\n%s\n\n",
+                gmdate('H:i:s.v', $timeCode),
+                gmdate('H:i:s.v', $next),
+                $this->getThumbnailUrl($timeCode),
+            );
+        }
+
+        return $vtt;
     }
 
     protected function getVideoSequence(): Collection
@@ -66,6 +97,16 @@ class DashStreamer implements StreamerInterface
                 ],
             ];
         });
+    }
+
+    protected function getUrl(string $location, string $uri): string
+    {
+        $hash = $this->getManifestHash($uri);
+
+        $hashPath = $this->getEncryptedPath($hash);
+        $hashPath = $this->getEncodedPath($hashPath);
+
+        return sprintf('%s/%s/%s', config('api.vod_url'), $location, $hashPath);
     }
 
     protected function getManifestHash(string $uri): string

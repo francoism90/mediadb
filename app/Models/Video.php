@@ -136,7 +136,8 @@ class Video extends BaseModel
 
     public function getVodUrlAttribute(): string
     {
-        return app(VodService::class, ['model' => $this])->getManifestUrl();
+        return app(VodService::class, ['model' => $this])
+            ->getManifestUrl();
     }
 
     public function scopeWithFavorites(Builder $query): Builder

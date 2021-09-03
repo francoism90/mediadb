@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Video;
 use App\Services\Streamers\DashStreamer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -13,14 +12,13 @@ class VodService
 
     public function __construct(
         protected Model $model
-    )
-    {
+    ) {
         $this->streamer = app($this->getStreamModule(), ['model' => $this->model]);
     }
 
     public function getManifestUrl(): string
     {
-        return $this->streamer->getUrl('dash', 'manifest.mpd');
+        return $this->streamer->getManifestUrl();
     }
 
     public function getManifestContents(): Collection
