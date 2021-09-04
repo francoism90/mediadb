@@ -41,7 +41,7 @@ class SearchService
 
     public static function getRandomResults(Model $model, string $value, int $limit = 100): Collection
     {
-        $value = Str::of($value)->matchAll(self::QUERY_FILTER)->take(6)->shuffle();
+        $value = Str::of($value)->matchAll(self::QUERY_FILTER)->shuffle()->take(6);
 
         $models = collect();
 

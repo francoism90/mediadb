@@ -33,6 +33,6 @@ class VodService
 
     protected function getStreamModule(): string
     {
-        return config('api.stream_module', DashStreamer::class);
+        return config('api.vod.stream_module', DashStreamer::class);
     }
 }

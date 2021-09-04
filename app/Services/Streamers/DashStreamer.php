@@ -21,8 +21,8 @@ class DashStreamer implements StreamerInterface
     public function getThumbnailUrl(float $timeSecs): string
     {
         $uri = sprintf(
-            'thumb-%s-w%d-h%d.jpg',
-            $timeSecs * 1000,
+            'thumb-%d-w%d-h%d.jpg',
+            round($timeSecs * 1000),
             config('api.conversions.sprite.width', 160),
             config('api.conversions.sprite.height', 90),
         );
@@ -106,7 +106,7 @@ class DashStreamer implements StreamerInterface
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
 
-        return sprintf('%s/%s/%s', config('api.vod_url'), $location, $hashPath);
+        return sprintf('%s/%s/%s', config('api.vod.url'), $location, $hashPath);
     }
 
     protected function getManifestHash(string $uri): string
@@ -153,16 +153,16 @@ class DashStreamer implements StreamerInterface
 
     protected function getStreamKey(): string
     {
-        return pack('H*', config('api.vod_key'));
+        return pack('H*', config('api.vod.key'));
     }
 
     protected function getStreamIV(): string
     {
-        return pack('H*', config('api.vod_iv'));
+        return pack('H*', config('api.vod.iv'));
     }
 
     protected function getStreamHashSize(): int
     {
-        return config('api.vod_hash_size', 8);
+        return config('api.vod.hash_size', 8);
     }
 }
