@@ -10,13 +10,15 @@ return [
     |
     */
 
-    'vod_url' => env('VOD_URL'),
+    'vod' => [
+        'url' => env('VOD_URL'),
 
-    'vod_key' => env('VOD_KEY'),
+        'key' => env('VOD_KEY'),
 
-    'vod_iv' => env('VOD_IV'),
+        'iv' => env('VOD_IV'),
 
-    'vod_expires' => env('VOD_EXPIRES', 60 * 24),
+        'expires' => env('VOD_EXPIRES', 60 * 24),
+    ],
 
     /*
     |--------------------------------------------------------------------------

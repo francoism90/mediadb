@@ -11,7 +11,6 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -117,11 +116,6 @@ class Video extends BaseModel
         ]);
     }
 
-    public function getCaptionsAttribute(): MediaCollection
-    {
-        return $this->getMedia('caption');
-    }
-
     public function getPosterUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -134,12 +128,21 @@ class Video extends BaseModel
         );
     }
 
+    public function getSpriteUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.vod.sprite',
+            [
+                'video' => $this,
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
+    }
+
     public function getVodUrlAttribute(): string
     {
-        return app(VodService::class)
-            ->generateUrl('dash', 'manifest.mpd', [
-                'video' => $this,
-            ]);
+        return app(VodService::class, ['model' => $this])
+            ->getManifestUrl();
     }
 
     public function scopeWithFavorites(Builder $query): Builder

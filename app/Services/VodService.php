@@ -3,52 +3,36 @@
 namespace App\Services;
 
 use App\Services\Streamers\DashStreamer;
-use App\Services\Tokenizers\LocalTokenizer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class VodService
 {
-    protected DashStreamer $streamer;
-    protected LocalTokenizer $tokenizer;
+    public DashStreamer $streamer;
 
-    public function __construct()
-    {
-        $this->streamer = app($this->getStreamModule());
-        $this->tokenizer = app($this->getTokenModule());
+    public function __construct(
+        protected Model $model
+    ) {
+        $this->streamer = app($this->getStreamModule(), ['model' => $this->model]);
     }
 
-    public function getMapping(Model $model): Collection
+    public function getManifestUrl(): string
     {
-        return $this->streamer->getMapping($model);
+        return $this->streamer->getManifestUrl();
     }
 
-    public function generateUrl(string $location, string $uri, array $token = []): string
+    public function getManifestContents(): Collection
     {
-        $tokenKey = $this->tokenizer->create($token);
-
-        $this->streamer->setToken($tokenKey);
-
-        return $this->streamer->getUrl($location, $uri);
+        return $this->streamer->getManifestContents();
     }
 
-    public function validToken(string $token): bool
+    public function getSpriteContents(): string
     {
-        return $this->tokenizer->exists($token);
-    }
-
-    public function decodeToken(string $token): array
-    {
-        return $this->tokenizer->find($token);
+        return $this->streamer->getSpriteContents();
     }
 
     protected function getStreamModule(): string
     {
-        return config('api.stream_module', DashStreamer::class);
-    }
-
-    protected function getTokenModule(): string
-    {
-        return config('api.token_module', LocalTokenizer::class);
+        return config('api.vod.stream_module', DashStreamer::class);
     }
 }

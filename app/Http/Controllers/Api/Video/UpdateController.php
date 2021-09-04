@@ -13,7 +13,7 @@ class UpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Video $video): VideoResource
     {
-        $locale = app()->getLocale();
+        $locale = $request->input('locale', app()->getLocale());
 
         $video
             ->setTranslation('name', $locale, $request->input('name', $video->name))

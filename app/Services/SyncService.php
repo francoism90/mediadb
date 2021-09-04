@@ -7,7 +7,6 @@ use App\Jobs\Media\CreateThumbnail;
 use App\Jobs\Media\SetMetadata;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Log\Logger;
 use Spatie\MediaLibrary\MediaCollections\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -17,7 +16,6 @@ class SyncService
     public function __construct(
         protected Finder $finder,
         protected Filesystem $filesystem,
-        protected Logger $logger
     ) {
     }
 

@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Api\Vod;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\Services\VodService;
-use Illuminate\Http\JsonResponse;
 
-class ManifestController extends Controller
+class SpriteController extends Controller
 {
-    public function __invoke(Video $video): JsonResponse
+    public function __invoke(Video $video)
     {
         $contents = app(VodService::class, ['model' => $video])
-            ->getManifestContents();
+            ->getSpriteContents();
 
-        return response()->json($contents);
+        return response($contents)
+            ->header('Content-Type', 'text/vtt');
     }
 }
