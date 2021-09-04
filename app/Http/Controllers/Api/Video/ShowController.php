@@ -21,6 +21,7 @@ class ShowController extends Controller
                     'following',
                     'views',
                     'poster_url',
+                    'sprite_url',
                     'vod_url',
                 ])
         );

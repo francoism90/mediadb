@@ -43,7 +43,7 @@ class DashStreamer implements StreamerInterface
         ]);
     }
 
-    public function getSpriteContents(): Collection
+    public function getSpriteContents(): string
     {
         $duration = $this->model->duration ?? $this->model->clip?->duration ?? 0;
 
@@ -51,23 +51,20 @@ class DashStreamer implements StreamerInterface
 
         $range = collect(range(1, $duration, $steps));
 
-        $vtt[] = 'WEBVTT';
-        $vtt[] = '';
+        $contents = "WEBVTT\n\n";
 
         foreach ($range as $timeCode) {
             $next = $range->after($timeCode, $duration);
 
-            $vtt[] = sprintf(
-                '%s --> %s',
+            $contents .= sprintf(
+                "%s --> %s\n%s\n\n",
                 gmdate('H:i:s.v', $timeCode),
-                gmdate('H:i:s.v', $next)
+                gmdate('H:i:s.v', $next),
+                $this->getThumbnailUrl($timeCode),
             );
-
-            $vtt[] = $this->getThumbnailUrl($timeCode);
-            $vtt[] = '';
         }
 
-        return collect($vtt);
+        return $contents;
     }
 
     protected function getVideoSequence(): Collection
@@ -140,6 +137,8 @@ class DashStreamer implements StreamerInterface
 
     protected function getEncryptedPath(string $path): string
     {
+        logger($path);
+
         return openssl_encrypt(
             $path,
             'aes-256-cbc',

@@ -26,7 +26,7 @@ class VodService
         return $this->streamer->getManifestContents();
     }
 
-    public function getSpriteContents(): Collection
+    public function getSpriteContents(): string
     {
         return $this->streamer->getSpriteContents();
     }
