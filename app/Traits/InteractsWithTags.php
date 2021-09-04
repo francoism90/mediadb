@@ -51,6 +51,8 @@ trait InteractsWithTags
 
     public function scopeWithTags(Builder $query, ...$values)
     {
-        return $this->scopeWithAllTagsOfAnyType($query, $values);
+        return $this
+            ->scopeWithAllTagsOfAnyType($query, $values)
+            ->inRandomSeedOrder();
     }
 }

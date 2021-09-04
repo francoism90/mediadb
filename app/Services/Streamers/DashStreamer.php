@@ -137,8 +137,6 @@ class DashStreamer implements StreamerInterface
 
     protected function getEncryptedPath(string $path): string
     {
-        logger($path);
-
         return openssl_encrypt(
             $path,
             'aes-256-cbc',
