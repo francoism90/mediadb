@@ -12,8 +12,8 @@ class SpriteController extends Controller
     public function __invoke(Video $video): JsonResponse
     {
         $contents = app(VodService::class, ['model' => $video])
-            ->getManifestContents()
-            ->toJson();
+            ->getSpriteContents()
+            ->implode('');
 
         return response()->json($contents);
     }

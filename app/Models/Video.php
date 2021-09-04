@@ -117,11 +117,6 @@ class Video extends BaseModel
         ]);
     }
 
-    public function getCaptionsAttribute(): MediaCollection
-    {
-        return $this->getMedia('caption');
-    }
-
     public function getPosterUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -129,6 +124,17 @@ class Video extends BaseModel
             [
                 'media' => $this->getFirstMedia('clip'),
                 'name' => 'thumbnail',
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
+    }
+
+    public function getSpriteUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.vod.sprite',
+            [
+                'video' => $this,
                 'version' => $this->updated_at->timestamp,
             ]
         );

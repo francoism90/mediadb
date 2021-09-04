@@ -26,6 +26,11 @@ class VodService
         return $this->streamer->getManifestContents();
     }
 
+    public function getSpriteContents(): Collection
+    {
+        return $this->streamer->getSpriteContents();
+    }
+
     protected function getStreamModule(): string
     {
         return config('api.stream_module', DashStreamer::class);
