@@ -48,6 +48,7 @@ class SyncService
         return $this->finder->create()
             ->files()
             ->followLinks()
+            ->sortByName()
             ->name(config('api.sync.extensions'))
             ->in($path);
     }
