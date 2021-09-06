@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d41b6ec95fa5451a7a4e70bbe40e36b",
+    "content-hash": "016533d7424e55325fd8343ec91337e7",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -6584,16 +6584,16 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "3.5.0",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "4e5257be24139836dc092f618d7c73bcb1c00302"
+                "reference": "03d8e1307dcb58b16fcc9c4947633fc60ae74802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/4e5257be24139836dc092f618d7c73bcb1c00302",
-                "reference": "4e5257be24139836dc092f618d7c73bcb1c00302",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/03d8e1307dcb58b16fcc9c4947633fc60ae74802",
+                "reference": "03d8e1307dcb58b16fcc9c4947633fc60ae74802",
                 "shasum": ""
             },
             "require": {
@@ -6650,7 +6650,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-07-05T14:17:44+00:00"
+            "time": "2021-09-06T08:03:10+00:00"
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
