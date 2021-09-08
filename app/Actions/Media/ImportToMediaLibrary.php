@@ -5,13 +5,10 @@ namespace App\Actions\Media;
 use App\Events\Media\HasBeenAdded;
 use App\Services\MediaLibraryService;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\QueueableAction\QueueableAction;
 use Symfony\Component\Finder\SplFileInfo;
 
 class ImportToMediaLibrary
 {
-    use QueueableAction;
-
     public function __construct(
         protected MediaLibraryService $mediaLibraryService,
     ) {

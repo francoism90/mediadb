@@ -4,12 +4,9 @@ namespace App\Actions\Media;
 
 use App\Models\Media;
 use App\Services\MediaLibraryService;
-use Spatie\QueueableAction\QueueableAction;
 
 class CreateNewThumbnail
 {
-    use QueueableAction;
-
     public function __construct(
         protected MediaLibraryService $mediaLibraryService,
         protected CreateVideoFrame $createVideoFrame,
@@ -20,6 +17,10 @@ class CreateNewThumbnail
 
     public function execute(Media $media): void
     {
+        if ('video' !== $media->type) {
+            return;
+        }
+
         $path = $this->getTemporaryPath();
 
         $this->createVideoFrame->execute($media, $path);

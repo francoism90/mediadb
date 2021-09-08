@@ -4,12 +4,9 @@ namespace App\Actions\Media;
 
 use App\Models\Media;
 use App\Services\MediaLibraryService;
-use Spatie\QueueableAction\QueueableAction;
 
 class CopyToConversions
 {
-    use QueueableAction;
-
     public function __construct(
         protected MediaLibraryService $mediaLibraryService,
     ) {

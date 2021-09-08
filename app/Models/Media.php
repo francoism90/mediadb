@@ -72,6 +72,11 @@ class Media extends BaseMedia
             ->last();
     }
 
+    public function getTypeAttribute(): string
+    {
+        return strtok($this->mime_type, '/');
+    }
+
     public function scopeMissingMetadata(Builder $query): Builder
     {
         return $query

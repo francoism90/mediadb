@@ -30,7 +30,7 @@ return [
     */
 
     'sync' => [
-        'extensions' => [
+        'video_extensions' => [
             '*.mp4',
             '*.m4v',
         ],
@@ -48,6 +48,10 @@ return [
             // 'video/x-ogm+ogg',
             // 'video/x-theora',
             // 'video/x-theora+ogg',
+        ],
+
+        'caption_extensions' => [
+            '*.vtt',
         ],
 
         'caption_mimetypes' => [

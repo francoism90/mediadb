@@ -5,18 +5,15 @@ namespace App\Actions\Media;
 use App\Models\Media;
 use App\Services\FFMpegService;
 use Illuminate\Support\Collection;
-use Spatie\QueueableAction\QueueableAction;
 
 class UpdateMetadataDetails
 {
-    use QueueableAction;
-
     public function __construct(
         protected FFMpegService $ffmpegService,
     ) {
     }
 
-    public function execute(Media $media): void
+    public function execute(Media $media)
     {
         $metadata = $this->gatherMetadata($media);
 
@@ -25,11 +22,9 @@ class UpdateMetadataDetails
 
     private function gatherMetadata(Media $media): Collection
     {
-        $type = $this->getType($media);
-
         $collect = collect();
 
-        if ('video' === $type) {
+        if ('video' === $media->type) {
             $collect = $collect->merge($this->getFormatAttributes($media));
             $collect = $collect->merge($this->getVideoAttributes($media));
         }
@@ -70,10 +65,5 @@ class UpdateMetadataDetails
             'pix_fmt' => $stream->get('pix_fmt', 0),
             'display_aspect_ratio' => $stream->get('display_aspect_ratio', null),
         ]);
-    }
-
-    private function getType(Media $media): string
-    {
-        return strtok($media->mime_type, '/');
     }
 }

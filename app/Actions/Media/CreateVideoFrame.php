@@ -7,12 +7,9 @@ use App\Services\FFMpegService;
 use App\Services\ImageService;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Filters\Video\CustomFilter;
-use Spatie\QueueableAction\QueueableAction;
 
 class CreateVideoFrame
 {
-    use QueueableAction;
-
     public function __construct(
         protected FFMpegService $ffmpegService,
     ) {
