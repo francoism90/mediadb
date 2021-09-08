@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Streamers;
+namespace App\Contracts;
 
 interface StreamerInterface
 {

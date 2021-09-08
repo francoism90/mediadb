@@ -2,29 +2,29 @@
 
 namespace App\Services;
 
+use App\Actions\Media\ImportToMediaLibrary;
+use App\Actions\User\CreateNewVideo;
 use App\Console\Commands\Video\ImportCommand;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Symfony\Component\Finder\Finder;
 use Throwable;
 
 class VideoService
 {
     public function __construct(
-        protected SyncService $syncService
+        protected CreateNewVideo $createNewVideo,
+        protected ImportToMediaLibrary $importToMediaLibrary
     ) {
     }
 
     public function import(
-        Model $model,
-        ?string $path = null,
+        User $user,
+        string $path,
         ?ImportCommand $command = null
     ): void {
         $results = collect();
 
-        $path = $path ?: Storage::disk('import')->path('');
-
-        $files = $this->syncService->gatherFiles($path);
+        $files = $this->gatherFiles($path);
 
         if (null !== $command) {
             $command->createProgressBar(count($files));
@@ -34,11 +34,9 @@ class VideoService
             $filePath = $file->getRealPath();
 
             try {
-                $baseModel = $model->videos()->create([
-                    'name' => Str::title($file->getFilenameWithoutExtension()),
-                ]);
+                $model = $this->createNewVideo->execute($user, $file);
 
-                $this->syncService->add($baseModel, $file, 'clip');
+                $this->importToMediaLibrary->execute($model, $file, 'clip');
 
                 $results->push([
                     'path' => $filePath,
@@ -58,5 +56,15 @@ class VideoService
                 $command->logStatusToConsole($results);
             }
         }
+    }
+
+    public function gatherFiles(string $path): Finder
+    {
+        return (new Finder())
+            ->files()
+            ->followLinks()
+            ->sortByName()
+            ->name(config('api.sync.extensions'))
+            ->in($path);
     }
 }

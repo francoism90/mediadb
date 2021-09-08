@@ -18,7 +18,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     Route::get('/', ['uses' => 'HomeController', 'as' => 'home']);
 
     // Auth
-    Route::name('auth.')->prefix('auth')->namespace('Auth')->group(function () {
+    Route::name('auth.')->namespace('Auth')->group(function () {
         Route::post('login', ['uses' => 'LoginController', 'as' => 'login']);
         Route::middleware('auth:sanctum')->post('logout', ['uses' => 'LogoutController', 'as' => 'logout']);
         Route::middleware('auth:sanctum')->get('user', ['uses' => 'UserController', 'as' => 'user']);

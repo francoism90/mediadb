@@ -3,11 +3,9 @@
 namespace App\Services;
 
 use App\Exceptions\InvalidFileException;
-use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe\DataMapping\Format;
 use FFMpeg\FFProbe\DataMapping\StreamCollection;
-use FFMpeg\Filters\Frame\CustomFrameFilter;
 use FFMpeg\Media\Audio;
 use FFMpeg\Media\Video;
 
@@ -27,50 +25,31 @@ class FFMpegService
         ]);
     }
 
-    public function isValidFile(string $path): bool
+    public function isValid(string $path): bool
     {
         return $this->ffmpeg->getFFProbe()->isValid($path);
     }
 
-    public function openFile(string $path): Audio | Video
+    public function open(string $path): Audio | Video
     {
         return $this->ffmpeg->open($path);
     }
 
-    public function getFileFormat(string $path): Format
+    public function getFormat(string $path): Format
     {
-        throw_if(!$this->isValidFile($path), InvalidFileException::class);
+        throw_if(!$this->isValid($path), InvalidFileException::class);
 
         return $this->ffmpeg->getFFProbe()->format($path);
     }
 
     public function getVideoStreams(string $path): StreamCollection
     {
-        throw_if(!$this->isValidFile($path), InvalidFileException::class);
+        throw_if(!$this->isValid($path), InvalidFileException::class);
 
         return $this
             ->ffmpeg
             ->getFFProbe()
             ->streams($path)
             ->videos();
-    }
-
-    public function createThumbnail(
-        Video $video,
-        string $path,
-        float $timeCode = 0,
-        string $filter = ''
-    ): string {
-        $frame = $video->frame(
-            TimeCode::fromSeconds($timeCode)
-        );
-
-        $frame->addFilter(
-            new CustomFrameFilter($filter)
-        );
-
-        $frame->save($path);
-
-        return $path;
     }
 }
