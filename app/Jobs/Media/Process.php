@@ -35,6 +35,7 @@ class Process implements ShouldQueue
         UpdateMetadataDetails $updateMetadataDetails,
         CreateNewThumbnail $createNewThumbnail,
     ): void {
+        logger('foo');
         $updateMetadataDetails->execute($this->media);
         $createNewThumbnail->execute($this->media);
     }

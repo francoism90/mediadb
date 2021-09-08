@@ -30,7 +30,7 @@ class MediaLibraryService
 
     public function temporaryPath(string $path): string
     {
-        return $this->temporaryDirectory->path($path);
+        return $this->temporaryDirectory()->path($path);
     }
 
     public function temporaryDirectory(): BaseTemporaryDirectory

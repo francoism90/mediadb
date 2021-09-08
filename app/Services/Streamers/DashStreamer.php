@@ -2,6 +2,7 @@
 
 namespace App\Services\Streamers;
 
+use App\Contracts\StreamerInterface;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

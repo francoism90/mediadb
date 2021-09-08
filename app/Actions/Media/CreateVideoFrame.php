@@ -6,7 +6,7 @@ use App\Models\Media;
 use App\Services\FFMpegService;
 use App\Services\ImageService;
 use FFMpeg\Coordinate\TimeCode;
-use FFMpeg\Filters\Video\CustomFilter;
+use FFMpeg\Filters\Frame\CustomFrameFilter;
 
 class CreateVideoFrame
 {
@@ -36,7 +36,7 @@ class CreateVideoFrame
         );
 
         $frame->addFilter(
-            new CustomFilter(config('api.conversions.thumbnail.filter'))
+            new CustomFrameFilter(config('api.conversions.thumbnail.filter'))
         );
 
         $frame->save($path);

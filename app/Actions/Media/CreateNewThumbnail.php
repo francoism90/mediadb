@@ -29,7 +29,7 @@ class CreateNewThumbnail
             $media, $path, config('api.conversions.thumbnail.path')
         );
 
-        $this->MarkConversionGenerated->execute($media, 'thumbnail');
+        $this->markConversionGenerated->execute($media, 'thumbnail');
     }
 
     private function getTemporaryPath(): string
