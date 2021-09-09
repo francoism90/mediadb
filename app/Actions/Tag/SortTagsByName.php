@@ -5,7 +5,7 @@ namespace App\Actions\Tag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 
-class SortByName
+class SortTagsByName
 {
     public function execute(): void
     {

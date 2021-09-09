@@ -4,7 +4,7 @@ namespace App\Actions\Tag;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SyncWithTypes
+class SyncTagsWithTypes
 {
     public function execute(Model $model, array $tags = []): void
     {
