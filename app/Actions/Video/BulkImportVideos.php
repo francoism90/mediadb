@@ -31,7 +31,7 @@ class BulkImportVideos
             ->files()
             ->followLinks()
             ->sortByName()
-            ->name(config('api.import.video_extensions'))
+            ->name(config('api.video.clips_extensions'))
             ->in($path);
     }
 }

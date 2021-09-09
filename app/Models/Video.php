@@ -38,8 +38,6 @@ class Video extends BaseModel
         'overview',
     ];
 
-    public bool $registerMediaConversionsUsingModelInstance = true;
-
     public function model(): MorphTo
     {
         return $this->morphTo();
