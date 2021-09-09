@@ -21,7 +21,7 @@ class VideoResource extends JsonResource
             'following' => $this->whenAppended('following'),
             'overview' => $this->whenAppended('overview'),
             'poster_url' => $this->whenAppended('poster_url'),
-            // 'sprite_url' => $this->whenAppended('sprite_url'),
+            'sprite_url' => $this->whenAppended('sprite_url'),
             'status' => $this->whenAppended('status'),
             'views' => $this->whenAppended('views'),
             'vod_url' => $this->whenAppended('vod_url'),

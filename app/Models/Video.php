@@ -6,6 +6,7 @@ use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithVod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
@@ -107,6 +108,17 @@ class Video extends BaseModel
     public function getPosterUrlAttribute(): string
     {
         return $this->getFirstMediaUrl('clips', 'thumbnail');
+    }
+
+    public function getSpriteUrlAttribute(): string
+    {
+        return URL::signedRoute(
+            'api.vod.sprite',
+            [
+                'video' => $this,
+                'version' => $this->updated_at->timestamp,
+            ]
+        );
     }
 
     public function scopeWithFavorites(Builder $query): Builder

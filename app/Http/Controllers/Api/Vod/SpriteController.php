@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api\Vod;
 
+use App\Actions\Vod\CreateSpriteItems;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
-use App\Services\VodService;
 
 class SpriteController extends Controller
 {
     public function __invoke(Video $video)
     {
-        $contents = app(VodService::class, ['model' => $video])
-            ->getSpriteContents();
+        $items = app(CreateSpriteItems::class)->execute($video);
 
-        return response($contents)
+        return response()
+            ->view('vtt.json', compact('items'))
             ->header('Content-Type', 'text/vtt');
     }
 }
