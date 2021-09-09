@@ -7,7 +7,7 @@ use App\Models\Video;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 
-class CreateNewVideo
+class CreateUserVideo
 {
     public function execute(User $user, SplFileInfo $file): Video
     {

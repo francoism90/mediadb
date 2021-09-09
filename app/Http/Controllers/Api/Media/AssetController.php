@@ -18,7 +18,8 @@ class AssetController extends Controller
 
     public function __invoke(Media $media, string $name): BinaryFileResponse
     {
-        $conversion = collect(config('api.conversions'))->first(fn ($value, $key) => $key === $name);
+        $conversion = collect(config('api.video_conversions'))
+            ->first(fn ($value, $key) => $key === $name);
 
         abort_if(!$conversion || !$media->hasGeneratedConversion($name), 404);
 

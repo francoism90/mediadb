@@ -2,7 +2,6 @@
 
 namespace App\Jobs\Media;
 
-use App\Actions\Media\CreateNewThumbnail;
 use App\Actions\Media\UpdateMetadataDetails;
 use App\Models\Media;
 use Illuminate\Bus\Queueable;
@@ -24,20 +23,15 @@ class Process implements ShouldQueue
 
     public int $timeout = 300;
 
-    protected Media $media;
-
-    public function __construct(Media $media)
-    {
-        $this->media = $media->withoutRelations();
+    public function __construct(
+        protected Media $media
+    ) {
     }
 
     public function handle(
         UpdateMetadataDetails $updateMetadataDetails,
-        CreateNewThumbnail $createNewThumbnail,
     ): void {
-        logger('foo');
         $updateMetadataDetails->execute($this->media);
-        $createNewThumbnail->execute($this->media);
     }
 
     public function tags(): array

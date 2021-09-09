@@ -14,7 +14,7 @@ class SortByName
         );
     }
 
-    private function getTags(): Collection
+    protected function getTags(): Collection
     {
         return Tag::all()->sortBy('name', SORT_NATURAL);
     }

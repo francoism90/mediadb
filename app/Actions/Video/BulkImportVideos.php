@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 class BulkImportVideos
 {
     public function __construct(
-        protected CreateNewVideo $createNewVideo,
+        protected CreateUserVideo $createUserVideo,
         protected ImportToMediaLibrary $importToMediaLibrary,
     ) {
     }
@@ -19,13 +19,13 @@ class BulkImportVideos
         $files = $this->gatherFiles($path);
 
         foreach ($files as $file) {
-            $model = $this->createNewVideo->execute($user, $file);
+            $video = $this->createUserVideo->execute($user, $file);
 
-            $this->importToMediaLibrary->execute($model, $file, 'clip');
+            $this->importToMediaLibrary->execute($video, $file, 'clips');
         }
     }
 
-    private function gatherFiles(string $path): Finder
+    protected function gatherFiles(string $path): Finder
     {
         return (new Finder())
             ->files()

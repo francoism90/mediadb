@@ -20,7 +20,7 @@ class UpdateMetadataDetails
         $this->setMetadataPropery($media, $metadata);
     }
 
-    private function gatherMetadata(Media $media): Collection
+    protected function gatherMetadata(Media $media): Collection
     {
         $collect = collect();
 
@@ -32,38 +32,39 @@ class UpdateMetadataDetails
         return $collect;
     }
 
-    private function setMetadataPropery(Media $media, Collection $metadata): void
+    protected function setMetadataPropery(Media $media, Collection $metadata): void
     {
-        $media->setCustomProperty('metadata', $metadata->all())->save();
+        $metadata->each(fn ($value, $key) => $media->setCustomProperty($key, $value));
+
+        $media->save();
     }
 
-    private function getFormatAttributes(Media $media): Collection
+    protected function getFormatAttributes(Media $media): Collection
     {
         $format = $this->ffmpegService->getFormat($media->getPath());
 
         return collect([
-            'start_time' => $format->get('start_time', 0),
-            'duration' => $format->get('duration', 0),
-            'size' => $format->get('size', 0),
             'bitrate' => $format->get('bit_rate', 0),
+            'duration' => $format->get('duration', 0),
             'probe_score' => $format->get('probe_score', 0),
+            'start_time' => $format->get('start_time', 0),
         ]);
     }
 
-    private function getVideoAttributes(Media $media): Collection
+    protected function getVideoAttributes(Media $media): Collection
     {
         $stream = $this->ffmpegService->getVideoStreams($media->getPath())->first();
 
         return collect([
-            'codec_name' => $stream->get('codec_name', null),
-            'profile' => $stream->get('profile', null),
-            'width' => $stream->get('width', 0),
-            'height' => $stream->get('height', 0),
-            'coded_width' => $stream->get('coded_width', 0),
-            'coded_height' => $stream->get('coded_height', 0),
             'closed_captions' => $stream->get('closed_captions', null),
-            'pix_fmt' => $stream->get('pix_fmt', 0),
+            'codec_name' => $stream->get('codec_name', null),
+            'coded_height' => $stream->get('coded_height', 0),
+            'coded_width' => $stream->get('coded_width', 0),
             'display_aspect_ratio' => $stream->get('display_aspect_ratio', null),
+            'height' => $stream->get('height', 0),
+            'width' => $stream->get('width', 0),
+            'pix_fmt' => $stream->get('pix_fmt', 0),
+            'profile' => $stream->get('profile', null),
         ]);
     }
 }

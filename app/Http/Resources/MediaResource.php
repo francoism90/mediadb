@@ -11,17 +11,12 @@ class MediaResource extends JsonResource
         return [
             'id' => $this->getRouteKey(),
             'name' => $this->name,
-            'kind' => $this->kind,
             'mime_type' => $this->mime_type,
+            'type' => $this->type,
+            'size' => $this->whenAppended('size'),
+            'metadata' => $this->whenAppended('metadata'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'bitrate' => $this->whenAppended('bitrate'),
-            'duration' => $this->whenAppended('duration'),
-            'locale' => $this->whenAppended('locale'),
-            'height' => $this->whenAppended('height'),
-            'width' => $this->whenAppended('width'),
-            'resolution' => $this->whenAppended('resolution'),
-            'size' => $this->whenAppended('size'),
         ];
     }
 }

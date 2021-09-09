@@ -5,13 +5,13 @@ return [
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */
-    'disk_name' => env('MEDIA_DISK', 'media'),
+    'disk_name' => env('MEDIA_DISK', 'public'),
 
     /*
      * The maximum file size of an item in bytes.
      * Adding a larger file will result in an exception.
      */
-    'max_file_size' => 1024 * 1024 * 10000,
+    'max_file_size' => 1024 * 1024 * 10000, // 10GB
 
     /*
      * This queue will be used to generate derived and responsive images.
@@ -46,7 +46,7 @@ return [
     /*
      * When enabled, Media Library pro will generate thumbnails for uploaded file.
      */
-    'generate_thumbnails_for_temporary_uploads' => false,
+    'generate_thumbnails_for_temporary_uploads' => true,
 
     /*
      * This is the class that is responsible for naming generated files.
@@ -62,7 +62,7 @@ return [
      * When urls to files get generated, this class will be called. Use the default
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => App\Support\MediaLibrary\UrlGenerator::class,
+    'url_generator' => Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator::class,
 
     /*
      * Moves media on updating to keep path consistent. Enable it only with a custom
@@ -74,7 +74,7 @@ return [
      * Whether to activate versioning when urls to files get generated.
      * When activated, this attaches a ?v=xx query string to the URL.
      */
-    'version_urls' => false,
+    'version_urls' => true,
 
     /*
      * The media library will try to optimize all converted images by removing
@@ -118,7 +118,7 @@ return [
         Spatie\MediaLibrary\Conversions\ImageGenerators\Webp::class,
         Spatie\MediaLibrary\Conversions\ImageGenerators\Pdf::class,
         Spatie\MediaLibrary\Conversions\ImageGenerators\Svg::class,
-        // Spatie\MediaLibrary\Conversions\ImageGenerators\Video::class,
+        Spatie\MediaLibrary\Conversions\ImageGenerators\Video::class,
     ],
 
     /*
@@ -146,7 +146,7 @@ return [
      * your custom jobs extend the ones provided by the package.
      */
     'jobs' => [
-        'perform_conversions' => Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob::class,
+        'perform_conversions' => App\Support\MediaLibrary\Conversions\Jobs\PerformConversionsJob::class,
         'generate_responsive_images' => Spatie\MediaLibrary\ResponsiveImages\Jobs\GenerateResponsiveImagesJob::class,
     ],
 
@@ -210,5 +210,5 @@ return [
      *
      * More info: https://css-tricks.com/native-lazy-loading/
      */
-    'default_loading_attribute_value' => null,
+    'default_loading_attribute_value' => 'lazy',
 ];
