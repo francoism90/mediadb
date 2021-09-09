@@ -6,7 +6,6 @@ use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithVod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
@@ -81,12 +80,9 @@ class Video extends BaseModel
 
     public function registerMediaConversions(Media $media = null): void
     {
-        $conversions = config('api.video.conversions');
-
-        foreach ($conversions as $key => $value) {
-            $this->addMediaConversion($key)
-                 ->performOnCollections('clips');
-        }
+        $this
+            ->addMediaConversion('thumbnail')
+            ->performOnCollections('clips');
     }
 
     public function registerMediaCollections(): void
@@ -112,19 +108,7 @@ class Video extends BaseModel
 
     public function getPosterUrlAttribute(): string
     {
-        return URL::signedRoute(
-            'api.media.asset',
-            [
-                'media' => $this->getFirstMedia('clips'),
-                'name' => 'thumbnail',
-                'version' => $this->updated_at->timestamp,
-            ]
-        );
-    }
-
-    public function getThumbnailAttribute(): ?float
-    {
-        return $this->clip?->getCustomProperty('thumbnail');
+        return $this->getFirstMediaUrl('clips', 'thumbnail');
     }
 
     public function scopeWithFavorites(Builder $query): Builder

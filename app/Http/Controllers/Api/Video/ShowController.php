@@ -13,7 +13,7 @@ class ShowController extends Controller
     {
         auth()?->user()?->view($video);
 
-        Process::dispatchNow($video->getFirstMedia('clips'));
+        // Process::dispatchNow($video->getFirstMedia('clips'));
 
         return new VideoResource(
             $video

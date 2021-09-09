@@ -5,6 +5,7 @@ namespace App\Support\MediaLibrary\UrlGenerator;
 use DateTimeInterface;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use League\Flysystem\Adapter\AbstractAdapter;
 use Spatie\MediaLibrary\Support\UrlGenerator\BaseUrlGenerator;
 
 class DefaultUrlGenerator extends BaseUrlGenerator
@@ -48,7 +49,9 @@ class DefaultUrlGenerator extends BaseUrlGenerator
         }
 
         $pathPrefix = '';
+
         if ($adapter instanceof AbstractAdapter) {
+            /** @var AbstractAdapter $pathPrefix */
             $pathPrefix = $adapter->getPathPrefix();
         }
 

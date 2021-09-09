@@ -5,8 +5,8 @@ namespace App\Actions\Media;
 use App\Models\Media;
 use App\Services\FFMpegService;
 use App\Services\ImageService;
+use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
-use FFMpeg\Filters\Frame\CustomFrameFilter;
 
 class CreateVideoFrame
 {
@@ -27,21 +27,18 @@ class CreateVideoFrame
         $duration = $media->getCustomProperty('duration', 10);
         $timeCode = $media->getCustomProperty('thumbnail', $duration / 2);
 
-        $file = $this->ffmpegService->open(
+        $video = $this->ffmpegService->open(
             $media->getPath()
         );
 
-        $frame = $file->frame(
-            TimeCode::fromSeconds($timeCode)
-        );
+        $video
+            ->filters()
+            ->resize(new Dimension(320, 240))
+            ->synchronize();
 
-        $frame->addFilter(
-            new CustomFrameFilter(
-                config('api.video.conversions.thumbnail.filter')
-            )
-        );
-
-        $frame->save($path);
+        $video
+            ->frame(TimeCode::fromSeconds($timeCode))
+            ->save($path);
     }
 
     protected function optimize(string $path): void

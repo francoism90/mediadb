@@ -30,16 +30,6 @@ return [
     */
 
     'video' => [
-        'conversions' => [
-            'sprite' => [
-                'steps' => 10,
-            ],
-
-            'thumbnail' => [
-                'filter' => 'scale=2048:-1',
-            ],
-        ],
-
         'clips_extensions' => [
             '*.mp4',
             '*.m4v',

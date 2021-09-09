@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 trait InteractsWithVod
 {
-    public function manifestUrl(): string
+    public function getVodUrlAttribute(): string
     {
         return app(VodDashService::class)->generateUrl(
             $this,

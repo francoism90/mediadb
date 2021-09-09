@@ -6,7 +6,6 @@ use App\Exceptions\InvalidFileException;
 use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe\DataMapping\Format;
 use FFMpeg\FFProbe\DataMapping\StreamCollection;
-use FFMpeg\Media\Audio;
 use FFMpeg\Media\Video;
 
 class FFMpegService
@@ -30,7 +29,7 @@ class FFMpegService
         return $this->ffmpeg->getFFProbe()->isValid($path);
     }
 
-    public function open(string $path): Audio | Video
+    public function open(string $path): Video
     {
         return $this->ffmpeg->open($path);
     }

@@ -16,7 +16,9 @@ class Media extends BaseMedia
     /**
      * @var array
      */
-    protected $touches = ['model'];
+    protected $touches = [
+        'model',
+    ];
 
     public function getRouteKeyName(): string
     {

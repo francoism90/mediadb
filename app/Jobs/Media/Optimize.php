@@ -22,11 +22,9 @@ class Optimize implements ShouldQueue
 
     public int $timeout = 300;
 
-    protected Media $media;
-
-    public function __construct(Media $media)
-    {
-        $this->media = $media->withoutRelations();
+    public function __construct(
+        protected Media $media
+    ) {
     }
 
     public function handle(): void
