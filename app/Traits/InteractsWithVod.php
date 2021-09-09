@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Models\Media;
 use App\Services\VodDashService;
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 trait InteractsWithVod
 {
@@ -47,7 +46,7 @@ trait InteractsWithVod
         ]);
     }
 
-    public function getClipsSequence(): MediaCollection
+    public function getClipsSequence(): Collection
     {
         return $this->getMedia('clips')?->flatMap(function (Media $media) {
             return [
@@ -62,7 +61,7 @@ trait InteractsWithVod
         });
     }
 
-    public function getCaptionsSequence(): MediaCollection
+    public function getCaptionsSequence(): Collection
     {
         return $this->getMedia('captions')?->flatMap(function (Media $media, $index) {
             return [
