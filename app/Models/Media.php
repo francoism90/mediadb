@@ -40,4 +40,9 @@ class Media extends BaseMedia
             'width',
         ]);
     }
+
+    public function getTypeAttribute(): string
+    {
+        return strtok($this->mime_type, '/');
+    }
 }

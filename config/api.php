@@ -29,13 +29,23 @@ return [
     |
     */
 
-    'sync' => [
-        'video_extensions' => [
+    'video' => [
+        'conversions' => [
+            'sprite' => [
+                'steps' => 10,
+            ],
+
+            'thumbnail' => [
+                'filter' => 'scale=2048:-1',
+            ],
+        ],
+
+        'clips_extensions' => [
             '*.mp4',
             '*.m4v',
         ],
 
-        'video_mimetypes' => [
+        'clips_mimetypes' => [
             'video/mp4',
             'video/mp4v-es',
             // 'video/ogg',
@@ -50,11 +60,11 @@ return [
             // 'video/x-theora+ogg',
         ],
 
-        'caption_extensions' => [
+        'captions_extensions' => [
             '*.vtt',
         ],
 
-        'caption_mimetypes' => [
+        'captions_mimetypes' => [
             'text/plain',
             'text/vtt',
         ],
@@ -69,10 +79,12 @@ return [
     |
     */
 
-    'tag_types' => [
-        'actor',
-        'genre',
-        'language',
-        'studio',
+    'tag' => [
+        'types' => [
+            'actor',
+            'genre',
+            'language',
+            'studio',
+        ],
     ],
 ];

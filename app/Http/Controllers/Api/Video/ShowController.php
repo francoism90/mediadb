@@ -13,20 +13,20 @@ class ShowController extends Controller
     {
         auth()?->user()?->view($video);
 
-        Process::dispatchNow($video->getFirstMedia('clip'));
+        Process::dispatchNow($video->getFirstMedia('clips'));
 
         return new VideoResource(
             $video
-                // ->load('tags', 'viewers')
-                // ->append([
-                //     // 'clip',
-                //     // 'favorite',
-                //     // 'following',
-                //     // 'views',
-                //     // 'poster_url',
-                //     // 'sprite_url',
-                //     // 'vod_url',
-                // ])
+                ->load('tags', 'viewers')
+                ->append([
+                    'clip',
+                    'favorite',
+                    'following',
+                    'views',
+                    'poster_url',
+                    'sprite_url',
+                    'vod_url',
+                ])
         );
     }
 }

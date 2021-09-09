@@ -25,6 +25,6 @@ class SyncWithTypes
 
     protected function getTypes(): ?array
     {
-        return config('api.tag_types');
+        return config('api.tag.types');
     }
 }

@@ -3,17 +3,11 @@
 namespace App\Actions\Media;
 
 use App\Events\Media\HasBeenAdded;
-use App\Services\MediaLibraryService;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Finder\SplFileInfo;
 
 class ImportToMediaLibrary
 {
-    public function __construct(
-        protected MediaLibraryService $mediaLibraryService,
-    ) {
-    }
-
     public function execute(
         Model $model,
         SplFileInfo $file,

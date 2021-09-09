@@ -23,8 +23,8 @@ trait InteractsWithVod
         $uri = sprintf(
             'thumb-%d-w%d-h%d.jpg',
             round($time * 1000),
-            config('api.video_conversions.sprite.width', 160),
-            config('api.video_conversions.sprite.height', 90),
+            config('api.video.conversions.sprite.width', 160),
+            config('api.video.conversions.sprite.height', 90),
         );
 
         return app(VodDashService::class)->generateUrl(
