@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Actions\Tag;
 
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 
-class TagService
+class SyncWithTypes
 {
-    public static function sync(Model $model, array $tags = []): void
+    public function execute(Model $model, array $tags = []): void
     {
         $collect = collect($tags);
 
-        $types = config('api.tag_types');
+        $types = $this->getTypes();
 
         foreach ($types as $type) {
             $items = $collect
@@ -24,12 +23,8 @@ class TagService
         }
     }
 
-    public static function sortByName(): void
+    private function getTypes(): ?array
     {
-        $tags = Tag::all()->sortBy('name', SORT_NATURAL);
-
-        Tag::setNewOrder(
-            $tags->pluck('id')->toArray()
-        );
+        return config('api.tag_types');
     }
 }
