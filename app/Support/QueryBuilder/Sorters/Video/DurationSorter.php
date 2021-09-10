@@ -2,8 +2,8 @@
 
 namespace App\Support\QueryBuilder\Sorters\Video;
 
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\Sorts\Sort;
 
@@ -35,8 +35,8 @@ class DurationSorter implements Sort
         return $query
             ->take(self::QUERY_LIMIT)
             ->get()
-            ->sortBy(function (Model $model) {
-                return $model
+            ->sortBy(function (Video $video) {
+                return $video
                     ->getFirstMedia('clips')
                     ->getCustomProperty('duration', 0);
             }, SORT_NUMERIC, $descending);
