@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Tag;
 
+use App\Actions\Tag\CreateNewTag;
 use App\Models\Tag;
 use Illuminate\Console\Command;
 
@@ -10,7 +11,7 @@ class CreateCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'tag:create {name} {type=genre}';
+    protected $signature = 'tag:create {name} {type=genre} {locale?}';
 
     /**
      * @var string
@@ -19,11 +20,6 @@ class CreateCommand extends Command
 
     public function handle(): void
     {
-        $model = Tag::create([
-            'name' => $this->argument('name'),
-            'type' => $this->argument('type'),
-        ]);
-
-        $this->info(sprintf('Successfully created tag %s (%s)', $model->name, $model->id));
+        app(CreateNewTag::class, $this->arguments());
     }
 }

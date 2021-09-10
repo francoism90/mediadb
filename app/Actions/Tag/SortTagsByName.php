@@ -10,11 +10,11 @@ class SortTagsByName
     public function execute(): void
     {
         Tag::setNewOrder(
-            $this->getTags()
+            $this->getSortedTags()
         );
     }
 
-    protected function getTags(): Collection
+    protected function getSortedTags(): Collection
     {
         return Tag::all()->sortBy('name', SORT_NATURAL);
     }
