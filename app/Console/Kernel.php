@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
      */
     protected function scheduleTimezone(): string
     {
-        return 'Europe/Amsterdam';
+        return config('api.timezone', 'Europe/Amsterdam');
     }
 
     /**

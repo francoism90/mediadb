@@ -19,6 +19,8 @@ class CreateCommand extends Command
 
     public function handle(): void
     {
-        app(CreateNewTag::class)->execute($this->arguments());
+        app(CreateNewTag::class)->execute(
+            $this->arguments(),
+        );
     }
 }
