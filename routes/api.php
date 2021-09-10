@@ -28,34 +28,33 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
     });
 
     // User
-    Route::middleware('auth:sanctum')->name('user.')->prefix('user')->namespace('User')->group(function () {
-        Route::post('/favorite/{model}', ['uses' => 'FavoriteController', 'as' => 'favorite']);
-        Route::post('/follow/{model}', ['uses' => 'FollowController', 'as' => 'follow']);
+    Route::name('user.')->prefix('user')->namespace('User')->group(function () {
+        Route::middleware('auth:sanctum')->post('/favorite/{model}', ['uses' => 'FavoriteController', 'as' => 'favorite']);
+        Route::middleware('auth:sanctum')->post('/follow/{model}', ['uses' => 'FollowController', 'as' => 'follow']);
     });
 
     // Video
-    Route::middleware('auth:sanctum')->name('videos.')->prefix('videos')->namespace('Video')->group(function () {
-        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::get('/{video}', ['uses' => 'ShowController', 'as' => 'show']);
-        Route::delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
-        Route::patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
+    Route::name('videos.')->prefix('videos')->namespace('Video')->group(function () {
+        // Resources
+        Route::middleware('auth:sanctum')->get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::middleware('auth:sanctum')->get('/{video}', ['uses' => 'ShowController', 'as' => 'show']);
+        Route::middleware('auth:sanctum')->delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
+        Route::middleware('auth:sanctum')->patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
+
+        // VOD
+        Route::middleware('auth:sanctum')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+        Route::middleware('signed')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
     });
 
     // Tag
-    Route::middleware('auth:sanctum')->name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
-        Route::get('/', ['uses' => 'IndexController', 'as' => 'index']);
-        Route::get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
+    Route::name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
+        Route::middleware('auth:sanctum')->get('/', ['uses' => 'IndexController', 'as' => 'index']);
+        Route::middleware('auth:sanctum')->get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
     });
 
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
         Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/asset/{media?}/{name}', ['uses' => 'AssetController', 'as' => 'asset']);
-    });
-
-    // VOD
-    Route::name('vod.')->prefix('vod')->namespace('Vod')->group(function () {
-        Route::middleware('auth:sanctum')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
-        Route::middleware('signed')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
     });
 });

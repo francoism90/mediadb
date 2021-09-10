@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Vod;
+namespace App\Actions\Video;
 
 use App\Models\Video;
 use Illuminate\Support\Collection;
@@ -21,7 +21,7 @@ class CreateSpriteItems
             $items->push([
                 'start_time' => gmdate('H:i:s.v', $sequence),
                 'end_time' => gmdate('H:i:s.v', $next),
-                'contents' =>  [
+                'contents' => [
                     'type' => 'thumbnail',
                     'url' => $video->frameCaptureUrl($sequence),
                 ],

@@ -2,7 +2,7 @@
 
 namespace App\Actions\Media;
 
-use App\Events\Media\HasBeenAdded;
+use App\Events\Media\MediaHasBeenAdded;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -29,6 +29,6 @@ class ImportToMediaLibrary
             $media->save();
         }
 
-        event(new HasBeenAdded($model, $media));
+        event(new MediaHasBeenAdded($model, $media));
     }
 }

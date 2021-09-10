@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Vod;
+namespace App\Http\Controllers\Api\Video;
 
 use App\Http\Controllers\Controller;
 use App\Models\Video;
@@ -10,8 +10,6 @@ class ManifestController extends Controller
 {
     public function __invoke(Video $video): JsonResponse
     {
-        logger('manifest');
-        logger($video->getManifestContents());
         return response()->json(
             $video->getManifestContents()
         );

@@ -3,7 +3,7 @@
 namespace App\Actions\Video;
 
 use App\Actions\Tag\SyncTagsWithTypes;
-use App\Events\Video\HasBeenUpdated;
+use App\Events\Video\VideoHasBeenUpdated;
 use App\Models\Video;
 
 class UpdateVideoDetails
@@ -26,7 +26,7 @@ class UpdateVideoDetails
             $video, $collect->get('tags', [])
         );
 
-        event(new HasBeenUpdated($video));
+        event(new VideoHasBeenUpdated($video));
 
         return $video;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\Vod;
+namespace App\Http\Controllers\Api\Video;
 
-use App\Actions\Vod\CreateSpriteItems;
+use App\Actions\Video\CreateSpriteItems;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 

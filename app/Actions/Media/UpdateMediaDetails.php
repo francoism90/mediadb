@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Actions\Media;
+
+use App\Events\Media\MediaHasBeenUpdated;
+use App\Models\Media;
+
+class UpdateMediaDetails
+{
+    public function execute(Media $media, array $data): Media
+    {
+        $collect = collect($data);
+
+        $media
+            ->setCustomProperty('thumbnail', $collect->get('thumbnail', $media->thumbnail))
+            ->saveOrFail();
+
+        event(new MediaHasBeenUpdated($media));
+
+        return $media;
+    }
+}

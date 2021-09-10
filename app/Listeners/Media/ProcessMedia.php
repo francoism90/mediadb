@@ -2,16 +2,18 @@
 
 namespace App\Listeners\Media;
 
-use App\Events\Media\HasBeenAdded;
+use App\Events\Media\MediaHasBeenAdded;
+use App\Events\Media\MediaHasBeenUpdated;
 use App\Jobs\Media\Optimize;
 use App\Jobs\Media\Process;
 use App\Jobs\Media\Release;
 use Illuminate\Support\Facades\Bus;
 
-class MediaAdded
+class ProcessMedia
 {
-    public function handle(HasBeenAdded $event): void
-    {
+    public function handle(
+        MediaHasBeenAdded | MediaHasBeenUpdated $event
+    ): void {
         Bus::chain([
             new Process($event->media),
             new Optimize($event->media),

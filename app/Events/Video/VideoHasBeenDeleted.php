@@ -1,34 +1,34 @@
 <?php
 
-namespace App\Events\Tag;
+namespace App\Events\Video;
 
-use App\Models\Tag;
+use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class HasBeenUpdated implements ShouldBroadcastNow
+class VideoHasBeenDeleted implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
     public function __construct(
-        public Tag $tag
+        public Video $video
     ) {
     }
 
     public function broadcastAs(): string
     {
-        return 'tag.updated';
+        return 'video.deleted';
     }
 
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
-            'tag.'.$this->tag->getRouteKey()
+            'video.'.$this->video->getRouteKey()
         );
     }
 }
