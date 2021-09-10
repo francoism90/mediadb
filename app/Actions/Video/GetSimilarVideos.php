@@ -31,7 +31,7 @@ class GetSimilarVideos
     {
         return app(GetWithTagsOfAnyType::class)->execute(
             $video,
-            optional($video->tags, []),
+            $video->tags,
             $limit,
         );
     }

@@ -113,7 +113,7 @@ class Video extends BaseModel
     public function getSpriteUrlAttribute(): string
     {
         return URL::signedRoute(
-            'api.vod.sprite',
+            'api.videos.sprite',
             [
                 'video' => $this,
                 'version' => $this->updated_at->timestamp,

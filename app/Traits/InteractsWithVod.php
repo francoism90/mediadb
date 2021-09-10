@@ -3,14 +3,14 @@
 namespace App\Traits;
 
 use App\Models\Media;
-use App\Services\VodDashService;
+use App\Services\VideoDashService;
 use Illuminate\Support\Collection;
 
 trait InteractsWithVod
 {
     public function getVodUrlAttribute(): string
     {
-        return app(VodDashService::class)->generateUrl(
+        return app(VideoDashService::class)->generateUrl(
             $this,
             'dash',
             'manifest.mpd'
@@ -26,7 +26,7 @@ trait InteractsWithVod
             config('api.video.conversions.sprite.height', 90),
         );
 
-        return app(VodDashService::class)->generateUrl(
+        return app(VideoDashService::class)->generateUrl(
             $this,
             'thumb',
             $uri

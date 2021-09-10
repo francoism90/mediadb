@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Video;
 
-class VodDashService
+class VideoDashService
 {
     public function generateUrl(Video $video, string $location, string $uri): string
     {
@@ -37,7 +37,7 @@ class VodDashService
 
     protected function getManifestRoute(Video $video): string
     {
-        $route = route('api.vod.manifest', ['video' => $video], false);
+        $route = route('api.videos.manifest', ['video' => $video], false);
 
         return trim($route, '/');
     }

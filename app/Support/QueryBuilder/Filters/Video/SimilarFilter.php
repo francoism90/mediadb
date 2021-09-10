@@ -13,7 +13,7 @@ class SimilarFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $value = Video::findOrFail($value);
+        $value = Video::findByPrefixedId($value);
 
         $table = $query->getModel()->getTable();
 

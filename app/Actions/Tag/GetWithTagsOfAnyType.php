@@ -9,7 +9,7 @@ class GetWithTagsOfAnyType
 {
     public static function execute(
         Model $model,
-        Collection | array | string $value,
+        Collection | array $value,
         int $limit = 100
     ): Collection {
         return $model
