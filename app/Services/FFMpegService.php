@@ -6,7 +6,6 @@ use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe\DataMapping\Format;
 use FFMpeg\FFProbe\DataMapping\StreamCollection;
 use FFMpeg\Media\Video;
-use RuntimeException;
 
 class FFMpegService
 {
@@ -32,14 +31,14 @@ class FFMpegService
 
     public function getFormat(string $path): Format
     {
-        throw_if(!$this->isValid($path), RuntimeException::class);
+        throw_if(!$this->isValid($path));
 
         return $this->ffmpeg->getFFProbe()->format($path);
     }
 
     public function getVideoStreams(string $path): StreamCollection
     {
-        throw_if(!$this->isValid($path), RuntimeException::class);
+        throw_if(!$this->isValid($path));
 
         return $this
             ->ffmpeg

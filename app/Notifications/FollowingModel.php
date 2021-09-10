@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class FavoriteModel extends Notification
+class FollowingModel extends Notification
 {
     use Queueable;
 
@@ -29,7 +29,7 @@ class FavoriteModel extends Notification
     {
         return new BroadcastMessage([
             'id' => $this->model->id,
-            'favorite' => $this->model->favorite,
+            'follow' => $this->model->follow,
         ]);
     }
 
@@ -37,7 +37,7 @@ class FavoriteModel extends Notification
     {
         return [
             'id' => $this->model->id,
-            'favorite' => $this->model->favorite,
+            'follow' => $this->model->follow,
         ];
     }
 }

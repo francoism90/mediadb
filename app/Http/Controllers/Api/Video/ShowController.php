@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
+use App\Actions\User\MarkModelAsViewed;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Jobs\Media\Process;
@@ -11,7 +12,7 @@ class ShowController extends Controller
 {
     public function __invoke(Video $video): VideoResource
     {
-        auth()?->user()?->view($video);
+        app(MarkModelAsViewed::class)->execute(auth()->user(), $video);
 
         // Process::dispatchNow($video->getFirstMedia('clips'));
 
