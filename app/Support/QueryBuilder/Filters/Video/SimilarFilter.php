@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Support\QueryBuilder\Filters;
+namespace App\Support\QueryBuilder\Filters\Video;
 
-use App\Services\SearchService;
+use App\Actions\Video\GetSimilarVideos;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\PrefixedIds\PrefixedIds;
-use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class SimilarFilter implements Filter
@@ -14,16 +13,14 @@ class SimilarFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $model = PrefixedIds::find($value);
-        throw_if(!$model, InvalidFilterValue::class);
-
-        $models = (new SearchService())->excerptSearch($query->getModel(), $model->name);
-        $models = $models->merge((new SearchService())->getTagResults($query->getModel(), $model->tags ?? []));
+        $value = Video::findOrFail($value);
 
         $table = $query->getModel()->getTable();
 
+        $models = app(GetSimilarVideos::class)->execute($value);
+
         return $query
-            ->where('id', '<>', $model->id)
+            ->where('id', '<>', $value->id)
             ->when($models->isEmpty(), function ($query) use ($table) {
                 return $query->whereNull(sprintf('%s.id', $table));
             }, function ($query) use ($models, $table) {

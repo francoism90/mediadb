@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Tag;
 
 use App\Actions\Tag\SortTagsByName;
-use App\Services\TagService;
 use Illuminate\Console\Command;
 
 class SortCommand extends Command
@@ -20,6 +19,6 @@ class SortCommand extends Command
 
     public function handle(): void
     {
-        app(SortTagsByName::class);
+        app(SortTagsByName::class)->execute();
     }
 }

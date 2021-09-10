@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Tag;
 
 use App\Actions\Tag\CreateNewTag;
-use App\Models\Tag;
 use Illuminate\Console\Command;
 
 class CreateCommand extends Command
@@ -20,6 +19,6 @@ class CreateCommand extends Command
 
     public function handle(): void
     {
-        app(CreateNewTag::class, $this->arguments());
+        app(CreateNewTag::class)->execute($this->arguments());
     }
 }
