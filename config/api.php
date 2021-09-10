@@ -3,21 +3,21 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Video-On-Demand
+    | DASH
     |--------------------------------------------------------------------------
     |
-    | This controls vide-on-demand (VOD).
+    | This controls dash attributes.
     |
     */
 
-    'vod' => [
-        'url' => env('VOD_URL'),
+    'dash' => [
+        'url' => env('DASH_URL'),
 
-        'key' => env('VOD_KEY'),
+        'key' => env('DASH_KEY'),
 
-        'iv' => env('VOD_IV'),
+        'iv' => env('DASH_IV'),
 
-        'expires' => env('VOD_EXPIRES', 60 * 24),
+        'expires' => env('DASH_EXPIRES', 60 * 24),
     ],
 
     /*

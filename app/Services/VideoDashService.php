@@ -13,7 +13,7 @@ class VideoDashService
         $hashPath = $this->getEncryptedPath($hash);
         $hashPath = $this->getEncodedPath($hashPath);
 
-        return sprintf('%s/%s/%s', config('api.vod.url'), $location, $hashPath);
+        return sprintf('%s/%s/%s', config('api.dash.url'), $location, $hashPath);
     }
 
     protected function getManifestHash(Video $video, string $uri): string
@@ -60,16 +60,16 @@ class VideoDashService
 
     protected function getStreamKey(): string
     {
-        return pack('H*', config('api.vod.key'));
+        return pack('H*', config('api.dash.key'));
     }
 
     protected function getStreamIV(): string
     {
-        return pack('H*', config('api.vod.iv'));
+        return pack('H*', config('api.dash.iv'));
     }
 
     protected function getStreamHashSize(): int
     {
-        return config('api.vod.hash_size', 8);
+        return config('api.dash.hash_size', 8);
     }
 }

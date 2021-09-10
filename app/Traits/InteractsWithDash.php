@@ -6,9 +6,9 @@ use App\Models\Media;
 use App\Services\VideoDashService;
 use Illuminate\Support\Collection;
 
-trait InteractsWithVod
+trait InteractsWithDash
 {
-    public function getVodUrlAttribute(): string
+    public function getDashUrlAttribute(): string
     {
         return app(VideoDashService::class)->generateUrl(
             $this,

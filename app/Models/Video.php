@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithAcquaintances;
-use App\Traits\InteractsWithVod;
+use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\URL;
@@ -22,7 +22,7 @@ class Video extends BaseModel
     use CanBeViewed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
-    use InteractsWithVod;
+    use InteractsWithDash;
     use Searchable;
 
     /**

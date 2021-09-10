@@ -24,9 +24,9 @@ class ShowController extends Controller
                     'favorite',
                     'following',
                     'views',
+                    'dash_url',
                     'poster_url',
                     'sprite_url',
-                    'vod_url',
                 ])
         );
     }
