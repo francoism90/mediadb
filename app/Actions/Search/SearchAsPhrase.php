@@ -7,8 +7,10 @@ use Illuminate\Support\Collection;
 
 class SearchAsPhrase
 {
-    public function __invoke(Model $model, string $value, int $limit = 500): Collection
+    public function __invoke(Model $model, array | string $value, int $limit = 500): Collection
     {
+        $value = is_string($value) ? explode(' ', $value) : $value;
+
         $value = collect($value)->take(6);
 
         $models = collect();

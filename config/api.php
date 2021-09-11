@@ -16,8 +16,6 @@ return [
         'key' => env('DASH_KEY'),
 
         'iv' => env('DASH_IV'),
-
-        'expires' => env('DASH_EXPIRES', 60 * 24),
     ],
 
     /*

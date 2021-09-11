@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class UpdateMetadataDetails
 {
-    public function __invoke(Media $media)
+    public function __invoke(Media $media): void
     {
         $metadata = $this->getMetadata($media);
 

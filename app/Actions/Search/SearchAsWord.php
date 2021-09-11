@@ -7,9 +7,11 @@ use Illuminate\Support\Collection;
 
 class SearchAsWord
 {
-    public function __invoke(Model $model, string $value, int $limit = 500): Collection
+    public function __invoke(Model $model, array | string $value, int $limit = 500): Collection
     {
-        $value = collect(explode(' ', $value))->shuffle()->take(6);
+        $value = is_string($value) ? explode(' ', $value) : $value;
+
+        $value = collect($value)->shuffle()->take(6);
 
         $models = collect();
 
