@@ -20,7 +20,7 @@ class CreateIndexesCommand extends Command
 
     public function handle(): void
     {
-        app(CreateIndexes::class)->execute(
+        app(CreateIndexes::class)(
             $this->option('reset'),
         );
     }

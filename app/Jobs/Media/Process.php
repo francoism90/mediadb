@@ -33,8 +33,8 @@ class Process implements ShouldQueue
         UpdateMetadataDetails $updateMetadataDetails,
         CreateNewThumbnail $createNewThumbnail,
     ): void {
-        $updateMetadataDetails->execute($this->media);
-        $createNewThumbnail->execute($this->media);
+        $updateMetadataDetails($this->media);
+        $createNewThumbnail($this->media);
     }
 
     public function tags(): array

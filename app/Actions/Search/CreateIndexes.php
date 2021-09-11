@@ -7,7 +7,7 @@ use MeiliSearch\Client;
 
 class CreateIndexes
 {
-    public function execute(?bool $reset = false): void
+    public function __invoke(?bool $reset = false): void
     {
         $client = $this->getClient();
 

@@ -17,7 +17,7 @@ class SimilarFilter implements Filter
 
         $table = $query->getModel()->getTable();
 
-        $models = app(GetSimilarVideos::class)->execute($value);
+        $models = app(GetSimilarVideos::class)($value);
 
         return $query
             ->where('id', '<>', $value->id)

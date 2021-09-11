@@ -12,7 +12,7 @@ class QueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $models = app(QueryDocuments::class)->execute(
+        $models = app(QueryDocuments::class)(
             $query->getModel(),
             $value,
         );

@@ -19,6 +19,6 @@ class SortCommand extends Command
 
     public function handle(): void
     {
-        app(SortTagsByName::class)->execute();
+        app(SortTagsByName::class)();
     }
 }

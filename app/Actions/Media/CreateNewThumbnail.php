@@ -8,7 +8,7 @@ use Spatie\TemporaryDirectory\TemporaryDirectory as BaseTemporaryDirectory;
 
 class CreateNewThumbnail
 {
-    public function execute(Media $media): void
+    public function __invoke(Media $media): void
     {
         if ('video' !== $media->type) {
             return;
@@ -16,13 +16,13 @@ class CreateNewThumbnail
 
         $temporaryPath = $this->getTemporaryPath($media);
 
-        app(CreateVideoFrame::class)->execute($media, $temporaryPath);
+        app(CreateVideoFrame::class)($media, $temporaryPath);
 
-        app(CopyToConversions::class)->execute(
+        app(CopyToConversions::class)(
             $media, $temporaryPath, $this->getConversionName($media),
         );
 
-        app(MarkConversionGenerated::class)->execute($media, 'thumbnail');
+        app(MarkConversionGenerated::class)($media, 'thumbnail');
     }
 
     protected function getConversionName(Media $media): string

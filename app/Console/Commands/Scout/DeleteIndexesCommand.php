@@ -19,6 +19,6 @@ class DeleteIndexesCommand extends Command
 
     public function handle(): void
     {
-        app(DeleteIndexes::class)->execute();
+        app(DeleteIndexes::class)();
     }
 }

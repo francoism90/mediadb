@@ -12,7 +12,7 @@ class FollowController extends Controller
 {
     public function __invoke(Model $model, FollowRequest $request): ModelResource
     {
-        app(MarkModelAsFollow::class)->execute(
+        app(MarkModelAsFollow::class)(
             auth()->user(),
             $model,
             $request->boolean('follow')

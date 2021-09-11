@@ -7,7 +7,7 @@ use MeiliSearch\Client;
 
 class DeleteIndexes
 {
-    public function execute(): void
+    public function __invoke(): void
     {
         $client = $this->getClient();
 

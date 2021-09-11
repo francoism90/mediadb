@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class SortTagsByName
 {
-    public function execute(): void
+    public function __invoke(): void
     {
         Tag::setNewOrder(
             $this->getSortedTags()

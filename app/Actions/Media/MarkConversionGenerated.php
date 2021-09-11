@@ -6,7 +6,7 @@ use App\Models\Media;
 
 class MarkConversionGenerated
 {
-    public function execute(Media $media, string $name): void
+    public function __invoke(Media $media, string $name): void
     {
         $media->markAsConversionGenerated($name);
     }

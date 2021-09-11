@@ -19,6 +19,6 @@ class RegenerateCommand extends Command
 
     public function handle(): void
     {
-        app(BulkRegenerateVideos::class)->execute();
+        app(BulkRegenerateVideos::class)();
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Tag;
 
 class CreateNewTag
 {
-    public function execute(array $data = []): Tag
+    public function __invoke(array $data = []): Tag
     {
         $collect = collect($data);
 

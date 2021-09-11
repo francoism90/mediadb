@@ -9,11 +9,11 @@ use Illuminate\Support\LazyCollection;
 
 class BulkRegenerateVideos
 {
-    public function execute(): void
+    public function __invoke(): void
     {
         $this->getModels()->each(function (Video $video): void {
             $video->getMedia('clips')->each(
-                fn (Media $media) => app(RegenerateMedia::class)->execute($media)
+                fn (Media $media) => app(RegenerateMedia::class)($media)
             );
         })->reject(function (Video $video) {
             return !$video->hasMedia('clips');

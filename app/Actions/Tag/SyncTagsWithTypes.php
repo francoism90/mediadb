@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SyncTagsWithTypes
 {
-    public function execute(Model $model, array $tags = []): void
+    public function __invoke(Model $model, array $tags = []): void
     {
         $collect = collect($tags);
 

@@ -10,7 +10,7 @@ class SpriteController extends Controller
 {
     public function __invoke(Video $video)
     {
-        $items = app(CreateSpriteItems::class)->execute($video);
+        $items = app(CreateSpriteItems::class)($video);
 
         return response()
             ->view('vtt.json', compact('items'))

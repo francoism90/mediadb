@@ -11,6 +11,6 @@ class ProcessMedia
     public function handle(
         MediaHasBeenAdded | MediaHasBeenUpdated $event
     ): void {
-        app(RegenerateMedia::class)->execute($event->media);
+        app(RegenerateMedia::class)($event->media);
     }
 }

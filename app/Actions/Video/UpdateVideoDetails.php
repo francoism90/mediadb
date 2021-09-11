@@ -8,7 +8,7 @@ use App\Models\Video;
 
 class UpdateVideoDetails
 {
-    public function execute(Video $video, array $data): Video
+    public function __invoke(Video $video, array $data): void
     {
         $collect = collect($data);
 
@@ -22,12 +22,10 @@ class UpdateVideoDetails
             ->setAttribute('season_number', $collect->get('season_number', $video->season_number))
             ->saveOrFail();
 
-        app(SyncTagsWithTypes::class)->execute(
+        app(SyncTagsWithTypes::class)(
             $video, $collect->get('tags', [])
         );
 
         event(new VideoHasBeenUpdated($video));
-
-        return $video;
     }
 }

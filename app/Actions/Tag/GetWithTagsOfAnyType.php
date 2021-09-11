@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class GetWithTagsOfAnyType
 {
-    public static function execute(
+    public function __invoke(
         Model $model,
         Collection | array $value,
         int $limit = 100

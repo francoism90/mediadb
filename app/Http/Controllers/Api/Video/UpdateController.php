@@ -12,10 +12,12 @@ class UpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Video $video): VideoResource
     {
-        app(UpdateVideoDetails::class)->execute(
+        app(UpdateVideoDetails::class)(
             $video,
             $request->validated()
         );
+
+        $video->refresh();
 
         return new VideoResource($video);
     }

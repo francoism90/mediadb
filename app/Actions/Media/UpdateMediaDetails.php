@@ -7,7 +7,7 @@ use App\Models\Media;
 
 class UpdateMediaDetails
 {
-    public function execute(Media $media, array $data): Media
+    public function __invoke(Media $media, array $data): Media
     {
         $collect = collect($data);
 

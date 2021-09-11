@@ -12,10 +12,12 @@ class UpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Media $media): MediaResource
     {
-        app(UpdateMediaDetails::class)->execute(
+        app(UpdateMediaDetails::class)(
             $media,
             $request->validated()
         );
+
+        $media->refresh();
 
         return new MediaResource($media);
     }

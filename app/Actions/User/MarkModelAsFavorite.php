@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MarkModelAsFavorite
 {
-    public function execute(User $user, Model $model, bool $force = false): void
+    public function __invoke(User $user, Model $model, bool $force = false): void
     {
         throw_if(!method_exists($model, 'favoriters'));
 

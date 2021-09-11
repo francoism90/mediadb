@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class GetSimilarVideos
 {
-    public function execute(Video $video, int $limit = 100): Collection
+    public function __invoke(Video $video, int $limit = 100): Collection
     {
         $models = $this->queryDocuments($video, $limit);
         $models = $models->merge($this->withTagsOfAnyType($video, $limit));
@@ -19,7 +19,7 @@ class GetSimilarVideos
 
     protected function queryDocuments(Video $video, int $limit): Collection
     {
-        return app(QueryDocuments::class)->execute(
+        return app(QueryDocuments::class)(
             $video,
             $video->name,
             $limit,
@@ -28,7 +28,7 @@ class GetSimilarVideos
 
     protected function withTagsOfAnyType(Video $video, int $limit): Collection
     {
-        return app(GetWithTagsOfAnyType::class)->execute(
+        return app(GetWithTagsOfAnyType::class)(
             $video,
             $video->tags,
             $limit,

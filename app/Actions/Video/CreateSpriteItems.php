@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class CreateSpriteItems
 {
-    public function execute(Video $video): Collection
+    public function __invoke(Video $video): Collection
     {
         $duration = $this->getDuration($video);
 

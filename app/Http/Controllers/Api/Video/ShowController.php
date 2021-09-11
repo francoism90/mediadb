@@ -12,7 +12,7 @@ class ShowController extends Controller
 {
     public function __invoke(Video $video): VideoResource
     {
-        app(MarkModelAsViewed::class)->execute(auth()->user(), $video);
+        app(MarkModelAsViewed::class)(auth()->user(), $video, true);
 
         // Process::dispatchNow($video->getFirstMedia('clips'));
 

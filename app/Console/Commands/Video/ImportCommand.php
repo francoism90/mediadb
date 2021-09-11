@@ -23,7 +23,7 @@ class ImportCommand extends Command
     public function handle(
         BulkImportVideos $bulkImportVideos,
     ): void {
-        $bulkImportVideos->execute(
+        $bulkImportVideos(
             $this->getUser(),
             $this->argument('path'),
         );

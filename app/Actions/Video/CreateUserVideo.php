@@ -9,7 +9,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class CreateUserVideo
 {
-    public function execute(User $user, SplFileInfo $file): Video
+    public function __invoke(User $user, SplFileInfo $file): Video
     {
         return $user->videos()->create([
             'name' => Str::title($file->getFilenameWithoutExtension()),

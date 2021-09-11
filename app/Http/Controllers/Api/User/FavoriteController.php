@@ -12,7 +12,7 @@ class FavoriteController extends Controller
 {
     public function __invoke(Model $model, FavoriteRequest $request): ModelResource
     {
-        app(MarkModelAsFavorite::class)->execute(
+        app(MarkModelAsFavorite::class)(
             auth()->user(),
             $model,
             $request->boolean('favorite')

@@ -7,7 +7,7 @@ use Spatie\MediaLibrary\MediaCollections\Filesystem;
 
 class CopyToConversions
 {
-    public function execute(Media $media, string $path, string $name): void
+    public function __invoke(Media $media, string $path, string $name): void
     {
         app(Filesystem::class)->copyToMediaLibrary(
             $path,

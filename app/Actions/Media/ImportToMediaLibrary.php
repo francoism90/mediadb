@@ -8,7 +8,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ImportToMediaLibrary
 {
-    public function execute(
+    public function __invoke(
         Model $model,
         SplFileInfo $file,
         string $collection = null,

@@ -10,12 +10,12 @@ class QueryDocuments
 {
     public const QUERY_FILTER = '/[\p{L}\p{N}\p{S}]+/u';
 
-    public function execute(Model $model, string $value, int $limit = 500): Collection
+    public function __invoke(Model $model, string $value, int $limit = 500): Collection
     {
         $value = Str::of($value)->matchAll(self::QUERY_FILTER)->implode(' ');
 
-        $models = app(SearchAsPhrase::class)->execute($model, $value);
-        $models = $models->merge(app(SearchAsWord::class)->execute($model, $value));
+        $models = app(SearchAsPhrase::class)($model, $value);
+        $models = $models->merge(app(SearchAsWord::class)($model, $value));
 
         return $models->take($limit);
     }

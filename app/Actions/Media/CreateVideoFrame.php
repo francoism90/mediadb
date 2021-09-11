@@ -10,7 +10,7 @@ use FFMpeg\Coordinate\TimeCode;
 
 class CreateVideoFrame
 {
-    public function execute(Media $media, string $path): void
+    public function __invoke(Media $media, string $path): void
     {
         $this->create($media, $path);
         $this->optimize($path);

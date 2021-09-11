@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Bus;
 
 class RegenerateMedia
 {
-    public function execute(Media $media): void
+    public function __invoke(Media $media): void
     {
         Bus::chain([
             new Process($media),
