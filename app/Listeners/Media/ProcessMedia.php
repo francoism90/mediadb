@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Media;
 
+use App\Actions\Media\RegenerateMedia;
 use App\Events\Media\MediaHasBeenAdded;
 use App\Events\Media\MediaHasBeenUpdated;
 use App\Jobs\Media\Optimize;
@@ -14,10 +15,6 @@ class ProcessMedia
     public function handle(
         MediaHasBeenAdded | MediaHasBeenUpdated $event
     ): void {
-        Bus::chain([
-            new Process($event->media),
-            new Optimize($event->media),
-            new Release($event->media),
-        ])->onQueue('media')->dispatch($event->media);
+        app(RegenerateMedia::class)->execute($event->media);
     }
 }

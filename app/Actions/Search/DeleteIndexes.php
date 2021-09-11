@@ -11,7 +11,7 @@ class DeleteIndexes
     {
         $client = $this->getClient();
 
-        $this->getIndexes()->each(function ($item) use ($client): void {
+        $this->getIndexes()->each(function (array $item) use ($client): void {
             $index = $client->getOrCreateIndex($item['name'], [
                 'primaryKey' => 'id',
             ]);

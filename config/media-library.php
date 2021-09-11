@@ -74,7 +74,7 @@ return [
      * Whether to activate versioning when urls to files get generated.
      * When activated, this attaches a ?v=xx query string to the URL.
      */
-    'version_urls' => true,
+    'version_urls' => false,
 
     /*
      * The media library will try to optimize all converted images by removing

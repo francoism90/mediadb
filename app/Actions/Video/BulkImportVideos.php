@@ -8,20 +8,14 @@ use Symfony\Component\Finder\Finder;
 
 class BulkImportVideos
 {
-    public function __construct(
-        protected CreateUserVideo $createUserVideo,
-        protected ImportToMediaLibrary $importToMediaLibrary,
-    ) {
-    }
-
     public function execute(User $user, string $path): void
     {
         $files = $this->gatherFiles($path);
 
         foreach ($files as $file) {
-            $video = $this->createUserVideo->execute($user, $file);
+            $video = app(CreateUserVideo::class)->execute($user, $file);
 
-            $this->importToMediaLibrary->execute($video, $file, 'clips');
+            app(ImportToMediaLibrary::class)->execute($video, $file, 'clips');
         }
     }
 
