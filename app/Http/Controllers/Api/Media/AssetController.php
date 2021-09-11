@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AssetController extends Controller
 {
-    public function __invoke(Media $media, string $conversion): BinaryFileResponse
+    public function __invoke(Media $media, string $conversion = null): BinaryFileResponse
     {
         abort_if(!$media->hasGeneratedConversion($conversion), 404);
 
