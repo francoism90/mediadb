@@ -17,8 +17,9 @@ class SortCommand extends Command
      */
     protected $description = 'Sort tags by name';
 
-    public function handle(): void
-    {
-        app(SortTagsByName::class)();
+    public function handle(
+        SortTagsByName $sortTagsByName
+    ): void {
+        $sortTagsByName();
     }
 }

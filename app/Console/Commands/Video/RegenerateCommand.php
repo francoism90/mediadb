@@ -17,8 +17,9 @@ class RegenerateCommand extends Command
      */
     protected $description = 'Regenerate video models';
 
-    public function handle(): void
-    {
-        app(BulkRegenerateVideos::class)();
+    public function handle(
+        BulkRegenerateVideos $bulkRegenerateVideos
+    ): void {
+        $bulkRegenerateVideos();
     }
 }

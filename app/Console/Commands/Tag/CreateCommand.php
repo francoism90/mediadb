@@ -17,10 +17,9 @@ class CreateCommand extends Command
      */
     protected $description = 'Create a tag model';
 
-    public function handle(): void
-    {
-        app(CreateNewTag::class)(
-            $this->arguments(),
-        );
+    public function handle(
+        CreateNewTag $createNewTag
+    ): void {
+        $createNewTag($this->arguments());
     }
 }

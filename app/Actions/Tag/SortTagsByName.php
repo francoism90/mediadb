@@ -10,7 +10,7 @@ class SortTagsByName
     public function __invoke(): void
     {
         Tag::setNewOrder(
-            $this->getSortedTags()
+            $this->getSortedTags()->toArray()
         );
     }
 

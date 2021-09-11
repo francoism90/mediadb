@@ -18,9 +18,10 @@ class CreateIndexesCommand extends Command
      */
     protected $description = 'Create Laravel Scout indexes';
 
-    public function handle(): void
-    {
-        app(CreateIndexes::class)(
+    public function handle(
+        CreateIndexes $createIndexes
+    ): void {
+        $createIndexes(
             $this->option('reset'),
         );
     }
