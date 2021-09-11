@@ -14,7 +14,7 @@ class QueryDocuments
     {
         $value = Str::of($value)->matchAll(self::QUERY_FILTER)->implode(' ');
 
-        $models = app(SearchAsPhase::class)->execute($model, $value);
+        $models = app(SearchAsPhrase::class)->execute($model, $value);
         $models = $models->merge(app(SearchAsWord::class)->execute($model, $value));
 
         return $models->take($limit);

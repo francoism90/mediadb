@@ -10,15 +10,9 @@ use FFMpeg\Coordinate\TimeCode;
 
 class CreateVideoFrame
 {
-    public function __construct(
-        protected FFMpegService $ffmpegService,
-    ) {
-    }
-
     public function execute(Media $media, string $path): void
     {
         $this->create($media, $path);
-
         $this->optimize($path);
     }
 
@@ -27,7 +21,7 @@ class CreateVideoFrame
         $duration = $media->getCustomProperty('duration', 10);
         $timeCode = $media->getCustomProperty('thumbnail', $duration / 2);
 
-        $video = $this->ffmpegService->open(
+        $video = app(FFMpegService::class)->open(
             $media->getPath()
         );
 

@@ -7,7 +7,7 @@ use MeiliSearch\Client;
 
 class CreateIndexes
 {
-    public function execute(bool $reset = false): void
+    public function execute(?bool $reset = false): void
     {
         $client = $this->getClient();
 
@@ -33,6 +33,9 @@ class CreateIndexes
 
     protected function getClient(): Client
     {
-        return app(Client::class, [config('meilisearch.host'), config('meilisearch.key')]);
+        return app(Client::class, [
+            config('meilisearch.host'),
+            config('meilisearch.key'),
+        ]);
     }
 }

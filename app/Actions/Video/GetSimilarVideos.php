@@ -12,7 +12,6 @@ class GetSimilarVideos
     public function execute(Video $video, int $limit = 100): Collection
     {
         $models = $this->queryDocuments($video, $limit);
-
         $models = $models->merge($this->withTagsOfAnyType($video, $limit));
 
         return $models->take($limit);

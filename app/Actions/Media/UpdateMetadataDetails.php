@@ -8,19 +8,14 @@ use Illuminate\Support\Collection;
 
 class UpdateMetadataDetails
 {
-    public function __construct(
-        protected FFMpegService $ffmpegService,
-    ) {
-    }
-
     public function execute(Media $media)
     {
-        $metadata = $this->gatherMetadata($media);
+        $metadata = $this->getMetadata($media);
 
         $this->setMetadataPropery($media, $metadata);
     }
 
-    protected function gatherMetadata(Media $media): Collection
+    protected function getMetadata(Media $media): Collection
     {
         $collect = collect();
 
@@ -41,7 +36,7 @@ class UpdateMetadataDetails
 
     protected function getFormatAttributes(Media $media): Collection
     {
-        $format = $this->ffmpegService->getFormat($media->getPath());
+        $format = app(FFMpegService::class)->getFormat($media->getPath());
 
         return collect([
             'bitrate' => $format->get('bit_rate', 0),
@@ -53,7 +48,7 @@ class UpdateMetadataDetails
 
     protected function getVideoAttributes(Media $media): Collection
     {
-        $stream = $this->ffmpegService->getVideoStreams($media->getPath())->first();
+        $stream = app(FFMpegService::class)->getVideoStreams($media->getPath())->first();
 
         return collect([
             'closed_captions' => $stream->get('closed_captions', null),

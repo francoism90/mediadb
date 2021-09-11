@@ -27,6 +27,9 @@ class DeleteIndexes
 
     protected function getClient(): Client
     {
-        return app(Client::class, [config('meilisearch.host'), config('meilisearch.key')]);
+        return app(Client::class, [
+            config('meilisearch.host'),
+            config('meilisearch.key'),
+        ]);
     }
 }

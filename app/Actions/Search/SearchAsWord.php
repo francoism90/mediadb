@@ -9,7 +9,7 @@ class SearchAsWord
 {
     public function execute(Model $model, string $value, int $limit = 500): Collection
     {
-        $value = collect($value)->shuffle()->take(6);
+        $value = collect(explode(' ', $value))->shuffle()->take(6);
 
         $models = collect();
 

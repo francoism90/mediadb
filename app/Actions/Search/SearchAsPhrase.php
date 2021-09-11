@@ -5,7 +5,7 @@ namespace App\Actions\Search;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class SearchAsPhase
+class SearchAsPhrase
 {
     public function execute(Model $model, string $value, int $limit = 500): Collection
     {
