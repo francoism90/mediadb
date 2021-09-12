@@ -12,6 +12,7 @@ class UpdateMediaDetails
         $collect = collect($data);
 
         $media
+            ->forgetCustomProperty('thumbnail')
             ->setCustomProperty('thumbnail', $collect->get('thumbnail', $media->thumbnail))
             ->saveOrFail();
 

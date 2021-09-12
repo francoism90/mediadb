@@ -19,12 +19,15 @@ class UpdateVideoDetails
             ->setTranslation('overview', $locale, $collect->get('overview', $video->overview))
             ->setAttribute('status', $collect->get('status', $video->status))
             ->setAttribute('episode_number', $collect->get('episode_number', $video->episode_number))
-            ->setAttribute('season_number', $collect->get('season_number', $video->season_number))
-            ->saveOrFail();
+            ->setAttribute('season_number', $collect->get('season_number', $video->season_number));
 
-        app(SyncTagsWithTypes::class)(
-            $video, $collect->get('tags', [])
-        );
+        $video->extra_attributes
+            ->set('capture_time', $collect->get('capture_time', $video->extra_attributes->get('capture_time')));
+
+        $video->saveOrFail();
+
+        app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
+        app(UpdateVideoThumbnail::class)($video);
 
         event(new VideoHasBeenUpdated($video));
     }
