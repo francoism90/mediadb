@@ -35,6 +35,9 @@ class Media extends BaseMedia
         return Arr::only($this->custom_properties, [
             'bitrate',
             'codec_name',
+            'codec_height',
+            'codec_width',
+            'display_aspect_ratio',
             'duration',
             'probe_score',
             'start_time',

@@ -50,6 +50,7 @@ trait InteractsWithDash
     {
         return $this->getMedia('clips')?->flatMap(function (Media $media) {
             return [
+                'id' => $media->getRouteKey(),
                 'label' => $media->getRouteKey(),
                 'clips' => [
                     [

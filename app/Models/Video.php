@@ -11,6 +11,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -89,7 +90,6 @@ class Video extends BaseModel
         $this
             ->addMediaCollection('clips')
             ->acceptsMimeTypes(config('api.video.clips_mimetypes'))
-            ->singleFile()
             ->useDisk('media');
 
         $this
@@ -98,11 +98,14 @@ class Video extends BaseModel
             ->useDisk('media');
     }
 
-    public function getClipAttribute(): ?Media
+    public function getClipsAttribute(): MediaCollection
     {
-        return $this->getFirstMedia('clips')?->append([
-            'metadata',
-        ]);
+        return $this->getMedia('clips')
+            ?->append('metadata')
+            ?->sortByDesc([
+                ['custom_properties->height', 'desc'],
+                ['custom_properties->width', 'desc'],
+            ]);
     }
 
     public function getPosterUrlAttribute(): string

@@ -27,7 +27,7 @@ class IndexController extends Controller
 
         $videos = QueryBuilder::for(Video::class)
             ->allowedAppends([
-                'clip',
+                'clips',
                 'favorite',
                 'following',
                 'poster_url',

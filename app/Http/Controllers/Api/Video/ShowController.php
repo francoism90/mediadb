@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Video;
 use App\Actions\User\MarkModelAsViewed;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
-use App\Jobs\Media\Process;
 use App\Models\Video;
 
 class ShowController extends Controller
@@ -14,13 +13,11 @@ class ShowController extends Controller
     {
         app(MarkModelAsViewed::class)(auth()->user(), $video, true);
 
-        // Process::dispatchNow($video->getFirstMedia('clips'));
-
         return new VideoResource(
             $video
                 ->load('tags', 'viewers')
                 ->append([
-                    'clip',
+                    'clips',
                     'favorite',
                     'following',
                     'views',
