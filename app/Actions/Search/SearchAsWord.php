@@ -21,7 +21,10 @@ class SearchAsWord
             }
 
             $models = $models->merge(
-                $model->search($word)->take($limit)->get()
+                $model
+                    ->search($word)
+                    ->take($limit)
+                    ->get()
             );
         }
 

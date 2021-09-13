@@ -12,7 +12,7 @@ class QueryDocuments
 
     public function __invoke(Model $model, string $value, int $limit = 500): Collection
     {
-        $value = Str::of($value)->matchAll(self::QUERY_FILTER);
+        $value = Str::of($value)->matchAll(self::QUERY_FILTER)->toArray();
 
         $models = app(SearchAsPhrase::class)($model, $value);
         $models = $models->merge(app(SearchAsWord::class)($model, $value));

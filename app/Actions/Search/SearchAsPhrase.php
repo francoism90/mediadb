@@ -24,7 +24,10 @@ class SearchAsPhrase
             }
 
             $models = $models->merge(
-                $model->search($phrase)->take($limit)->get()
+                $model
+                    ->search($phrase)
+                    ->take($limit)
+                    ->get()
             );
         }
 
