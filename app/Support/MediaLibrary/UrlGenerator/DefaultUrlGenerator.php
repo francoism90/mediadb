@@ -17,6 +17,7 @@ class DefaultUrlGenerator extends BaseUrlGenerator
             [
                 $this->media,
                 $this->conversion?->getName(),
+                $this->media?->updated_at?->timestamp,
             ]
         );
     }
@@ -29,6 +30,7 @@ class DefaultUrlGenerator extends BaseUrlGenerator
             [
                 $this->media,
                 $this->conversion?->getName(),
+                $this->media?->updated_at?->timestamp,
             ]
         );
     }

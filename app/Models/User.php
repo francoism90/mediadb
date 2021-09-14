@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
@@ -59,11 +60,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
     /**
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * @var array
@@ -105,7 +102,9 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function preferredLocale(): string
     {
-        return $this->extra_attributes->get('locale', config('app.fallback_locale'));
+        return $this->extra_attributes->get(
+            'locale', config('app.fallback_locale')
+        );
     }
 
     public function getSlugOptions(): SlugOptions
@@ -122,7 +121,8 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('avatar')
+        $this
+            ->addMediaCollection('avatar')
             ->singleFile()
             ->useDisk('media');
     }
@@ -132,18 +132,20 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return $this->getFirstMediaUrl('avatar');
     }
 
-    public function getAssignedRolesAttribute(): array
+    public function getAssignedRolesAttribute(): Collection
     {
-        return $this->getRoleNames()->toArray();
+        return $this->getRoleNames();
     }
 
-    public function getAssignedPermissionsAttribute(): array
+    public function getAssignedPermissionsAttribute(): Collection
     {
-        return $this->getAllPermissions()->pluck('name')->toArray();
+        return $this->getAllPermissions()->pluck('name');
     }
 
     public function getSettingsAttribute(): ?array
     {
-        return $this->extra_attributes->get('settings', config('api.default_settings'));
+        return $this->extra_attributes->get(
+            'settings', config('api.default_settings')
+        );
     }
 }
