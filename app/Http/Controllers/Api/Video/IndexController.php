@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoCollection;
 use App\Models\Video;
 use App\Support\QueryBuilder\Filters\QueryFilter;
-use App\Support\QueryBuilder\Filters\SimilarFilter;
+use App\Support\QueryBuilder\Filters\Video\SimilarFilter;
 use App\Support\QueryBuilder\Filters\Video\TypeFilter;
 use App\Support\QueryBuilder\Sorters\MostViewsSorter;
 use App\Support\QueryBuilder\Sorters\RandomSorter;
@@ -27,7 +27,7 @@ class IndexController extends Controller
 
         $videos = QueryBuilder::for(Video::class)
             ->allowedAppends([
-                'clip',
+                'clips',
                 'favorite',
                 'following',
                 'poster_url',

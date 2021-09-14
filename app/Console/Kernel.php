@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
      */
     protected function scheduleTimezone(): string
     {
-        return 'Europe/Amsterdam';
+        return config('app.timezone', 'UTC');
     }
 
     /**
@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('02:00')
                  ->runInBackground();
 
-        $schedule->command('media:regenerate')
+        $schedule->command('video:regenerate')
                  ->withoutOverlapping()
                  ->dailyAt('03:00')
                  ->environments(['staging', 'production'])

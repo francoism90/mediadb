@@ -11,7 +11,7 @@ return [
      * The maximum file size of an item in bytes.
      * Adding a larger file will result in an exception.
      */
-    'max_file_size' => 1024 * 1024 * 10000,
+    'max_file_size' => 1024 * 1024 * 10000, // 10GB
 
     /*
      * This queue will be used to generate derived and responsive images.
@@ -46,7 +46,7 @@ return [
     /*
      * When enabled, Media Library pro will generate thumbnails for uploaded file.
      */
-    'generate_thumbnails_for_temporary_uploads' => false,
+    'generate_thumbnails_for_temporary_uploads' => true,
 
     /*
      * This is the class that is responsible for naming generated files.
@@ -62,7 +62,7 @@ return [
      * When urls to files get generated, this class will be called. Use the default
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => App\Support\MediaLibrary\UrlGenerator::class,
+    'url_generator' => App\Support\MediaLibrary\UrlGenerator\DefaultUrlGenerator::class,
 
     /*
      * Moves media on updating to keep path consistent. Enable it only with a custom
@@ -84,6 +84,7 @@ return [
     'image_optimizers' => [
         Spatie\ImageOptimizer\Optimizers\Jpegoptim::class => [
             '-m85', // set maximum quality to 85%
+            '--force', // ensure that progressive generation is always done also if a little bigger
             '--strip-all', // this strips out all text information such as comments and EXIF data
             '--all-progressive', // this will make sure the resulting image is a progressive one
         ],

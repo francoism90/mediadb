@@ -19,13 +19,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:255',
+            'capture_time' => 'nullable|numeric|min:0|max:28800',
             'season_number' => 'nullable|string|min:1|max:255',
             'episode_number' => 'nullable|string|min:1|max:255',
             'overview' => 'nullable|string|min:1|max:1024',
             'status' => 'nullable|string|in:private,public',
-            'type' => 'nullable|string|in:clip,episode,movie',
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*.id' => ['required', new IsExistingTag()],
+            'type' => 'nullable|string|in:clip,episode,movie',
         ];
     }
 
@@ -33,12 +34,13 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
+            'capture_time' => 'cast:float',
             'season_number' => 'trim|strip_tags',
             'episode_number' => 'trim|strip_tags',
             'overview' => 'trim|strip_tags',
             'status' => 'trim|strip_tags|lowercase',
-            'type' => 'trim|strip_tags|lowercase',
             'tags.*.id' => 'trim|strip_tags',
+            'type' => 'trim|strip_tags|lowercase',
         ];
     }
 }

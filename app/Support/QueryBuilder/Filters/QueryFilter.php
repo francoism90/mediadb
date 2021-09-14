@@ -2,7 +2,7 @@
 
 namespace App\Support\QueryBuilder\Filters;
 
-use App\Services\SearchService;
+use App\Actions\Search\QueryDocuments;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
@@ -12,7 +12,10 @@ class QueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $models = (new SearchService())->excerptSearch($query->getModel(), $value ?? '');
+        $models = app(QueryDocuments::class)(
+            $query->getModel(),
+            $value,
+        );
 
         $table = $query->getModel()->getTable();
 

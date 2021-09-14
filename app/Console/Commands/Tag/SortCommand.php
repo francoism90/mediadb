@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tag;
 
-use App\Services\TagService;
+use App\Actions\Tag\SortTagsByName;
 use Illuminate\Console\Command;
 
 class SortCommand extends Command
@@ -17,8 +17,9 @@ class SortCommand extends Command
      */
     protected $description = 'Sort tags by name';
 
-    public function handle(): void
-    {
-        TagService::sortByName();
+    public function handle(
+        SortTagsByName $sortTagsByName
+    ): void {
+        $sortTagsByName();
     }
 }

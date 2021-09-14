@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Services\VodService;
 use App\Traits\InteractsWithAcquaintances;
+use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\URL;
@@ -11,6 +11,8 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -21,6 +23,7 @@ class Video extends BaseModel
     use CanBeViewed;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
+    use InteractsWithDash;
     use Searchable;
 
     /**
@@ -29,13 +32,6 @@ class Video extends BaseModel
     protected $with = [
         'media',
         'tags',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $appends = [
-        'clip',
     ];
 
     public array $translatable = [
@@ -82,67 +78,50 @@ class Video extends BaseModel
         return $query->with($this->with);
     }
 
-    public function registerMediaConversions($media = null): void
+    public function registerMediaConversions(Media $media = null): void
     {
-        $conversions = config('api.conversions');
-
-        foreach ($conversions as $key => $value) {
-            $this->addMediaConversion($key)
-                 ->withoutManipulations()
-                 ->performOnCollections('conversion-service')
-                 ->nonQueued();
-        }
+        $this
+            ->addMediaConversion('thumbnail')
+            ->performOnCollections('clips');
     }
 
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('clip')
-            ->acceptsMimeTypes(config('api.sync.video_mimetypes'))
-            ->singleFile()
+            ->addMediaCollection('clips')
+            ->acceptsMimeTypes(config('api.video.clips_mimetypes'))
             ->useDisk('media');
 
         $this
-            ->addMediaCollection('caption')
-            ->acceptsMimeTypes(config('api.sync.caption_mimetypes'))
+            ->addMediaCollection('captions')
+            ->acceptsMimeTypes(config('api.video.captions_mimetypes'))
             ->useDisk('media');
     }
 
-    public function getClipAttribute(): ?Media
+    public function getClipsAttribute(): MediaCollection
     {
-        return $this->getFirstMedia('clip')?->append([
-            'duration',
-            'resolution',
-        ]);
+        return $this->getMedia('clips')
+            ?->append('metadata')
+            ?->sortByDesc([
+                ['custom_properties->height', 'desc'],
+                ['custom_properties->width', 'desc'],
+            ]);
     }
 
     public function getPosterUrlAttribute(): string
     {
-        return URL::signedRoute(
-            'api.media.asset',
-            [
-                'media' => $this->getFirstMedia('clip'),
-                'name' => 'thumbnail',
-                'version' => $this->updated_at->timestamp,
-            ]
-        );
+        return $this->getFirstMediaUrl('clips', 'thumbnail');
     }
 
     public function getSpriteUrlAttribute(): string
     {
         return URL::signedRoute(
-            'api.vod.sprite',
+            'api.videos.sprite',
             [
                 'video' => $this,
                 'version' => $this->updated_at->timestamp,
             ]
         );
-    }
-
-    public function getVodUrlAttribute(): string
-    {
-        return app(VodService::class, ['model' => $this])
-            ->getManifestUrl();
     }
 
     public function scopeWithFavorites(Builder $query): Builder
