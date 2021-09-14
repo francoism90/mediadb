@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 
 class QueryDocuments
 {
+    /**
+     * @var string
+     */
     public const QUERY_FILTER = '/[\p{L}\p{N}\p{S}]+/u';
 
     public function __invoke(Model $model, string $value, int $limit = 500): Collection

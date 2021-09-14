@@ -15,7 +15,7 @@ class BulkRegenerateVideos
             $video->getMedia('clips')->each(
                 fn (Media $media) => app(RegenerateMedia::class)($media)
             );
-        })->reject(function (Video $video) {
+        })->reject(function (Video $video): bool {
             return !$video->hasMedia('clips');
         });
     }
