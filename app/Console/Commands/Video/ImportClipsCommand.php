@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands\Video;
 
-use App\Actions\Video\BulkImportVideos;
+use App\Actions\Video\BulkImportClips;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Console\Command;
 
 class ImportClipsCommand extends Command
@@ -11,26 +12,26 @@ class ImportClipsCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'video:import
+    protected $signature = 'video:import-clips
         {path : Import path to use}
-        {user=1 : Import to user}';
+        {video : Import to video}';
 
     /**
      * @var string
      */
-    protected $description = 'Import videos to a user';
+    protected $description = 'Import clips to a video';
 
     public function handle(
-        BulkImportVideos $bulkImportVideos,
+        BulkImportClips $bulkImportClips,
     ): void {
-        $bulkImportVideos(
-            $this->getUser(),
+        $bulkImportClips(
+            $this->getVideo(),
             $this->argument('path'),
         );
     }
 
-    protected function getUser(): User
+    protected function getVideo(): User
     {
-        return User::findOrFail($this->argument('user'));
+        return Video::findOrFail($this->argument('video'));
     }
 }
