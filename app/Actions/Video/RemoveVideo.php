@@ -9,7 +9,7 @@ class RemoveVideo
 {
     public function __invoke(Video $video): void
     {
-        throw_if(!$video->delete());
+        $video->deleteOrFail();
 
         event(new VideoHasBeenDeleted($video));
     }
