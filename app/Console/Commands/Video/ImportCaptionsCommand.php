@@ -12,7 +12,7 @@ class ImportCaptionsCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'video:import
+    protected $signature = 'video:import-captions
         {path : Import path to use}
         {video : Import to video}';
 
