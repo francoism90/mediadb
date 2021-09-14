@@ -6,7 +6,7 @@ use App\Actions\Video\BulkImportVideos;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-class ImportCommand extends Command
+class ImportClipsCommand extends Command
 {
     /**
      * @var string
