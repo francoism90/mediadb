@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Spatie\RateLimitedMiddleware\RateLimited;
 
 class Process implements ShouldQueue
 {
@@ -19,10 +20,6 @@ class Process implements ShouldQueue
     use SerializesModels;
 
     public bool $deleteWhenMissingModels = true;
-
-    public int $tries = 3;
-
-    public int $timeout = 300;
 
     public function __construct(
         protected Media $media
@@ -35,6 +32,16 @@ class Process implements ShouldQueue
     ): void {
         $updateMetadataDetails($this->media);
         $createNewThumbnail($this->media);
+    }
+
+    public function middleware()
+    {
+        return [new RateLimited()];
+    }
+
+    public function retryUntil(): \DateTime
+    {
+        return now()->addDay();
     }
 
     public function tags(): array

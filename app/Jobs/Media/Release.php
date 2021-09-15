@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Spatie\RateLimitedMiddleware\RateLimited;
 
 class Release implements ShouldQueue
 {
@@ -18,10 +19,6 @@ class Release implements ShouldQueue
 
     public bool $deleteWhenMissingModels = true;
 
-    public int $tries = 3;
-
-    public int $timeout = 300;
-
     public function __construct(
         protected Media $media
     ) {
@@ -29,6 +26,16 @@ class Release implements ShouldQueue
 
     public function handle(): void
     {
+    }
+
+    public function middleware()
+    {
+        return [new RateLimited()];
+    }
+
+    public function retryUntil(): \DateTime
+    {
+        return now()->addDay();
     }
 
     public function tags(): array

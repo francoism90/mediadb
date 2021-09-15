@@ -14,7 +14,11 @@ class CreateNewThumbnail
             return;
         }
 
-        $temporaryPath = $this->getTemporaryPath($media);
+        $temporaryDirectory = $this->temporaryDirectory();
+
+        $temporaryPath = $temporaryDirectory->path(
+            $this->getConversionName($media)
+        );
 
         app(CreateVideoFrame::class)($media, $temporaryPath);
 
@@ -23,18 +27,13 @@ class CreateNewThumbnail
         );
 
         app(MarkConversionGenerated::class)($media, 'thumbnail');
+
+        $temporaryDirectory->delete();
     }
 
     protected function getConversionName(Media $media): string
     {
         return basename($media->getPath('thumbnail'));
-    }
-
-    protected function getTemporaryPath(Media $media): string
-    {
-        return $this->temporaryDirectory()->path(
-             $this->getConversionName($media)
-        );
     }
 
     protected function temporaryDirectory(): BaseTemporaryDirectory

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68935b18fd02c30d1f0f10dc4e7d14ad",
+    "content-hash": "fdc5282652b5bbfefc0d29aa1f3ca436",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -6655,6 +6655,68 @@
                 }
             ],
             "time": "2021-09-06T08:03:10+00:00"
+        },
+        {
+            "name": "spatie/laravel-rate-limited-job-middleware",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-rate-limited-job-middleware.git",
+                "reference": "68ff9ace4b8e132165046df1c3d77cd112e994a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-rate-limited-job-middleware/zipball/68ff9ace4b8e132165046df1c3d77cd112e994a2",
+                "reference": "68ff9ace4b8e132165046df1c3d77cd112e994a2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/redis": "^6.0|^7.0|^8.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "pestphp/pest": "^1.18",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpunit/phpunit": "^8.2|^9.0",
+                "symfony/var-dumper": "^4.3|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\RateLimitedMiddleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A middleware that can rate limit jobs",
+            "homepage": "https://github.com/spatie/laravel-rate-limited-job-middleware",
+            "keywords": [
+                "laravel-rate-limited-job-middleware",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-rate-limited-job-middleware/issues",
+                "source": "https://github.com/spatie/laravel-rate-limited-job-middleware/tree/2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-09-15T08:28:33+00:00"
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
