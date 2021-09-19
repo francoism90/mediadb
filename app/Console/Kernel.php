@@ -41,12 +41,6 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping()
                  ->dailyAt('02:00')
                  ->runInBackground();
-
-        $schedule->command('video:regenerate')
-                 ->withoutOverlapping()
-                 ->dailyAt('03:00')
-                 ->environments(['staging', 'production'])
-                 ->runInBackground();
     }
 
     /**
