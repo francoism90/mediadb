@@ -124,6 +124,11 @@ class Video extends BaseModel
         );
     }
 
+    public function getCaptureTimeAttribute(): ?string
+    {
+        return $this->extra_attributes->get('capture_time');
+    }
+
     public function scopeWithFavorites(Builder $query): Builder
     {
         return $query

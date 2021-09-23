@@ -22,7 +22,7 @@ class UpdateVideoDetails
             ->setAttribute('season_number', $collect->get('season_number', $video->season_number));
 
         $video->extra_attributes
-            ->set('capture_time', $collect->get('capture_time', $video->extra_attributes->get('capture_time')));
+            ->set('capture_time', $collect->get('capture_time', $video->capture_time));
 
         $video->saveOrFail();
 

@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'capture_time' => 'cast:float',
+            'capture_time' => 'cast:string',
             'season_number' => 'trim|strip_tags',
             'episode_number' => 'trim|strip_tags',
             'overview' => 'trim|strip_tags',

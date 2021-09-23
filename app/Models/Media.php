@@ -50,4 +50,9 @@ class Media extends BaseMedia
     {
         return strtok($this->mime_type, '/');
     }
+
+    public function getThumbnailAttribute(): ?string
+    {
+        return $this->getCustomProperty('thumbnail');
+    }
 }

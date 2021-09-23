@@ -9,8 +9,10 @@ class UpdateVideoThumbnail
 {
     public function __invoke(Video $video): void
     {
+        $video->refresh();
+
         app(UpdateVideoClips::class)($video, [
-            'thumbnail' => $video->extra_attributes->get('capture_time', 1),
+            'thumbnail' => $video->capture_time,
         ]);
 
         event(new VideoHasBeenUpdated($video));
