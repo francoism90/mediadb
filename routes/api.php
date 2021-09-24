@@ -41,7 +41,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->delete('/{video}', ['uses' => 'DestroyController', 'as' => 'destroy']);
         Route::middleware('auth:sanctum')->patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
 
-        // VOD
+        // DASH
         Route::middleware('auth:sanctum')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
         Route::middleware('signed')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
     });

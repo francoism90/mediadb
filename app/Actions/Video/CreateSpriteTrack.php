@@ -5,7 +5,7 @@ namespace App\Actions\Video;
 use App\Models\Video;
 use Illuminate\Support\Collection;
 
-class CreateSpriteItems
+class CreateSpriteTrack
 {
     public function __invoke(Video $video): Collection
     {
@@ -13,12 +13,12 @@ class CreateSpriteItems
 
         $sequences = $this->getSpriteSequences($duration);
 
-        $items = collect();
+        $sections = collect();
 
         foreach ($sequences as $sequence) {
             $next = $sequences->after($sequence, $duration);
 
-            $items->push([
+            $sections->push([
                 'start_time' => gmdate('H:i:s.v', $sequence),
                 'end_time' => gmdate('H:i:s.v', $next),
                 'contents' => [
@@ -28,7 +28,7 @@ class CreateSpriteItems
             ]);
         }
 
-        return $items;
+        return $sections;
     }
 
     protected function getSpriteSequences(float $duration = 0): Collection
@@ -38,8 +38,6 @@ class CreateSpriteItems
 
     protected function getDuration(Video $video): ?float
     {
-        return $video
-            ->getFirstMedia('clips')
-            ?->getCustomProperty('duration', 0);
+        return $video->getFirstMedia('clips')?->getCustomProperty('duration');
     }
 }

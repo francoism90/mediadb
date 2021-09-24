@@ -14,7 +14,7 @@ class GetSimilarVideos
         $models = $this->queryDocuments($video, $limit);
         $models = $models->merge($this->withTagsOfAnyType($video, $limit));
 
-        return $models->take($limit);
+        return $models->where('id', '<>', $video->id)->take($limit);
     }
 
     protected function queryDocuments(Video $video, int $limit): Collection

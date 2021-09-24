@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Video;
 
-use App\Actions\Video\CreateSpriteItems;
+use App\Actions\Video\CreateSpriteTrack;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 
@@ -10,10 +10,10 @@ class SpriteController extends Controller
 {
     public function __invoke(Video $video)
     {
-        $items = app(CreateSpriteItems::class)($video);
+        $sections = app(CreateSpriteTrack::class)($video);
 
         return response()
-            ->view('vtt.json', compact('items'))
+            ->view('vtt.json', compact('sections'))
             ->header('Content-Type', 'text/vtt');
     }
 }

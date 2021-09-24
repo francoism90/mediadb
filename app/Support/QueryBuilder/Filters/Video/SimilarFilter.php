@@ -5,6 +5,9 @@ namespace App\Support\QueryBuilder\Filters\Video;
 use App\Actions\Video\GetSimilarVideos;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class SimilarFilter implements Filter
@@ -13,14 +16,13 @@ class SimilarFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $value = Video::findByPrefixedId($value);
+        $model = $this->retrieveModel($value);
+
+        $models = $this->getQueryCache($model);
 
         $table = $query->getModel()->getTable();
 
-        $models = app(GetSimilarVideos::class)($value);
-
         return $query
-            ->where('id', '<>', $value->id)
             ->when($models->isEmpty(), function ($query) use ($table) {
                 return $query->whereNull(sprintf('%s.id', $table));
             }, function ($query) use ($models, $table) {
@@ -31,5 +33,22 @@ class SimilarFilter implements Filter
                     ->whereIn(sprintf('%s.id', $table), $ids)
                     ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             });
+    }
+
+    protected function retrieveModel(string $value): Model
+    {
+        return Video::findByPrefixedId($value);
+    }
+
+    protected function getQueryCache(Model $model, int $ttl = 600): Collection
+    {
+        $key = sprintf('videoSimilar_%s', $model->id);
+
+        return Cache::remember($key, $ttl, fn () => $this->getQueryResults($model));
+    }
+
+    protected function getQueryResults(Model $model): Collection
+    {
+        return app(GetSimilarVideos::class)($model);
     }
 }

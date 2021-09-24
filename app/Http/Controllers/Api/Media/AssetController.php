@@ -12,11 +12,11 @@ class AssetController extends Controller
     {
         abort_if(!$media->hasGeneratedConversion($conversion), 404);
 
-        $absolutePath = $media->getPath($conversion);
+        $path = $media->getPath($conversion);
 
         return response()->download(
-            $absolutePath,
-            basename($absolutePath)
+            $path,
+            basename($path)
         );
     }
 }

@@ -1,9 +1,9 @@
 WEBVTT
 
-@foreach ($items as $item)
+@foreach ($sections as $section)
 
 {{ $loop->iteration }}
-{{ $item['start_time'] }} --> {{ $item['end_time'] }}
-@json($item['contents'], JSON_PRETTY_PRINT)
+{{ $section['start_time'] }} --> {{ $section['end_time'] }}
+@json($section['contents'])
 
 @endforeach
