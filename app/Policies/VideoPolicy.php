@@ -36,8 +36,8 @@ class VideoPolicy
         }
 
         return
-            $video->model->type === get_class($user) &&
-            $video->model->id === $user->id
+            $video->model_type === get_class($user) &&
+            $video->model_id === $user->id
         ;
     }
 
@@ -48,8 +48,8 @@ class VideoPolicy
         }
 
         return
-            $video->model->type === get_class($user) &&
-            $video->model->id === $user->id
+            $video->model_type === get_class($user) &&
+            $video->model_id === $user->id
         ;
     }
 
@@ -60,8 +60,8 @@ class VideoPolicy
         }
 
         return
-            $video->model->type === get_class($user) &&
-            $video->model->id === $user->id
+            $video->model_type === get_class($user) &&
+            $video->model_id === $user->id
         ;
     }
 
@@ -72,8 +72,8 @@ class VideoPolicy
         }
 
         return
-            $video->model->type === get_class($user) &&
-            $video->model->id === $user->id
+            $video->model_type === get_class($user) &&
+            $video->model_id === $user->id
         ;
     }
 }

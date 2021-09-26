@@ -2,40 +2,26 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     /**
-     * Bootstrap the application services.
-     *
-     * @return mixed
-     */
-    public function boot()
-    {
-        Telescope::auth(function () {
-            if (!auth()->guard('web')->user()) {
-                throw new UnauthorizedHttpException('Unauthorized');
-            }
-
-            return true;
-        });
-    }
-
-    /**
      * Register any application services.
+     *
+     * @return void
      */
-    public function register(): void
+    public function register()
     {
         // Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
         Telescope::filter(function (IncomingEntry $entry) {
-            if ($this->app->isLocal()) {
+            if ($this->app->environment('local')) {
                 return true;
             }
 
@@ -49,10 +35,12 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
     /**
      * Prevent sensitive request details from being logged by Telescope.
+     *
+     * @return void
      */
-    protected function hideSensitiveRequestDetails(): void
+    protected function hideSensitiveRequestDetails()
     {
-        if ($this->app->isLocal()) {
+        if ($this->app->environment('local')) {
             return;
         }
 
@@ -63,5 +51,20 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             'x-csrf-token',
             'x-xsrf-token',
         ]);
+    }
+
+    /**
+     * Register the Telescope gate.
+     *
+     * This gate determines who can access Telescope in non-local environments.
+     *
+     * @return void
+     */
+    protected function gate()
+    {
+        Gate::define('viewTelescope', function ($user) {
+            return in_array($user->email, [
+            ]);
+        });
     }
 }
