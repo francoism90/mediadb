@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Video;
 use App\Support\Sanitizer\SlugFilter;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Spatie\PrefixedIds\PrefixedIds;
 
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         \Sanitizer::extend('slug', SlugFilter::class);
+
+        Model::preventLazyLoading(!app()->isProduction());
     }
 
     /**
