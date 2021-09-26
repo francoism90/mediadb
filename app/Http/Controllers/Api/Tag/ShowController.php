@@ -10,6 +10,8 @@ class ShowController extends Controller
 {
     public function __invoke(Tag $tag): TagResource
     {
+        $this->authorize('view', $tag);
+
         return new TagResource(
             $tag->append([
                 'items',

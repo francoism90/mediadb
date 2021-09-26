@@ -22,6 +22,8 @@ class IndexController extends Controller
 {
     public function __invoke(): ResourceCollection
     {
+        $this->authorize('viewAny', Video::class);
+
         $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter())
             ->defaultDirection('desc');
 

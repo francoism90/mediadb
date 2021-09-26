@@ -18,6 +18,8 @@ class IndexController extends Controller
 {
     public function __invoke(): ResourceCollection
     {
+        $this->authorize('viewAny', Tag::class);
+
         $defaultSort = AllowedSort::field('name', 'order_column')
             ->defaultDirection('asc');
 

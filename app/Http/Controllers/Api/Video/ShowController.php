@@ -11,6 +11,8 @@ class ShowController extends Controller
 {
     public function __invoke(Video $video): VideoResource
     {
+        $this->authorize('view', $video);
+
         app(MarkModelAsViewed::class)(auth()->user(), $video, true);
 
         return new VideoResource(

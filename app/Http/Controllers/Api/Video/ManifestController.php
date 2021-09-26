@@ -10,6 +10,8 @@ class ManifestController extends Controller
 {
     public function __invoke(Video $video): JsonResponse
     {
+        $this->authorize('view', $video);
+
         return response()->json(
             $video->getManifestContents()
         );

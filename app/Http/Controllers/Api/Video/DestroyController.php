@@ -11,6 +11,8 @@ class DestroyController extends Controller
 {
     public function __invoke(Video $video): VideoResource
     {
+        $this->authorize('delete', $video);
+
         app(RemoveVideo::class)($video);
 
         return new VideoResource($video);
