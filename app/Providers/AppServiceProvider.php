@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        Model::preventLazyLoading(!app()->isProduction());
+
         PrefixedIds::registerModels([
             'tag_' => Tag::class,
             'user_' => User::class,
@@ -31,8 +33,6 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         \Sanitizer::extend('slug', SlugFilter::class);
-
-        Model::preventLazyLoading(!app()->isProduction());
     }
 
     /**
