@@ -18,7 +18,7 @@ class CreateVideoFrame
 
     protected function create(Media $media, string $path): void
     {
-        $duration = $media->getCustomProperty('duration', 10);
+        $duration = $media->getCustomProperty('duration') ?? 10;
         $timeCode = $media->getCustomProperty('thumbnail') ?? $duration / 2;
 
         $video = app(FFMpegService::class)->open(
