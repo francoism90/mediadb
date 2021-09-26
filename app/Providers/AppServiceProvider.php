@@ -24,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Model::preventLazyLoading(!app()->isProduction());
-
         PrefixedIds::registerModels([
             'tag_' => Tag::class,
             'user_' => User::class,
@@ -40,5 +38,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::preventLazyLoading(!app()->isProduction());
     }
 }
