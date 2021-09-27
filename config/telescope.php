@@ -1,6 +1,5 @@
 <?php
 
-use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
 return [
@@ -75,7 +74,9 @@ return [
     */
 
     'middleware' => [
-        Authorize::class,
+        'web',
+        'auth.basic',
+        \App\Http\Middleware\CheckForSuperAdminRole::class,
     ],
 
     /*

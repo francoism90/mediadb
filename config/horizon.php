@@ -69,7 +69,11 @@ return [
     |
     */
 
-    'middleware' => ['auth.basic'],
+    'middleware' => [
+        'web',
+        'auth.basic',
+        \App\Http\Middleware\CheckForSuperAdminRole::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

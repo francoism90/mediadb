@@ -19,7 +19,8 @@ return [
 
         'middleware' => [
             'web',
-            \BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize::class,
+            'auth.basic',
+            \App\Http\Middleware\CheckForSuperAdminRole::class,
         ],
     ],
 
