@@ -21,7 +21,7 @@ trait HasQueryCacheable
     protected function getCacheBaseTags(): array
     {
         return [
-            sprintf('query_cache_%s', $this->getTable())
+            sprintf('query_cache_%s', $this->getTable()),
         ];
     }
 
@@ -29,7 +29,7 @@ trait HasQueryCacheable
     {
         return [
             $this->getTable(),
-            sprintf('%s:%s', $this->getTable(), $this->id)
+            sprintf('%s:%s', $this->getTable(), $this->id),
         ];
     }
 

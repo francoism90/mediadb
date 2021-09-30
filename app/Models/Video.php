@@ -140,7 +140,7 @@ class Video extends BaseModel
         $collect = collect(config('api.video.resolutions'));
 
         $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
-        $byWidth  = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
+        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
 
         return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
     }
