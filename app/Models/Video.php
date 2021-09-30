@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasQueryCacheable;
 use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,6 +22,7 @@ class Video extends BaseModel
     use CanBeFavorited;
     use CanBeFollowed;
     use CanBeViewed;
+    use HasQueryCacheable;
     use HasTranslatableSlug;
     use InteractsWithAcquaintances;
     use InteractsWithDash;

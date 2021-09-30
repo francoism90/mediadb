@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdc5282652b5bbfefc0d29aa1f3ca436",
+    "content-hash": "dcfc3de8e8be2f2362391f6348dd25cd",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1993,16 +1993,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.61.0",
+            "version": "v8.62.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3d528d3d3c8ecb444b50a266c212a52973a6669b"
+                "reference": "60a7e00488167ce2babf3a2aeb3677e48aaf39be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3d528d3d3c8ecb444b50a266c212a52973a6669b",
-                "reference": "3d528d3d3c8ecb444b50a266c212a52973a6669b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/60a7e00488167ce2babf3a2aeb3677e48aaf39be",
+                "reference": "60a7e00488167ce2babf3a2aeb3677e48aaf39be",
                 "shasum": ""
             },
             "require": {
@@ -2012,15 +2012,17 @@
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "league/commonmark": "^1.3|^2.0",
+                "laravel/serializable-closure": "^1.0",
+                "league/commonmark": "^1.3|^2.0.2",
                 "league/flysystem": "^1.1",
                 "monolog/monolog": "^2.0",
                 "nesbot/carbon": "^2.31",
                 "opis/closure": "^3.6",
                 "php": "^7.3|^8.0",
                 "psr/container": "^1.0",
+                "psr/log": "^1.0 || ^2.0",
                 "psr/simple-cache": "^1.0",
-                "ramsey/uuid": "^4.0",
+                "ramsey/uuid": "^4.2.2",
                 "swiftmailer/swiftmailer": "^6.0",
                 "symfony/console": "^5.1.4",
                 "symfony/error-handler": "^5.1.4",
@@ -2077,21 +2079,21 @@
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^3.189.0",
-                "doctrine/dbal": "^2.6|^3.0",
+                "doctrine/dbal": "^2.13.3|^3.1.2",
                 "filp/whoops": "^2.8",
                 "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
                 "league/flysystem-cached-adapter": "^1.0",
-                "mockery/mockery": "^1.4.2",
+                "mockery/mockery": "^1.4.4",
                 "orchestra/testbench-core": "^6.23",
                 "pda/pheanstalk": "^4.0",
-                "phpunit/phpunit": "^8.5.8|^9.3.3",
+                "phpunit/phpunit": "^8.5.19|^9.5.8",
                 "predis/predis": "^1.1.2",
                 "symfony/cache": "^5.1.4"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.189.0).",
                 "brianium/paratest": "Required to run tests in parallel (^6.0).",
-                "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6|^3.0).",
+                "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.13.3|^3.1.2).",
                 "ext-ftp": "Required to use the Flysystem FTP driver.",
                 "ext-gd": "Required to use Illuminate\\Http\\Testing\\FileFactory::image().",
                 "ext-memcached": "Required to use the memcache cache driver.",
@@ -2105,10 +2107,10 @@
                 "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (^1.0).",
                 "league/flysystem-cached-adapter": "Required to use the Flysystem cache (^1.0).",
                 "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (^1.0).",
-                "mockery/mockery": "Required to use mocking (^1.4.2).",
+                "mockery/mockery": "Required to use mocking (^1.4.4).",
                 "nyholm/psr7": "Required to use PSR-7 bridging features (^1.2).",
                 "pda/pheanstalk": "Required to use the beanstalk queue driver (^4.0).",
-                "phpunit/phpunit": "Required to use assertions and run tests (^8.5.8|^9.3.3).",
+                "phpunit/phpunit": "Required to use assertions and run tests (^8.5.19|^9.5.8).",
                 "predis/predis": "Required to use the predis connector (^1.1.2).",
                 "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0|^5.0|^6.0).",
@@ -2158,7 +2160,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-09-14T13:31:32+00:00"
+            "time": "2021-09-28T13:30:25+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2303,16 +2305,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v9.2.9",
+            "version": "v9.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "f0b0550dfe27a15ee83976254cd423bb6abeddfd"
+                "reference": "214ef71d4f9979b24c1ac30f8199d8da1cabff53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/f0b0550dfe27a15ee83976254cd423bb6abeddfd",
-                "reference": "f0b0550dfe27a15ee83976254cd423bb6abeddfd",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/214ef71d4f9979b24c1ac30f8199d8da1cabff53",
+                "reference": "214ef71d4f9979b24c1ac30f8199d8da1cabff53",
                 "shasum": ""
             },
             "require": {
@@ -2371,7 +2373,66 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2021-09-14T16:21:44+00:00"
+            "time": "2021-09-28T15:36:01+00:00"
+        },
+        {
+            "name": "laravel/serializable-closure",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/serializable-closure.git",
+                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/679e24d36ff8b9be0e36f5222244ec8602e18867",
+                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.18",
+                "phpstan/phpstan": "^0.12.98",
+                "symfony/var-dumper": "^5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\SerializableClosure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                },
+                {
+                    "name": "Nuno Maduro",
+                    "email": "nuno@laravel.com"
+                }
+            ],
+            "description": "Laravel Serializable Closure provides an easy and secure way to serialize closures in PHP.",
+            "keywords": [
+                "closure",
+                "laravel",
+                "serializable"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/serializable-closure/issues",
+                "source": "https://github.com/laravel/serializable-closure"
+            },
+            "time": "2021-09-29T13:25:52+00:00"
         },
         {
             "name": "laravel/telescope",
@@ -2439,16 +2500,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.6.1",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "04ad32c1a3328081097a181875733fa51f402083"
+                "reference": "c808a7227f97ecfd9219fbf913bad842ea854ddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/04ad32c1a3328081097a181875733fa51f402083",
-                "reference": "04ad32c1a3328081097a181875733fa51f402083",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/c808a7227f97ecfd9219fbf913bad842ea854ddc",
+                "reference": "c808a7227f97ecfd9219fbf913bad842ea854ddc",
                 "shasum": ""
             },
             "require": {
@@ -2501,9 +2562,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.6.1"
+                "source": "https://github.com/laravel/tinker/tree/v2.6.2"
             },
-            "time": "2021-03-02T16:53:12+00:00"
+            "time": "2021-09-28T15:47:34+00:00"
         },
         {
             "name": "league/commonmark",
@@ -5674,6 +5735,71 @@
             "time": "2021-07-11T12:37:55+00:00"
         },
         {
+            "name": "rennokki/laravel-eloquent-query-cache",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/renoki-co/laravel-eloquent-query-cache.git",
+                "reference": "e3a4501fa54f4b12f1437a3688ccc7af3fcfa70f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/e3a4501fa54f4b12f1437a3688ccc7af3fcfa70f",
+                "reference": "e3a4501fa54f4b12f1437a3688ccc7af3fcfa70f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.30|^8.23",
+                "illuminate/support": "^7.30|^8.23"
+            },
+            "require-dev": {
+                "chelout/laravel-relationship-events": "^1.4",
+                "laravel/legacy-factories": "^1.1",
+                "mockery/mockery": "^1.4",
+                "orchestra/database": "^5.0|^6.0",
+                "orchestra/testbench": "^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rennokki\\QueryCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Renoki",
+                    "email": "alex@renoki.org",
+                    "homepage": "https://github.com/rennokki",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Adding cache on your Laravel Eloquent queries' results is now a breeze.",
+            "homepage": "https://github.com/renoki-co/laravel-eloquent-query-cache",
+            "keywords": [
+                "caching",
+                "eloquent",
+                "laravel",
+                "query",
+                "remember",
+                "sql"
+            ],
+            "support": {
+                "issues": "https://github.com/renoki-co/laravel-eloquent-query-cache/issues",
+                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/rennokki",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-09-29T07:56:58+00:00"
+        },
+        {
             "name": "spatie/db-dumper",
             "version": "3.0.1",
             "source": {
@@ -6803,16 +6929,16 @@
         },
         {
             "name": "spatie/laravel-translatable",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-translatable.git",
-                "reference": "c1c201ff3ddff767ab53da2faf78ba141518ae69"
+                "reference": "7ea25cf24754b4f55fd3efa3c10ef2b39755a385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/c1c201ff3ddff767ab53da2faf78ba141518ae69",
-                "reference": "c1c201ff3ddff767ab53da2faf78ba141518ae69",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/7ea25cf24754b4f55fd3efa3c10ef2b39755a385",
+                "reference": "7ea25cf24754b4f55fd3efa3c10ef2b39755a385",
                 "shasum": ""
             },
             "require": {
@@ -6874,7 +7000,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-translatable/issues",
-                "source": "https://github.com/spatie/laravel-translatable/tree/5.0.1"
+                "source": "https://github.com/spatie/laravel-translatable/tree/5.0.2"
             },
             "funding": [
                 {
@@ -6882,7 +7008,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-07-15T10:30:08+00:00"
+            "time": "2021-09-28T14:21:12+00:00"
         },
         {
             "name": "spatie/temporary-directory",
@@ -10840,16 +10966,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.10.1",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "267fafeaf0e0311952316ae0f3c765abc7516469"
+                "reference": "0b9ddae87b5867e0ca3a68f3b645079054c7ace3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/267fafeaf0e0311952316ae0f3c765abc7516469",
-                "reference": "267fafeaf0e0311952316ae0f3c765abc7516469",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/0b9ddae87b5867e0ca3a68f3b645079054c7ace3",
+                "reference": "0b9ddae87b5867e0ca3a68f3b645079054c7ace3",
                 "shasum": ""
             },
             "require": {
@@ -10896,7 +11022,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-08-23T13:43:27+00:00"
+            "time": "2021-09-28T15:33:02+00:00"
         },
         {
             "name": "mockery/mockery",

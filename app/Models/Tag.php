@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasQueryCacheable;
 use App\Traits\HasRandomSeed;
 use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithTranslations;
@@ -15,6 +16,7 @@ use Spatie\Tags\Tag as BaseTag;
 class Tag extends BaseTag
 {
     use HasPrefixedId;
+    use HasQueryCacheable;
     use HasRandomSeed;
     use HasSchemalessAttributes;
     use InteractsWithTranslations;

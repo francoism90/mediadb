@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasQueryCacheable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia
 {
+    use HasQueryCacheable;
+
     /**
      * @var array
      */
