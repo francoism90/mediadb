@@ -17,7 +17,7 @@ class TypeFilter implements Filter
     {
         $value = is_string($value) ? explode(',', $value) : $value;
 
-        $scopes = collect(self::ALLOWED_SCOPES)->whereIn('key', $value);
+        $scopes = collect(static::ALLOWED_SCOPES)->whereIn('key', $value);
 
         return $query->scopes(
             $scopes->implode('value')
