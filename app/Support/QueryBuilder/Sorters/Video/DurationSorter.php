@@ -9,15 +9,13 @@ use Spatie\QueryBuilder\Sorts\Sort;
 
 class DurationSorter implements Sort
 {
-    public const QUERY_LIMIT = 1500;
-
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
         $query->getQuery()->reorder();
 
         $table = $query->getModel()->getTable();
 
-        $models = $this->sortModelDurations($query, $descending);
+        $models = static::sortModels($query, $descending);
 
         return $query
             ->when($models->isNotEmpty(), function ($query) use ($models, $table) {
@@ -30,15 +28,14 @@ class DurationSorter implements Sort
             });
     }
 
-    protected function sortModelDurations(Builder $query, bool $descending): Collection
+    protected static function sortModels(Builder $query, bool $descending): Collection
     {
         return $query
-            ->take(self::QUERY_LIMIT)
             ->get()
-            ->sortBy(function (Video $video) {
-                return $video
-                    ->getFirstMedia('clips')
-                    ->getCustomProperty('duration', 0);
-            }, SORT_NUMERIC, $descending);
+            ->sortBy(
+                fn (Video $video) => $video->duration ?? 0,
+                SORT_NUMERIC,
+                $descending
+            );
     }
 }

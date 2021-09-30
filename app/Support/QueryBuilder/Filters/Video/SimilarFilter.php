@@ -16,9 +16,9 @@ class SimilarFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $model = $this->retrieveModel($value);
+        $model = static::retrieveModel($value);
 
-        $models = $this->getQueryCache($model);
+        $models = static::getQueryCache($model);
 
         $table = $query->getModel()->getTable();
 
@@ -35,19 +35,19 @@ class SimilarFilter implements Filter
             });
     }
 
-    protected function retrieveModel(string $value): Model
+    protected static function retrieveModel(string $value): Model
     {
         return Video::findByPrefixedId($value);
     }
 
-    protected function getQueryCache(Model $model, int $ttl = 600): Collection
+    protected static function getQueryCache(Model $model, int $ttl = 600): Collection
     {
-        $key = sprintf('videoSimilar_%s', $model->id);
+        $key = sprintf('similar_%s_%s', $model->getTable(), $model->id);
 
-        return Cache::remember($key, $ttl, fn () => $this->getQueryResults($model));
+        return Cache::remember($key, $ttl, fn () => static::getQueryResults($model));
     }
 
-    protected function getQueryResults(Model $model): Collection
+    protected static function getQueryResults(Model $model): Collection
     {
         return app(GetSimilarVideos::class)($model);
     }

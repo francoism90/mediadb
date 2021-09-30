@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasQueryCacheable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia
 {
+    use HasQueryCacheable;
+
     /**
      * @var array
      */
@@ -20,14 +23,17 @@ class Media extends BaseMedia
         'model',
     ];
 
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'metadata',
+        'type',
+    ];
+
     public function getRouteKeyName(): string
     {
         return 'uuid';
-    }
-
-    public function getKindAttribute(): string
-    {
-        return Str::plural($this->collection_name);
     }
 
     public function getMetadataAttribute(): array
@@ -44,6 +50,11 @@ class Media extends BaseMedia
             'height',
             'width',
         ]);
+    }
+
+    public function getKindAttribute(): string
+    {
+        return Str::plural($this->collection_name);
     }
 
     public function getTypeAttribute(): string
