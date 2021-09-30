@@ -34,6 +34,17 @@ class Video extends BaseModel
         'tags',
     ];
 
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'duration',
+        'resolution',
+    ];
+
+    /**
+     * @var array
+     */
     public array $translatable = [
         'name',
         'slug',
@@ -101,16 +112,35 @@ class Video extends BaseModel
     public function getClipsAttribute(): MediaCollection
     {
         return $this->getMedia('clips')
-            ?->append('metadata')
             ?->sortByDesc([
                 ['custom_properties->height', 'desc'],
                 ['custom_properties->width', 'desc'],
             ]);
     }
 
-    public function getPosterUrlAttribute(): string
+    public function getClipAttribute(): ?Media
     {
-        return $this->getFirstMediaUrl('clips', 'thumbnail');
+        return $this->clips?->first();
+    }
+
+    public function getDurationAttribute(): ?float
+    {
+        return $this->clips?->max('custom_properties.duration');
+    }
+
+    public function getPosterUrlAttribute(): ?string
+    {
+        return $this->clip?->getUrl('thumbnail');
+    }
+
+    public function getResolutionAttribute(): string
+    {
+        $collect = collect(config('api.video.resolutions'));
+
+        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
+        $byWidth  = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
+
+        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
     }
 
     public function getSpriteUrlAttribute(): string
