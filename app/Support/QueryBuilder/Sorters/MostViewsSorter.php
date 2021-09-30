@@ -10,7 +10,6 @@ class MostViewsSorter implements Sort
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
         return $query
-            ->with('viewers')
             ->withCount('viewers')
             ->orderByDesc('viewers_count');
     }

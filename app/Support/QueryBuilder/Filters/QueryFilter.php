@@ -33,14 +33,14 @@ class QueryFilter implements Filter
             });
     }
 
-    protected function getQueryCache(Model $model, string $value, int $ttl = 600): Collection
+    protected static function getQueryCache(Model $model, string $value): Collection
     {
-        $key = sprintf('documentQuery_%s', Str::camel($value));
+        $key = sprintf('query_%s_%s', $model->getTable(), Str::kebab($value));
 
-        return Cache::remember($key, $ttl, fn () => $this->getQueryResults($model, $value));
+        return Cache::remember($key, 600, fn () => static::getQueryResults($model, $value));
     }
 
-    protected function getQueryResults(Model $model, string $value): Collection
+    protected static function getQueryResults(Model $model, string $value): Collection
     {
         return app(QueryDocuments::class)($model, $value);
     }
