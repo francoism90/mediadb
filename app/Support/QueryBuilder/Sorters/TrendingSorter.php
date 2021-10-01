@@ -11,7 +11,6 @@ class TrendingSorter implements Sort
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
         return $query
-            ->with('viewers')
             ->withCount(['viewers' => function (Builder $query): void {
                 $query->where('interactions.created_at', '>=', Carbon::now()->subDays(3));
             }])

@@ -36,11 +36,12 @@ return [
         'clips_mimetypes' => [
             'video/mp4',
             'video/mp4v-es',
+            'video/quicktime',
+            'video/x-m4v',
             // 'video/ogg',
             // 'video/vp8',
             // 'video/vp9',
             // 'video/webm',
-            'video/x-m4v',
             // 'video/x-ogg',
             // 'video/x-ogm',
             // 'video/x-ogm+ogg',

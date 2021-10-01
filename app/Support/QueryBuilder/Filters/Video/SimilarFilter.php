@@ -20,7 +20,7 @@ class SimilarFilter implements Filter
 
         $models = static::getQueryCache($model);
 
-        $table = $query->getModel()->getTable();
+        $table = static::getModelTable($query);
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
@@ -35,11 +35,6 @@ class SimilarFilter implements Filter
             });
     }
 
-    protected static function retrieveModel(string $value): Model
-    {
-        return Video::findByPrefixedId($value);
-    }
-
     protected static function getQueryCache(Model $model, int $ttl = 600): Collection
     {
         $key = sprintf('similar_%s_%s', $model->getTable(), $model->id);
@@ -50,5 +45,15 @@ class SimilarFilter implements Filter
     protected static function getQueryResults(Model $model): Collection
     {
         return app(GetSimilarVideos::class)($model);
+    }
+
+    protected static function retrieveModel(string $value): Model
+    {
+        return Video::findByPrefixedIdOrFail($value);
+    }
+
+    protected static function getModelTable(Builder $query): string
+    {
+        return $query->getModel()->getTable();
     }
 }

@@ -16,9 +16,9 @@ class QueryFilter implements Filter
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $models = $this->getQueryCache($query->getModel(), $value);
+        $models = static::getQueryCache($query->getModel(), $value);
 
-        $table = $query->getModel()->getTable();
+        $table = static::getModelTable($query);
 
         return $query
             ->when($models->isEmpty(), function ($query) use ($table) {
@@ -43,5 +43,10 @@ class QueryFilter implements Filter
     protected static function getQueryResults(Model $model, string $value): Collection
     {
         return app(QueryDocuments::class)($model, $value);
+    }
+
+    protected static function getModelTable(Builder $query): string
+    {
+        return $query->getModel()->getTable();
     }
 }
