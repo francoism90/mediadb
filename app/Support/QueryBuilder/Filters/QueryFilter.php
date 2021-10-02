@@ -37,12 +37,14 @@ class QueryFilter implements Filter
     {
         $key = sprintf('query_%s_%s', $model->getTable(), Str::kebab($value));
 
-        return Cache::remember($key, 600, fn () => static::getQueryResults($model, $value));
+        return Cache::tags($model->getTable())->remember(
+            $key, 3600, fn () => static::getQueryResults($model, $value)
+        );
     }
 
     protected static function getQueryResults(Model $model, string $value): Collection
     {
-        return app(QueryDocuments::class)($model, $value);
+        return app(QueryDocuments::class)($model, $value)->map->only(['id', 'name']);
     }
 
     protected static function getModelTable(Builder $query): string

@@ -12,8 +12,8 @@ class CreateNewTag
 
         return Tag::findOrCreate(
             $collect->get('name'),
-            $collect->get('type'),
-            $collect->get('locale'),
+            $collect->get('type', 'genre'),
+            $collect->get('locale', 'en'),
         );
     }
 }

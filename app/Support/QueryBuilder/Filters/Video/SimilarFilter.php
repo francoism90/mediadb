@@ -35,16 +35,18 @@ class SimilarFilter implements Filter
             });
     }
 
-    protected static function getQueryCache(Model $model, int $ttl = 600): Collection
+    protected static function getQueryCache(Model $model): Collection
     {
         $key = sprintf('similar_%s_%s', $model->getTable(), $model->id);
 
-        return Cache::remember($key, $ttl, fn () => static::getQueryResults($model));
+        return Cache::tags($model->getTable())->remember(
+            $key, 3600, fn () => static::getQueryResults($model)
+        );
     }
 
     protected static function getQueryResults(Model $model): Collection
     {
-        return app(GetSimilarVideos::class)($model);
+        return app(GetSimilarVideos::class)($model)->map->only(['id', 'name']);
     }
 
     protected static function retrieveModel(string $value): Model
