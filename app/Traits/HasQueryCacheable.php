@@ -21,15 +21,8 @@ trait HasQueryCacheable
     protected function getCacheBaseTags(): array
     {
         return [
-            sprintf('query_cache_%s', $this->getTable()),
-        ];
-    }
-
-    protected function cacheTagsValue(): array
-    {
-        return [
             $this->getTable(),
-            sprintf('%s:%s', $this->getTable(), $this->id),
+            sprintf('%s:%d', $this->getTable(), $this->id),
         ];
     }
 
@@ -40,6 +33,6 @@ trait HasQueryCacheable
 
     public function getCacheTagsToInvalidateOnUpdate($relation = null, $pivotedModels = null): array
     {
-        return $this->cacheTagsValue();
+        return $this->getCacheBaseTags();
     }
 }
