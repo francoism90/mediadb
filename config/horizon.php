@@ -208,5 +208,23 @@ return [
         ],
     ],
 
-    'environments' => [],
+    'environments' => [
+        'production' => [
+            'supervisor-1' => [],
+            'supervisor-2' => [],
+            'supervisor-3' => [],
+        ],
+
+        'staging' => [
+            'supervisor-1' => [],
+            'supervisor-2' => [],
+            'supervisor-3' => [],
+        ],
+
+        'local' => [
+            'supervisor-1' => [],
+            'supervisor-2' => [],
+            'supervisor-3' => [],
+        ],
+    ],
 ];
