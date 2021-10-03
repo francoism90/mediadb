@@ -12,6 +12,8 @@ class FavoriteController extends Controller
 {
     public function __invoke(Model $model, FavoriteRequest $request): ModelResource
     {
+        $this->authorize('view', $model);
+
         app(MarkModelAsFavorite::class)(
             auth()->user(),
             $model,
