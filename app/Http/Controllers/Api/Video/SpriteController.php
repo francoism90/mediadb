@@ -10,8 +10,6 @@ class SpriteController extends Controller
 {
     public function __invoke(Video $video)
     {
-        $this->authorize('view', $video);
-
         $sections = app(CreateSpriteTrack::class)($video);
 
         return response()
