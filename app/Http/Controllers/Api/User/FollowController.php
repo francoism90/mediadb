@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Actions\User\MarkModelAsFollow;
+use App\Actions\User\MarkModelAsFollowing;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\FollowRequest;
 use App\Http\Resources\ModelResource;
@@ -14,7 +14,7 @@ class FollowController extends Controller
     {
         $this->authorize('view', $model);
 
-        app(MarkModelAsFollow::class)(
+        app(MarkModelAsFollowing::class)(
             auth()->user(),
             $model,
             $request->boolean('following')

@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Notifications\FollowingModel;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkModelAsFollow
+class MarkModelAsFollowing
 {
     public function __invoke(User $user, Model $model, bool $force = false): void
     {
