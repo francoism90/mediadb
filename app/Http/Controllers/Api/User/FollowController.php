@@ -15,7 +15,7 @@ class FollowController extends Controller
         app(MarkModelAsFollow::class)(
             auth()->user(),
             $model,
-            $request->boolean('follow')
+            $request->boolean('following')
         );
 
         $model->refresh();

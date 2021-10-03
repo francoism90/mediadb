@@ -17,14 +17,14 @@ class FollowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'follow' => 'nullable|boolean',
+            'following' => 'nullable|boolean',
         ];
     }
 
     public function filters(): array
     {
         return [
-            'follow' => 'trim|strip_tags|cast:boolean',
+            'following' => 'trim|strip_tags|cast:boolean',
         ];
     }
 }

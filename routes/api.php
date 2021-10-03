@@ -23,8 +23,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->post('logout', ['uses' => 'LogoutController', 'as' => 'logout']);
         Route::middleware('auth:sanctum')->get('user', ['uses' => 'UserController', 'as' => 'user']);
         Route::middleware('auth:sanctum')->get('refresh', ['uses' => 'RefreshController', 'as' => 'refresh']);
-        // Route::middleware('auth:sanctum')->get('impersonate', ['uses' => 'ImpersonateController', 'as' => 'impersonate']);
-        // Route::middleware('auth:sanctum')->get('unimpersonate', ['uses' => 'UnimpersonateController', 'as' => 'unimpersonate']);
     });
 
     // User
@@ -42,8 +40,8 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{video}', ['uses' => 'UpdateController', 'as' => 'update']);
 
         // DASH
-        Route::middleware('auth:sanctum')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
-        Route::middleware('signed')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
+        Route::middleware('auth:sanctum', 'cache.headers:public;max_age=86400;etag')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
+        Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
     });
 
     // Tag
