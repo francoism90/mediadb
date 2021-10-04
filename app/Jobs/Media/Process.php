@@ -3,7 +3,7 @@
 namespace App\Jobs\Media;
 
 use App\Actions\Media\CreateNewThumbnail;
-use App\Actions\Media\UpdateMetadataDetails;
+use App\Actions\Media\UpdateMediaProperties;
 use App\Models\Media;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,10 +27,10 @@ class Process implements ShouldQueue
     }
 
     public function handle(
-        UpdateMetadataDetails $updateMetadataDetails,
+        UpdateMediaProperties $updateMediaProperties,
         CreateNewThumbnail $createNewThumbnail,
     ): void {
-        $updateMetadataDetails($this->media);
+        $updateMediaProperties($this->media);
         $createNewThumbnail($this->media);
     }
 

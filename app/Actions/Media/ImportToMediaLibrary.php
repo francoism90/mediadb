@@ -26,9 +26,9 @@ class ImportToMediaLibrary
         // Force WebVTT
         if ('vtt' === $extension) {
             $media->mime_type = 'text/vtt';
-            $media->save();
+            $media->saveOrFail();
         }
 
-        event(new MediaHasBeenAdded($model, $media));
+        MediaHasBeenAdded::dispatch($model, $media);
     }
 }

@@ -12,10 +12,11 @@ class UpdateMediaDetails
         $collect = collect($data);
 
         $media
+            ->setAttribute('name', $collect->get('name', $media->name))
             ->setCustomProperty('thumbnail', $collect->get('thumbnail', $media->thumbnail))
             ->saveOrFail();
 
-        event(new MediaHasBeenUpdated($media));
+        MediaHasBeenUpdated::dispatch($media);
 
         return $media;
     }

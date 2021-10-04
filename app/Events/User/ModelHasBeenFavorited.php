@@ -1,40 +1,44 @@
 <?php
 
-namespace App\Events\Video;
+namespace App\Events\User;
 
-use App\Http\Resources\VideoResource;
-use App\Models\Video;
+use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VideoHasBeenUpdated implements ShouldBroadcastNow
+class ModelHasBeenFavorited implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
     public function __construct(
-        public Video $video
+        public User $user,
+        public Model $model
     ) {
     }
 
     public function broadcastAs(): string
     {
-        return 'video.updated';
+        return 'model.favorited';
     }
 
     public function broadcastWith(): array
     {
-        return (new VideoResource($this->video))->resolve();
+        return [
+            'id' => $this->model->getRouteKey(),
+            'favorite' => $this->model->favorite,
+        ];
     }
 
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
-            'video.'.$this->video->getRouteKey()
+            'user.'.$this->user->getRouteKey()
         );
     }
 }

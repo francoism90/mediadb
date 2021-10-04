@@ -16,6 +16,6 @@ class MarkModelAsViewed
             ? $user->view($model)
             : $user->toggleView($model);
 
-        $user->notify(new ViewedModel($model));
+        // $user->notify(new ViewedModel($model));
     }
 }

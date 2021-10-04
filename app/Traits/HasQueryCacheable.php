@@ -15,7 +15,7 @@ trait HasQueryCacheable
 
     protected function cacheForValue(): int
     {
-        return config('api.cache_queries', 3600);
+        return config('api.cache_queries', 0);
     }
 
     protected function getCacheBaseTags(): array

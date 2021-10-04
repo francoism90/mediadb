@@ -11,6 +11,6 @@ class RemoveVideo
     {
         $video->deleteOrFail();
 
-        event(new VideoHasBeenDeleted($video));
+        VideoHasBeenDeleted::dispatch($video);
     }
 }

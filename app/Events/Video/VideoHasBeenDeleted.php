@@ -2,6 +2,7 @@
 
 namespace App\Events\Video;
 
+use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -23,6 +24,11 @@ class VideoHasBeenDeleted implements ShouldBroadcastNow
     public function broadcastAs(): string
     {
         return 'video.deleted';
+    }
+
+    public function broadcastWith(): array
+    {
+        return (new VideoResource($this->video))->resolve();
     }
 
     public function broadcastOn(): PrivateChannel

@@ -29,6 +29,8 @@ class UpdateVideoDetails
         app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
         app(UpdateVideoThumbnail::class)($video);
 
-        event(new VideoHasBeenUpdated($video));
+        $video->refresh();
+
+        VideoHasBeenUpdated::dispatch($video);
     }
 }
