@@ -2,8 +2,8 @@
 
 namespace App\Actions\User;
 
+use App\Events\User\ModelHasBeenFavorited;
 use App\Models\User;
-use App\Notifications\FavoritedModel;
 use Illuminate\Database\Eloquent\Model;
 
 class MarkModelAsFavorite
@@ -16,6 +16,6 @@ class MarkModelAsFavorite
             ? $user->favorite($model)
             : $user->toggleFavorite($model);
 
-        $user->notify(new FavoritedModel($model));
+        ModelHasBeenFavorited::dispatch($user, $model);
     }
 }

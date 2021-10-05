@@ -33,6 +33,13 @@ class Tag extends BaseTag
         return 'prefixed_id';
     }
 
+    public function videos(): MorphToMany
+    {
+        return $this->morphedByMany(
+            Video::class, 'taggable', 'taggables'
+        );
+    }
+
     public function searchableAs(): string
     {
         return 'tags_index';
@@ -51,13 +58,6 @@ class Tag extends BaseTag
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
         return $query->with($this->with);
-    }
-
-    public function videos(): MorphToMany
-    {
-        return $this->morphedByMany(
-            Video::class, 'taggable', 'taggables'
-        );
     }
 
     public function getItemsAttribute(?string $type = null): int

@@ -75,6 +75,16 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return 'prefixed_id';
     }
 
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'user.'.$this->getRouteKey();
+    }
+
+    public function videos(): MorphMany
+    {
+        return $this->morphMany(Video::class, 'model');
+    }
+
     public function searchableAs(): string
     {
         return 'users_index';
@@ -90,21 +100,9 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         ]);
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
-    {
-        return $query->with($this->with);
-    }
-
-    public function videos(): MorphMany
-    {
-        return $this->morphMany(Video::class, 'model');
-    }
-
     public function preferredLocale(): string
     {
-        return $this->extra_attributes->get(
-            'locale', config('app.fallback_locale')
-        );
+        return $this->extra_attributes->get('locale', config('app.fallback_locale'));
     }
 
     public function getSlugOptions(): SlugOptions
@@ -112,11 +110,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    public function receivesBroadcastNotificationsOn(): string
-    {
-        return 'user.'.$this->getRouteKey();
     }
 
     public function registerMediaCollections(): void
@@ -147,5 +140,10 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return $this->extra_attributes->get(
             'settings', config('api.default_settings')
         );
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 }

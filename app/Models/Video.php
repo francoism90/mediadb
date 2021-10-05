@@ -86,11 +86,6 @@ class Video extends BaseModel
         ];
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
-    {
-        return $query->with($this->with);
-    }
-
     public function registerMediaConversions(Media $media = null): void
     {
         $this
@@ -192,5 +187,10 @@ class Video extends BaseModel
             ->where('interactions.user_id', auth()?->user()?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 }

@@ -6,35 +6,30 @@ use App\Models\Media;
 use App\Services\FFMpegService;
 use Illuminate\Support\Collection;
 
-class UpdateMetadataDetails
+class UpdateMediaProperties
 {
     public function __invoke(Media $media): void
     {
-        $metadata = $this->getMetadata($media);
+        $this
+            ->getProperties($media)
+            ->each(fn ($value, $key) => $media->setCustomProperty($key, $value));
 
-        $this->setMetadataPropery($media, $metadata);
+        $media->saveOrFail();
     }
 
-    protected function getMetadata(Media $media): Collection
+    protected function getProperties(Media $media): Collection
     {
         $collect = collect();
 
         if ('video' === $media->type) {
-            $collect = $collect->merge($this->getFormatAttributes($media));
-            $collect = $collect->merge($this->getVideoAttributes($media));
+            $collect = $collect->merge($this->getVideoFormatAttributes($media));
+            $collect = $collect->merge($this->getVideoStreamAttributes($media));
         }
 
         return $collect;
     }
 
-    protected function setMetadataPropery(Media $media, Collection $metadata): void
-    {
-        $metadata->each(fn ($value, $key) => $media->setCustomProperty($key, $value));
-
-        $media->save();
-    }
-
-    protected function getFormatAttributes(Media $media): Collection
+    protected function getVideoFormatAttributes(Media $media): Collection
     {
         $format = app(FFMpegService::class)->getFormat($media->getPath());
 
@@ -46,7 +41,7 @@ class UpdateMetadataDetails
         ]);
     }
 
-    protected function getVideoAttributes(Media $media): Collection
+    protected function getVideoStreamAttributes(Media $media): Collection
     {
         $stream = app(FFMpegService::class)->getVideoStreams($media->getPath())->first();
 

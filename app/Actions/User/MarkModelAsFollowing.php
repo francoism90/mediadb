@@ -2,8 +2,8 @@
 
 namespace App\Actions\User;
 
+use App\Events\User\ModelHasBeenFollowed;
 use App\Models\User;
-use App\Notifications\FollowingModel;
 use Illuminate\Database\Eloquent\Model;
 
 class MarkModelAsFollowing
@@ -16,6 +16,6 @@ class MarkModelAsFollowing
             ? $user->follow($model)
             : $user->toggleFollow($model);
 
-        $user->notify(new FollowingModel($model));
+        ModelHasBeenFollowed::dispatch($user, $model);
     }
 }

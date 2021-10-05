@@ -20,10 +20,34 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Syncing
+    | Media Attributes
     |--------------------------------------------------------------------------
     |
-    | This controls media syncing/importing.
+    | This controls video attributes.
+    |
+    */
+
+    'media' => [
+        'visible_properties' => [
+            'bitrate',
+            'codec_name',
+            'codec_height',
+            'codec_width',
+            'display_aspect_ratio',
+            'duration',
+            'probe_score',
+            'start_time',
+            'height',
+            'width',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Attributes
+    |--------------------------------------------------------------------------
+    |
+    | This controls video attributes.
     |
     */
 

@@ -27,8 +27,10 @@ class UpdateVideoDetails
         $video->saveOrFail();
 
         app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
-        app(UpdateVideoThumbnail::class)($video);
+        app(UpdateVideoClips::class)($video, [
+            'thumbnail' => $collect->get('capture_time', $video->capture_time),
+        ]);
 
-        event(new VideoHasBeenUpdated($video));
+        VideoHasBeenUpdated::dispatch($video->refresh());
     }
 }

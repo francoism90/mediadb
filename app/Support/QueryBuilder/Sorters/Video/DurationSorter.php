@@ -31,6 +31,7 @@ class DurationSorter implements Sort
     protected static function sortModels(Builder $query, bool $descending): Collection
     {
         return $query
+            ->take(1000)
             ->get()
             ->sortBy(
                 fn (Video $video) => $video->duration ?? 0,

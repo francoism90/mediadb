@@ -14,7 +14,7 @@ class MediaResource extends JsonResource
             'mime_type' => $this->mime_type,
             'type' => $this->type,
             'size' => $this->whenAppended('size'),
-            'metadata' => $this->whenAppended('metadata'),
+            'properties' => $this->whenAppended('properties'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

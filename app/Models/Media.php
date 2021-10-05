@@ -27,7 +27,7 @@ class Media extends BaseMedia
      * @var array
      */
     protected $appends = [
-        'metadata',
+        'properties',
         'type',
     ];
 
@@ -36,25 +36,17 @@ class Media extends BaseMedia
         return 'uuid';
     }
 
-    public function getMetadataAttribute(): array
-    {
-        return Arr::only($this->custom_properties, [
-            'bitrate',
-            'codec_name',
-            'codec_height',
-            'codec_width',
-            'display_aspect_ratio',
-            'duration',
-            'probe_score',
-            'start_time',
-            'height',
-            'width',
-        ]);
-    }
-
     public function getKindAttribute(): string
     {
         return Str::plural($this->collection_name);
+    }
+
+    public function getPropertiesAttribute(): array
+    {
+        return Arr::only(
+            $this->custom_properties,
+            config('api.media.visible_properties')
+        );
     }
 
     public function getTypeAttribute(): string
