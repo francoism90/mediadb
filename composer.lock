@@ -73,6 +73,52 @@
             "time": "2020-02-12T19:35:11+00:00"
         },
         {
+            "name": "artisansdk/ratelimiter",
+            "version": "1.0.0-rc2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artisansdk/ratelimiter.git",
+                "reference": "81cf6f831928baa4cf4fe3e2c178a2badb3bc826"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artisansdk/ratelimiter/zipball/81cf6f831928baa4cf4fe3e2c178a2badb3bc826",
+                "reference": "81cf6f831928baa4cf4fe3e2c178a2badb3bc826",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.0 | ~6.0 | ~7.0 | ~8.0",
+                "nesbot/carbon": "~1.0 | ~2.0",
+                "php": ">=7.0|>=8.0",
+                "symfony/http-kernel": "~2.6|~3.3|~4.0|~5.0"
+            },
+            "require-dev": {
+                "artisansdk/bench": "~1.0.0-rc1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ArtisanSdk\\RateLimiter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel LaBarge",
+                    "email": "daniel@artisanscollaborative.com"
+                }
+            ],
+            "description": "A leaky bucket rate limiter and middleware controls for route-level granularity.",
+            "support": {
+                "issues": "https://github.com/artisansdk/ratelimiter/issues",
+                "source": "https://github.com/artisansdk/ratelimiter/tree/1.0.0-rc2"
+            },
+            "time": "2021-02-26T19:00:22+00:00"
+        },
+        {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
             "source": {
@@ -1993,16 +2039,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.62.0",
+            "version": "v8.63.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "60a7e00488167ce2babf3a2aeb3677e48aaf39be"
+                "reference": "8f3d280f36a427730c8c8fa34316c79eed38781e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/60a7e00488167ce2babf3a2aeb3677e48aaf39be",
-                "reference": "60a7e00488167ce2babf3a2aeb3677e48aaf39be",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/8f3d280f36a427730c8c8fa34316c79eed38781e",
+                "reference": "8f3d280f36a427730c8c8fa34316c79eed38781e",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2206,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-09-28T13:30:25+00:00"
+            "time": "2021-10-05T14:04:25+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2377,16 +2423,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867"
+                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/679e24d36ff8b9be0e36f5222244ec8602e18867",
-                "reference": "679e24d36ff8b9be0e36f5222244ec8602e18867",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
+                "reference": "6cfc678735f22ccedad761b8cae2bab14c3d8e5b",
                 "shasum": ""
             },
             "require": {
@@ -2432,7 +2478,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2021-09-29T13:25:52+00:00"
+            "time": "2021-10-07T14:00:57+00:00"
         },
         {
             "name": "laravel/telescope",
@@ -6663,19 +6709,21 @@
         },
         {
             "name": "spatie/laravel-rate-limited-job-middleware",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-rate-limited-job-middleware.git",
-                "reference": "68ff9ace4b8e132165046df1c3d77cd112e994a2"
+                "reference": "172c410d2e6a228bc5457f8be97f20dee47ebc38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-rate-limited-job-middleware/zipball/68ff9ace4b8e132165046df1c3d77cd112e994a2",
-                "reference": "68ff9ace4b8e132165046df1c3d77cd112e994a2",
+                "url": "https://api.github.com/repos/spatie/laravel-rate-limited-job-middleware/zipball/172c410d2e6a228bc5457f8be97f20dee47ebc38",
+                "reference": "172c410d2e6a228bc5457f8be97f20dee47ebc38",
                 "shasum": ""
             },
             "require": {
+                "artisansdk/ratelimiter": "^1.0@RC",
+                "illuminate/cache": "^6.0|^7.0|^8.0",
                 "illuminate/redis": "^6.0|^7.0|^8.0",
                 "php": "^8.0"
             },
@@ -6685,6 +6733,7 @@
                 "pestphp/pest": "^1.18",
                 "pestphp/pest-plugin-laravel": "^1.1",
                 "phpunit/phpunit": "^8.2|^9.0",
+                "spatie/pest-plugin-test-time": "^1.0",
                 "symfony/var-dumper": "^4.3|^5.0"
             },
             "type": "library",
@@ -6713,7 +6762,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-rate-limited-job-middleware/issues",
-                "source": "https://github.com/spatie/laravel-rate-limited-job-middleware/tree/2.0.0"
+                "source": "https://github.com/spatie/laravel-rate-limited-job-middleware/tree/2.1.1"
             },
             "funding": [
                 {
@@ -6721,7 +6770,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-15T08:28:33+00:00"
+            "time": "2021-10-07T14:39:17+00:00"
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
