@@ -48,7 +48,7 @@ trait InteractsWithDash
 
     public function getClipsSequence(): Collection
     {
-        return $this->getMedia('clips')?->flatMap(function (Media $media) {
+        return $this->getMedia('clips')?->flatMap(function (Media $media): array {
             return [
                 'id' => $media->getRouteKey(),
                 'label' => $media->getRouteKey(),
@@ -64,7 +64,7 @@ trait InteractsWithDash
 
     public function getCaptionsSequence(): Collection
     {
-        return $this->getMedia('captions')?->flatMap(function (Media $media, $index) {
+        return $this->getMedia('captions')?->flatMap(function (Media $media, $index): array {
             return [
                 'id' => sprintf('CC%d', $index + 1),
                 'label' => $media->getRouteKey(),

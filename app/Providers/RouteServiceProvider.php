@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureModelBinding();
         $this->configureRateLimiting();
 
-        $this->routes(function () {
+        $this->routes(function (): void {
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
@@ -70,6 +70,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting(): void
     {
+        // TODO: limit the number of requests
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(100));
     }
 }
