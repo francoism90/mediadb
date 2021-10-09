@@ -22,8 +22,8 @@ trait InteractsWithDash
         $uri = sprintf(
             'thumb-%d-w%d-h%d.jpg',
             round($time * 1000),
-            config('api.video.conversions.sprite.width', 160),
-            config('api.video.conversions.sprite.height', 90),
+            config('api.video.conversions.sprite.width', 240),
+            config('api.video.conversions.sprite.height', 120),
         );
 
         return app(VideoDashService::class)->generateUrl(
