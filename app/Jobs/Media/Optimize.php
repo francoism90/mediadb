@@ -35,7 +35,7 @@ class Optimize implements ShouldQueue
 
     public function retryUntil(): \DateTime
     {
-        return now()->addDay();
+        return now()->addHour();
     }
 
     public function tags(): array
