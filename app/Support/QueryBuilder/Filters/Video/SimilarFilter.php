@@ -46,7 +46,7 @@ class SimilarFilter implements Filter
 
     protected static function getQueryResults(Model $model): Collection
     {
-        return app(GetSimilarVideos::class)($model)->map->only(['id', 'name']);
+        return app(GetSimilarVideos::class)($model)->map->only('id');
     }
 
     protected static function retrieveModel(string $value): Model

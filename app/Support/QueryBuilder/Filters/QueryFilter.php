@@ -44,7 +44,7 @@ class QueryFilter implements Filter
 
     protected static function getQueryResults(Model $model, string $value): Collection
     {
-        return app(QueryDocuments::class)($model, $value)->map->only(['id', 'name']);
+        return app(QueryDocuments::class)($model, $value)->map->only('id');
     }
 
     protected static function getModelTable(Builder $query): string

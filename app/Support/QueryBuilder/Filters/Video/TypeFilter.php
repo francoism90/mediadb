@@ -8,19 +8,19 @@ use Spatie\QueryBuilder\Filters\Filter;
 class TypeFilter implements Filter
 {
     public const ALLOWED_SCOPES = [
-        ['key' => 'favorites', 'value' => 'withFavorites'],
-        ['key' => 'following', 'value' => 'withFollowing'],
-        ['key' => 'viewed', 'value' => 'withViewed'],
+        ['value' => 'favorites', 'scope' => 'withFavorites'],
+        ['value' => 'following', 'scope' => 'withFollowing'],
+        ['value' => 'viewed', 'scope' => 'withViewed'],
     ];
 
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         $value = is_string($value) ? explode(',', $value) : $value;
 
-        $scopes = collect(static::ALLOWED_SCOPES)->whereIn('key', $value);
+        $scopes = collect(static::ALLOWED_SCOPES)->whereIn('value', $value);
 
         return $query->scopes(
-            $scopes->implode('value')
+            $scopes->implode('scope', ',')
         );
     }
 }
