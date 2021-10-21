@@ -3,36 +3,44 @@
 namespace App\Support\QueryBuilder\Sorters\Video;
 
 use App\Models\Video;
+use App\Traits\InteractsWithQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\Sorts\Sort;
 
 class DurationSorter implements Sort
 {
+    use InteractsWithQueryBuilder;
+
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
-        $query->getQuery()->reorder();
+        $table = static::getQueryTable($query);
 
-        $table = $query->getModel()->getTable();
-
-        $models = static::sortModels($query, $descending);
+        $results = static::getQueryResults($query, $descending);
 
         return $query
-            ->when($models->isNotEmpty(), function ($query) use ($models, $table) {
-                $ids = $models->pluck('id');
-                $idsOrder = $models->implode('id', ',');
+            ->when($results->isEmpty(), function ($query) use ($table) {
+                return $query->whereNull(sprintf('%s.id', $table));
+            }, function ($query) use ($results, $table) {
+                $ids = $results->pluck('id');
+                $idsOrder = $results->implode('id', ',');
 
                 return $query
+                    ->reorder()
                     ->whereIn(sprintf('%s.id', $table), $ids)
                     ->orderByRaw(sprintf('FIELD(%s.id, %s)', $table, $idsOrder));
             });
     }
 
-    protected static function sortModels(Builder $query, bool $descending): Collection
+    protected static function getQueryResults(Builder $query, bool $descending): Collection
     {
-        return $query
-            ->take(1000)
+        $ids = $query->pluck('id');
+
+        $model = static::getQueryModel($query);
+
+        return $model
             ->get()
+            ->whereIn('id', $ids)
             ->sortBy(
                 fn (Video $video) => $video->duration ?? 0,
                 SORT_NUMERIC,

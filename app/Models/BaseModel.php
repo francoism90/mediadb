@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasRandomSeed;
 use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithTags;
 use App\Traits\InteractsWithTranslations;
@@ -18,7 +17,6 @@ abstract class BaseModel extends Model implements HasMedia
 {
     use HasFactory;
     use HasPrefixedId;
-    use HasRandomSeed;
     use HasSchemalessAttributes;
     use HasTranslations;
     use InteractsWithMedia;

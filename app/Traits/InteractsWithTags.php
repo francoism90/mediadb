@@ -53,6 +53,6 @@ trait InteractsWithTags
     {
         return $this
             ->scopeWithAllTagsOfAnyType($query, $values)
-            ->inRandomSeedOrder();
+            ->inRandomOrder();
     }
 }

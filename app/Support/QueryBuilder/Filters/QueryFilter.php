@@ -3,29 +3,30 @@
 namespace App\Support\QueryBuilder\Filters;
 
 use App\Actions\Search\QueryDocuments;
+use App\Traits\InteractsWithQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Spatie\QueryBuilder\Filters\Filter;
 
 class QueryFilter implements Filter
 {
+    use InteractsWithQueryBuilder;
+
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $models = static::getQueryCache($query->getModel(), $value);
+        $table = static::getQueryTable($query);
 
-        $table = static::getModelTable($query);
+        $results = static::getQueryCache($query, $value);
 
         return $query
-            ->when($models->isEmpty(), function ($query) use ($table) {
+            ->when($results->isEmpty(), function ($query) use ($table) {
                 return $query->whereNull(sprintf('%s.id', $table));
-            }, function ($query) use ($models, $table) {
-                $ids = $models->pluck('id');
-                $idsOrder = $models->implode('id', ',');
+            }, function ($query) use ($results, $table) {
+                $ids = $results->pluck('id');
+                $idsOrder = $results->implode('id', ',');
 
                 return $query
                     ->whereIn(sprintf('%s.id', $table), $ids)
@@ -33,22 +34,19 @@ class QueryFilter implements Filter
             });
     }
 
-    protected static function getQueryCache(Model $model, string $value): Collection
+    protected static function getQueryCache(Builder $query, string $value): Collection
     {
-        $key = sprintf('query_%s_%s', $model->getTable(), Str::kebab($value));
+        $key = static::getQueryCacheKey($query, "q-{$value}");
 
-        return Cache::tags($model->getTable())->remember(
-            $key, 3600, fn () => static::getQueryResults($model, $value)
+        return Cache::remember(
+            $key, 3600, fn () => static::getQueryResults($query, $value)
         );
     }
 
-    protected static function getQueryResults(Model $model, string $value): Collection
+    protected static function getQueryResults(Builder $query, string $value): Collection
     {
-        return app(QueryDocuments::class)($model, $value)->map->only('id');
-    }
+        $model = static::getQueryModel($query);
 
-    protected static function getModelTable(Builder $query): string
-    {
-        return $query->getModel()->getTable();
+        return app(QueryDocuments::class)($model, $value)->map->only('id');
     }
 }

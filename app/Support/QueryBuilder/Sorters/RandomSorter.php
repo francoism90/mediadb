@@ -11,6 +11,6 @@ class RandomSorter implements Sort
     {
         return $query
             ->reorder()
-            ->inRandomSeedOrder();
+            ->inRandomOrder();
     }
 }

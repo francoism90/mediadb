@@ -15,7 +15,7 @@ class GetWithTagsOfAnyType
         return $model
             ->with('tags')
             ->withAnyTagsOfAnyType($value)
-            ->inRandomSeedOrder()
+            ->inRandomOrder()
             ->take($limit)
             ->get();
     }

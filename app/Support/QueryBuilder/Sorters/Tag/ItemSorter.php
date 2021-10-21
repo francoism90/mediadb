@@ -10,6 +10,7 @@ class ItemSorter implements Sort
     public function __invoke(Builder $query, bool $descending, string $property): Builder
     {
         return $query
+            ->reorder()
             ->withCount('videos')
             ->orderByDesc('videos_count');
     }

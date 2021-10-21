@@ -4,6 +4,7 @@ namespace App\Support\QueryBuilder\Filters\Video;
 
 use App\Actions\Video\GetSimilarVideos;
 use App\Models\Video;
+use App\Traits\InteractsWithQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -12,22 +13,22 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 class SimilarFilter implements Filter
 {
+    use InteractsWithQueryBuilder;
+
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         $value = is_array($value) ? implode(' ', $value) : $value;
 
-        $model = static::retrieveModel($value);
+        $table = static::getQueryTable($query);
 
-        $models = static::getQueryCache($model);
-
-        $table = static::getModelTable($query);
+        $results = static::getQueryCache($query, $value);
 
         return $query
-            ->when($models->isEmpty(), function ($query) use ($table) {
+            ->when($results->isEmpty(), function ($query) use ($table) {
                 return $query->whereNull(sprintf('%s.id', $table));
-            }, function ($query) use ($models, $table) {
-                $ids = $models->pluck('id');
-                $idsOrder = $models->implode('id', ',');
+            }, function ($query) use ($results, $table) {
+                $ids = $results->pluck('id');
+                $idsOrder = $results->implode('id', ',');
 
                 return $query
                     ->whereIn(sprintf('%s.id', $table), $ids)
@@ -35,11 +36,13 @@ class SimilarFilter implements Filter
             });
     }
 
-    protected static function getQueryCache(Model $model): Collection
+    protected static function getQueryCache(Builder $query, string $value): Collection
     {
-        $key = sprintf('similar_%s_%s', $model->getTable(), $model->id);
+        $key = static::getQueryCacheKey($query, "s-{$value}");
 
-        return Cache::tags($model->getTable())->remember(
+        $model = Video::findByPrefixedIdOrFail($value);
+
+        return Cache::remember(
             $key, 3600, fn () => static::getQueryResults($model)
         );
     }
@@ -47,15 +50,5 @@ class SimilarFilter implements Filter
     protected static function getQueryResults(Model $model): Collection
     {
         return app(GetSimilarVideos::class)($model)->map->only('id');
-    }
-
-    protected static function retrieveModel(string $value): Model
-    {
-        return Video::findByPrefixedIdOrFail($value);
-    }
-
-    protected static function getModelTable(Builder $query): string
-    {
-        return $query->getModel()->getTable();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasRandomSeed;
 use App\Traits\HasSchemalessAttributes;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,7 +32,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
     use HasApiTokens;
     use HasFactory;
     use HasPrefixedId;
-    use HasRandomSeed;
     use HasRoles;
     use HasSchemalessAttributes;
     use HasSlug;

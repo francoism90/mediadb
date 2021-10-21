@@ -13,6 +13,8 @@ class RelevanceSorter implements Sort
             return $query;
         }
 
-        return $query->inRandomSeedOrder();
+        return $query
+            ->reorder()
+            ->inRandomOrder();
     }
 }
