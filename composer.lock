@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb4ec71bb6cb85b75c5a46688d593d8e",
+    "content-hash": "a014619de1d7c42b294f3e1fd9309d86",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2223,16 +2223,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.64.0",
+            "version": "v8.65.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3337c029e1bb31d9712d27437cc27010ba302c9e"
+                "reference": "6db59afadca28dfdb2f719e7d79f93885ede17e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3337c029e1bb31d9712d27437cc27010ba302c9e",
-                "reference": "3337c029e1bb31d9712d27437cc27010ba302c9e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6db59afadca28dfdb2f719e7d79f93885ede17e4",
+                "reference": "6db59afadca28dfdb2f719e7d79f93885ede17e4",
                 "shasum": ""
             },
             "require": {
@@ -2390,7 +2390,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-12T13:43:13+00:00"
+            "time": "2021-10-19T13:59:41+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2547,16 +2547,16 @@
         },
         {
             "name": "laravel/sanctum",
-            "version": "v2.11.4",
+            "version": "v2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "2cc0c0f79eb92578f606f6130fafd31b18229db1"
+                "reference": "0b8664bb065f080e93c209f1ae1b78b5a9e13f15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/2cc0c0f79eb92578f606f6130fafd31b18229db1",
-                "reference": "2cc0c0f79eb92578f606f6130fafd31b18229db1",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/0b8664bb065f080e93c209f1ae1b78b5a9e13f15",
+                "reference": "0b8664bb065f080e93c209f1ae1b78b5a9e13f15",
                 "shasum": ""
             },
             "require": {
@@ -2607,7 +2607,7 @@
                 "issues": "https://github.com/laravel/sanctum/issues",
                 "source": "https://github.com/laravel/sanctum"
             },
-            "time": "2021-10-13T13:38:15+00:00"
+            "time": "2021-10-19T15:33:22+00:00"
         },
         {
             "name": "laravel/scout",
@@ -6041,71 +6041,6 @@
             "time": "2021-07-11T12:37:55+00:00"
         },
         {
-            "name": "rennokki/laravel-eloquent-query-cache",
-            "version": "3.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/renoki-co/laravel-eloquent-query-cache.git",
-                "reference": "b79bbce5fc6c450c8740131cd66dd42161af58aa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/b79bbce5fc6c450c8740131cd66dd42161af58aa",
-                "reference": "b79bbce5fc6c450c8740131cd66dd42161af58aa",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^7.30|^8.23",
-                "illuminate/support": "^7.30|^8.23"
-            },
-            "require-dev": {
-                "chelout/laravel-relationship-events": "^1.4",
-                "laravel/legacy-factories": "^1.1",
-                "mockery/mockery": "^1.4",
-                "orchestra/database": "^5.0|^6.0",
-                "orchestra/testbench": "^5.0|^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Rennokki\\QueryCache\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Renoki",
-                    "email": "alex@renoki.org",
-                    "homepage": "https://github.com/rennokki",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Adding cache on your Laravel Eloquent queries' results is now a breeze.",
-            "homepage": "https://github.com/renoki-co/laravel-eloquent-query-cache",
-            "keywords": [
-                "caching",
-                "eloquent",
-                "laravel",
-                "query",
-                "remember",
-                "sql"
-            ],
-            "support": {
-                "issues": "https://github.com/renoki-co/laravel-eloquent-query-cache/issues",
-                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.1.2"
-            },
-            "funding": [
-                {
-                    "url": "https://www.patreon.com/rennokki",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2021-10-09T05:55:11+00:00"
-        },
-        {
             "name": "spatie/db-dumper",
             "version": "3.0.1",
             "source": {
@@ -6899,16 +6834,16 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "3.6.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "03d8e1307dcb58b16fcc9c4947633fc60ae74802"
+                "reference": "ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/03d8e1307dcb58b16fcc9c4947633fc60ae74802",
-                "reference": "03d8e1307dcb58b16fcc9c4947633fc60ae74802",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1",
+                "reference": "ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1",
                 "shasum": ""
             },
             "require": {
@@ -6919,6 +6854,7 @@
             },
             "require-dev": {
                 "ext-json": "*",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "laravel/legacy-factories": "^1.0.4",
                 "mockery/mockery": "^1.4",
                 "orchestra/testbench": "^4.9|^5.8|^6.3",
@@ -6965,7 +6901,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-09-06T08:03:10+00:00"
+            "time": "2021-10-20T12:45:43+00:00"
         },
         {
             "name": "spatie/laravel-rate-limited-job-middleware",
@@ -11715,16 +11651,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.2",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/622548b623e81ca6d78b721c5e029f4ce664f170",
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170",
                 "shasum": ""
             },
             "require": {
@@ -11735,7 +11671,8 @@
                 "webmozart/assert": "^1.9.1"
             },
             "require-dev": {
-                "mockery/mockery": "~1.3.2"
+                "mockery/mockery": "~1.3.2",
+                "psalm/phar": "^4.8"
             },
             "type": "library",
             "extra": {
@@ -11765,9 +11702,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.3.0"
             },
-            "time": "2020-09-03T19:13:55+00:00"
+            "time": "2021-10-19T17:43:47+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -12373,16 +12310,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.11.59",
+            "version": "0.11.60",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "5ae5c75ec54697ff19de987f249e68513e899b8a"
+                "reference": "428f593818f8c50fe12c543e8c0a107f9bd899ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/5ae5c75ec54697ff19de987f249e68513e899b8a",
-                "reference": "5ae5c75ec54697ff19de987f249e68513e899b8a",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/428f593818f8c50fe12c543e8c0a107f9bd899ae",
+                "reference": "428f593818f8c50fe12c543e8c0a107f9bd899ae",
                 "shasum": ""
             },
             "require": {
@@ -12422,7 +12359,7 @@
             "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.11.59"
+                "source": "https://github.com/rectorphp/rector/tree/0.11.60"
             },
             "funding": [
                 {
@@ -12430,7 +12367,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-19T10:08:27+00:00"
+            "time": "2021-10-20T13:08:22+00:00"
         },
         {
             "name": "sebastian/cli-parser",
