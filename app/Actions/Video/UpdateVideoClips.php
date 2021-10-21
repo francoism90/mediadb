@@ -10,7 +10,7 @@ class UpdateVideoClips
 {
     public function __invoke(Video $video, array $data): void
     {
-        $video->clips->each(function (Media $media) use ($data): void {
+        $video->clips?->each(function (Media $media) use ($data): void {
             app(UpdateMediaDetails::class)($media, $data);
         });
     }

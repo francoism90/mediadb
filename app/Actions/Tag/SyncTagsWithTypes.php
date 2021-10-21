@@ -21,8 +21,6 @@ class SyncTagsWithTypes
 
             $model->syncTagsWithType($items, $type);
         }
-
-        app(FlushQueryTagCache::class)();
     }
 
     protected function getTypes(): ?array

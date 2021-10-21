@@ -12,9 +12,7 @@ class CreateIndexes
         $client = $this->getClient();
 
         $this->getIndexes()->each(function ($item) use ($client, $reset): void {
-            $index = $client->getOrCreateIndex($item['name'], [
-                'primaryKey' => 'id',
-            ]);
+            $index = $client->getOrCreateIndex($item['name']);
 
             if ($reset) {
                 $index->resetSettings();
