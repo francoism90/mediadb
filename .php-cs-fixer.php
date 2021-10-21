@@ -1,9 +1,6 @@
 <?php
 
-use PhpCsFixer\Config;
-use PhpCsFixer\Finder;
-
-$finder = Finder::create()
+$finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('_ide_helper.php')
     ->exclude('bootstrap')
@@ -11,7 +8,7 @@ $finder = Finder::create()
     ->exclude('vendor')
 ;
 
-$config = new Config();
+$config = new PhpCsFixer\Config();
 
 return $config->setRules([
         '@Symfony' => true,
