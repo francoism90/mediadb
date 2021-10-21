@@ -12,7 +12,7 @@ class CreateUserVideo
     public function __invoke(User $user, SplFileInfo $file): Video
     {
         return $user->videos()->create([
-            'name' => Str::headline($file->getFilenameWithoutExtension()),
+            'name' => Str::title($file->getFilenameWithoutExtension()),
         ]);
     }
 }
