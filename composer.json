@@ -34,7 +34,7 @@
         "spatie/laravel-medialibrary": "^9.8",
         "spatie/laravel-permission": "^5.1",
         "spatie/laravel-prefixed-ids": "^1.1",
-        "spatie/laravel-query-builder": "^3.6",
+        "spatie/laravel-query-builder": "^4.0",
         "spatie/laravel-rate-limited-job-middleware": "^2.1",
         "spatie/laravel-schemaless-attributes": "^2.0",
         "spatie/laravel-sluggable": "^3.1",
