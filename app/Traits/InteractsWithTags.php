@@ -40,9 +40,7 @@ trait InteractsWithTags
     {
         $collect = $this
             ->tagTranslations()
-            ->when($type, function ($query, $type) {
-                return $query->where('type', $type);
-            })
+            ->when($type, fn ($query, $type) => $query->where('type', $type))
             ->pluck(sprintf('%s_translated', $field))
             ->flatMap(fn ($tags) => collect($tags)->toArray());
 

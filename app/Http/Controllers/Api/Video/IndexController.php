@@ -24,8 +24,7 @@ class IndexController extends Controller
     {
         $this->authorize('viewAny', Video::class);
 
-        $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter())
-            ->defaultDirection('desc');
+        $defaultSort = AllowedSort::custom('relevance', new RelevanceSorter());
 
         $videos = QueryBuilder::for(Video::class)
             ->allowedAppends([
