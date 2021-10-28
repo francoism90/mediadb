@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8660f0e6658ae6dfdbfeaae0ef88ce98",
+    "content-hash": "6633cfb7aa866b4a98f27ec011bbcc16",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2219,16 +2219,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.68.0",
+            "version": "v8.68.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "08781be9c1e3f83b0c38ce9539e1dc4664e33a14"
+                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/08781be9c1e3f83b0c38ce9539e1dc4664e33a14",
-                "reference": "08781be9c1e3f83b0c38ce9539e1dc4664e33a14",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
+                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
                 "shasum": ""
             },
             "require": {
@@ -2387,7 +2387,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-26T12:52:38+00:00"
+            "time": "2021-10-27T12:31:46+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -6681,16 +6681,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.1.1",
+            "version": "5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "58d5eb6c7b0eafa8bdf0a93d1ca5c214a05344cb"
+                "reference": "2843185ab8cec3c08470024248e99ce55606f3ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/58d5eb6c7b0eafa8bdf0a93d1ca5c214a05344cb",
-                "reference": "58d5eb6c7b0eafa8bdf0a93d1ca5c214a05344cb",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/2843185ab8cec3c08470024248e99ce55606f3ac",
+                "reference": "2843185ab8cec3c08470024248e99ce55606f3ac",
                 "shasum": ""
             },
             "require": {
@@ -6751,7 +6751,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.1.1"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.2.0"
             },
             "funding": [
                 {
@@ -6759,7 +6759,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-01T20:02:17+00:00"
+            "time": "2021-10-28T07:46:03+00:00"
         },
         {
             "name": "spatie/laravel-prefixed-ids",
@@ -6831,16 +6831,16 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1"
+                "reference": "712b3fab3b5835c90f35052ba4bfa93f66d3d4bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1",
-                "reference": "ba3c35b32cf1cb0cda69d179f472f2fbe514f4d1",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/712b3fab3b5835c90f35052ba4bfa93f66d3d4bb",
+                "reference": "712b3fab3b5835c90f35052ba4bfa93f66d3d4bb",
                 "shasum": ""
             },
             "require": {
@@ -6898,7 +6898,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-10-20T12:45:43+00:00"
+            "time": "2021-10-27T14:48:58+00:00"
         },
         {
             "name": "spatie/laravel-rate-limited-job-middleware",
@@ -10272,16 +10272,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.2.11",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582"
+                "reference": "679333688725c7dd043ff35c547100ccf512f051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
-                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/679333688725c7dd043ff35c547100ccf512f051",
+                "reference": "679333688725c7dd043ff35c547100ccf512f051",
                 "shasum": ""
             },
             "require": {
@@ -10328,7 +10328,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.2.11"
+                "source": "https://github.com/composer/ca-bundle/tree/1.3.0"
             },
             "funding": [
                 {
@@ -10344,7 +10344,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-25T20:32:43+00:00"
+            "time": "2021-10-27T07:42:23+00:00"
         },
         {
             "name": "composer/composer",
