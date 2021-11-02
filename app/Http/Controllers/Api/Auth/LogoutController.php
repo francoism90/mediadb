@@ -16,8 +16,6 @@ class LogoutController extends Controller
             $request->input('token', '')
         );
 
-        return response()->json([
-            'success' => true,
-        ]);
+        return response()->json();
     }
 }

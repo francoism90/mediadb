@@ -22,8 +22,8 @@ class CreateSpriteTrack
                 'start_time' => gmdate('H:i:s.v', $sequence),
                 'end_time' => gmdate('H:i:s.v', $next),
                 'contents' => [
-                    'type' => 'thumbnail',
-                    'url' => $video->frameCaptureUrl($sequence),
+                    'kind' => 'thumbnail',
+                    'src' => $video->frameCaptureUrl($sequence),
                 ],
             ]);
         }
