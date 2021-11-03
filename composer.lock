@@ -2219,16 +2219,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.68.1",
+            "version": "v8.69.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f"
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
-                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/545181da688db64fed6d8427e55f630a90ca0d32",
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32",
                 "shasum": ""
             },
             "require": {
@@ -2387,7 +2387,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-27T12:31:46+00:00"
+            "time": "2021-11-02T13:53:22+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2468,16 +2468,16 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.0.16",
+            "version": "v1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "0e221d56cc93f6453721b7ba4d2de815860e3ad8"
+                "reference": "750a072ac2a33c62b5bd079a19287f33690a775b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/0e221d56cc93f6453721b7ba4d2de815860e3ad8",
-                "reference": "0e221d56cc93f6453721b7ba4d2de815860e3ad8",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/750a072ac2a33c62b5bd079a19287f33690a775b",
+                "reference": "750a072ac2a33c62b5bd079a19287f33690a775b",
                 "shasum": ""
             },
             "require": {
@@ -2540,7 +2540,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2021-10-26T15:59:10+00:00"
+            "time": "2021-11-02T16:41:16+00:00"
         },
         {
             "name": "laravel/sanctum",
