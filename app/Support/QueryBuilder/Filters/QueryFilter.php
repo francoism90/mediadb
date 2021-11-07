@@ -36,7 +36,7 @@ class QueryFilter implements Filter
 
     protected static function getQueryCache(Builder $query, string $value): Collection
     {
-        $key = static::getQueryCacheKey($query, "q-{$value}");
+        $key = static::getQueryCacheKey($query, sprintf('q-%s', $value));
 
         return Cache::remember(
             $key, 3600, fn () => static::getQueryResults($query, $value)

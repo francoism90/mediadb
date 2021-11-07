@@ -38,7 +38,7 @@ class SimilarFilter implements Filter
 
     protected static function getQueryCache(Builder $query, string $value): Collection
     {
-        $key = static::getQueryCacheKey($query, "s-{$value}");
+        $key = static::getQueryCacheKey($query, sprintf('s-%s', $value));
 
         $model = Video::findByPrefixedIdOrFail($value);
 

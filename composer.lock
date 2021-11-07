@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cadfec1024c7fc5aa485491b2f3791d0",
+    "content-hash": "2523dd4e51f4bc6bc7db90a07780453a",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -6968,16 +6968,16 @@
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-schemaless-attributes.git",
-                "reference": "a2b3ebace5e6f75fa0f0c102370f25323071c38b"
+                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/a2b3ebace5e6f75fa0f0c102370f25323071c38b",
-                "reference": "a2b3ebace5e6f75fa0f0c102370f25323071c38b",
+                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/6a27ac49424106bc3dfe036b82c48b89b0f37707",
+                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707",
                 "shasum": ""
             },
             "require": {
@@ -7027,7 +7027,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-schemaless-attributes/issues",
-                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.0.0"
+                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.0.1"
             },
             "funding": [
                 {
@@ -7039,7 +7039,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-09T20:44:12+00:00"
+            "time": "2021-11-06T17:51:27+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -11208,16 +11208,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.12.2",
+            "version": "v1.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a"
+                "reference": "f335277677188b79d12f4caad88577cf76e54dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a",
-                "reference": "1acae00ddb5c6ec4a2957fe42c0004f13cd17a7a",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/f335277677188b79d12f4caad88577cf76e54dfa",
+                "reference": "f335277677188b79d12f4caad88577cf76e54dfa",
                 "shasum": ""
             },
             "require": {
@@ -11264,7 +11264,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-10-26T21:37:54+00:00"
+            "time": "2021-11-05T13:35:24+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -11823,16 +11823,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.0.2",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e9e2a501102ba0b126b2f63a7f0a3b151056fe91"
+                "reference": "cb317029197236c571c1b9305b8dd12850d8d85c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e9e2a501102ba0b126b2f63a7f0a3b151056fe91",
-                "reference": "e9e2a501102ba0b126b2f63a7f0a3b151056fe91",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cb317029197236c571c1b9305b8dd12850d8d85c",
+                "reference": "cb317029197236c571c1b9305b8dd12850d8d85c",
                 "shasum": ""
             },
             "require": {
@@ -11863,7 +11863,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.0.2"
+                "source": "https://github.com/phpstan/phpstan/tree/1.1.1"
             },
             "funding": [
                 {
@@ -11883,7 +11883,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-03T16:09:51+00:00"
+            "time": "2021-11-06T22:46:47+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12312,21 +12312,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "8c3ab8ea78c8554d3bdd17f36e4229cf43abcf23"
+                "reference": "4a6ab9985634a0d9d0de24e8724a3765a9d77c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/8c3ab8ea78c8554d3bdd17f36e4229cf43abcf23",
-                "reference": "8c3ab8ea78c8554d3bdd17f36e4229cf43abcf23",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/4a6ab9985634a0d9d0de24e8724a3765a9d77c6e",
+                "reference": "4a6ab9985634a0d9d0de24e8724a3765a9d77c6e",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1|^8.0",
-                "phpstan/phpstan": "^1.0"
+                "phpstan/phpstan": "^1.1.1"
             },
             "conflict": {
-                "phpstan/phpdoc-parser": "<=0.5.3",
-                "phpstan/phpstan": "<=0.12.99",
+                "phpstan/phpdoc-parser": "<1.2",
                 "rector/rector-cakephp": "*",
                 "rector/rector-doctrine": "*",
                 "rector/rector-laravel": "*",
@@ -12366,7 +12365,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-05T11:34:48+00:00"
+            "time": "2021-11-07T06:43:37+00:00"
         },
         {
             "name": "sebastian/cli-parser",
