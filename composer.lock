@@ -4736,20 +4736,20 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "autoload": {
@@ -4778,9 +4778,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.1"
+                "source": "https://github.com/php-fig/container/tree/1.1.2"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2021-11-05T16:50:12+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -6968,16 +6968,16 @@
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-schemaless-attributes.git",
-                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707"
+                "reference": "f731d355642eb3697fe17972f08e8d66cd4bcb0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/6a27ac49424106bc3dfe036b82c48b89b0f37707",
-                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707",
+                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/f731d355642eb3697fe17972f08e8d66cd4bcb0c",
+                "reference": "f731d355642eb3697fe17972f08e8d66cd4bcb0c",
                 "shasum": ""
             },
             "require": {
@@ -7027,7 +7027,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-schemaless-attributes/issues",
-                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.0.1"
+                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.1.0"
             },
             "funding": [
                 {
@@ -7039,7 +7039,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-06T17:51:27+00:00"
+            "time": "2021-11-08T16:16:51+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
