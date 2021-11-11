@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2523dd4e51f4bc6bc7db90a07780453a",
+    "content-hash": "bab270c55f3468fbb7ec50e7877759ac",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2219,16 +2219,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.69.0",
+            "version": "v8.70.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "545181da688db64fed6d8427e55f630a90ca0d32"
+                "reference": "dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/545181da688db64fed6d8427e55f630a90ca0d32",
-                "reference": "545181da688db64fed6d8427e55f630a90ca0d32",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225",
+                "reference": "dec9524cd0f9fa35a6eb8e25d0b40f8bbc8ec225",
                 "shasum": ""
             },
             "require": {
@@ -2387,7 +2387,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-11-02T13:53:22+00:00"
+            "time": "2021-11-09T22:48:33+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2468,21 +2468,21 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.0.17",
+            "version": "v1.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "750a072ac2a33c62b5bd079a19287f33690a775b"
+                "reference": "65eb090c9cb8765fa1f9204d718a7879d28f7452"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/750a072ac2a33c62b5bd079a19287f33690a775b",
-                "reference": "750a072ac2a33c62b5bd079a19287f33690a775b",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/65eb090c9cb8765fa1f9204d718a7879d28f7452",
+                "reference": "65eb090c9cb8765fa1f9204d718a7879d28f7452",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-diactoros": "^2.5",
-                "laravel/framework": "^8.62",
+                "laravel/framework": "^8.70",
                 "laravel/serializable-closure": "^1.0",
                 "php": "^8.0",
                 "symfony/psr-http-message-bridge": "^2.0"
@@ -2540,7 +2540,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2021-11-02T16:41:16+00:00"
+            "time": "2021-11-09T17:51:50+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -6968,16 +6968,16 @@
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
-            "version": "2.0.1",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-schemaless-attributes.git",
-                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707"
+                "reference": "c8f6b25b531e4a6bb550d225920be34f5cbbbf89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/6a27ac49424106bc3dfe036b82c48b89b0f37707",
-                "reference": "6a27ac49424106bc3dfe036b82c48b89b0f37707",
+                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/c8f6b25b531e4a6bb550d225920be34f5cbbbf89",
+                "reference": "c8f6b25b531e4a6bb550d225920be34f5cbbbf89",
                 "shasum": ""
             },
             "require": {
@@ -7027,7 +7027,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-schemaless-attributes/issues",
-                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.0.1"
+                "source": "https://github.com/spatie/laravel-schemaless-attributes/tree/2.1.1"
             },
             "funding": [
                 {
@@ -7039,7 +7039,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-06T17:51:27+00:00"
+            "time": "2021-11-09T07:53:20+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -11208,16 +11208,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.12.3",
+            "version": "v1.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "f335277677188b79d12f4caad88577cf76e54dfa"
+                "reference": "a214b593d50ad4c581c922d5ee604ffe0fab4d01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/f335277677188b79d12f4caad88577cf76e54dfa",
-                "reference": "f335277677188b79d12f4caad88577cf76e54dfa",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/a214b593d50ad4c581c922d5ee604ffe0fab4d01",
+                "reference": "a214b593d50ad4c581c922d5ee604ffe0fab4d01",
                 "shasum": ""
             },
             "require": {
@@ -11264,7 +11264,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-11-05T13:35:24+00:00"
+            "time": "2021-11-09T17:42:55+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -11823,16 +11823,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cb317029197236c571c1b9305b8dd12850d8d85c"
+                "reference": "bcea0ae85868a89d5789c75f012c93129f842934"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cb317029197236c571c1b9305b8dd12850d8d85c",
-                "reference": "cb317029197236c571c1b9305b8dd12850d8d85c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bcea0ae85868a89d5789c75f012c93129f842934",
+                "reference": "bcea0ae85868a89d5789c75f012c93129f842934",
                 "shasum": ""
             },
             "require": {
@@ -11863,7 +11863,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.1.1"
+                "source": "https://github.com/phpstan/phpstan/tree/1.1.2"
             },
             "funding": [
                 {
@@ -11883,7 +11883,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-06T22:46:47+00:00"
+            "time": "2021-11-09T12:41:09+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12308,16 +12308,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "dev-main",
+            "version": "0.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "4a6ab9985634a0d9d0de24e8724a3765a9d77c6e"
+                "reference": "a46666f4ed5feb5015b7af4f5f48d456729cb937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/4a6ab9985634a0d9d0de24e8724a3765a9d77c6e",
-                "reference": "4a6ab9985634a0d9d0de24e8724a3765a9d77c6e",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/a46666f4ed5feb5015b7af4f5f48d456729cb937",
+                "reference": "a46666f4ed5feb5015b7af4f5f48d456729cb937",
                 "shasum": ""
             },
             "require": {
@@ -12335,14 +12335,13 @@
                 "rector/rector-prefixed": "*",
                 "rector/rector-symfony": "*"
             },
-            "default-branch": true,
             "bin": [
                 "bin/rector"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.11-dev"
+                    "dev-main": "0.12-dev"
                 }
             },
             "autoload": {
@@ -12357,7 +12356,7 @@
             "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/main"
+                "source": "https://github.com/rectorphp/rector/tree/0.12.2"
             },
             "funding": [
                 {
@@ -12365,7 +12364,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-07T06:43:37+00:00"
+            "time": "2021-11-10T11:49:56+00:00"
         },
         {
             "name": "sebastian/cli-parser",
