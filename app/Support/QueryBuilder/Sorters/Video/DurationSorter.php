@@ -34,9 +34,9 @@ class DurationSorter implements Sort
 
     protected static function getQueryResults(Builder $query, bool $descending): Collection
     {
-        $ids = $query->pluck('id');
-
         $model = static::getQueryModel($query);
+
+        $ids = static::getQueryIds($query);
 
         return $model
             ->whereIn('id', $ids)
