@@ -39,8 +39,8 @@ class DurationSorter implements Sort
         $model = static::getQueryModel($query);
 
         return $model
-            ->get()
             ->whereIn('id', $ids)
+            ->cursor()
             ->sortBy(
                 fn (Video $video) => $video->duration ?? 0,
                 SORT_NUMERIC,
