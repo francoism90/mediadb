@@ -3350,16 +3350,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.19.2",
+            "version": "v0.19.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "5d95c290c33bc1e76dc80028f3e5a0d89c4346a1"
+                "reference": "60ba4ce218cb27e9c76beeac7fded1449029e33d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/5d95c290c33bc1e76dc80028f3e5a0d89c4346a1",
-                "reference": "5d95c290c33bc1e76dc80028f3e5a0d89c4346a1",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/60ba4ce218cb27e9c76beeac7fded1449029e33d",
+                "reference": "60ba4ce218cb27e9c76beeac7fded1449029e33d",
                 "shasum": ""
             },
             "require": {
@@ -3411,9 +3411,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.19.2"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.19.3"
             },
-            "time": "2021-10-12T13:04:12+00:00"
+            "time": "2021-11-16T20:01:33+00:00"
         },
         {
             "name": "monolog/monolog",
