@@ -37,9 +37,19 @@ class Kernel extends ConsoleKernel
                  ->dailyAt('02:00')
                  ->runInBackground();
 
+        $schedule->command('schedule-monitor:clean')
+                 ->withoutOverlapping()
+                 ->dailyAt('01:30')
+                 ->runInBackground();
+
+        $schedule->command('schedule-monitor:sync')
+                 ->withoutOverlapping()
+                 ->dailyAt('05:00')
+                 ->runInBackground();
+
         $schedule->command('websockets:clean')
                  ->withoutOverlapping()
-                 ->dailyAt('02:00')
+                 ->dailyAt('01:45')
                  ->runInBackground();
     }
 

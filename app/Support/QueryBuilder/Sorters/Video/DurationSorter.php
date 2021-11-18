@@ -40,7 +40,7 @@ class DurationSorter implements Sort
 
         return $model
             ->whereIn('id', $ids)
-            ->cursor()
+            ->get()
             ->sortBy(
                 fn (Video $video) => $video->duration ?? 0,
                 SORT_NUMERIC,
