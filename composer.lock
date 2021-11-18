@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bab270c55f3468fbb7ec50e7877759ac",
+    "content-hash": "ac1cb4ea9249083ef6ec1345c9212d40",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -3350,16 +3350,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.19.2",
+            "version": "v0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "5d95c290c33bc1e76dc80028f3e5a0d89c4346a1"
+                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/5d95c290c33bc1e76dc80028f3e5a0d89c4346a1",
-                "reference": "5d95c290c33bc1e76dc80028f3e5a0d89c4346a1",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/0b592c1d2b3e642d618254a7ff5716874b72fabf",
+                "reference": "0b592c1d2b3e642d618254a7ff5716874b72fabf",
                 "shasum": ""
             },
             "require": {
@@ -3411,9 +3411,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.19.2"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.20.0"
             },
-            "time": "2021-10-12T13:04:12+00:00"
+            "time": "2021-11-17T20:46:29+00:00"
         },
         {
             "name": "monolog/monolog",
