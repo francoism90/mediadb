@@ -10,9 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "chokidar": "^3.5.2"
-    },
-    "dependencies": {
+        "chokidar": "^3.5.2",
         "laravel-mix": "^6.0.39",
         "postcss": "^8.3.11"
     }

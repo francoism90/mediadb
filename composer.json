@@ -53,16 +53,6 @@
         "phpunit/phpunit": "^9.5",
         "rector/rector": "^0.12.4"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
@@ -75,8 +65,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -93,10 +81,23 @@
             "@php artisan telescope:publish --ansi"
         ],
         "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi",
             "@php artisan horizon:publish --ansi",
             "@php artisan telescope:publish --ansi",
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ]
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
