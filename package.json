@@ -11,5 +11,9 @@
     },
     "devDependencies": {
         "chokidar": "^3.5.2"
+    },
+    "dependencies": {
+        "laravel-mix": "^6.0.39",
+        "postcss": "^8.3.11"
     }
 }
