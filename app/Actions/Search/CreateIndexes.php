@@ -19,8 +19,8 @@ class CreateIndexes
             }
 
             $index->updateSettings($item['settings']);
-            $index->updateSynonyms(config('meilisearch.synonyms'));
-            $index->updateStopWords(config('meilisearch.stop_words'));
+            $index->updateSynonyms(config('meilisearch.synonyms', []));
+            $index->updateStopWords(config('meilisearch.stop_words', []));
         });
     }
 

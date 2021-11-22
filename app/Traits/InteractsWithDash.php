@@ -26,11 +26,7 @@ trait InteractsWithDash
             config('api.video.conversions.sprite.height', 120),
         );
 
-        return app(VideoDashService::class)->generateUrl(
-            $this,
-            'thumb',
-            $uri
-        );
+        return app(VideoDashService::class)->generateUrl($this, 'thumb', $uri);
     }
 
     public function getManifestContents(): Collection

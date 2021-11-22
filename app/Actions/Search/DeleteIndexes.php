@@ -11,9 +11,9 @@ class DeleteIndexes
     {
         $client = $this->getClient();
 
-        $this->getIndexes()->each(function (array $item) use ($client): void {
-            $client->deleteIndexIfExists($item['name']);
-        });
+        $this->getIndexes()->each(
+            fn (array $item) => $client->deleteIndexIfExists($item['name'])
+        );
     }
 
     protected function getIndexes(): Collection

@@ -11,7 +11,7 @@ class SearchAsPhrase
     {
         $value = is_string($value) ? explode(' ', $value) : $value;
 
-        $value = collect($value)->take(6);
+        $value = collect($value)->take(8);
 
         $models = collect();
 
@@ -19,7 +19,7 @@ class SearchAsPhrase
         for ($i = $value->count(); $i >= 1; --$i) {
             $phrase = $value->take($i)->implode(' ');
 
-            if (strlen($phrase) < 2) {
+            if (strlen($phrase) < 1) {
                 continue;
             }
 

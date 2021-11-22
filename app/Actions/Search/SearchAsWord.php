@@ -11,12 +11,12 @@ class SearchAsWord
     {
         $value = is_string($value) ? explode(' ', $value) : $value;
 
-        $value = collect($value)->shuffle()->take(6);
+        $value = collect($value)->shuffle()->take(8);
 
         $models = collect();
 
         foreach ($value as $word) {
-            if (strlen($word) < 2) {
+            if (strlen($word) < 1) {
                 continue;
             }
 

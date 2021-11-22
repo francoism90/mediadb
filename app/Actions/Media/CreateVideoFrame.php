@@ -13,6 +13,7 @@ class CreateVideoFrame
     public function __invoke(Media $media, string $path): void
     {
         $this->create($media, $path);
+
         $this->optimize($path);
     }
 

@@ -39,7 +39,7 @@ class QueryFilter implements Filter
         $key = static::getQueryCacheKey($query, sprintf('q-%s', $value));
 
         return Cache::remember(
-            $key, 3600, fn () => static::getQueryResults($query, $value)
+            $key, 3600, fn () => static::getQueryResults($query, $value)->map->only('id')
         );
     }
 
@@ -47,6 +47,6 @@ class QueryFilter implements Filter
     {
         $model = static::getQueryModel($query);
 
-        return app(QueryDocuments::class)($model, $value)->map->only('id');
+        return app(QueryDocuments::class)($model, $value);
     }
 }
