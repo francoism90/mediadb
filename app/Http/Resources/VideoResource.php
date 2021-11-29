@@ -18,6 +18,8 @@ class VideoResource extends JsonResource
             'episode_number' => $this->episode_number,
             'release_date' => $this->release_date,
             'season_number' => $this->season_number,
+            'actors' => $this->actors,
+            'foo' => $this->foo,
             'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
             'clips' => $this->whenAppended('clips', new MediaCollection($this->clips)),
             'favorite' => $this->whenAppended('favorite'),

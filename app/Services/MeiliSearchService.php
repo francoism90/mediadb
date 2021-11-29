@@ -24,6 +24,7 @@ class MeiliSearchService
 
         return $this->subject->search('', function (Indexes $meilisearch, $query, $options) {
             $options = array_merge($options, $this->options);
+            logger($options);
 
             return $meilisearch->search($query, $options);
         });
@@ -52,6 +53,11 @@ class MeiliSearchService
         return $this;
     }
 
+    public function getOption(string $key, mixed $default = null): mixed
+    {
+        return Arr::get($this->options, $key, $default);
+    }
+
     public function query(?string $value = null): static
     {
         $this->add('q', $value ?? '*');
@@ -75,9 +81,23 @@ class MeiliSearchService
         return $this;
     }
 
-    public function getOption(string $key, mixed $default = null): mixed
+    public function filter(string $key, mixed $value = null): static
     {
-        return Arr::get($this->options, $key, $default);
+        $value = is_string($value) ? explode(',', $value) : $value;
+
+        $values = collect($value)->map(fn ($item) => sprintf('%s = "%s"', $key, $item));
+        logger($values);
+
+        // $value = is_string($value) ? explode(',', $value) : $value;
+
+        // $values = array_merge($this->getOption('filter'), $value);
+
+        $this->add(
+            'filter',
+            $values->toArray()
+        );
+
+        return $this;
     }
 
     public function paginate(): Paginator

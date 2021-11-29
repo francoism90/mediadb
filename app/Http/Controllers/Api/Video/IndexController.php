@@ -19,6 +19,7 @@ class IndexController extends Controller
             ->subject(Video::class)
             ->for($request)
             ->query($request->input('filter.query'))
+            ->filter('actors', $request->input('filter.tags'))
             ->sort($request->input('sort'))
             ->limit(24)
             ->paginate();
