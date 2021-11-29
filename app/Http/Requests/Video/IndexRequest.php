@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Video;
 
-use App\Models\Video;
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 

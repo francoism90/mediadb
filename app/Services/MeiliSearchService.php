@@ -52,6 +52,13 @@ class MeiliSearchService
         return $this;
     }
 
+    public function query(?string $value = null): static
+    {
+        $this->add('q', $value ?? '*');
+
+        return $this;
+    }
+
     public function sort(mixed $value = null): static
     {
         $value = is_string($value) ? explode(',', $value) : $value;
@@ -61,11 +68,27 @@ class MeiliSearchService
         return $this;
     }
 
+    public function limit(?int $value = null): static
+    {
+        $this->add('limit', $value ?? 20);
+
+        return $this;
+    }
+
+    public function getOption(string $key, mixed $default = null): mixed
+    {
+        return Arr::get($this->options, $key, $default);
+    }
+
     public function paginate(): Paginator
     {
+        $perPage = $this->getOption('limit', 20);
+
+        $query = $this->request?->query();
+
         return $this
             ->engine()
-            ->simplePaginate(24)
-            ->appends($this->request->query());
+            ->simplePaginate($perPage)
+            ->appends($query);
     }
 }
