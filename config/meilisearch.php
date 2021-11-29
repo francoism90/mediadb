@@ -52,12 +52,22 @@ return [
                     'description',
                     'type',
                 ],
+                'sortableAttributes' => [
+                    'name',
+                    'description',
+                    'type',
+                ],
             ],
         ],
         [
             'name' => 'users_index',
             'settings' => [
                 'searchableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
+                'sortableAttributes' => [
                     'name',
                     'email',
                     'description',
@@ -84,6 +94,13 @@ return [
                     'genres',
                     'languages',
                     'tags',
+                ],
+                'sortableAttributes' => [
+                    'name',
+                    'duration',
+                    'overview',
+                    'created_at',
+                    'updated_at',
                 ],
             ],
         ],
