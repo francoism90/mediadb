@@ -36,15 +36,15 @@ trait InteractsWithTags
             ->ordered();
     }
 
-    public function extractTagTranslations(string $field = 'name', ?string $type = null): array
+    public function extractTagTranslations(?string $type = null): array
     {
         $collect = $this
-            ->tagTranslations()
+            ->tagTranslations
             ->when($type, fn ($query, $type) => $query->where('type', $type))
-            ->pluck(sprintf('%s_translated', $field))
-            ->flatMap(fn ($tags) => collect($tags)->toArray());
+            ->map(fn ($item) => $item->name)
+            ->unique();
 
-        return $collect->unique()->toArray();
+        return $collect->values()->all();
     }
 
     public function scopeWithTags(Builder $query, ...$values)
