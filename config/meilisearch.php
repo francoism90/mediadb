@@ -53,6 +53,7 @@ return [
                     'type',
                 ],
                 'sortableAttributes' => [
+                    'id',
                     'name',
                     'description',
                     'type',
@@ -68,6 +69,7 @@ return [
                     'description',
                 ],
                 'sortableAttributes' => [
+                    'id',
                     'name',
                     'email',
                     'description',
@@ -87,6 +89,7 @@ return [
                     'genres',
                     'languages',
                     'tags',
+                    'descriptions',
                 ],
                 'filterableAttributes' => [
                     'actors',
@@ -96,11 +99,14 @@ return [
                     'tags',
                 ],
                 'sortableAttributes' => [
+                    'id',
                     'name',
+                    'season_number',
+                    'episode_number',
                     'duration',
                     'overview',
-                    'created_at',
-                    'updated_at',
+                    'created',
+                    'updated',
                 ],
             ],
         ],

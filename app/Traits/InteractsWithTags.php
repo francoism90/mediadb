@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
@@ -25,23 +26,12 @@ trait InteractsWithTags
             ->orderBy('order_column');
     }
 
-    public function tagTranslations(): MorphToMany
-    {
-        return $this
-            ->morphToMany(self::getTagClassName(), 'taggable')
-            ->select('*')
-            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.*')) as name_translated")
-            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(slug, '$.*')) as slug_translated")
-            ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(description, '$.*')) as description_translated")
-            ->ordered();
-    }
-
-    public function extractTagTranslations(?string $type = null): array
+    public function extractTagTranslations(string $field = 'name', ?string $type = null): array
     {
         $collect = $this
-            ->tagTranslations
+            ->tags
             ->when($type, fn ($query, $type) => $query->where('type', $type))
-            ->map(fn ($item) => $item->name)
+            ->map(fn (Tag $item) => $item->$field)
             ->unique();
 
         return $collect->values()->all();
