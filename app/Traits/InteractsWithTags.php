@@ -3,8 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
 
 trait InteractsWithTags

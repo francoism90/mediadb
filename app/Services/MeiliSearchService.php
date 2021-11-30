@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Scout\Builder;
@@ -83,10 +82,7 @@ class MeiliSearchService
             ->map(fn ($item) => sprintf('%s = "%s"', $key, $item))
             ->implode(sprintf(' %s ', $expression));
 
-        $this->add(
-            'filter',
-            $values
-        );
+        $this->add('filter', $values);
 
         return $this;
     }
@@ -97,7 +93,12 @@ class MeiliSearchService
 
         $scopes = is_string($scopes) ? explode(',', $scopes) : $scopes;
 
-        $ids = $this->subject->select('id')->scopes($scopes)->get()?->pluck('id');
+        $ids = $this
+            ->subject
+            ->select('id')
+            ->scopes($scopes)
+            ?->take(1000)
+            ?->pluck('id');
 
         $this->filter('id', $ids, 'OR');
 

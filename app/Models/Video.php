@@ -160,6 +160,11 @@ class Video extends BaseModel
         return $this->extra_attributes->get('capture_time');
     }
 
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
+    }
+
     public function scopeRandom(Builder $query): Builder
     {
         return $query
@@ -189,7 +194,7 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    public function scopeViewed(Builder $query): Builder
+    public function scopeSimilar(Builder $query): Builder
     {
         return $query
             ->with('viewers')
@@ -200,8 +205,14 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
+    public function scopeViewed(Builder $query): Builder
     {
-        return $query->with($this->with);
+        return $query
+            ->with('viewers')
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('interactions.relation', 'view')
+            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
+            ->select('videos.*')
+            ->latest('interactions.created_at');
     }
 }
