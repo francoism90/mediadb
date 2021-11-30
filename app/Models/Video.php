@@ -72,6 +72,7 @@ class Video extends BaseModel
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'overview' => $this->extractTranslations('overview'),
             'duration' => $this->duration,
@@ -156,6 +157,13 @@ class Video extends BaseModel
     public function getCaptureTimeAttribute(): ?string
     {
         return $this->extra_attributes->get('capture_time');
+    }
+
+    public function scopeWithFoo(Builder $query): Builder
+    {
+        return $query
+            ->inRandomOrder()
+            ->take(500);
     }
 
     public function scopeWithFavorites(Builder $query): Builder

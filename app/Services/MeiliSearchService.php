@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Laravel\Scout\Builder;
 use MeiliSearch\Endpoints\Indexes;
 use RuntimeException;
@@ -17,6 +19,8 @@ class MeiliSearchService
     public ?Request $request = null;
 
     public ?array $options = [];
+
+    public ?array $scopes = [];
 
     public function engine(): Builder
     {
@@ -81,23 +85,40 @@ class MeiliSearchService
         return $this;
     }
 
-    public function filter(string $key, mixed $value = null): static
+    public function filter(string $key, mixed $value = null, string $expression = 'OR'): static
     {
         $value = is_string($value) ? explode(',', $value) : $value;
 
-        $values = collect($value)->map(fn ($item) => sprintf('%s = "%s"', $key, $item));
-        logger($values);
-
-        // $value = is_string($value) ? explode(',', $value) : $value;
-
-        // $values = array_merge($this->getOption('filter'), $value);
+        $values = collect($value)
+            ->map(fn ($item) => sprintf('%s = "%s"', $key, $item))
+            ->implode(sprintf(' %s ', $expression));
 
         $this->add(
             'filter',
-            $values->toArray()
+            $values
         );
 
         return $this;
+    }
+
+    public function scopes(mixed $scopes): static
+    {
+        throw_if(!$this->subject, RuntimeException::class, 'A subject needs to be given.');
+
+        $scopes = is_string($scopes) ? explode(',', $scopes) : $scopes;
+
+        $ids = $this->subject->scopes($scopes)->get()->pluck('id');
+
+        $this->filter('id', $ids);
+
+        return $this;
+    }
+
+    public function get(): Collection
+    {
+        return $this
+            ->engine()
+            ->get();
     }
 
     public function paginate(): Paginator

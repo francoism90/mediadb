@@ -22,6 +22,7 @@ class IndexController extends Controller
             ->filter('tags', $request->input('filter.tags'))
             ->sort($request->input('sort'))
             ->limit(24)
+            ->scopes(['withFavorites'])
             ->paginate();
 
         return new VideoCollection($items);

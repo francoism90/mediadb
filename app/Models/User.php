@@ -90,12 +90,13 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function toSearchableArray(): array
     {
-        return $this->only([
-            'id',
-            'name',
-            'email',
-            'description',
-        ]);
+        return [
+            'id' => $this->id,
+            'uuid' => $this->prefixed_id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'description' => $this->description,
+        ];
     }
 
     public function preferredLocale(): string

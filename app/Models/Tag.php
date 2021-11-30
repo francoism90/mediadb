@@ -45,6 +45,7 @@ class Tag extends BaseTag
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'description' => $this->extractTranslations('description'),
             'type' => $this->type,

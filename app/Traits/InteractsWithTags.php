@@ -36,11 +36,4 @@ trait InteractsWithTags
 
         return $collect->values()->all();
     }
-
-    public function scopeWithTags(Builder $query, ...$values)
-    {
-        return $this
-            ->scopeWithAllTagsOfAnyType($query, $values)
-            ->inRandomOrder();
-    }
 }

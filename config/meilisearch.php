@@ -52,8 +52,11 @@ return [
                     'description',
                     'type',
                 ],
-                'sortableAttributes' => [
+                'filterableAttributes' => [
                     'id',
+                    'uuid',
+                ],
+                'sortableAttributes' => [
                     'name',
                     'description',
                     'type',
@@ -68,8 +71,11 @@ return [
                     'email',
                     'description',
                 ],
-                'sortableAttributes' => [
+                'filterableAttributes' => [
                     'id',
+                    'uuid',
+                ],
+                'sortableAttributes' => [
                     'name',
                     'email',
                     'description',
@@ -92,6 +98,8 @@ return [
                     'descriptions',
                 ],
                 'filterableAttributes' => [
+                    'id',
+                    'uuid',
                     'actors',
                     'studios',
                     'genres',
@@ -99,7 +107,6 @@ return [
                     'tags',
                 ],
                 'sortableAttributes' => [
-                    'id',
                     'name',
                     'season_number',
                     'episode_number',
