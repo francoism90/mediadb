@@ -39,6 +39,7 @@ class Video extends BaseModel
      */
     protected $appends = [
         'duration',
+        'poster_url',
         'resolution',
     ];
 
@@ -159,14 +160,14 @@ class Video extends BaseModel
         return $this->extra_attributes->get('capture_time');
     }
 
-    public function scopeWithFoo(Builder $query): Builder
+    public function scopeRandom(Builder $query): Builder
     {
         return $query
             ->inRandomOrder()
             ->take(500);
     }
 
-    public function scopeWithFavorites(Builder $query): Builder
+    public function scopeFavorites(Builder $query): Builder
     {
         return $query
             ->with('favoriters')
@@ -177,7 +178,7 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    public function scopeWithFollowing(Builder $query): Builder
+    public function scopeFollowing(Builder $query): Builder
     {
         return $query
             ->with('followers')
@@ -188,7 +189,7 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    public function scopeWithViewed(Builder $query): Builder
+    public function scopeViewed(Builder $query): Builder
     {
         return $query
             ->with('viewers')

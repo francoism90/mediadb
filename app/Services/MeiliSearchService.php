@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -15,8 +14,6 @@ use RuntimeException;
 class MeiliSearchService
 {
     public ?Model $subject = null;
-
-    public ?Request $request = null;
 
     public ?array $options = [];
 
@@ -37,13 +34,6 @@ class MeiliSearchService
     public function subject(string $class): static
     {
         $this->subject = app($class);
-
-        return $this;
-    }
-
-    public function for(Request $request): static
-    {
-        $this->request = $request;
 
         return $this;
     }
@@ -85,7 +75,7 @@ class MeiliSearchService
         return $this;
     }
 
-    public function filter(string $key, mixed $value = null, string $expression = 'OR'): static
+    public function filter(string $key, mixed $value = null, string $expression = 'AND'): static
     {
         $value = is_string($value) ? explode(',', $value) : $value;
 
@@ -107,9 +97,9 @@ class MeiliSearchService
 
         $scopes = is_string($scopes) ? explode(',', $scopes) : $scopes;
 
-        $ids = $this->subject->scopes($scopes)->get()->pluck('id');
+        $ids = $this->subject->select('id')->scopes($scopes)->get()?->pluck('id');
 
-        $this->filter('id', $ids);
+        $this->filter('id', $ids, 'OR');
 
         return $this;
     }
@@ -125,11 +115,8 @@ class MeiliSearchService
     {
         $perPage = $this->getOption('limit', 20);
 
-        $query = $this->request?->query();
-
         return $this
             ->engine()
-            ->simplePaginate($perPage)
-            ->appends($query);
+            ->simplePaginate($perPage);
     }
 }

@@ -55,6 +55,7 @@ return [
                 'filterableAttributes' => [
                     'id',
                     'uuid',
+                    'slug',
                 ],
                 'sortableAttributes' => [
                     'name',

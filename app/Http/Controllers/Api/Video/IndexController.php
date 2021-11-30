@@ -17,12 +17,11 @@ class IndexController extends Controller
 
         $items = app(MeiliSearchService::class)
             ->subject(Video::class)
-            ->for($request)
-            ->query($request->input('filter.query'))
             ->filter('tags', $request->input('filter.tags'))
+            ->query($request->input('filter.query'))
             ->sort($request->input('sort'))
             ->limit(24)
-            ->scopes(['withFavorites'])
+            ->scopes($request->input('filter.type', 'random'))
             ->paginate();
 
         return new VideoCollection($items);
