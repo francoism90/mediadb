@@ -3,9 +3,9 @@
 namespace App\Actions\Video;
 
 use App\Models\Video;
+use Illuminate\Support\Arr;
 use Laravel\Scout\Builder;
 use MeiliSearch\Endpoints\Indexes;
-use Illuminate\Support\Arr;
 
 class SearchForVideos
 {
@@ -19,7 +19,7 @@ class SearchForVideos
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
 
                 return $meilisearch->search($query, $options);
-        })
+            })
         ->when($params['id'], fn ($engine, $ids) => $engine->whereIn('id', $ids))
         ->when($params['tags'], fn ($engine, $tags) => $engine->where('tags', $tags));
     }

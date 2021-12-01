@@ -17,8 +17,10 @@ class IndexController extends Controller
 
         $items = app(GetVideosIndex::class)($request);
 
+        $pageSize = $request->input('size', 24);
+
         return new VideoCollection(
-            $items->simplePaginate()
+            $items->simplePaginate($pageSize)
         );
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\IndexRequest;
 use App\Http\Resources\VideoCollection;
 use App\Models\Video;
-use App\Services\MeiliSearchService;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SimilarController extends Controller
@@ -16,15 +15,12 @@ class SimilarController extends Controller
     {
         $this->authorize('viewAny', Video::class);
 
-        $ids = app(GetSimilarVideos::class)($video)->pluck('id')->toArray();
-        // logger($ids);
+        $items = app(GetSimilarVideos::class)($video);
 
-        $items = app(MeiliSearchService::class)
-            ->subject(Video::class)
-            ->filter('id', $ids, 'OR')
-            ->limit($request->input('size', 24))
-            ->paginate();
+        $pageSize = $request->input('size', 24);
 
-        return new VideoCollection($items);
+        return new VideoCollection(
+            $items->simplePaginate($pageSize)
+        );
     }
 }
