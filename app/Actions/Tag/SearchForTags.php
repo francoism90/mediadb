@@ -12,7 +12,6 @@ class SearchForTags
     public function __invoke(array $data): Builder
     {
         $params = $this->getSearchOptions($data);
-        logger($params);
 
         return Tag::search(
             $params['query'],

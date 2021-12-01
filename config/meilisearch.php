@@ -44,6 +44,25 @@ return [
     */
 
     'indexes' => [
+           [
+            'name' => 'users_index',
+            'settings' => [
+                'searchableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
+                'filterableAttributes' => [
+                    'id',
+                    'uuid',
+                ],
+                'sortableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
+            ],
+        ],
         [
             'name' => 'tags_index',
             'settings' => [
@@ -60,26 +79,8 @@ return [
                 'sortableAttributes' => [
                     'name',
                     'description',
+                    'items',
                     'type',
-                ],
-            ],
-        ],
-        [
-            'name' => 'users_index',
-            'settings' => [
-                'searchableAttributes' => [
-                    'name',
-                    'email',
-                    'description',
-                ],
-                'filterableAttributes' => [
-                    'id',
-                    'uuid',
-                ],
-                'sortableAttributes' => [
-                    'name',
-                    'email',
-                    'description',
                 ],
             ],
         ],

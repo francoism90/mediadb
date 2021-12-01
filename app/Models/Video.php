@@ -37,15 +37,6 @@ class Video extends BaseModel
     /**
      * @var array
      */
-    protected $appends = [
-        'duration',
-        'poster_url',
-        'resolution',
-    ];
-
-    /**
-     * @var array
-     */
     public array $translatable = [
         'name',
         'slug',
