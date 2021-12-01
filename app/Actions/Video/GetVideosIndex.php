@@ -16,8 +16,11 @@ class GetVideosIndex
         if ($request->has('filter') || $request->has('sort')) {
             $options = $request->validated();
 
-            // Fetch ids of user lists
-            $options['id'] = $this->getVideoIdsByLists($request->input('filter.type'));
+            // Filters
+            $types = $request->input('filter.type');
+
+            // Set matching ids of user types (if any)
+            $options = data_set($options, 'filter.id', $this->getVideoIdsByType($types));
 
             return app(SearchForVideos::class)($options);
         }
@@ -25,20 +28,20 @@ class GetVideosIndex
         return app(GetRandomVideos::class)();
     }
 
-    protected function getVideoIdsByLists(mixed $lists = null): ?array
+    protected function getVideoIdsByType(mixed $types = null): ?array
     {
-        $lists = is_string($lists) ? explode(',', $lists) : $lists;
+        $types = is_string($types) ? explode(',', $types) : $types;
 
-        if (!$lists) {
+        if (!$types) {
             return null;
         }
 
         $user = auth()?->user();
 
         return Video::active()
-            ->when(in_array('favorites', $lists), fn ($query) => $query->userFavorites($user))
-            ->when(in_array('following', $lists), fn ($query) => $query->userFollowing($user))
-            ->when(in_array('viewed', $lists), fn ($query) => $query->userViewed($user))
+            ->when(in_array('favorites', $types), fn ($query) => $query->userFavorites($user))
+            ->when(in_array('following', $types), fn ($query) => $query->userFollowing($user))
+            ->when(in_array('viewed', $types), fn ($query) => $query->userViewed($user))
             ->pluck('id')
             ->take(500)
             ->all();

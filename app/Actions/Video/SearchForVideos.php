@@ -18,6 +18,7 @@ class SearchForVideos
             $params['query'],
             function (Indexes $meilisearch, string $query, array $options) use ($params) {
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
+                logger($options);
 
                 return $meilisearch->search($query, $options);
         })
