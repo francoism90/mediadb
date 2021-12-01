@@ -2,36 +2,61 @@
 
 namespace App\Actions\Video;
 
-use App\Actions\Search\QueryDocuments;
-use App\Actions\Tag\GetWithTagsOfAnyType;
 use App\Models\Video;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class GetSimilarVideos
 {
-    public function __invoke(Video $video, int $limit = 100): Collection
-    {
-        $models = $this->queryDocuments($video, $limit);
-        $models = $models->merge($this->withTagsOfAnyType($video, $limit));
+    /**
+     * @var string
+     */
+    public const QUERY_FILTER = '/[\p{L}\p{N}\p{S}]+/u';
 
-        return $models->where('id', '<>', $video->id)->take($limit);
+    public function __invoke(Video $video): Collection
+    {
+        $items = $this->getAsPhrases($video);
+        $items = $items->merge($this->withTagsOfAnyType($video));
+
+        return $items->where('id', '<>', $video->id);
     }
 
-    protected function queryDocuments(Video $video, int $limit): Collection
+    protected function getAsPhrases(Video $video): Collection
     {
-        return app(QueryDocuments::class)(
-            $video,
-            $video->name,
-            $limit,
-        );
+        $query = $this->getQueryTerms($video->name);
+
+        $collect = collect();
+
+        // e.g. foo bar 1, foo bar, foo
+        for ($i = $query->count(); $i >= 1; --$i) {
+            $phrase = $query->take($i)->implode(' ');
+
+            if (strlen($phrase) < 1) {
+                continue;
+            }
+
+            $items = $video->search($phrase)->take(50)->get();
+
+            $collect = $collect->merge($items);
+        }
+
+        return $collect;
     }
 
-    protected function withTagsOfAnyType(Video $video, int $limit): Collection
+    protected function withTagsOfAnyType(Video $video): Collection
     {
-        return app(GetWithTagsOfAnyType::class)(
-            $video,
-            $video->tags,
-            $limit,
-        );
+        return $video
+            ->with('tags')
+            ->withAnyTagsOfAnyType($video->tags)
+            // ->inRandomOrder()
+            ->take(50)
+            ->get();
+    }
+
+    protected function getQueryTerms(string $value): Collection
+    {
+        return Str::of($value)
+            ->matchAll(self::QUERY_FILTER)
+            ->take(8);
     }
 }

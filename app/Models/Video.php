@@ -165,53 +165,41 @@ class Video extends BaseModel
         return $query->with($this->with);
     }
 
-    public function scopeRandom(Builder $query): Builder
+    public function scopeActive(Builder $query): Builder
     {
-        return $query
-            ->inRandomOrder()
-            ->take(500);
+        // TODO: check 'ready' status
+        return $query;
     }
 
-    public function scopeFavorites(Builder $query): Builder
+    public function scopeUserFavorites(Builder $query, ?User $user = null): Builder
     {
         return $query
             ->with('favoriters')
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->where('interactions.relation', 'favorite')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
+            ->where('interactions.user_id', $user?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
 
-    public function scopeFollowing(Builder $query): Builder
+    public function scopeUserFollowing(Builder $query, ?User $user = null): Builder
     {
         return $query
             ->with('followers')
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->where('interactions.relation', 'follow')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
+            ->where('interactions.user_id', $user?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
 
-    public function scopeSimilar(Builder $query): Builder
+    public function scopeUserViewed(Builder $query, ?User $user = null): Builder
     {
         return $query
             ->with('viewers')
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
             ->where('interactions.relation', 'view')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
-            ->select('videos.*')
-            ->latest('interactions.created_at');
-    }
-
-    public function scopeViewed(Builder $query): Builder
-    {
-        return $query
-            ->with('viewers')
-            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->where('interactions.relation', 'view')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
+            ->where('interactions.user_id', $user?->id ?? 0)
             ->select('videos.*')
             ->latest('interactions.created_at');
     }

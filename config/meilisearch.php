@@ -86,6 +86,16 @@ return [
         [
             'name' => 'videos_index',
             'settings' => [
+                'rankingRules' => [
+                    'sort',
+                    'created:asc',
+                    'id:desc',
+                    'words',
+                    'typo',
+                    'proximity',
+                    'attribute',
+                    'exactness',
+                ],
                 'searchableAttributes' => [
                     'name',
                     'season_number',
@@ -158,7 +168,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | MeiliSearch Stop words
+    | MeiliSearch Stop Words
     |--------------------------------------------------------------------------
     |
     | The stop-words route allows you to add a list of words ignored in your search queries.
