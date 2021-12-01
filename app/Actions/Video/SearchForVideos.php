@@ -12,13 +12,11 @@ class SearchForVideos
     public function __invoke(array $data): Builder
     {
         $params = $this->getSearchOptions($data);
-        logger($params);
 
         return Video::search(
             $params['query'],
             function (Indexes $meilisearch, string $query, array $options) use ($params) {
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
-                logger($options);
 
                 return $meilisearch->search($query, $options);
         })
@@ -32,9 +30,9 @@ class SearchForVideos
 
         return [
             'query' => $option('filter.query', '*'),
-            'id' => $option('filter.id', null),
-            'tags' => $option('filter.tags', null),
-            'sort' => (array) $option('sort', null),
+            'id' => $option('filter.id'),
+            'tags' => $option('filter.tags'),
+            'sort' => (array) $option('sort'),
             'page' => $option('page', 1),
             'limit' => $option('size', 24),
         ];

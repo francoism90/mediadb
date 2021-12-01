@@ -12,7 +12,7 @@ class GetVideosIndex
     public function __invoke(IndexRequest $request): EloquentBuilder | ScoutBuilder
     {
         // We only use Laravel Scout for filtering and sorting.
-        // Laravel Scout is limited when creating simple feeds.
+        // Scout is limited when providng a simple feed (hopefully this will change).
         if ($request->has('filter') || $request->has('sort')) {
             $options = $request->validated();
 
