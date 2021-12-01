@@ -86,16 +86,6 @@ return [
         [
             'name' => 'videos_index',
             'settings' => [
-                'rankingRules' => [
-                    'sort',
-                    'created:asc',
-                    'id:desc',
-                    'words',
-                    'typo',
-                    'proximity',
-                    'attribute',
-                    'exactness',
-                ],
                 'searchableAttributes' => [
                     'name',
                     'season_number',
