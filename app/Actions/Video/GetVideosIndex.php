@@ -13,7 +13,7 @@ class GetVideosIndex
     {
         // We only use Laravel Scout for filtering and sorting.
         // Scout is limited when providng a simple feed (hopefully this will change).
-        if ($request->has('filter') || $request->has('sort')) {
+        if ($request->filled('filter') || $request->filled('sort')) {
             $options = $request->validated();
 
             // Filters

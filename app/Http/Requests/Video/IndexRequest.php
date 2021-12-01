@@ -22,7 +22,7 @@ class IndexRequest extends FormRequest
             'filter' => 'nullable|array',
             'filter.type' => 'nullable|string|in:favorites,following,viewed',
             'filter.query' => 'nullable|string|min:1|max:255',
-            'sort' => 'nullable|string|in:name:asc,items:asc,items:desc',
+            'sort' => 'nullable|string|in:name:asc,duration:asc,duration:desc,created:desc,created:asc',
         ];
     }
 
