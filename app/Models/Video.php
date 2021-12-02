@@ -169,8 +169,8 @@ class Video extends BaseModel
     {
         return $query
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->where('interactions.relation', 'view')
             ->withCount(['viewers' => fn (Builder $builder) => $builder
+                ->where('interactions.relation', 'view')
                 ->where('interactions.created_at', '>=', Carbon::now()->subDays($days)),
             ])
             ->orderByDesc('viewers_count');
