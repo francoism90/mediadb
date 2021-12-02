@@ -35,7 +35,7 @@ class SearchForTags
         return [
             'id' => $this->getIds($id, $type),
             'type' => $this->getTypes($type),
-            'sort' => Helper::convert($option('sort', 'name:asc')),
+            'sort' => Helper::convert($option('sort', 'order:asc')),
             'query' => (string) $option('query', '*'),
             'limit' => (int) $option('size', 24),
         ];

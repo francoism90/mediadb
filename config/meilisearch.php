@@ -44,7 +44,7 @@ return [
     */
 
     'indexes' => [
-           [
+        [
             'name' => 'users_index',
             'settings' => [
                 'searchableAttributes' => [
@@ -81,6 +81,7 @@ return [
                     'name',
                     'description',
                     'items',
+                    'order',
                     'type',
                 ],
             ],
