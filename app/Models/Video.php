@@ -79,6 +79,7 @@ class Video extends BaseModel
             'languages' => $this->extractTagTranslations(type: 'language'),
             'tags' => $this->extractTagTranslations(),
             'descriptions' => $this->extractTagTranslations('description'),
+            'released' => $this->released_at,
             'created' => $this->created_at,
             'updated' => $this->updated_at,
         ];

@@ -120,6 +120,7 @@ return [
                     'episode_number',
                     'duration',
                     'views',
+                    'released',
                     'created',
                     'updated',
                 ],
