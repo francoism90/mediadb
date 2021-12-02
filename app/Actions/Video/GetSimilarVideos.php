@@ -3,6 +3,7 @@
 namespace App\Actions\Video;
 
 use App\Models\Video;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -13,19 +14,34 @@ class GetSimilarVideos
      */
     public const QUERY_FILTER = '/[\p{L}\p{N}\p{S}]+/u';
 
-    public function __invoke(Video $video): Collection
+    public function __invoke(Video $video): Builder
     {
-        $items = $this->getAsPhrases($video);
-        $items = $items->merge($this->withTagsOfAnyType($video));
+        $ids = $this->getIds($video);
+        $idsOrder = implode(',', $ids);
 
-        return $items->where('id', '<>', $video->id);
+        return Video::active()
+            ->whereIn('id', $ids)
+            ->orderByRaw(sprintf('FIELD(id, %s)', $idsOrder));
     }
 
-    protected function getAsPhrases(Video $video): Collection
+    protected function getIds(Video $video): array
     {
-        $query = $this->getQueryTerms($video->name);
+        $items = $this->getWithPhrases($video);
+        $items = $items->merge($this->withTagsOfAnyType($video));
 
-        $collect = collect();
+        return $items
+            ->where('id', '<>', $video->id)
+            ->pluck('id')
+            ->unique()
+            ->take(75)
+            ->toArray();
+    }
+
+    protected function getWithPhrases(Video $video): Collection
+    {
+        $query = Str::of($video->name)->matchAll(self::QUERY_FILTER)->take(8);
+
+        $items = collect();
 
         // e.g. foo bar 1, foo bar, foo
         for ($i = $query->count(); $i >= 1; --$i) {
@@ -35,26 +51,24 @@ class GetSimilarVideos
                 continue;
             }
 
-            $items = Video::search($phrase)->take(50)->get();
+            $results = app(SearchForVideos::class)([
+                'query' => $phrase,
+                'limit' => 10,
+            ])->get();
 
-            $collect = $collect->merge($items);
+            $items = $items->merge($results);
         }
 
-        return $collect;
+        return $items;
     }
 
     protected function withTagsOfAnyType(Video $video): Collection
     {
         return Video::active()
-            ->has('tags')
+            ->with('tags')
             ->withAnyTagsOfAnyType($video->tags)
             ->inRandomOrder()
-            ->take(50)
+            ->take(75)
             ->get();
-    }
-
-    protected function getQueryTerms(string $value): Collection
-    {
-        return Str::of($value)->matchAll(self::QUERY_FILTER)->take(8);
     }
 }
