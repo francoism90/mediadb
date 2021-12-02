@@ -45,6 +45,25 @@ return [
 
     'indexes' => [
         [
+            'name' => 'users_index',
+            'settings' => [
+                'searchableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
+                'filterableAttributes' => [
+                    'id',
+                    'uuid',
+                ],
+                'sortableAttributes' => [
+                    'name',
+                    'email',
+                    'description',
+                ],
+            ],
+        ],
+        [
             'name' => 'tags_index',
             'settings' => [
                 'searchableAttributes' => [
@@ -52,15 +71,18 @@ return [
                     'description',
                     'type',
                 ],
-            ],
-        ],
-        [
-            'name' => 'users_index',
-            'settings' => [
-                'searchableAttributes' => [
+                'filterableAttributes' => [
+                    'id',
+                    'uuid',
+                    'slug',
+                    'type',
+                ],
+                'sortableAttributes' => [
                     'name',
-                    'email',
                     'description',
+                    'items',
+                    'order',
+                    'type',
                 ],
             ],
         ],
@@ -77,13 +99,29 @@ return [
                     'genres',
                     'languages',
                     'tags',
+                    'descriptions',
                 ],
                 'filterableAttributes' => [
+                    'id',
+                    'uuid',
+                    'season_number',
+                    'episode_number',
+                    'duration',
+                    'quality',
                     'actors',
                     'studios',
                     'genres',
                     'languages',
                     'tags',
+                ],
+                'sortableAttributes' => [
+                    'name',
+                    'season_number',
+                    'episode_number',
+                    'duration',
+                    'views',
+                    'created',
+                    'updated',
                 ],
             ],
         ],
@@ -127,7 +165,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | MeiliSearch Stop words
+    | MeiliSearch Stop Words
     |--------------------------------------------------------------------------
     |
     | The stop-words route allows you to add a list of words ignored in your search queries.

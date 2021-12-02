@@ -6,6 +6,7 @@ use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -32,14 +33,6 @@ class Video extends BaseModel
     protected $with = [
         'media',
         'tags',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $appends = [
-        'duration',
-        'resolution',
     ];
 
     /**
@@ -72,15 +65,22 @@ class Video extends BaseModel
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'overview' => $this->extractTranslations('overview'),
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
-            'actors' => $this->extractTagTranslations('name', 'actor'),
-            'studios' => $this->extractTagTranslations('name', 'studio'),
-            'genres' => $this->extractTagTranslations('name', 'genre'),
-            'languages' => $this->extractTagTranslations('name', 'language'),
-            'tags' => $this->extractTagTranslations('description'),
+            'duration' => $this->duration,
+            'quality' => $this->quality,
+            'views' => $this->views,
+            'actors' => $this->extractTagTranslations(type: 'actor'),
+            'studios' => $this->extractTagTranslations(type: 'studio'),
+            'genres' => $this->extractTagTranslations(type: 'genre'),
+            'languages' => $this->extractTagTranslations(type: 'language'),
+            'tags' => $this->extractTagTranslations(),
+            'descriptions' => $this->extractTagTranslations('description'),
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
         ];
     }
 
@@ -128,16 +128,6 @@ class Video extends BaseModel
         return $this->clip?->getUrl('thumbnail');
     }
 
-    public function getResolutionAttribute(): string
-    {
-        $collect = collect(config('api.video.resolutions'));
-
-        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
-        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
-
-        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
-    }
-
     public function getSpriteUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -154,41 +144,79 @@ class Video extends BaseModel
         return $this->extra_attributes->get('capture_time');
     }
 
-    public function scopeWithFavorites(Builder $query): Builder
+    public function getQualityAttribute(): string
     {
-        return $query
-            ->with('favoriters')
-            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->where('interactions.relation', 'favorite')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
-            ->select('videos.*')
-            ->latest('interactions.created_at');
-    }
+        $collect = collect(config('api.video.resolutions'));
 
-    public function scopeWithFollowing(Builder $query): Builder
-    {
-        return $query
-            ->with('followers')
-            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->where('interactions.relation', 'follow')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
-            ->select('videos.*')
-            ->latest('interactions.created_at');
-    }
+        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
+        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
 
-    public function scopeWithViewed(Builder $query): Builder
-    {
-        return $query
-            ->with('viewers')
-            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->where('interactions.relation', 'view')
-            ->where('interactions.user_id', auth()?->user()?->id ?? 0)
-            ->select('videos.*')
-            ->latest('interactions.created_at');
+        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
     }
 
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
         return $query->with($this->with);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        // TODO: check 'published' status
+        return $query;
+    }
+
+    public function scopeTrending(Builder $query, int $days = 3): Builder
+    {
+        return $query
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->withCount(['viewers' => fn (Builder $builder) => $builder
+                ->where('interactions.relation', 'view')
+                ->where('interactions.created_at', '>=', Carbon::now()->subDays($days)),
+            ])
+            ->orderByDesc('viewers_count');
+    }
+
+    public function scopeUserFavorites(Builder $query, ?User $user = null): Builder
+    {
+        return $query
+            ->with('favoriters')
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('interactions.relation', 'favorite')
+            ->where('interactions.user_id', $user?->id ?? 0)
+            ->select('videos.*')
+            ->latest('interactions.created_at');
+    }
+
+    public function scopeUserFollowing(Builder $query, ?User $user = null): Builder
+    {
+        return $query
+            ->with('followers')
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('interactions.relation', 'follow')
+            ->where('interactions.user_id', $user?->id ?? 0)
+            ->select('videos.*')
+            ->latest('interactions.created_at');
+    }
+
+    public function scopeUserViewed(Builder $query, ?User $user = null): Builder
+    {
+        return $query
+            ->with('viewers')
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('interactions.relation', 'view')
+            ->where('interactions.user_id', $user?->id ?? 0)
+            ->select('videos.*')
+            ->latest('interactions.created_at');
+    }
+
+    public function scopeWithAnyType(Builder $query, ?array $types = [], ?User $user = null): Builder
+    {
+        $type = fn (string $key) => in_array($key, $types);
+
+        return Video::active()
+            ->when($type('favorites'), fn ($query) => $query->userFavorites($user))
+            ->when($type('following'), fn ($query) => $query->userFollowing($user))
+            ->when($type('random'), fn ($query) => $query->inRandomOrder())
+            ->when($type('viewed'), fn ($query) => $query->userViewed($user));
     }
 }

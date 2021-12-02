@@ -42,17 +42,24 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         // DASH
         Route::middleware('auth:sanctum', 'cache.headers:public;max_age=86400;etag')->get('/manifest/{video}', ['uses' => 'ManifestController', 'as' => 'manifest']);
         Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
+
+        // Miscellaneous
+        Route::middleware('auth:sanctum')->get('/similar/{video}', ['uses' => 'SimilarController', 'as' => 'similar']);
     });
 
     // Tag
     Route::name('tags.')->prefix('tags')->namespace('Tag')->group(function () {
+        // Resources
         Route::middleware('auth:sanctum')->get('/', ['uses' => 'IndexController', 'as' => 'index']);
         Route::middleware('auth:sanctum')->get('/{tag}', ['uses' => 'ShowController', 'as' => 'show']);
     });
 
     // Media
     Route::name('media.')->prefix('media')->namespace('Media')->group(function () {
+        // Resources
         Route::middleware('auth:sanctum')->patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
+
+        // Miscellaneous
         Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/asset/{media}/{name?}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
     });
 });

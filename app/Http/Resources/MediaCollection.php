@@ -12,6 +12,11 @@ class MediaCollection extends ResourceCollection
     public $collects = MediaResource::class;
 
     /**
+     * @var bool
+     */
+    protected $preserveAllQueryParameters = true;
+
+    /**
      * Transform the resource collection into an array.
      *
      * @param \Illuminate\Http\Request $request
