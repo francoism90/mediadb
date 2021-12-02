@@ -102,6 +102,10 @@ return [
                 'filterableAttributes' => [
                     'id',
                     'uuid',
+                    'season_number',
+                    'episode_number',
+                    'duration',
+                    'quality',
                     'actors',
                     'studios',
                     'genres',

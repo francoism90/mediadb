@@ -67,9 +67,10 @@ class Video extends BaseModel
             'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'overview' => $this->extractTranslations('overview'),
-            'duration' => $this->duration,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
+            'duration' => $this->duration,
+            'quality' => $this->quality,
             'actors' => $this->extractTagTranslations(type: 'actor'),
             'studios' => $this->extractTagTranslations(type: 'studio'),
             'genres' => $this->extractTagTranslations(type: 'genre'),
@@ -125,16 +126,6 @@ class Video extends BaseModel
         return $this->clip?->getUrl('thumbnail');
     }
 
-    public function getResolutionAttribute(): string
-    {
-        $collect = collect(config('api.video.resolutions'));
-
-        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
-        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
-
-        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
-    }
-
     public function getSpriteUrlAttribute(): string
     {
         return URL::signedRoute(
@@ -149,6 +140,16 @@ class Video extends BaseModel
     public function getCaptureTimeAttribute(): ?string
     {
         return $this->extra_attributes->get('capture_time');
+    }
+
+    public function getQualityAttribute(): string
+    {
+        $collect = collect(config('api.video.resolutions'));
+
+        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
+        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
+
+        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
     }
 
     protected function makeAllSearchableUsing(Builder $query): Builder
