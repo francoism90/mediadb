@@ -6,6 +6,7 @@ use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
@@ -71,6 +72,7 @@ class Video extends BaseModel
             'episode_number' => $this->episode_number,
             'duration' => $this->duration,
             'quality' => $this->quality,
+            'views' => $this->views,
             'actors' => $this->extractTagTranslations(type: 'actor'),
             'studios' => $this->extractTagTranslations(type: 'studio'),
             'genres' => $this->extractTagTranslations(type: 'genre'),
@@ -161,6 +163,17 @@ class Video extends BaseModel
     {
         // TODO: check 'ready' status
         return $query;
+    }
+
+    public function scopeTrending(Builder $query, int $days = 3): Builder
+    {
+        return $query
+            ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
+            ->where('interactions.relation', 'view')
+            ->withCount(['viewers' => fn (Builder $builder) => $builder
+                ->where('interactions.created_at', '>=', Carbon::now()->subDays($days)),
+            ])
+            ->orderByDesc('viewers_count');
     }
 
     public function scopeUserFavorites(Builder $query, ?User $user = null): Builder

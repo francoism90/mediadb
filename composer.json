@@ -29,7 +29,6 @@
         "pusher/pusher-php-server": "^5.0",
         "spatie/laravel-collection-macros": "^7.9",
         "spatie/laravel-db-snapshots": "^2.0",
-        "spatie/laravel-json-api-paginate": "^1.11",
         "spatie/laravel-medialibrary": "^9.8",
         "spatie/laravel-permission": "^5.3",
         "spatie/laravel-prefixed-ids": "^1.1",

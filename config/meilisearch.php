@@ -117,7 +117,7 @@ return [
                     'season_number',
                     'episode_number',
                     'duration',
-                    'overview',
+                    'views',
                     'created',
                     'updated',
                 ],
