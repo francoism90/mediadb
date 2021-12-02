@@ -21,37 +21,44 @@ class SearchForVideos
                 return $meilisearch->search($query, $options);
             })
         ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
-        ->when($params['tags'], fn ($builder, $tags) => $builder->where('tags', $tags));
+        ->when($params['tags'], fn ($builder, $tags) => $builder->whereIn('tags', $tags));
     }
 
     protected function getSearchOptions(array $data): array
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
-        // Id filtering (if any)
-        $ids = $this->getVideoFilterIds($option('id'), $option('type'));
+        $types = $this->getTypeFilter($option('type'));
+
+        $ids = $this->getIdFilter($option('id'), $types);
 
         return [
             'id' => $ids,
             'query' => $option('query'),
-            'tags' => $option('tags'),
-            'sort' => (array) $option('sort'),
+            'tags' => (array) $option('tags'),
             'limit' => (int) $option('size', 24),
         ];
     }
 
-    protected function getVideoFilterIds(?array $ids = null, ?array $types = null): array
+    protected function getIdFilter(mixed $ids = null, mixed $types = null): array
     {
         return array_merge(
             $ids ?? [],
-            $this->getVideoIdsByType($types),
+            $this->getIdsByType($types),
         );
     }
 
-    protected function getVideoIdsByType(?array $types = null): array
+    protected function getTypeFilter(mixed $types = null): array
+    {
+        $types = $this->convertToArray($types);
+
+        return $types;
+    }
+
+    protected function getIdsByType(?array $types = null): ?array
     {
         if (!$types) {
-            return [];
+            return null;
         }
 
         return Video::active()
@@ -59,5 +66,10 @@ class SearchForVideos
             ->pluck('id')
             ->take(500)
             ->all();
+    }
+
+    protected function convertToArray(mixed $value = null): array
+    {
+        return is_string($value) ? explode(',', $value) : (array) $value;
     }
 }

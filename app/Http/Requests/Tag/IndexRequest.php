@@ -19,7 +19,7 @@ class IndexRequest extends FormRequest
         return [
             'page' => 'nullable|numeric|min:1|max:48',
             'size' => 'nullable|numeric|min:1|max:24',
-            'type' => 'nullable|string|in:favorites,following,viewed',
+            'type' => 'nullable|string|in:actor,genre,language,studio',
             'query' => 'nullable|string|min:1|max:255',
             'sort' => 'nullable|string|in:name:asc,name:desc,items:asc,items:desc',
         ];

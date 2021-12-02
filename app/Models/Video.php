@@ -161,7 +161,7 @@ class Video extends BaseModel
 
     public function scopeActive(Builder $query): Builder
     {
-        // TODO: check 'ready' status
+        // TODO: check 'published' status
         return $query;
     }
 
@@ -209,15 +209,9 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    public function scopeWithAnyType(Builder $query, mixed $types = null, ?User $user = null): Builder
+    public function scopeWithAnyType(Builder $query, ?array $types = null, ?User $user = null): Builder
     {
-        $types = is_string($types) ? explode(',', $types) : $types;
-
-        if (!$types || !is_array($types)) {
-            return $query;
-        }
-
-        $type = fn (string $key) => in_array($key, $types);
+        $type = fn (string $key) => in_array($key, $types ?? []);
 
         return Video::active()
             ->when($type('favorites'), fn ($query) => $query->userFavorites($user))

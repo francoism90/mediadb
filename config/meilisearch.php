@@ -75,6 +75,7 @@ return [
                     'id',
                     'uuid',
                     'slug',
+                    'type',
                 ],
                 'sortableAttributes' => [
                     'name',

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Actions\Video;
+namespace App\Actions\Tag;
 
-use App\Models\Video;
+use App\Helpers\Arr;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 
-class GetVideosFeed
+class GetTagsFeed
 {
     public function __invoke(array $data): Builder
     {
@@ -13,7 +14,7 @@ class GetVideosFeed
 
         $user = auth()?->user() ?? null;
 
-        return Video::active()
+        return Tag::active()
             ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
             ->when($params['type'], fn ($builder, $types) => $builder->withAnyType($types, $user));
     }
@@ -23,8 +24,8 @@ class GetVideosFeed
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         return [
-            'id' => $option('id'),
-            'type' => $option('type', 'random'),
+            'id' => Arr::convert($option('id')),
+            'type' => Arr::convert($option('type', 'ordered')),
         ];
     }
 }
