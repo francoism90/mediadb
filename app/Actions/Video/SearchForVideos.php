@@ -20,20 +20,36 @@ class SearchForVideos
 
                 return $meilisearch->search($query, $options);
             })
-        ->when($params['id'], fn ($engine, $ids) => $engine->whereIn('id', $ids))
-        ->when($params['tags'], fn ($engine, $tags) => $engine->where('tags', $tags));
+        ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
+        ->when($params['tags'], fn ($builder, $tags) => $builder->where('tags', $tags));
     }
 
     protected function getSearchOptions(array $data): array
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
+        // We need to use an additional query
+        $ids = array_merge($option('id'), $this->getVideoIdsByType($option('type')));
+
         return [
-            'query' => $option('filter.query'),
-            'id' => $option('filter.id'),
-            'tags' => $option('filter.tags'),
+            'id' => $ids,
+            'query' => $option('query'),
+            'tags' => $option('tags'),
             'sort' => (array) $option('sort'),
             'limit' => (int) $option('size', 24),
         ];
+    }
+
+    protected function getVideoIdsByType(mixed $types = null): ?array
+    {
+        if (!$types) {
+            return null;
+        }
+
+        return Video::active()
+            ->withAnyType($types, auth()?->user())
+            ->pluck('id')
+            ->take(500)
+            ->all();
     }
 }

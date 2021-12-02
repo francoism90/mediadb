@@ -29,9 +29,9 @@ class SearchForTags
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         return [
-            'query' => $option('filter.query'),
-            'id' => $option('filter.id'),
-            'type' => $option('filter.type'),
+            'query' => $option('query'),
+            'id' => $option('id'),
+            'type' => $option('type'),
             'sort' => (array) $option('sort'),
             'limit' => (int) $option('size', 24),
         ];

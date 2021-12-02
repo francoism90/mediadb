@@ -208,4 +208,21 @@ class Video extends BaseModel
             ->select('videos.*')
             ->latest('interactions.created_at');
     }
+
+    public function scopeWithAnyType(Builder $query, mixed $types = null, ?User $user = null): Builder
+    {
+        $types = is_string($types) ? explode(',', $types) : $types;
+
+        if (!$types || !is_array($types)) {
+            return $query;
+        }
+
+        $type = fn (string $key) => in_array($key, $types);
+
+        return Video::active()
+            ->when($type('favorites'), fn ($query) => $query->userFavorites($user))
+            ->when($type('following'), fn ($query) => $query->userFollowing($user))
+            ->when($type('random'), fn ($query) => $query->inRandomOrder())
+            ->when($type('viewed'), fn ($query) => $query->userViewed($user));
+    }
 }

@@ -19,9 +19,8 @@ class IndexRequest extends FormRequest
         return [
             'page' => 'nullable|numeric|min:1|max:48',
             'size' => 'nullable|numeric|min:1|max:24',
-            'filter' => 'nullable|array',
-            'filter.type' => 'nullable|string|in:favorites,following,viewed',
-            'filter.query' => 'nullable|string|min:1|max:255',
+            'type' => 'nullable|string|in:favorites,following,viewed',
+            'query' => 'nullable|string|min:1|max:255',
             'sort' => 'nullable|string|in:name:asc,duration:asc,duration:desc,created:desc,created:asc',
         ];
     }
@@ -31,9 +30,8 @@ class IndexRequest extends FormRequest
         return [
             'page' => 'trim|empty_string_to_null',
             'size' => 'trim|empty_string_to_null',
-            'filter' => 'trim|empty_string_to_null',
-            'filter.type' => 'trim|empty_string_to_null',
-            'filter.query' => 'trim|empty_string_to_null',
+            'type' => 'trim|empty_string_to_null',
+            'query' => 'trim|empty_string_to_null',
             'sort' => 'trim|empty_string_to_null',
         ];
     }
