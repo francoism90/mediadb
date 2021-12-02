@@ -44,14 +44,14 @@ class SearchForVideos
     {
         return array_merge(
             $ids ?? [],
-            $this->getVideoIdsByType($types) ?? [],
+            $this->getVideoIdsByType($types),
         );
     }
 
-    protected function getVideoIdsByType(?array $types = null): ?array
+    protected function getVideoIdsByType(?array $types = null): array
     {
         if (!$types) {
-            return null;
+            return [];
         }
 
         return Video::active()

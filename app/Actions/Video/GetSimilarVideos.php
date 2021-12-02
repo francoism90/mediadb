@@ -21,11 +21,6 @@ class GetSimilarVideos
         return $items->where('id', '<>', $video->id);
     }
 
-    protected function getQueryTerms(string $value): Collection
-    {
-        return Str::of($value)->matchAll(self::QUERY_FILTER)->take(8);
-    }
-
     protected function getAsPhrases(Video $video): Collection
     {
         $query = $this->getQueryTerms($video->name);
@@ -55,5 +50,10 @@ class GetSimilarVideos
             ->inRandomOrder()
             ->take(50)
             ->get();
+    }
+
+    protected function getQueryTerms(string $value): Collection
+    {
+        return Str::of($value)->matchAll(self::QUERY_FILTER)->take(8);
     }
 }
