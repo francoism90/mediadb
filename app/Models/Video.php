@@ -209,9 +209,9 @@ class Video extends BaseModel
             ->latest('interactions.created_at');
     }
 
-    public function scopeWithAnyType(Builder $query, ?array $types = null, ?User $user = null): Builder
+    public function scopeWithAnyType(Builder $query, ?array $types = [], ?User $user = null): Builder
     {
-        $type = fn (string $key) => in_array($key, $types ?? []);
+        $type = fn (string $key) => in_array($key, $types);
 
         return Video::active()
             ->when($type('favorites'), fn ($query) => $query->userFavorites($user))

@@ -13,7 +13,6 @@ class SearchForTags
     public function __invoke(array $data): Builder
     {
         $params = $this->getSearchOptions($data);
-        logger($params);
 
         return Tag::search(
             $params['query'],
@@ -44,16 +43,9 @@ class SearchForTags
 
     protected function getIds(array $id, array $type): ?array
     {
-        // Skip indexed types
-        $type = Arr::except($type, config('tag.types'));
+        $models = $this->getTagIdsByTypes($type);
 
-        if (!$type) {
-            return null;
-        }
-
-        $tags = $this->getTagIdsByTypes($type);
-
-        return array_merge($id, $tags);
+        return array_merge($id, $models);
     }
 
     protected function getTypes(array $type): array
@@ -61,8 +53,15 @@ class SearchForTags
         return Arr::only($type, config('tag.types'));
     }
 
-    protected function getTagIdsByTypes(array $types): array
+    protected function getTagIdsByTypes(?array $types = null): array
     {
+        // Skip indexed types
+        $types = Arr::except($types, config('tag.types'));
+
+        if (!$types) {
+            return [];
+        }
+
         return Tag::active()
             ->withAnyType($types, auth()?->user())
             ->pluck('id')

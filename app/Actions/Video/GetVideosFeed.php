@@ -2,6 +2,7 @@
 
 namespace App\Actions\Video;
 
+use App\Helpers\Arr;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -23,8 +24,8 @@ class GetVideosFeed
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         return [
-            'id' => $option('id'),
-            'type' => $option('type', 'random'),
+            'id' => Arr::convert($option('id')),
+            'type' => Arr::convert($option('type', 'random')),
         ];
     }
 }

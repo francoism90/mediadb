@@ -4,8 +4,8 @@ namespace App\Actions\Tag;
 
 use App\Http\Requests\Tag\IndexRequest;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Laravel\Scout\Builder as ScoutBuilder;
 use Illuminate\Support\Arr;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 class GetTagsIndex
 {

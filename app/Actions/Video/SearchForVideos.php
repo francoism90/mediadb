@@ -2,6 +2,7 @@
 
 namespace App\Actions\Video;
 
+use App\Helpers\Arr as Helper;
 use App\Models\Video;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Builder;
@@ -14,7 +15,7 @@ class SearchForVideos
         $params = $this->getSearchOptions($data);
 
         return Video::search(
-            $params['query'] ?? '*',
+            $params['query'],
             function (Indexes $meilisearch, string $query, array $options) use ($params) {
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
 
@@ -28,37 +29,29 @@ class SearchForVideos
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
-        $types = $this->getTypeFilter($option('type'));
-
-        $ids = $this->getIdFilter($option('id'), $types);
+        $id = Helper::convert($option('id'));
+        $type = Helper::convert($option('type'));
 
         return [
-            'id' => $ids,
-            'query' => $option('query'),
-            'tags' => (array) $option('tags'),
+            'id' => $this->getIds($id, $type),
+            'tags' => Helper::convert($option('tags')),
+            'sort' => Helper::convert($option('sort')),
+            'query' => (string) $option('query', '*'),
             'limit' => (int) $option('size', 24),
         ];
     }
 
-    protected function getIdFilter(mixed $ids = null, mixed $types = null): array
+    protected function getIds(array $id, array $type): ?array
     {
-        return array_merge(
-            $ids ?? [],
-            $this->getIdsByType($types),
-        );
+        $models = $this->getVideoIdsByTypes($type);
+
+        return array_merge($id, $models);
     }
 
-    protected function getTypeFilter(mixed $types = null): array
-    {
-        $types = $this->convertToArray($types);
-
-        return $types;
-    }
-
-    protected function getIdsByType(?array $types = null): ?array
+    protected function getVideoIdsByTypes(?array $types = null): array
     {
         if (!$types) {
-            return null;
+            return [];
         }
 
         return Video::active()
@@ -66,10 +59,5 @@ class SearchForVideos
             ->pluck('id')
             ->take(500)
             ->all();
-    }
-
-    protected function convertToArray(mixed $value = null): array
-    {
-        return is_string($value) ? explode(',', $value) : (array) $value;
     }
 }
