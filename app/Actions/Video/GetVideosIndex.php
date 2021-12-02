@@ -27,8 +27,10 @@ class GetVideosIndex
     protected function useSearchEngine(IndexRequest $request, array $options): bool
     {
         // Except filters that can be included on all requests
-        $params = Arr::except($options, ['page', 'size', 'type']);
+        $filters = Arr::except($options, ['page', 'size', 'type']);
 
-        return $request->anyFilled($params);
+        return $request->anyFilled(
+            array_keys($filters)
+        );
     }
 }

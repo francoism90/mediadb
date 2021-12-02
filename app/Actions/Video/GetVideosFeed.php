@@ -10,7 +10,6 @@ class GetVideosFeed
     public function __invoke(array $data): Builder
     {
         $params = $this->getOptions($data);
-        logger($params);
 
         $user = auth()?->user() ?? null;
 

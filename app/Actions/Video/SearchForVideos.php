@@ -28,8 +28,8 @@ class SearchForVideos
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
-        // We need to use an additional query
-        $ids = array_merge($option('id'), $this->getVideoIdsByType($option('type')));
+        // Id filtering (if any)
+        $ids = $this->getVideoFilterIds($option('id'), $option('type'));
 
         return [
             'id' => $ids,
@@ -40,7 +40,15 @@ class SearchForVideos
         ];
     }
 
-    protected function getVideoIdsByType(mixed $types = null): ?array
+    protected function getVideoFilterIds(?array $ids = null, ?array $types = null): array
+    {
+        return array_merge(
+            $ids ?? [],
+            $this->getVideoIdsByType($types) ?? [],
+        );
+    }
+
+    protected function getVideoIdsByType(?array $types = null): ?array
     {
         if (!$types) {
             return null;
