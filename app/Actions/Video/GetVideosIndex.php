@@ -32,16 +32,18 @@ class GetVideosIndex
     {
         $types = is_string($types) ? explode(',', $types) : $types;
 
-        if (!$types) {
+        if (!$types || !is_array($types)) {
             return null;
         }
+
+        $type = fn (string $key) => in_array($key, $types);
 
         $user = auth()?->user();
 
         return Video::active()
-            ->when(in_array('favorites', $types), fn ($query) => $query->userFavorites($user))
-            ->when(in_array('following', $types), fn ($query) => $query->userFollowing($user))
-            ->when(in_array('viewed', $types), fn ($query) => $query->userViewed($user))
+            ->when($type('favorites'), fn ($query) => $query->userFavorites($user))
+            ->when($type('following'), fn ($query) => $query->userFollowing($user))
+            ->when($type('viewed'), fn ($query) => $query->userViewed($user))
             ->pluck('id')
             ->take(500)
             ->all();
