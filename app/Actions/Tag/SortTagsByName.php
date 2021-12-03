@@ -3,19 +3,21 @@
 namespace App\Actions\Tag;
 
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Collection;
 
 class SortTagsByName
 {
     public function __invoke(): void
     {
         Tag::setNewOrder(
-            $this->getTagsSorted()->toArray()
+            $this->getTagsSorted()
         );
     }
 
-    protected function getTagsSorted(): Collection
+    protected function getTagsSorted(): array
     {
-        return Tag::all()->sortBy('name', SORT_NATURAL);
+        return Tag::active()
+            ->orderBy('name')
+            ->pluck('id')
+            ->all();
     }
 }
