@@ -138,7 +138,7 @@ class Video extends BaseModel
 
     public function getProductionCodeAttribute(): string
     {
-        return implode('', [$this->season_number, $this->episode_number]);
+        return implode('', array_filter([$this->season_number, $this->episode_number]));
     }
 
     public function getSpriteUrlAttribute(): string
@@ -154,7 +154,7 @@ class Video extends BaseModel
 
     public function getTitleAttribute(): string
     {
-        return collect([$this->production_code, $this->name])->implode(' - ');
+        return implode(' - ', array_filter([$this->production_code, $this->name]));
     }
 
     public function getQualityAttribute(): string
