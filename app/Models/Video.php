@@ -67,12 +67,14 @@ class Video extends BaseModel
             'id' => $this->id,
             'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
-            'overview' => $this->extractTranslations('overview'),
+            'title' => $this->title,
+            'production_code' => $this->production_code,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'duration' => $this->duration,
             'quality' => $this->quality,
             'views' => $this->views,
+            'overview' => $this->extractTranslations('overview'),
             'actors' => $this->extractTagTranslations(type: 'actor'),
             'studios' => $this->extractTagTranslations(type: 'studio'),
             'genres' => $this->extractTagTranslations(type: 'genre'),
@@ -119,6 +121,11 @@ class Video extends BaseModel
         return $this->clips?->first();
     }
 
+    public function getCaptureTimeAttribute(): ?string
+    {
+        return $this->extra_attributes->get('capture_time');
+    }
+
     public function getDurationAttribute(): ?float
     {
         return $this->clips?->max('custom_properties.duration');
@@ -127,6 +134,11 @@ class Video extends BaseModel
     public function getPosterUrlAttribute(): ?string
     {
         return $this->clip?->getUrl('thumbnail');
+    }
+
+    public function getProductionCodeAttribute(): string
+    {
+        return implode('', [$this->season_number, $this->episode_number]);
     }
 
     public function getSpriteUrlAttribute(): string
@@ -140,9 +152,9 @@ class Video extends BaseModel
         );
     }
 
-    public function getCaptureTimeAttribute(): ?string
+    public function getTitleAttribute(): string
     {
-        return $this->extra_attributes->get('capture_time');
+        return collect([$this->production_code, $this->name])->implode(' - ');
     }
 
     public function getQualityAttribute(): string
@@ -162,7 +174,7 @@ class Video extends BaseModel
 
     public function scopeActive(Builder $query): Builder
     {
-        // TODO: check 'published' status
+        // TODO: check 'published' state
         return $query;
     }
 

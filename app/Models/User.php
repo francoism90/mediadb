@@ -96,6 +96,8 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
             'name' => $this->name,
             'email' => $this->email,
             'description' => $this->description,
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
         ];
     }
 

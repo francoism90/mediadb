@@ -59,6 +59,8 @@ class Tag extends BaseTag
             'order' => $this->order_column,
             'items' => $this->items,
             'type' => $this->type,
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
         ];
     }
 

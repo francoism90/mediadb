@@ -12,6 +12,8 @@ class VideoResource extends JsonResource
             'id' => $this->getRouteKey(),
             'slug' => $this->slug,
             'name' => $this->name,
+            'title' => $this->title,
+            'production_code' => $this->production_code,
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'poster_url' => $this->poster_url,
