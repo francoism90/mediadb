@@ -10,7 +10,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "beyondcode/laravel-websockets": "^2.0.0-beta.36",
         "elegantweb/sanitizer": "^1.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
