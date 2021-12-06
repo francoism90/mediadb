@@ -3,9 +3,9 @@
     "type": "project",
     "description": "Personal media manager.",
     "keywords": [
+        "dash",
         "media",
-        "stream",
-        "mp4"
+        "streaming"
     ],
     "license": "MIT",
     "require": {
@@ -29,7 +29,7 @@
         "pusher/pusher-php-server": "^5.0",
         "spatie/laravel-collection-macros": "^7.9",
         "spatie/laravel-db-snapshots": "^2.0",
-        "spatie/laravel-medialibrary": "^9.8",
+        "spatie/laravel-medialibrary": "^9.9",
         "spatie/laravel-permission": "^5.3",
         "spatie/laravel-prefixed-ids": "^1.1",
         "spatie/laravel-rate-limited-job-middleware": "^2.1",
@@ -76,13 +76,12 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
-            "@php artisan horizon:publish --ansi",
-            "@php artisan telescope:publish --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",
-            "@php artisan horizon:publish --ansi",
-            "@php artisan telescope:publish --ansi",
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ]

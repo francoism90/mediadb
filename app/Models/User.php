@@ -75,7 +75,7 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
 
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'user.'.$this->getRouteKey();
+        return sprintf('user.%s', $this->getRouteKey());
     }
 
     public function videos(): MorphMany
