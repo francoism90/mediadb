@@ -25,7 +25,7 @@
         "meilisearch/meilisearch-php": "^0.20.0",
         "multicaret/laravel-acquaintances": "^3.5",
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
-        "pusher/pusher-php-server": "5.0.3",
+        "pusher/pusher-php-server": "7.0.1",
         "spatie/laravel-collection-macros": "^7.9",
         "spatie/laravel-db-snapshots": "^2.0",
         "spatie/laravel-medialibrary": "^9.9",
