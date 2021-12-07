@@ -25,7 +25,7 @@ class IndexRequest extends FormRequest
             'tags' => [$tagRule],
             'type' => 'nullable|string|in:favorites,following,viewed',
             'query' => 'nullable|string|min:1|max:255',
-            'sort' => 'nullable|string|in:name:asc,duration:asc,duration:desc,created:desc,created:asc',
+            'sort' => 'nullable|string|in:name:asc,duration:asc,duration:desc,created:desc,created:asc,views:asc,views:desc',
         ];
     }
 

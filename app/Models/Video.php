@@ -178,7 +178,7 @@ class Video extends BaseModel
         return $query;
     }
 
-    public function scopeTrending(Builder $query, int $days = 3): Builder
+    public function scopeIsTrending(Builder $query, int $days = 3): Builder
     {
         return $query
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
