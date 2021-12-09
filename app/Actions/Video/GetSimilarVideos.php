@@ -64,7 +64,8 @@ class GetSimilarVideos
 
     protected function withTagsOfAnyType(Video $video): Collection
     {
-        return Video::active()
+        return Video::cacheFor(30)
+            ->select('id')
             ->with('tags')
             ->withAnyTagsOfAnyType($video->tags)
             ->inRandomOrder()

@@ -14,7 +14,7 @@ class GetTagsFeed
 
         $user = auth()?->user() ?? null;
 
-        return Tag::active()
+        return Tag::cacheFor(60 * 10)
             ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
             ->when($params['type'], fn ($builder, $types) => $builder->withAnyType($types, $user));
     }

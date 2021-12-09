@@ -12,6 +12,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasTranslatableSlug;
@@ -26,6 +27,7 @@ class Video extends BaseModel
     use InteractsWithAcquaintances;
     use InteractsWithDash;
     use Searchable;
+    use QueryCacheable;
 
     /**
      * @var array

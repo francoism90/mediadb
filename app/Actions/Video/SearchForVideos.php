@@ -54,7 +54,8 @@ class SearchForVideos
             return [];
         }
 
-        return Video::active()
+        return Video::cacheFor(60 * 10)
+            ->select('id')
             ->withAnyType($types, auth()?->user())
             ->pluck('id')
             ->take(500)

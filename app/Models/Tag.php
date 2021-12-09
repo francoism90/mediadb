@@ -12,6 +12,7 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as BaseTag;
 
@@ -25,6 +26,7 @@ class Tag extends BaseTag
     use InteractsWithAcquaintances;
     use InteractsWithTranslations;
     use Searchable;
+    use QueryCacheable;
 
     public array $translatable = [
         'name',
