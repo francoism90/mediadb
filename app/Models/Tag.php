@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithAcquaintances;
+use App\Traits\InteractsWithQueryCache;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -12,7 +13,6 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as BaseTag;
 
@@ -24,20 +24,15 @@ class Tag extends BaseTag
     use HasPrefixedId;
     use HasSchemalessAttributes;
     use InteractsWithAcquaintances;
+    use InteractsWithQueryCache;
     use InteractsWithTranslations;
     use Searchable;
-    use QueryCacheable;
 
     public array $translatable = [
         'name',
         'slug',
         'description',
     ];
-
-    /**
-     * @var bool
-     */
-    protected static $flushCacheOnUpdate = true;
 
     public function getRouteKeyName(): string
     {
@@ -46,9 +41,7 @@ class Tag extends BaseTag
 
     public function videos(): MorphToMany
     {
-        return $this->morphedByMany(
-            Video::class, 'taggable', 'taggables'
-        );
+        return $this->morphedByMany(Video::class, 'taggable', 'taggables');
     }
 
     public function searchableAs(): string
