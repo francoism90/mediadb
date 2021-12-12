@@ -64,7 +64,7 @@ class GetSimilarVideos
 
     protected function withTagsOfAnyType(Video $video): Collection
     {
-        return Video::cacheFor(30)
+        return Video::cacheFor(60 * 10)
             ->select('id')
             ->with('tags')
             ->withAnyTagsOfAnyType($video->tags)

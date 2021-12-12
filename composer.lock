@@ -11763,16 +11763,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.12.5",
+            "version": "0.12.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "e50e40e0fe73b88a46f27e086441e1998ceeca3c"
+                "reference": "d88fbe1bcde87e11cbdfa1bf2f51c990f33f426d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e50e40e0fe73b88a46f27e086441e1998ceeca3c",
-                "reference": "e50e40e0fe73b88a46f27e086441e1998ceeca3c",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/d88fbe1bcde87e11cbdfa1bf2f51c990f33f426d",
+                "reference": "d88fbe1bcde87e11cbdfa1bf2f51c990f33f426d",
                 "shasum": ""
             },
             "require": {
@@ -11811,7 +11811,7 @@
             "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.12.5"
+                "source": "https://github.com/rectorphp/rector/tree/0.12.7"
             },
             "funding": [
                 {
@@ -11819,7 +11819,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-23T17:38:29+00:00"
+            "time": "2021-12-09T20:25:42+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12850,16 +12850,16 @@
         },
         {
             "name": "seld/phar-utils",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/phar-utils.git",
-                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0"
+                "reference": "9f3452c93ff423469c0d56450431562ca423dcee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
-                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
+                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/9f3452c93ff423469c0d56450431562ca423dcee",
+                "reference": "9f3452c93ff423469c0d56450431562ca423dcee",
                 "shasum": ""
             },
             "require": {
@@ -12892,9 +12892,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/phar-utils/issues",
-                "source": "https://github.com/Seldaek/phar-utils/tree/1.1.2"
+                "source": "https://github.com/Seldaek/phar-utils/tree/1.2.0"
             },
-            "time": "2021-08-19T21:01:38+00:00"
+            "time": "2021-12-10T11:20:11+00:00"
         },
         {
             "name": "theseer/tokenizer",

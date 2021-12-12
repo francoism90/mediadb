@@ -8,6 +8,7 @@ use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
@@ -23,11 +24,17 @@ abstract class BaseModel extends Model implements HasMedia
     use InteractsWithTags;
     use InteractsWithTranslations;
     use Notifiable;
+    use QueryCacheable;
 
     /**
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
 
     public function getRouteKeyName(): string
     {

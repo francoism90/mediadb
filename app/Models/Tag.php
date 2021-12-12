@@ -34,6 +34,11 @@ class Tag extends BaseTag
         'description',
     ];
 
+    /**
+     * @var bool
+     */
+    protected static $flushCacheOnUpdate = true;
+
     public function getRouteKeyName(): string
     {
         return 'prefixed_id';
