@@ -11,12 +11,12 @@ trait InteractsWithTags
 
     public function extractTagTranslations(string $field = 'name', ?string $type = null): array
     {
-        $collect = $this
+        $items = $this
             ->tags
             ->when($type, fn ($query, $type) => $query->where('type', $type))
             ->map(fn (Tag $item) => $item->$field)
             ->unique();
 
-        return $collect->values()->all();
+        return $items->values()->all();
     }
 }
