@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "953acb4841fa310a01ad5652e8452b3a",
+    "content-hash": "122c4b93471d7e237abf444455cf51d9",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1706,16 +1706,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.75.0",
+            "version": "v8.76.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637"
+                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0bb91d3176357da232da69762a64b0e0a0988637",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/83fe447ae964dc5f1f829d25fa2f6042d9099834",
+                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834",
                 "shasum": ""
             },
             "require": {
@@ -1874,7 +1874,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-12-07T14:55:46+00:00"
+            "time": "2021-12-14T16:21:19+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -5394,16 +5394,16 @@
         },
         {
             "name": "spatie/laravel-db-snapshots",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-db-snapshots.git",
-                "reference": "3092de2a387e126c27c2e75d32f580145262d525"
+                "reference": "737e663a5f6cb3f8f81271a08c31c3a7ab8fc454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-db-snapshots/zipball/3092de2a387e126c27c2e75d32f580145262d525",
-                "reference": "3092de2a387e126c27c2e75d32f580145262d525",
+                "url": "https://api.github.com/repos/spatie/laravel-db-snapshots/zipball/737e663a5f6cb3f8f81271a08c31c3a7ab8fc454",
+                "reference": "737e663a5f6cb3f8f81271a08c31c3a7ab8fc454",
                 "shasum": ""
             },
             "require": {
@@ -5452,7 +5452,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-db-snapshots/issues",
-                "source": "https://github.com/spatie/laravel-db-snapshots/tree/2.1.0"
+                "source": "https://github.com/spatie/laravel-db-snapshots/tree/2.2.0"
             },
             "funding": [
                 {
@@ -5464,20 +5464,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-08T20:04:12+00:00"
+            "time": "2021-12-14T14:32:26+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.10.1",
+            "version": "9.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "5b70ba37f2a76eb1a33d75767db2c252faf869c6"
+                "reference": "bc03542bdc7cc7e5f37d0f9a345bf0631f103fc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/5b70ba37f2a76eb1a33d75767db2c252faf869c6",
-                "reference": "5b70ba37f2a76eb1a33d75767db2c252faf869c6",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/bc03542bdc7cc7e5f37d0f9a345bf0631f103fc3",
+                "reference": "bc03542bdc7cc7e5f37d0f9a345bf0631f103fc3",
                 "shasum": ""
             },
             "require": {
@@ -5559,7 +5559,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.10.1"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.10.2"
             },
             "funding": [
                 {
@@ -5571,7 +5571,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-13T18:39:00+00:00"
+            "time": "2021-12-14T16:27:49+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -8879,16 +8879,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403"
+                "reference": "264dce589e7ce37a7ba99cb901eed8249fbec92f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/264dce589e7ce37a7ba99cb901eed8249fbec92f",
+                "reference": "264dce589e7ce37a7ba99cb901eed8249fbec92f",
                 "shasum": ""
             },
             "require": {
@@ -8926,11 +8926,13 @@
             "authors": [
                 {
                     "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk"
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
                 },
                 {
                     "name": "Vance Lucas",
-                    "email": "vance@vancelucas.com"
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://github.com/vlucas"
                 }
             ],
             "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -8941,7 +8943,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.0"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.1"
             },
             "funding": [
                 {
@@ -8953,7 +8955,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-10T01:08:39+00:00"
+            "time": "2021-12-12T23:22:04+00:00"
         },
         {
             "name": "voku/portable-ascii",
