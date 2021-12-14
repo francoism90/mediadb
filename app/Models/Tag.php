@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithAcquaintances;
+use App\Traits\InteractsWithQueryCache;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -23,6 +24,7 @@ class Tag extends BaseTag
     use HasPrefixedId;
     use HasSchemalessAttributes;
     use InteractsWithAcquaintances;
+    use InteractsWithQueryCache;
     use InteractsWithTranslations;
     use Searchable;
 
@@ -39,9 +41,7 @@ class Tag extends BaseTag
 
     public function videos(): MorphToMany
     {
-        return $this->morphedByMany(
-            Video::class, 'taggable', 'taggables'
-        );
+        return $this->morphedByMany(Video::class, 'taggable', 'taggables');
     }
 
     public function searchableAs(): string

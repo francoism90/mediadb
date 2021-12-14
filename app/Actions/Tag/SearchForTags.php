@@ -62,7 +62,7 @@ class SearchForTags
             return [];
         }
 
-        return Tag::active()
+        return Tag::cacheFor(60 * 10)
             ->withAnyType($types, auth()?->user())
             ->pluck('id')
             ->take(500)

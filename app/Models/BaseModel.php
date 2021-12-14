@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSchemalessAttributes;
+use App\Traits\InteractsWithQueryCache;
 use App\Traits\InteractsWithTags;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ abstract class BaseModel extends Model implements HasMedia
     use HasSchemalessAttributes;
     use HasTranslations;
     use InteractsWithMedia;
+    use InteractsWithQueryCache;
     use InteractsWithTags;
     use InteractsWithTranslations;
     use Notifiable;
