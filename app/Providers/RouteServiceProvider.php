@@ -11,7 +11,6 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use Spatie\PrefixedIds\PrefixedIds;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -56,11 +55,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureModelBinding(): void
     {
-        Route::bind('media', fn ($value) => Media::findByUuid($value));
-        Route::bind('model', fn ($value) => PrefixedIds::find($value));
-        Route::bind('tag', fn ($value) => Tag::findByPrefixedId($value));
-        Route::bind('user', fn ($value) => User::findByPrefixedId($value));
-        Route::bind('video', fn ($value) => Video::findByPrefixedId($value));
+        Route::bind('media', fn ($value) => Media::findByHashidOrFail($value));
+        Route::bind('tag', fn ($value) => Tag::findByHashidOrFail($value));
+        Route::bind('user', fn ($value) => User::findByHashidOrFail($value));
+        Route::bind('video', fn ($value) => Video::findByHashidOrFail($value));
     }
 
     /**

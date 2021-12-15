@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSchemalessAttributes;
+use App\Traits\InteractsWithHashids;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,6 @@ use Multicaret\Acquaintances\Traits\CanView;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -31,10 +31,10 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
     use CanView;
     use HasApiTokens;
     use HasFactory;
-    use HasPrefixedId;
     use HasRoles;
     use HasSchemalessAttributes;
     use HasSlug;
+    use InteractsWithHashids;
     use InteractsWithMedia;
     use Notifiable;
     use Searchable;

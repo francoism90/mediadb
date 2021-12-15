@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithAcquaintances;
+use App\Traits\InteractsWithHashids;
 use App\Traits\InteractsWithQueryCache;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +14,6 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
-use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Tags\Tag as BaseTag;
 
 class Tag extends BaseTag
@@ -21,9 +21,9 @@ class Tag extends BaseTag
     use CanBeFavorited;
     use CanBeFollowed;
     use CanBeViewed;
-    use HasPrefixedId;
     use HasSchemalessAttributes;
     use InteractsWithAcquaintances;
+    use InteractsWithHashids;
     use InteractsWithQueryCache;
     use InteractsWithTranslations;
     use Searchable;
