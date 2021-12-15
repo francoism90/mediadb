@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Video;
 
 use Elegant\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FollowRequest extends FormRequest
+class FavoriteRequest extends FormRequest
 {
     use SanitizesInput;
 
@@ -17,14 +17,14 @@ class FollowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'following' => 'nullable|boolean',
+            'favorite' => 'nullable|boolean',
         ];
     }
 
     public function filters(): array
     {
         return [
-            'following' => 'trim|strip_tags|cast:boolean',
+            'favorite' => 'trim|empty_string_to_null|cast:boolean',
         ];
     }
 }

@@ -25,12 +25,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->get('refresh', ['uses' => 'RefreshController', 'as' => 'refresh']);
     });
 
-    // User
-    Route::name('user.')->prefix('user')->namespace('User')->group(function () {
-        Route::middleware('auth:sanctum')->post('/favorite/{model}', ['uses' => 'FavoriteController', 'as' => 'favorite']);
-        Route::middleware('auth:sanctum')->post('/follow/{model}', ['uses' => 'FollowController', 'as' => 'follow']);
-    });
-
     // Video
     Route::name('videos.')->prefix('videos')->namespace('Video')->group(function () {
         // Resources
@@ -44,6 +38,8 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/sprite/{video}', ['uses' => 'SpriteController', 'as' => 'sprite']);
 
         // Miscellaneous
+        Route::middleware('auth:sanctum')->patch('/favorite/{video}', ['uses' => 'FavoriteController', 'as' => 'favorite']);
+        Route::middleware('auth:sanctum')->patch('/follow/{video}', ['uses' => 'FollowController', 'as' => 'follow']);
         Route::middleware('auth:sanctum')->get('/similar/{video}', ['uses' => 'SimilarController', 'as' => 'similar']);
     });
 

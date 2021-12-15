@@ -34,13 +34,13 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'capture_time' => 'cast:string',
-            'season_number' => 'trim|strip_tags',
-            'episode_number' => 'trim|strip_tags',
-            'overview' => 'trim|strip_tags',
-            'status' => 'trim|strip_tags|lowercase',
+            'capture_time' => 'trim|empty_string_to_null|cast:string',
+            'season_number' => 'trim|empty_string_to_null|strip_tags',
+            'episode_number' => 'trim|empty_string_to_null|strip_tags',
+            'overview' => 'trim|empty_string_to_null|strip_tags',
+            'status' => 'trim|empty_string_to_null|strip_tags|lowercase',
             'tags.*.id' => 'trim|strip_tags',
-            'type' => 'trim|strip_tags|lowercase',
+            'type' => 'trim|empty_string_to_null|strip_tags|lowercase',
         ];
     }
 }

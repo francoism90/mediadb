@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function filters(): array
     {
         return [
-            'thumbnail' => 'cast:float',
+            'thumbnail' => 'trim|empty_string_to_null|cast:float',
         ];
     }
 }
