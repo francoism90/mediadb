@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
     public function filters(): array
     {
         return [
+            'settings' => 'trim|empty_string_to_null',
             'settings.language' => 'trim|strip_tags|lowercase|slug',
             'settings.captions.*.locale' => 'trim|strip_tags|lowercase|slug',
         ];

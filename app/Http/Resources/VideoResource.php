@@ -33,7 +33,7 @@ class VideoResource extends JsonResource
             'views' => $this->whenAppended('views'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'model' => new ModelResource($this->whenLoaded('model')),
+            'user' => new UserResource($this->whenLoaded('model')),
             'tags' => new TagCollection($this->whenLoaded('tags')),
         ];
     }

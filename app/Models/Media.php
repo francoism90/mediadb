@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\InteractsWithHashids;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia
 {
+    use InteractsWithHashids;
+
     /**
      * @var array
      */
