@@ -34,11 +34,6 @@ class Tag extends BaseTag
         'description',
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'prefixed_id';
-    }
-
     public function videos(): MorphToMany
     {
         return $this->morphedByMany(Video::class, 'taggable', 'taggables');
@@ -53,7 +48,6 @@ class Tag extends BaseTag
     {
         return [
             'id' => $this->id,
-            'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'description' => $this->extractTranslations('description'),
             'order' => $this->order_column,

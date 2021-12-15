@@ -65,7 +65,6 @@ class Video extends BaseModel
     {
         return [
             'id' => $this->id,
-            'uuid' => $this->prefixed_id,
             'name' => $this->extractTranslations('name'),
             'title' => $this->title,
             'production_code' => $this->production_code,

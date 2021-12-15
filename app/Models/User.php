@@ -68,11 +68,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         'remember_token',
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'prefixed_id';
-    }
-
     public function receivesBroadcastNotificationsOn(): string
     {
         return sprintf('user.%s', $this->getRouteKey());
@@ -92,7 +87,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
     {
         return [
             'id' => $this->id,
-            'uuid' => $this->prefixed_id,
             'name' => $this->name,
             'email' => $this->email,
             'description' => $this->description,

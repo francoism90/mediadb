@@ -30,9 +30,4 @@ abstract class BaseModel extends Model implements HasMedia
      * @var array
      */
     protected $guarded = [];
-
-    public function getRouteKeyName(): string
-    {
-        return 'prefixed_id';
-    }
 }
