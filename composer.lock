@@ -1793,16 +1793,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.76.1",
+            "version": "v8.76.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834"
+                "reference": "c67acfdc968f487b6235435080eef62a7e2ed055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/83fe447ae964dc5f1f829d25fa2f6042d9099834",
-                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c67acfdc968f487b6235435080eef62a7e2ed055",
+                "reference": "c67acfdc968f487b6235435080eef62a7e2ed055",
                 "shasum": ""
             },
             "require": {
@@ -1961,7 +1961,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-12-14T16:21:19+00:00"
+            "time": "2021-12-15T14:02:14+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -6021,20 +6021,20 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "0f5606b1b6d4b2e754608914fb99eedfa071deac"
+                "reference": "6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/0f5606b1b6d4b2e754608914fb99eedfa071deac",
-                "reference": "0f5606b1b6d4b2e754608914fb99eedfa071deac",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5",
+                "reference": "6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^8.0",
+                "illuminate/database": "^8.76.1",
                 "illuminate/support": "^8.0",
                 "php": "^8.0"
             },
@@ -6070,7 +6070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-sluggable/issues",
-                "source": "https://github.com/spatie/laravel-sluggable/tree/3.1.1"
+                "source": "https://github.com/spatie/laravel-sluggable/tree/3.2.0"
             },
             "funding": [
                 {
@@ -6078,7 +6078,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-13T18:36:07+00:00"
+            "time": "2021-12-15T07:40:37+00:00"
         },
         {
             "name": "spatie/laravel-tags",
