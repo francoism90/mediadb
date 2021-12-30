@@ -19,9 +19,6 @@ class ResponseController extends Controller
         // Generate response
         $path = $media->getPath($conversion);
 
-        return response()->download(
-            $path,
-            basename($path)
-        );
+        return response()->file($path);
     }
 }
