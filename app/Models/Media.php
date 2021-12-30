@@ -31,11 +31,6 @@ class Media extends BaseMedia
         'type',
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
-
     public function getKindAttribute(): string
     {
         return Str::plural($this->collection_name);

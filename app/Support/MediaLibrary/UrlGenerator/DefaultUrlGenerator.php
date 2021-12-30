@@ -13,11 +13,11 @@ class DefaultUrlGenerator extends BaseUrlGenerator
     public function getUrl(): string
     {
         return URL::signedRoute(
-            'api.media.asset',
+            'api.media.response',
             [
-                $this->media,
-                $this->conversion?->getName(),
-                $this->media?->updated_at?->timestamp,
+                'media' => $this->media,
+                'conversion' => $this->conversion?->getName(),
+                'version' => $this->media?->updated_at?->timestamp,
             ]
         );
     }
@@ -25,12 +25,12 @@ class DefaultUrlGenerator extends BaseUrlGenerator
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return URL::temporarySignedRoute(
-            'api.media.asset',
+            'api.media.response',
             $expiration,
             [
-                $this->media,
-                $this->conversion?->getName(),
-                $this->media?->updated_at?->timestamp,
+                'media' => $this->media,
+                'conversion' => $this->conversion?->getName(),
+                'version' => $this->media?->updated_at?->timestamp,
             ]
         );
     }

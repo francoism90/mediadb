@@ -56,6 +56,6 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->patch('/{media}', ['uses' => 'UpdateController', 'as' => 'update']);
 
         // Miscellaneous
-        Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/asset/{media}/{name?}/{version?}', ['uses' => 'AssetController', 'as' => 'asset']);
+        Route::middleware('signed', 'cache.headers:public;max_age=86400;etag')->get('/asset/{media}', ['uses' => 'ResponseController', 'as' => 'response']);
     });
 });
