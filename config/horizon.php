@@ -196,7 +196,7 @@ return [
 
         'supervisor-3' => [
             'connection' => 'redis',
-            'queue' => ['media'],
+            'queue' => ['processing'],
             'balance' => 'auto',
             'minProcesses' => 1,
             'maxProcesses' => 10,

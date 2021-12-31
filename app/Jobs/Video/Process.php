@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Jobs\Media;
+namespace App\Jobs\Video;
 
-use App\Actions\Media\UpdateMediaProperties;
-use App\Models\Media;
+use App\Actions\Video\CreateNewThumbnail;
+use App\Models\Video;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,20 +24,20 @@ class Process implements ShouldQueue
     public bool $failOnTimeout = true;
 
     public function __construct(
-        protected Media $media
+        protected Video $video
     ) {
     }
 
     public function handle(
-        UpdateMediaProperties $updateMediaProperties,
+        CreateNewThumbnail $createNewThumbnail,
     ): void {
-        $updateMediaProperties($this->media);
+        $createNewThumbnail($this->video);
     }
 
     public function middleware()
     {
         return [
-            new WithoutOverlapping($this->media->id),
+            new WithoutOverlapping($this->video->id),
             new RateLimited(),
         ];
     }
@@ -49,6 +49,6 @@ class Process implements ShouldQueue
 
     public function tags(): array
     {
-        return ['process', 'media:'.$this->media->id];
+        return ['process', 'video:'.$this->video->id];
     }
 }

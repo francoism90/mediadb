@@ -8,19 +8,23 @@ use App\Services\ImageService;
 use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
 
-class CreateVideoFrame
+class CreateMediaThumbnail
 {
     public function __invoke(Media $media, string $path): void
     {
-        $this->create($media, $path);
+        $conversion = match ($media->type) {
+            'video' => $this->videoFrame($media, $path)
+        };
 
-        $this->optimize($path);
+        if ($conversion) {
+            $this->optimize($path);
+        }
     }
 
-    protected function create(Media $media, string $path): void
+    protected function videoFrame(Media $media, string $path): void
     {
         $duration = $media->getCustomProperty('duration') ?? 10;
-        $timeCode = $media->getCustomProperty('thumbnail') ?? $duration / 2;
+        $timeCode = $media->getCustomProperty('thumbnail') ?? round($duration / 2, 3);
 
         $video = app(FFMpegService::class)->open(
             $media->getPath()

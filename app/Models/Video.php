@@ -104,6 +104,12 @@ class Video extends BaseModel
             ->addMediaCollection('captions')
             ->acceptsMimeTypes(config('api.video.captions_mimetypes'))
             ->useDisk('media');
+
+        $this
+            ->addMediaCollection('thumbnail')
+            ->acceptsMimeTypes(config('api.video.thumbnail_mimetypes'))
+            ->useDisk('media')
+            ->singleFile();
     }
 
     public function getClipsAttribute(): MediaCollection
@@ -120,11 +126,6 @@ class Video extends BaseModel
         return $this->clips?->first();
     }
 
-    public function getCaptureTimeAttribute(): ?string
-    {
-        return $this->extra_attributes->get('capture_time');
-    }
-
     public function getDurationAttribute(): ?float
     {
         return $this->clips?->max('custom_properties.duration');
@@ -132,7 +133,7 @@ class Video extends BaseModel
 
     public function getPosterUrlAttribute(): ?string
     {
-        return $this->clip?->getUrl('thumbnail');
+        return $this->getFirstMediaUrl('thumbnail');
     }
 
     public function getProductionCodeAttribute(): string
@@ -149,6 +150,11 @@ class Video extends BaseModel
                 'version' => $this->updated_at->timestamp,
             ]
         );
+    }
+
+    public function getThumbnailAttribute(): ?string
+    {
+        return $this->extra_attributes->get('thumbnail');
     }
 
     public function getTitleAttribute(): string

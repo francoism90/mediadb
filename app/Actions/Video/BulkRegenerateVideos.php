@@ -12,9 +12,13 @@ class BulkRegenerateVideos
     public function __invoke(): void
     {
         $this->getModels()->each(function (Video $video): void {
-            $video->getMedia('clips')->each(
-                fn (Media $media) => app(RegenerateMedia::class)($media)
-            );
+            // Regenerate each clip
+            $video->clips?->each(function (Media $media): void {
+                app(RegenerateMedia::class)($media);
+            });
+
+            // Regenerate the video
+            app(RegenerateVideo::class)($video);
         })->reject(function (Video $video): bool {
             return !$video->hasMedia('clips');
         });
@@ -22,6 +26,6 @@ class BulkRegenerateVideos
 
     protected function getModels(): LazyCollection
     {
-        return Video::with('media')->cursor();
+        return Video::with('media')->take(5)->cursor();
     }
 }

@@ -82,6 +82,15 @@ return [
             'text/vtt',
         ],
 
+        'thumbnail_extensions' => [
+            '*.jpg',
+        ],
+
+        'thumbnail_mimetypes' => [
+            'image/jpg',
+            'image/jpeg',
+        ],
+
         'resolutions' => [
             ['name' => '240p', 'width' => 426, 'height' => 240],
             ['name' => '360p', 'width' => 640, 'height' => 360],

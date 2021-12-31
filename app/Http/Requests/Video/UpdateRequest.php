@@ -19,14 +19,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:255',
-            'capture_time' => 'nullable|numeric|min:0|max:28800',
             'season_number' => 'nullable|string|min:1|max:255',
             'episode_number' => 'nullable|string|min:1|max:255',
             'overview' => 'nullable|string|min:1|max:1024',
             'status' => 'nullable|string|in:private,public',
+            'thumbnail' => 'nullable|numeric|min:0|max:28800',
+            'type' => 'nullable|string|in:clip,episode,movie',
             'tags' => 'nullable|array|min:0|max:15',
             'tags.*.id' => ['required', new IsExistingTag()],
-            'type' => 'nullable|string|in:clip,episode,movie',
         ];
     }
 
@@ -34,13 +34,13 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'trim|strip_tags',
-            'capture_time' => 'trim|empty_string_to_null|cast:string',
             'season_number' => 'trim|empty_string_to_null|strip_tags',
             'episode_number' => 'trim|empty_string_to_null|strip_tags',
             'overview' => 'trim|empty_string_to_null|strip_tags',
             'status' => 'trim|empty_string_to_null|strip_tags|lowercase',
-            'tags.*.id' => 'trim|strip_tags',
+            'thumbnail' => 'trim|empty_string_to_null|cast:string',
             'type' => 'trim|empty_string_to_null|strip_tags|lowercase',
+            'tags.*.id' => 'trim|strip_tags',
         ];
     }
 }

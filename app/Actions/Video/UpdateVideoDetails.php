@@ -12,6 +12,7 @@ class UpdateVideoDetails
     {
         $collect = collect($data);
 
+        // Set attributes
         $locale = $collect->get('locale', app()->getLocale());
 
         $video
@@ -22,16 +23,22 @@ class UpdateVideoDetails
             ->setAttribute('season_number', $collect->get('season_number', $video->season_number));
 
         $video->extra_attributes
-            ->set('capture_time', $collect->get('capture_time', $video->capture_time));
+            ->set('thumbnail', $collect->get('thumbnail', $video->thumbnail));
 
         $video->saveOrFail();
 
+        // Sync tags
         app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
 
+        // Set thumbnail capturing
         app(UpdateVideoClips::class)($video, [
-            'thumbnail' => $collect->get('capture_time', $video->capture_time),
+            'thumbnail' => $collect->get('thumbnail', $video->thumbnail),
         ]);
 
+        // Create the thumbnail
+        app(CreateNewThumbnail::class)($video);
+
+        // Dispatch event
         VideoHasBeenUpdated::dispatch(
             $video->refresh()
         );
