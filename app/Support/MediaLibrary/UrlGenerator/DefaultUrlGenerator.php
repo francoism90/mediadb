@@ -16,7 +16,7 @@ class DefaultUrlGenerator extends BaseUrlGenerator
             'api.media.response',
             [
                 'media' => $this->media,
-                'conversion' => $this->conversion?->getName(),
+                // 'conversion' => $this->conversion?->getName(),
                 'version' => $this->media?->updated_at?->timestamp,
             ]
         );
@@ -29,7 +29,7 @@ class DefaultUrlGenerator extends BaseUrlGenerator
             $expiration,
             [
                 'media' => $this->media,
-                'conversion' => $this->conversion?->getName(),
+                // 'conversion' => $this->conversion?->getName(),
                 'version' => $this->media?->updated_at?->timestamp,
             ]
         );
