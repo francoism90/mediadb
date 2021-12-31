@@ -20,6 +20,7 @@ class ImportToMediaLibrary
         $media = $model
             ->addMedia($path)
             ->withCustomProperties($properties)
+            ->storingConversionsOnDisk('conversions')
             ->toMediaCollection($collection);
 
         // Force WebVTT
