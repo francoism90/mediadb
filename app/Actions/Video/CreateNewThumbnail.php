@@ -24,7 +24,6 @@ class CreateNewThumbnail
         // Import to media-library
         $video
             ->addMedia($temporaryPath)
-            ->storingConversionsOnDisk('conversions')
             ->usingName($video->name)
             ->toMediaCollection('thumbnail');
 
