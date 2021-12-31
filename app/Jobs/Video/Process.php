@@ -44,7 +44,7 @@ class Process implements ShouldQueue
 
     public function retryUntil(): \DateTime
     {
-        return now()->addHours(4);
+        return now()->addHour();
     }
 
     public function tags(): array
