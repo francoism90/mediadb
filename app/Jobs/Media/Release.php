@@ -24,8 +24,6 @@ class Release implements ShouldQueue
 
     public int $tries = 25;
 
-    public int $maxExceptions = 3;
-
     public function __construct(
         protected Media $media
     ) {
