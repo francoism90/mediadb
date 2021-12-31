@@ -26,6 +26,6 @@ class BulkRegenerateVideos
 
     protected function getModels(): LazyCollection
     {
-        return Video::with('media')->take(5)->cursor();
+        return Video::with('media')->cursor();
     }
 }

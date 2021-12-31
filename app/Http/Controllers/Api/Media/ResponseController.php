@@ -11,7 +11,7 @@ class ResponseController extends Controller
 {
     public function __invoke(Request $request, Media $media): StreamedResponse
     {
-        // TODO: add some validation
+        // TODO: add some validation?
 
         return $media->toInlineResponse($request);
     }
