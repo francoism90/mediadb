@@ -16,6 +16,8 @@ class RegenerateVideo
             new Process($video),
             new Optimize($video),
             new Release($video),
-        ])->onQueue('processing')->dispatch();
+        ])->onQueue('processing')
+          ->delay(now()->addSeconds(10))
+          ->dispatch();
     }
 }

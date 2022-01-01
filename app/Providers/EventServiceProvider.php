@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\Events\Media\MediaHasBeenAdded;
 use App\Events\Media\MediaHasBeenUpdated;
+use App\Events\Video\VideoHasBeenAdded;
+use App\Events\Video\VideoHasBeenUpdated;
 use App\Listeners\Media\ProcessMedia;
+use App\Listeners\Video\ProcessVideo;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +30,14 @@ class EventServiceProvider extends ServiceProvider
 
         MediaHasBeenUpdated::class => [
             ProcessMedia::class,
+        ],
+
+        VideoHasBeenAdded::class => [
+            ProcessVideo::class,
+        ],
+
+        VideoHasBeenUpdated::class => [
+            ProcessVideo::class,
         ],
     ];
 

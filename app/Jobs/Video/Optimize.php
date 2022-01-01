@@ -24,6 +24,8 @@ class Optimize implements ShouldQueue
 
     public int $tries = 25;
 
+    public int $backoff = 5;
+
     public function __construct(
         protected Video $video
     ) {
@@ -43,7 +45,7 @@ class Optimize implements ShouldQueue
 
     public function retryUntil(): \DateTime
     {
-        return now()->addHour();
+        return now()->addMinutes(30);
     }
 
     public function tags(): array

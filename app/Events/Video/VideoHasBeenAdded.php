@@ -1,34 +1,40 @@
 <?php
 
-namespace App\Events\Media;
+namespace App\Events\Video;
 
-use App\Models\Media;
+use App\Http\Resources\VideoResource;
+use App\Models\Video;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MediaHasBeenAdded implements ShouldBroadcastNow
+class VideoHasBeenAdded implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
     public function __construct(
-        public Media $media
+        public Video $video
     ) {
     }
 
     public function broadcastAs(): string
     {
-        return 'media.added';
+        return 'video.added';
+    }
+
+    public function broadcastWith(): array
+    {
+        return (new VideoResource($this->video))->resolve();
     }
 
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
-            'media.'.$this->media->getRouteKey()
+            'video.'.$this->video->getRouteKey()
         );
     }
 }

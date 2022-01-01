@@ -16,6 +16,8 @@ class RegenerateMedia
             new Process($media),
             new Optimize($media),
             new Release($media),
-        ])->onQueue('processing')->dispatch();
+        ])->onQueue('processing')
+          ->delay(now()->addSeconds(10))
+          ->dispatch();
     }
 }

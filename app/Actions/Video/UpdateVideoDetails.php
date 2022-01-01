@@ -12,7 +12,7 @@ class UpdateVideoDetails
     {
         $collect = collect($data);
 
-        // Set attributes
+        // Update attributes
         $locale = $collect->get('locale', app()->getLocale());
 
         $video
@@ -27,16 +27,13 @@ class UpdateVideoDetails
 
         $video->saveOrFail();
 
-        // Sync tags
-        app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
-
-        // Set thumbnail capturing
+        // Update clips attributes
         app(UpdateVideoClips::class)($video, [
             'thumbnail' => $collect->get('thumbnail', $video->thumbnail),
         ]);
 
-        // Create the thumbnail
-        app(CreateNewThumbnail::class)($video);
+        // Sync tags
+        app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
 
         // Dispatch event
         VideoHasBeenUpdated::dispatch(

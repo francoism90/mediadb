@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Actions\Media;
+namespace App\Actions\Video;
 
 use App\Events\Media\MediaHasBeenAdded;
-use Illuminate\Database\Eloquent\Model;
+use App\Events\Video\VideoHasBeenAdded;
+use App\Models\Video;
 use Symfony\Component\Finder\SplFileInfo;
 
-class ImportToMediaLibrary
+class ImportMediaToLibrary
 {
     public function __invoke(
-        Model $model,
+        Video $video,
         SplFileInfo $file,
         string $collection = null,
         array $properties = []
@@ -17,7 +18,7 @@ class ImportToMediaLibrary
         $path = $file->getRealPath();
         $extension = $file->getExtension();
 
-        $media = $model
+        $media = $video
             ->addMedia($path)
             ->withCustomProperties($properties)
             ->toMediaCollection($collection);
@@ -28,6 +29,10 @@ class ImportToMediaLibrary
             $media->saveOrFail();
         }
 
-        MediaHasBeenAdded::dispatch($model, $media);
+        // Process media
+        MediaHasBeenAdded::dispatch($media);
+
+        // Process video
+        VideoHasBeenAdded::dispatch($video);
     }
 }

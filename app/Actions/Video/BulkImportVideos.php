@@ -2,7 +2,6 @@
 
 namespace App\Actions\Video;
 
-use App\Actions\Media\ImportToMediaLibrary;
 use App\Models\User;
 use Symfony\Component\Finder\Finder;
 
@@ -15,7 +14,7 @@ class BulkImportVideos
         foreach ($files as $file) {
             $video = app(CreateUserVideo::class)($user, $file);
 
-            app(ImportToMediaLibrary::class)($video, $file, 'clips');
+            app(ImportMediaToLibrary::class)($video, $file, 'clips');
         }
     }
 
