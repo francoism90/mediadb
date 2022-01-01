@@ -32,6 +32,11 @@ class Kernel extends ConsoleKernel
                  ->everyFiveMinutes()
                  ->runInBackground();
 
+        $schedule->command('scout:import-indexes')
+                 ->withoutOverlapping()
+                 ->weeklyOn(1, '02:00')
+                 ->runInBackground();
+
         $schedule->command('telescope:prune')
                  ->withoutOverlapping()
                  ->dailyAt('02:00')
