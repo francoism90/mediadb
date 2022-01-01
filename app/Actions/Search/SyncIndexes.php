@@ -4,11 +4,11 @@ namespace App\Actions\Search;
 
 use Illuminate\Support\Facades\Artisan;
 
-class ImportIndexes
+class SyncIndexes
 {
     public function __invoke(): void
     {
-        $models = config('api.scout.import_models');
+        $models = config('api.scout.sync_models');
 
         foreach ($models as $model) {
             $this->importModels($model);

@@ -28,7 +28,7 @@ return [
     */
 
     'scout' => [
-        'import_models' => [
+        'sync_models' => [
             'App\Models\Tag',
             'App\Models\User',
             'App\Models\Video',

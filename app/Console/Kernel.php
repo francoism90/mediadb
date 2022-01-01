@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
                  ->everyFiveMinutes()
                  ->runInBackground();
 
-        $schedule->command('scout:import-indexes')
+        $schedule->command('scout:sync')
                  ->withoutOverlapping()
                  ->weeklyOn(1, '02:00')
                  ->runInBackground();
