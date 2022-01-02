@@ -13,7 +13,7 @@ class ManifestController extends Controller
         $this->authorize('view', $video);
 
         return response()->json(
-            $video->getManifestContents()
+            $video->getPreviewContents()
         );
     }
 }

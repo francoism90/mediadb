@@ -33,6 +33,8 @@ class UpdateMediaProperties
     {
         $format = app(FFMpegService::class)->getFormat($media->getPath());
 
+        logger($format->all());
+
         return collect([
             'bitrate' => $format->get('bit_rate', 0),
             'duration' => $format->get('duration', 0),
