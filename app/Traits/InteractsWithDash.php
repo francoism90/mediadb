@@ -82,6 +82,7 @@ trait InteractsWithDash
         $length = $this->getPreviewsLength();
 
         $durations = array_fill(0, $parts, $length);
+        logger($durations);
 
         // Create sequences
         $sequences = collect([
@@ -91,6 +92,8 @@ trait InteractsWithDash
 
         return collect([
             'id' => $this->getRouteKey(),
+            'discontinuity' => false,
+            'referenceClipIndex' => 1,
             'durations' => $durations,
             'sequences' => $sequences->filter()->values(),
         ]);
@@ -102,7 +105,6 @@ trait InteractsWithDash
             return [
                 'id' => $media->getRouteKey(),
                 'label' => $media->getRouteKey(),
-                'discontinuity' => false,
                 'clips' => $this->getPreviewClips($media),
             ];
         });
@@ -123,6 +125,8 @@ trait InteractsWithDash
 
         array_pop($times);
 
+        logger($times);
+
         $clips = [];
 
         foreach ($times as $time) {
@@ -130,7 +134,7 @@ trait InteractsWithDash
                 'type' => 'source',
                 'path' => $media->getPath(),
                 'clipFrom' => $time,
-                'clipTo' => $time + $length,
+                'clipTo' => $length,
             ];
         }
 
@@ -144,6 +148,6 @@ trait InteractsWithDash
 
     protected function getPreviewsLength(): int
     {
-        return config('api.video.previews.parts', 1500);
+        return config('api.video.previews.length', 4000);
     }
 }
