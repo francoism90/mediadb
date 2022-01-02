@@ -27,7 +27,7 @@ class GetSimilarVideos
     protected function getIds(Video $video): array
     {
         $items = $this->getWithPhrases($video);
-        $items = $items->merge($this->withTagsOfAnyType($video));
+        $items = $items->merge($this->getWithTagsOfAnyType($video));
 
         return $items
             ->where('id', '<>', $video->id)
@@ -62,12 +62,12 @@ class GetSimilarVideos
         return $items;
     }
 
-    protected function withTagsOfAnyType(Video $video): Collection
+    protected function getWithTagsOfAnyType(Video $video): Collection
     {
         return Video::cacheFor(60 * 10)
             ->select('id')
             ->with('tags')
-            ->withAnyTagsOfAnyType($video->tags)
+            ->when($video->tags->isNotEmpty(), fn ($query) => $query->withAnyTagsOfAnyType($video->tags))
             ->inRandomOrder()
             ->take(75)
             ->get();
