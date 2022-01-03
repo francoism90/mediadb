@@ -2,7 +2,6 @@
 
 namespace App\Actions\Video;
 
-use App\Helpers\Arr as Helper;
 use App\Models\Video;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Builder;
@@ -29,13 +28,13 @@ class SearchForVideos
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
-        $id = Helper::convert($option('id'));
-        $type = Helper::convert($option('type'));
+        $id = Arr::wrap($option('id'));
+        $type = Arr::wrap($option('type'));
 
         return [
             'id' => $this->getIds($id, $type),
-            'tags' => Helper::convert($option('tags')),
-            'sort' => Helper::convert($option('sort')),
+            'tags' => Arr::wrap($option('tags')),
+            'sort' => Arr::wrap($option('sort')),
             'query' => (string) $option('query', '*'),
             'limit' => (int) $option('size', 24),
         ];

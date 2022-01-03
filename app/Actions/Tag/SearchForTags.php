@@ -2,7 +2,6 @@
 
 namespace App\Actions\Tag;
 
-use App\Helpers\Arr as Helper;
 use App\Models\Tag;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Builder;
@@ -29,13 +28,13 @@ class SearchForTags
     {
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
-        $id = Helper::convert($option('id'));
-        $type = Helper::convert($option('type'));
+        $id = Arr::wrap($option('id'));
+        $type = Arr::wrap($option('type'));
 
         return [
             'id' => $this->getIds($id, $type),
             'type' => $this->getTypes($type),
-            'sort' => Helper::convert($option('sort', 'order:asc')),
+            'sort' => Arr::wrap($option('sort', 'order:asc')),
             'query' => (string) $option('query', '*'),
             'limit' => (int) $option('size', 24),
         ];

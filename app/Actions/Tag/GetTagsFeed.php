@@ -2,9 +2,9 @@
 
 namespace App\Actions\Tag;
 
-use App\Helpers\Arr;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class GetTagsFeed
 {
@@ -24,8 +24,8 @@ class GetTagsFeed
         $option = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         return [
-            'id' => Arr::convert($option('id')),
-            'type' => Arr::convert($option('type', 'ordered')),
+            'id' => Arr::wrap($option('id')),
+            'type' => Arr::wrap($option('type', 'ordered')),
         ];
     }
 }
