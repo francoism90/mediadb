@@ -86,13 +86,6 @@ class Video extends BaseModel
         ];
     }
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('thumbnail')
-            ->performOnCollections('clips');
-    }
-
     public function registerMediaCollections(): void
     {
         $this
@@ -103,12 +96,12 @@ class Video extends BaseModel
         $this
             ->addMediaCollection('captions')
             ->acceptsMimeTypes(config('api.video.captions_mimetypes'))
-            ->useDisk('media');
+            ->useDisk('conversions');
 
         $this
             ->addMediaCollection('thumbnail')
             ->acceptsMimeTypes(config('api.video.thumbnail_mimetypes'))
-            ->useDisk('media')
+            ->useDisk('conversions')
             ->singleFile();
     }
 
