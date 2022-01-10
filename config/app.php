@@ -172,6 +172,7 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\HealthServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
     ],

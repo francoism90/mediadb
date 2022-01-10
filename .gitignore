@@ -1,5 +1,3 @@
-/config
-/database
 /node_modules
 /public
 /storage/*.key

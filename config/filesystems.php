@@ -63,9 +63,16 @@ return [
             'visibility' => 'private',
         ],
 
+        'backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/backups'),
+            'visibility' => 'private',
+        ],
+
         'snapshots' => [
             'driver' => 'local',
-            'root' => database_path('snapshots'),
+            'root' => storage_path('app/snapshots'),
+            'visibility' => 'private',
         ],
     ],
 
