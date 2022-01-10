@@ -12,6 +12,7 @@
     "devDependencies": {
         "chokidar": "^3.5.2",
         "laravel-mix": "^6.0.39",
-        "postcss": "^8.4.4"
+        "node-forge": "^1.2.0",
+        "postcss": "^8.4.5"
     }
 }
