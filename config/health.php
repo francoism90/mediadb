@@ -37,7 +37,7 @@ return [
         'enabled' => false,
 
         'notifications' => [
-            Spatie\Health\Notifications\CheckFailedNotification::class => ['mail'],
+            // Spatie\Health\Notifications\CheckFailedNotification::class => ['mail'],
         ],
 
         /*
