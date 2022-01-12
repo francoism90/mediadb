@@ -12,7 +12,7 @@ class DeleteIndexes
         $client = $this->getClient();
 
         $this->getIndexes()->each(
-            fn (array $item) => $client->deleteIndexIfExists($item['name'])
+            fn (array $item) => $client->deleteIndex($item['name'])
         );
     }
 

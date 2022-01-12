@@ -17,9 +17,8 @@ class SyncIndexesCommand extends Command
      */
     protected $description = 'Sync Laravel Scout indexes';
 
-    public function handle(
-        SyncIndexes $syncIndexes
-    ): void {
+    public function handle(SyncIndexes $syncIndexes): void
+    {
         $syncIndexes();
     }
 }

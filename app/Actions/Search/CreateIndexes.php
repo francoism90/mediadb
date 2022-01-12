@@ -7,20 +7,23 @@ use MeiliSearch\Client;
 
 class CreateIndexes
 {
-    public function __invoke(?bool $reset = false): void
+    public function __invoke(): void
     {
         $client = $this->getClient();
 
-        $this->getIndexes()->each(function ($item) use ($client, $reset): void {
-            $index = $client->getOrCreateIndex($item['name']);
+        $settings = config('meilisearch.settings', []);
 
-            if ($reset) {
-                $index->resetSettings();
-            }
+        $this->getIndexes()->each(function ($item) use ($client, $settings): void {
+            // Delete index (if exists)
+            $client->deleteIndex($item['name']);
 
-            $index->updateSettings($item['settings']);
-            $index->updateSynonyms(config('meilisearch.synonyms'));
-            $index->updateStopWords(config('meilisearch.stop_words'));
+            // Create index
+            $client->createIndex($item['name']);
+
+            // Update settings
+            $client->index($item['name'])->updateSettings(
+                array_merge($settings, $item['settings'])
+            );
         });
     }
 

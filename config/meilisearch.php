@@ -52,12 +52,13 @@ return [
                     'email',
                     'description',
                 ],
+
                 'filterableAttributes' => [
                     'id',
-                    'uuid',
                     'created',
                     'updated',
                 ],
+
                 'sortableAttributes' => [
                     'name',
                     'email',
@@ -75,15 +76,16 @@ return [
                     'description',
                     'type',
                 ],
+
                 'filterableAttributes' => [
                     'id',
-                    'uuid',
                     'slug',
                     'items',
                     'type',
                     'created',
                     'updated',
                 ],
+
                 'sortableAttributes' => [
                     'name',
                     'description',
@@ -112,9 +114,9 @@ return [
                     'tags',
                     'descriptions',
                 ],
+
                 'filterableAttributes' => [
                     'id',
-                    'uuid',
                     'production_code',
                     'season_number',
                     'episode_number',
@@ -129,6 +131,7 @@ return [
                     'created',
                     'updated',
                 ],
+
                 'sortableAttributes' => [
                     'name',
                     'title',
@@ -147,64 +150,62 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | MeiliSearch Synonyms
+    | MeiliSearch Settings
     |--------------------------------------------------------------------------
     |
-    | Synonyms are considered to be the same.
-    | A search on a word or its synonym will return the same search result.
+    | Settings that are being applied to all indexes.
     |
     */
 
-    'synonyms' => [
-        '1' => ['01'],
-        '2' => ['02'],
-        '3' => ['03'],
-        '4' => ['04'],
-        '5' => ['05'],
-        '6' => ['06'],
-        '7' => ['07'],
-        '8' => ['08'],
-        '9' => ['09'],
-        '01' => ['1'],
-        '02' => ['2'],
-        '03' => ['3'],
-        '04' => ['4'],
-        '05' => ['5'],
-        '06' => ['6'],
-        '07' => ['7'],
-        '08' => ['8'],
-        '09' => ['9'],
-        '&' => ['and'],
-        'and' => ['&'],
-        '@' => ['at'],
-        'at' => ['@'],
-        '#' => ['hash', 'hashtag'],
-    ],
+    'settings' => [
+        'displayedAttributes' => [
+            'id',
+            'uuid',
+            'slug',
+            'name',
+        ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | MeiliSearch Stop Words
-    |--------------------------------------------------------------------------
-    |
-    | The stop-words route allows you to add a list of words ignored in your search queries.
-    | Adding a stop-words list improves the speed, and relevancy of a search.
-    |
-    */
+        'synonyms' => [
+            '1' => ['01'],
+            '2' => ['02'],
+            '3' => ['03'],
+            '4' => ['04'],
+            '5' => ['05'],
+            '6' => ['06'],
+            '7' => ['07'],
+            '8' => ['08'],
+            '9' => ['09'],
+            '01' => ['1'],
+            '02' => ['2'],
+            '03' => ['3'],
+            '04' => ['4'],
+            '05' => ['5'],
+            '06' => ['6'],
+            '07' => ['7'],
+            '08' => ['8'],
+            '09' => ['9'],
+            '&' => ['and'],
+            'and' => ['&'],
+            '@' => ['at'],
+            'at' => ['@'],
+            '#' => ['hash', 'hashtag'],
+        ],
 
-    'stop_words' => [
-        '.',
-        ',',
-        '-',
-        '_',
-        '|',
-        '(',
-        ')',
-        '[',
-        ']',
-        '&',
-        'a',
-        'and',
-        'or',
-        'the',
+        'stopWords' => [
+            '.',
+            ',',
+            '-',
+            '_',
+            '|',
+            '(',
+            ')',
+            '[',
+            ']',
+            '&',
+            'a',
+            'and',
+            'or',
+            'the',
+        ],
     ],
 ];

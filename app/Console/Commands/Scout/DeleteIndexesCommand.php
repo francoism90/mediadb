@@ -17,9 +17,8 @@ class DeleteIndexesCommand extends Command
      */
     protected $description = 'Delete Laravel Scout indexes';
 
-    public function handle(
-        DeleteIndexes $deleteIndexes
-    ): void {
+    public function handle(DeleteIndexes $deleteIndexes): void
+    {
         $deleteIndexes();
     }
 }
