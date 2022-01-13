@@ -1694,16 +1694,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.78.1",
+            "version": "v8.79.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "16359b5ebafba6579b397d7505b082a6d1bb2e31"
+                "reference": "8091f07558ff4a890435ff9d25fa9aca0189ad63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/16359b5ebafba6579b397d7505b082a6d1bb2e31",
-                "reference": "16359b5ebafba6579b397d7505b082a6d1bb2e31",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/8091f07558ff4a890435ff9d25fa9aca0189ad63",
+                "reference": "8091f07558ff4a890435ff9d25fa9aca0189ad63",
                 "shasum": ""
             },
             "require": {
@@ -1735,7 +1735,7 @@
                 "symfony/routing": "^5.4",
                 "symfony/var-dumper": "^5.4",
                 "tijsverkoyen/css-to-inline-styles": "^2.2.2",
-                "vlucas/phpdotenv": "^5.2",
+                "vlucas/phpdotenv": "^5.4.1",
                 "voku/portable-ascii": "^1.4.8"
             },
             "conflict": {
@@ -1792,6 +1792,7 @@
                 "symfony/cache": "^5.4"
             },
             "suggest": {
+                "ably/ably-php": "Required to use the Ably broadcast driver (^1.0).",
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.198.1).",
                 "brianium/paratest": "Required to run tests in parallel (^6.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.13.3|^3.1.4).",
@@ -1862,7 +1863,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-01-05T14:52:50+00:00"
+            "time": "2022-01-12T16:12:41+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -1943,21 +1944,21 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v1.1.3",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "62cf8d5461dc24f135fe7fb919a27ad1b9010bc9"
+                "reference": "5862dec90e3c064bd7d4c31f3f3a20467baa4027"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/62cf8d5461dc24f135fe7fb919a27ad1b9010bc9",
-                "reference": "62cf8d5461dc24f135fe7fb919a27ad1b9010bc9",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/5862dec90e3c064bd7d4c31f3f3a20467baa4027",
+                "reference": "5862dec90e3c064bd7d4c31f3f3a20467baa4027",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-diactoros": "^2.5",
-                "laravel/framework": "^8.70",
+                "laravel/framework": "^8.77|^9.0",
                 "laravel/serializable-closure": "^1.0",
                 "php": "^8.0",
                 "symfony/psr-http-message-bridge": "^2.0"
@@ -1965,10 +1966,9 @@
             "require-dev": {
                 "guzzlehttp/guzzle": "^7.2",
                 "mockery/mockery": "^1.4",
-                "nunomaduro/collision": "^5.3",
-                "orchestra/testbench": "^6.16",
+                "nunomaduro/collision": "^5.10|^6.0",
+                "orchestra/testbench": "^6.16|^7.0",
                 "phpunit/phpunit": "^9.3",
-                "spatie/laravel-ray": "^1.14",
                 "spiral/roadrunner": "^2.0"
             },
             "bin": [
@@ -2015,7 +2015,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2022-01-05T14:52:24+00:00"
+            "time": "2022-01-12T15:35:48+00:00"
         },
         {
             "name": "laravel/sanctum",
