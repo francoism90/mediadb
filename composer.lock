@@ -544,29 +544,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.2.4",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0"
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9545dea2a1d92b60c8b3d06f02025c83e999bde0",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/63f2a76a045bac6ec93cc2daf2b534b412aa0313",
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "webmozart/assert": "^1.7.0"
+                "webmozart/assert": "^1.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-webmozart-assert": "^0.12.7",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -593,7 +593,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.2.4"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -601,7 +601,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T04:09:37+00:00"
+            "time": "2022-01-14T16:02:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -5104,16 +5104,16 @@
         },
         {
             "name": "rennokki/laravel-eloquent-query-cache",
-            "version": "3.1.4",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/renoki-co/laravel-eloquent-query-cache.git",
-                "reference": "24d6aec2d2a097a64f8b44354462e3dd83c52e4d"
+                "reference": "12669e1019f5da48d4f765702abf7a66f2e4bbba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/24d6aec2d2a097a64f8b44354462e3dd83c52e4d",
-                "reference": "24d6aec2d2a097a64f8b44354462e3dd83c52e4d",
+                "url": "https://api.github.com/repos/renoki-co/laravel-eloquent-query-cache/zipball/12669e1019f5da48d4f765702abf7a66f2e4bbba",
+                "reference": "12669e1019f5da48d4f765702abf7a66f2e4bbba",
                 "shasum": ""
             },
             "require": {
@@ -5125,7 +5125,7 @@
                 "laravel/legacy-factories": "^1.1",
                 "mockery/mockery": "^1.4",
                 "orchestra/database": "^5.0|^6.0",
-                "orchestra/testbench": "^6.23.1"
+                "orchestra/testbench": "^6.23.2"
             },
             "type": "library",
             "autoload": {
@@ -5157,7 +5157,7 @@
             ],
             "support": {
                 "issues": "https://github.com/renoki-co/laravel-eloquent-query-cache/issues",
-                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.1.4"
+                "source": "https://github.com/renoki-co/laravel-eloquent-query-cache/tree/3.1.5"
             },
             "funding": [
                 {
@@ -5165,7 +5165,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-07T14:46:30+00:00"
+            "time": "2022-01-14T20:09:24+00:00"
         },
         {
             "name": "spatie/db-dumper",
