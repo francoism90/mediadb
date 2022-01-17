@@ -544,29 +544,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.2.4",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0"
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9545dea2a1d92b60c8b3d06f02025c83e999bde0",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/63f2a76a045bac6ec93cc2daf2b534b412aa0313",
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "webmozart/assert": "^1.7.0"
+                "webmozart/assert": "^1.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-webmozart-assert": "^0.12.7",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -593,7 +593,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.2.4"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -601,7 +601,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T04:09:37+00:00"
+            "time": "2022-01-14T16:02:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -5677,21 +5677,21 @@
         },
         {
             "name": "spatie/laravel-db-snapshots",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-db-snapshots.git",
-                "reference": "737e663a5f6cb3f8f81271a08c31c3a7ab8fc454"
+                "reference": "145602005f0705a4d2a1c5d368fbf95ccbd35576"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-db-snapshots/zipball/737e663a5f6cb3f8f81271a08c31c3a7ab8fc454",
-                "reference": "737e663a5f6cb3f8f81271a08c31c3a7ab8fc454",
+                "url": "https://api.github.com/repos/spatie/laravel-db-snapshots/zipball/145602005f0705a4d2a1c5d368fbf95ccbd35576",
+                "reference": "145602005f0705a4d2a1c5d368fbf95ccbd35576",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^7.0|^8.0",
-                "league/flysystem": "^1.0.41",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "league/flysystem": "^1.0.41|^2.0|^3.0",
                 "php": "^8.0",
                 "spatie/db-dumper": "^3.1",
                 "spatie/laravel-package-tools": "^1.6",
@@ -5699,7 +5699,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^5.0|^6.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -5735,7 +5735,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-db-snapshots/issues",
-                "source": "https://github.com/spatie/laravel-db-snapshots/tree/2.2.0"
+                "source": "https://github.com/spatie/laravel-db-snapshots/tree/2.2.1"
             },
             "funding": [
                 {
@@ -5747,7 +5747,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-14T14:32:26+00:00"
+            "time": "2022-01-14T08:27:40+00:00"
         },
         {
             "name": "spatie/laravel-health",
