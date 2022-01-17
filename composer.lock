@@ -544,29 +544,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.2.4",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0"
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9545dea2a1d92b60c8b3d06f02025c83e999bde0",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/63f2a76a045bac6ec93cc2daf2b534b412aa0313",
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "webmozart/assert": "^1.7.0"
+                "webmozart/assert": "^1.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-webmozart-assert": "^0.12.7",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -593,7 +593,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.2.4"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -601,7 +601,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T04:09:37+00:00"
+            "time": "2022-01-14T16:02:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -5751,27 +5751,27 @@
         },
         {
             "name": "spatie/laravel-health",
-            "version": "1.7.5",
+            "version": "1.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-health.git",
-                "reference": "125244ede71a11de906dd6fa61e042b43fa5d2ce"
+                "reference": "9f5709fce37851af7cabd62c7ea5f4e3474b49da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/125244ede71a11de906dd6fa61e042b43fa5d2ce",
-                "reference": "125244ede71a11de906dd6fa61e042b43fa5d2ce",
+                "url": "https://api.github.com/repos/spatie/laravel-health/zipball/9f5709fce37851af7cabd62c7ea5f4e3474b49da",
+                "reference": "9f5709fce37851af7cabd62c7ea5f4e3474b49da",
                 "shasum": ""
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.1",
                 "guzzlehttp/guzzle": "^6.5|^7.4",
-                "illuminate/console": "^8.75",
-                "illuminate/contracts": "^8.75",
-                "illuminate/database": "^8.75",
-                "illuminate/notifications": "^8.75",
-                "illuminate/support": "^8.75",
-                "nunomaduro/termwind": "^1.1",
+                "illuminate/console": "^8.75|^9.0",
+                "illuminate/contracts": "^8.75|^9.0",
+                "illuminate/database": "^8.75|^9.0",
+                "illuminate/notifications": "^8.75|^9.0",
+                "illuminate/support": "^8.75|^9.0",
+                "nunomaduro/termwind": "^1.3",
                 "php": "^8.0",
                 "spatie/enum": "^3.11",
                 "spatie/laravel-package-tools": "^1.9.2",
@@ -5781,9 +5781,9 @@
             "require-dev": {
                 "laravel/horizon": "^5.7",
                 "laravel/slack-notification-channel": "^2.3",
-                "nunomaduro/collision": "^5.10",
+                "nunomaduro/collision": "^5.10|^6.0",
                 "nunomaduro/larastan": "^1.0",
-                "orchestra/testbench": "^6.23",
+                "orchestra/testbench": "^6.23|^7.0",
                 "pestphp/pest": "^1.21",
                 "pestphp/pest-plugin-laravel": "^1.1",
                 "phpstan/extension-installer": "^1.1",
@@ -5802,7 +5802,7 @@
                         "Spatie\\Health\\HealthServiceProvider"
                     ],
                     "aliases": {
-                        "Skeleton": "Spatie\\Health\\Facades\\Health"
+                        "Health": "Spatie\\Health\\Facades\\Health"
                     }
                 }
             },
@@ -5832,7 +5832,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-health/issues",
-                "source": "https://github.com/spatie/laravel-health/tree/1.7.5"
+                "source": "https://github.com/spatie/laravel-health/tree/1.7.6"
             },
             "funding": [
                 {
@@ -5840,7 +5840,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-25T22:40:40+00:00"
+            "time": "2022-01-15T21:53:38+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
