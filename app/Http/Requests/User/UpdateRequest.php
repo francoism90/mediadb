@@ -17,20 +17,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'settings' => 'nullable|array|min:0|max:30',
-            'settings.language' => 'nullable|string|in:en-us',
-            'settings.captions' => 'nullable|array|min:0|max:15',
-            'settings.captions.*' => 'required|array',
-            'settings.captions.*.locale' => 'required|string|in:en-us',
+            'locale' => 'nullable|string|min:1|max:5|in:en,nl',
         ];
     }
 
     public function filters(): array
     {
         return [
-            'settings' => 'trim|empty_string_to_null',
-            'settings.language' => 'trim|strip_tags|lowercase|slug',
-            'settings.captions.*.locale' => 'trim|strip_tags|lowercase|slug',
+            'locale' => 'trim|empty_string_to_null|strip_tags',
         ];
     }
 }

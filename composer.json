@@ -27,6 +27,7 @@
         "php-ffmpeg/php-ffmpeg": "^0.19.0",
         "pusher/pusher-php-server": "5.0.3",
         "rennokki/laravel-eloquent-query-cache": "^3.1",
+        "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-backup": "^7.7",
         "spatie/laravel-collection-macros": "^7.10",
         "spatie/laravel-db-snapshots": "^2.2",

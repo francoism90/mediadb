@@ -130,13 +130,6 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return $this->getAllPermissions()->pluck('name');
     }
 
-    public function getSettingsAttribute(): ?array
-    {
-        return $this->extra_attributes->get(
-            'settings', config('api.default_settings')
-        );
-    }
-
     protected function makeAllSearchableUsing(Builder $query): Builder
     {
         return $query->with($this->with);
