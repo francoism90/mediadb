@@ -12558,21 +12558,21 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.12.13",
+            "version": "0.12.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "3132cdf7ead96ad98ab7331028083f4ef6e41ee9"
+                "reference": "e923bcd0d675dc4d8746da0554089b484044d0b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/3132cdf7ead96ad98ab7331028083f4ef6e41ee9",
-                "reference": "3132cdf7ead96ad98ab7331028083f4ef6e41ee9",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e923bcd0d675dc4d8746da0554089b484044d0b5",
+                "reference": "e923bcd0d675dc4d8746da0554089b484044d0b5",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1|^8.0",
-                "phpstan/phpstan": "^1.4"
+                "phpstan/phpstan": "^1.4.2"
             },
             "conflict": {
                 "phpstan/phpdoc-parser": "<1.2",
@@ -12603,10 +12603,10 @@
             "license": [
                 "MIT"
             ],
-            "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.12.13"
+                "source": "https://github.com/rectorphp/rector/tree/0.12.15"
             },
             "funding": [
                 {
@@ -12614,7 +12614,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-17T09:27:22+00:00"
+            "time": "2022-01-26T12:02:35+00:00"
         },
         {
             "name": "sebastian/cli-parser",
