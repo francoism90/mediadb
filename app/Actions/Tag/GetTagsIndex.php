@@ -9,7 +9,7 @@ use Laravel\Scout\Builder as ScoutBuilder;
 
 class GetTagsIndex
 {
-    public function __invoke(IndexRequest $request): EloquentBuilder | ScoutBuilder
+    public function __invoke(IndexRequest $request): EloquentBuilder|ScoutBuilder
     {
         $options = $request->validated();
 

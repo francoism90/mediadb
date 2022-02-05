@@ -44,6 +44,9 @@ return [
                     CURLOPT_SSL_VERIFYPEER => 0,
                 ],
             ],
+            'client_options' => [
+                'verify' => false,
+            ],
         ],
 
         'ably' => [

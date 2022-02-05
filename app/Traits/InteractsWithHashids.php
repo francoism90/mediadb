@@ -42,14 +42,14 @@ trait InteractsWithHashids
         return static::getHashidsConnection($connection)?->encode($value);
     }
 
-    public static function convertHashidToId(string $value, ?string $connection = null): string | int
+    public static function convertHashidToId(string $value, ?string $connection = null): string|int
     {
         $decoded = static::getHashidsConnection($connection)?->decode($value);
 
         return $decoded[0] ?? null;
     }
 
-    public static function convertHashidsToModels(array | string $values): Collection
+    public static function convertHashidsToModels(array|string $values): Collection
     {
         return collect($values)->map(function ($value) {
             if ($value instanceof Model) {
@@ -60,7 +60,7 @@ trait InteractsWithHashids
         });
     }
 
-    public function scopeWhereHashids(Builder $query, array | string $hashids): Builder
+    public function scopeWhereHashids(Builder $query, array|string $hashids): Builder
     {
         $hashids = static::convertHashidsToModels($hashids);
 

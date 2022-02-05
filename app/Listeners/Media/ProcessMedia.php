@@ -9,7 +9,7 @@ use App\Events\Media\MediaHasBeenUpdated;
 class ProcessMedia
 {
     public function handle(
-        MediaHasBeenAdded | MediaHasBeenUpdated $event
+        MediaHasBeenAdded|MediaHasBeenUpdated $event
     ): void {
         app(RegenerateMedia::class)($event->media);
     }

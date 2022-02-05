@@ -28,17 +28,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('health:check')
-                  ->withoutOverlapping()
+                  ->withoutOverlapping(30)
                   ->everyMinute()
                   ->runInBackground();
 
         $schedule->command('health:schedule-check-heartbeat')
-                  ->withoutOverlapping()
+                  ->withoutOverlapping(30)
                   ->everyMinute()
                   ->runInBackground();
 
         $schedule->command('horizon:snapshot')
-                 ->withoutOverlapping()
+                 ->withoutOverlapping(240)
                  ->everyFiveMinutes()
                  ->runInBackground();
 

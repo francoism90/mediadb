@@ -9,7 +9,7 @@ use App\Events\Video\VideoHasBeenUpdated;
 class ProcessVideo
 {
     public function handle(
-        VideoHasBeenAdded | VideoHasBeenUpdated $event
+        VideoHasBeenAdded|VideoHasBeenUpdated $event
     ): void {
         app(RegenerateVideo::class)($event->video);
     }
