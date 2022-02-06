@@ -41,6 +41,7 @@ Route::name('api.')->namespace('Api')->prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->patch('/favorite/{video}', ['uses' => 'FavoriteController', 'as' => 'favorite']);
         Route::middleware('auth:sanctum')->patch('/follow/{video}', ['uses' => 'FollowController', 'as' => 'follow']);
         Route::middleware('auth:sanctum')->get('/similar/{video}', ['uses' => 'SimilarController', 'as' => 'similar']);
+        Route::middleware('auth:sanctum')->get('/roulette/random', ['uses' => 'RandomController', 'as' => 'random']);
     });
 
     // Tag

@@ -37,12 +37,12 @@ trait InteractsWithHashids
         return Hashids::connection($connection ?? static::class);
     }
 
-    public static function convertToHashid(string $value, ?string $connection = null): string
+    public static function convertToHashid(string $value, ?string $connection = null): ?string
     {
         return static::getHashidsConnection($connection)?->encode($value);
     }
 
-    public static function convertHashidToId(string $value, ?string $connection = null): string|int
+    public static function convertHashidToId(string $value, ?string $connection = null): ?string
     {
         $decoded = static::getHashidsConnection($connection)?->decode($value);
 
