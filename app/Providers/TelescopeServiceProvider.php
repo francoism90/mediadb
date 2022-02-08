@@ -9,18 +9,6 @@ use Laravel\Telescope\TelescopeApplicationServiceProvider;
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     /**
-     * Configure the Telescope authorization services.
-     *
-     * @return void
-     */
-    protected function authorization()
-    {
-        Telescope::auth(function ($request) {
-            return $request->user()->hasRole('super-admin');
-        });
-    }
-
-    /**
      * Register any application services.
      *
      * @return mixed
@@ -63,5 +51,17 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             'x-csrf-token',
             'x-xsrf-token',
         ]);
+    }
+
+    /**
+     * Configure the Telescope authorization services.
+     *
+     * @return void
+     */
+    protected function authorization()
+    {
+        Telescope::auth(function ($request) {
+            return $request->user()->hasRole('super-admin');
+        });
     }
 }

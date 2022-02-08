@@ -3,16 +3,15 @@ version: "3"
 services:
   laravel.test:
     build:
-      context: ./docker/8.0
+      context: ./docker/8.1
       dockerfile: Dockerfile
       args:
         WWWGROUP: "${WWWGROUP}"
-    image: sail-8.0/app
+    image: sail-8.1/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
       - "${APP_PORT:-80}:80"
-      - "${LARAVEL_WEBSOCKETS_PORT:-6001}:6001"
     environment:
       WWWUSER: "${WWWUSER}"
       LARAVEL_SAIL: 1
