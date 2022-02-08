@@ -61,11 +61,6 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping()
                  ->dailyAt('05:00')
                  ->runInBackground();
-
-        $schedule->command('websockets:clean')
-                 ->withoutOverlapping()
-                 ->dailyAt('01:45')
-                 ->runInBackground();
     }
 
     /**
