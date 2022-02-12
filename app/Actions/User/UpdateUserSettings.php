@@ -5,7 +5,7 @@ namespace App\Actions\User;
 use App\Events\User\UserHasBeenUpdated;
 use App\Models\User;
 
-class UpdateVideoDetails
+class UpdateUserSettings
 {
     public function __invoke(User $user, array $data): void
     {
