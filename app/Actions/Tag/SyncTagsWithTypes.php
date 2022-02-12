@@ -2,29 +2,28 @@
 
 namespace App\Actions\Tag;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 
 class SyncTagsWithTypes
 {
-    public function __invoke(Model $model, array $tags = []): void
+    public function __invoke(Model $model, array $values = null): void
     {
-        $collect = collect($tags);
+        $model->detachTags($model->tags);
 
-        $types = $this->getTypes();
+        $tags = collect($values)->map(function ($value) {
+            if ($value instanceof Tag) {
+                return $value;
+            }
 
-        foreach ($types as $type) {
-            $items = $collect
-                ->where('type', $type)
-                ->pluck('name')
-                ->unique()
-                ->toArray();
+            return Tag::findByHashid($value);
+        });
 
-            $model->syncTagsWithType($items, $type);
-        }
-    }
+        $names = fn ($type) => $tags->where('type', $type)->pluck('name')->unique()->all();
 
-    protected function getTypes(): ?array
-    {
-        return config('api.tag.types');
+        $tags
+            ?->pluck('type')
+            ?->unique()
+            ?->each(fn ($type) => $model->syncTagsWithType($names($type), $type));
     }
 }

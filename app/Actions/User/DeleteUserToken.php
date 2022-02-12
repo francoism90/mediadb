@@ -8,6 +8,8 @@ class DeleteUserToken
 {
     public function __invoke(User $user, string $token): void
     {
-        $user->tokens()?->firstWhere('token', $token)?->delete();
+        $user->tokens
+            ?->firstWhere('token', $token)
+            ?->delete();
     }
 }
