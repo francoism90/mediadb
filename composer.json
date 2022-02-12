@@ -10,7 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "elegantweb/sanitizer": "^1.1",
+        "elegantweb/sanitizer": "^2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
@@ -24,7 +24,6 @@
         "laravel/tinker": "^2.7",
         "meilisearch/meilisearch-php": "^0.21.0",
         "multicaret/laravel-acquaintances": "^3.5",
-        "php-ffmpeg/php-ffmpeg": "^0.19.0",
         "pusher/pusher-php-server": "^7.0",
         "rennokki/laravel-eloquent-query-cache": "^3.2",
         "spatie/eloquent-sortable": "^4.0",

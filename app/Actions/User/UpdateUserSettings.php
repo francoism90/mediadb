@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Video;
+namespace App\Actions\User;
 
 use App\Events\User\UserHasBeenUpdated;
 use App\Models\User;
