@@ -75,6 +75,7 @@ return [
         ],
 
         'clips_mimetypes' => [
+            'application/octet-stream',
             'video/mp4',
             'video/mp4v-es',
             'video/quicktime',

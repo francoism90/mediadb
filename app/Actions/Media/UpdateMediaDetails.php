@@ -9,11 +9,11 @@ class UpdateMediaDetails
 {
     public function __invoke(Media $media, array $data): Media
     {
-        $collect = collect($data);
+        $value = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         $media
-            ->setAttribute('name', $collect->get('name', $media->name))
-            ->setCustomProperty('thumbnail', $collect->get('thumbnail', $media->thumbnail))
+            ->setAttribute('name', $value('name', $media->name))
+            ->setCustomProperty('thumbnail', $value('thumbnail', $media->thumbnail))
             ->saveOrFail();
 
         MediaHasBeenUpdated::dispatch($media);

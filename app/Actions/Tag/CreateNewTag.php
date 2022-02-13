@@ -8,12 +8,12 @@ class CreateNewTag
 {
     public function __invoke(array $data = []): Tag
     {
-        $collect = collect($data);
+        $value = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         return Tag::findOrCreate(
-            $collect->get('name'),
-            $collect->get('type', 'genre'),
-            $collect->get('locale', 'en'),
+            $value('name'),
+            $value('type', 'genre'),
+            $value('locale', 'en'),
         );
     }
 }

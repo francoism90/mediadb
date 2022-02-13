@@ -10,30 +10,30 @@ class UpdateVideoDetails
 {
     public function __invoke(Video $video, array $data): void
     {
-        $collect = collect($data);
+        $value = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         // Update attributes
-        $locale = $collect->get('locale', app()->getLocale());
+        $locale = $value('locale', app()->getLocale());
 
         $video
-            ->setTranslation('name', $locale, $collect->get('name', $video->name))
-            ->setTranslation('overview', $locale, $collect->get('overview', $video->overview))
-            ->setAttribute('status', $collect->get('status', $video->status))
-            ->setAttribute('episode_number', $collect->get('episode_number', $video->episode_number))
-            ->setAttribute('season_number', $collect->get('season_number', $video->season_number));
+            ->setTranslation('name', $locale, $value('name', $video->name))
+            ->setTranslation('overview', $locale, $value('overview', $video->overview))
+            ->setAttribute('status', $value('status', $video->status))
+            ->setAttribute('episode_number', $value('episode_number', $video->episode_number))
+            ->setAttribute('season_number', $value('season_number', $video->season_number));
 
         $video->extra_attributes
-            ->set('thumbnail', $collect->get('thumbnail', $video->thumbnail));
+            ->set('thumbnail', $value('thumbnail', $video->thumbnail));
 
         $video->saveOrFail();
 
         // Update clips attributes
         app(UpdateVideoClips::class)($video, [
-            'thumbnail' => $collect->get('thumbnail', $video->thumbnail),
+            'thumbnail' => $value('thumbnail', $video->thumbnail),
         ]);
 
         // Sync tags
-        app(SyncTagsWithTypes::class)($video, $collect->get('tags', []));
+        app(SyncTagsWithTypes::class)($video, $value('tags.*.id'));
 
         // Dispatch event
         VideoHasBeenUpdated::dispatch(

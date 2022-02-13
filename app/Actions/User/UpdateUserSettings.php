@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Actions\Video;
+namespace App\Actions\User;
 
 use App\Events\User\UserHasBeenUpdated;
 use App\Models\User;
 
-class UpdateVideoDetails
+class UpdateUserSettings
 {
     public function __invoke(User $user, array $data): void
     {
-        $collect = collect($data);
+        $value = fn (string $key, mixed $default = null) => data_get($data, $key, $default);
 
         // Update attributes
-        $locale = $collect->get('locale', $user->preferredLocale());
+        $locale = $value('locale', $user->preferredLocale());
 
         $user->extra_attributes
-            ->set('locale', $collect->get('locale', $locale));
+            ->set('locale', $value('locale', $locale));
 
         $user->saveOrFail();
 
