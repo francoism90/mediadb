@@ -121,7 +121,7 @@ return [
                     'season_number',
                     'episode_number',
                     'duration',
-                    'quality',
+                    'resolution',
                     'actors',
                     'studios',
                     'genres',

@@ -6,11 +6,11 @@ use App\Traits\HasSchemalessAttributes;
 use App\Traits\InteractsWithHashids;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanFavorite;
@@ -115,19 +115,25 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
             ->useDisk('media');
     }
 
-    public function getAvatarUrlAttribute(): string
+    public function assignedRoles(): Attribute
     {
-        return $this->getFirstMediaUrl('avatar');
+        return new Attribute(
+            get: fn () => $this->getRoleNames(),
+        );
     }
 
-    public function getAssignedRolesAttribute(): Collection
+    public function assignedPermissions(): Attribute
     {
-        return $this->getRoleNames();
+        return new Attribute(
+            get: fn () => $this->getAllPermissions()?->pluck('name'),
+        );
     }
 
-    public function getAssignedPermissionsAttribute(): Collection
+    public function avatarUrl(): Attribute
     {
-        return $this->getAllPermissions()->pluck('name');
+        return new Attribute(
+            get: fn () => $this->getFirstMediaUrl('avatar'),
+        );
     }
 
     protected function makeAllSearchableUsing(Builder $query): Builder

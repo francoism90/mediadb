@@ -8,6 +8,7 @@ use App\Traits\InteractsWithHashids;
 use App\Traits\InteractsWithQueryCache;
 use App\Traits\InteractsWithTranslations;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
@@ -58,12 +59,14 @@ class Tag extends BaseTag
         ];
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
+    public function items(): Attribute
     {
-        return $query->with($this->with);
+        return new Attribute(
+            get: fn () => $this->getTaggablesCount(),
+        );
     }
 
-    public function getItemsAttribute(?string $type = null): int
+    public function getTaggablesCount(?string $type = null): int
     {
         return DB::table('taggables')
             ->where('tag_id', $this->id)
@@ -91,5 +94,10 @@ class Tag extends BaseTag
             ->when($type('ordered'), fn ($query) => $query->orderBy('order_column'))
             ->when($type('random'), fn ($query) => $query->inRandomOrder())
             ->when($type('viewed'), fn ($query) => $query->userViewed($user));
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 }

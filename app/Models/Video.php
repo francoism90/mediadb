@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\InteractsWithAcquaintances;
 use App\Traits\InteractsWithDash;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
@@ -12,8 +13,6 @@ use Laravel\Scout\Searchable;
 use Multicaret\Acquaintances\Traits\CanBeFavorited;
 use Multicaret\Acquaintances\Traits\CanBeFollowed;
 use Multicaret\Acquaintances\Traits\CanBeViewed;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -41,6 +40,7 @@ class Video extends BaseModel
     public array $translatable = [
         'name',
         'slug',
+        'description',
         'overview',
     ];
 
@@ -71,7 +71,7 @@ class Video extends BaseModel
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'duration' => $this->duration,
-            'quality' => $this->quality,
+            'resolution' => $this->resolution,
             'views' => $this->views,
             'overview' => $this->extractTranslations('overview'),
             'actors' => $this->extractTagTranslations(type: 'actor'),
@@ -105,69 +105,74 @@ class Video extends BaseModel
             ->singleFile();
     }
 
-    public function getClipsAttribute(): MediaCollection
+    public function clip(): Attribute
     {
-        return $this->getMedia('clips')
-            ?->sortByDesc([
-                ['custom_properties->height', 'desc'],
-                ['custom_properties->width', 'desc'],
-            ]);
-    }
-
-    public function getClipAttribute(): ?Media
-    {
-        return $this->clips?->first();
-    }
-
-    public function getDurationAttribute(): ?float
-    {
-        return $this->clips?->max('custom_properties.duration');
-    }
-
-    public function getPosterUrlAttribute(): ?string
-    {
-        return $this->getFirstMediaUrl('thumbnail');
-    }
-
-    public function getProductionCodeAttribute(): string
-    {
-        return implode('', array_filter([$this->season_number, $this->episode_number]));
-    }
-
-    public function getSpriteUrlAttribute(): string
-    {
-        return URL::signedRoute(
-            'api.videos.sprite',
-            [
-                'video' => $this,
-                'version' => $this->updated_at->timestamp,
-            ]
+        return new Attribute(
+            get: fn () => $this->getClip(),
         );
     }
 
-    public function getThumbnailAttribute(): ?string
+    public function clips(): Attribute
     {
-        return $this->extra_attributes->get('thumbnail');
+        return new Attribute(
+            get: fn () => $this->getClips(),
+        );
     }
 
-    public function getTitleAttribute(): string
+    public function duration(): Attribute
     {
-        return implode(' - ', array_filter([$this->production_code, $this->name]));
+        return new Attribute(
+            get: fn () => $this->getClip()?->getCustomProperty('duration'),
+        );
     }
 
-    public function getQualityAttribute(): string
+    public function productionCode(): Attribute
     {
-        $collect = collect(config('api.video.resolutions'));
-
-        $byHeight = $collect->firstWhere('height', '>=', $this->clip?->getCustomProperty('height', 0));
-        $byWidth = $collect->firstWhere('width', '>=', $this->clip?->getCustomProperty('width', 0));
-
-        return $byHeight['name'] ?? $byWidth['name'] ?? 'N/A';
+        return new Attribute(
+            get: fn () => implode('', array_filter([$this->season_number, $this->episode_number])),
+        );
     }
 
-    protected function makeAllSearchableUsing(Builder $query): Builder
+    public function resolution(): Attribute
     {
-        return $query->with($this->with);
+        return new Attribute(
+            get: fn () => $this->getVideoResolution($this->getClip()),
+        );
+    }
+
+    public function thumbnail(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->extra_attributes->get('thumbnail'),
+        );
+    }
+
+    public function title(): Attribute
+    {
+        return new Attribute(
+            get: fn () => implode(' - ', array_filter([$this->production_code, $this->name])),
+        );
+    }
+
+    public function dashUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->getDashManifestUrl(),
+        );
+    }
+
+    public function posterUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->getFirstMediaUrl('thumbnail'),
+        );
+    }
+
+    public function spriteUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->generateSpriteUrl(),
+        );
     }
 
     public function scopeActive(Builder $query): Builder
@@ -229,5 +234,21 @@ class Video extends BaseModel
             ->when($type('following'), fn ($query) => $query->userFollowing($user))
             ->when($type('random'), fn ($query) => $query->inRandomOrder())
             ->when($type('viewed'), fn ($query) => $query->userViewed($user));
+    }
+
+    protected function generateSpriteUrl(): string
+    {
+        return URL::signedRoute(
+            'api.videos.sprite',
+            [
+                'video' => $this,
+                'version' => $this->updated_at?->timestamp,
+            ]
+        );
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
     }
 }

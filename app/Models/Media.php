@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\InteractsWithHashids;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
@@ -31,26 +32,31 @@ class Media extends BaseMedia
         'type',
     ];
 
-    public function getKindAttribute(): string
+    public function fileType(): Attribute
     {
-        return Str::plural($this->collection_name);
-    }
-
-    public function getPropertiesAttribute(): array
-    {
-        return Arr::only(
-            $this->custom_properties,
-            config('api.media.visible_properties')
+        return new Attribute(
+            get: fn () => strtok($this->mime_type, '/'),
         );
     }
 
-    public function getTypeAttribute(): string
+    public function kind(): Attribute
     {
-        return strtok($this->mime_type, '/');
+        return new Attribute(
+            get: fn () => Str::plural($this->collection_name),
+        );
     }
 
-    public function getThumbnailAttribute(): ?string
+    public function properties(): Attribute
     {
-        return $this->getCustomProperty('thumbnail');
+        return new Attribute(
+            get: fn () => Arr::only($this->custom_properties, config('api.media.visible_properties')),
+        );
+    }
+
+    public function thumbnail(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->getCustomProperty('thumbnail'),
+        );
     }
 }

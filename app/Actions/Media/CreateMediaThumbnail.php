@@ -12,7 +12,7 @@ class CreateMediaThumbnail
 {
     public function __invoke(Media $media, string $path): void
     {
-        $conversion = match ($media->type) {
+        $conversion = match ($media->fileType) {
             'video' => $this->videoFrame($media, $path)
         };
 

@@ -19,7 +19,7 @@ class VideoResource extends JsonResource
             'poster_url' => $this->poster_url,
             'type' => $this->type,
             'duration' => $this->duration,
-            'quality' => $this->quality,
+            'resolution' => $this->resolution,
             'released_at' => $this->released_at,
             'clip' => $this->whenAppended('clip', new MediaResource($this->clip)),
             'clips' => $this->whenAppended('clips', new MediaCollection($this->clips)),
