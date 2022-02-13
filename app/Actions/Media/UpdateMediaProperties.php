@@ -21,7 +21,7 @@ class UpdateMediaProperties
     {
         $collect = collect();
 
-        if ('video' === $media->type) {
+        if ('video' === $media->fileType) {
             $collect = $collect->merge($this->getVideoFormatAttributes($media));
             $collect = $collect->merge($this->getVideoStreamAttributes($media));
         }

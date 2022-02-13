@@ -12,7 +12,7 @@ class MediaResource extends JsonResource
             'id' => $this->getRouteKey(),
             'name' => $this->name,
             'mime_type' => $this->mime_type,
-            'type' => $this->type,
+            'type' => $this->fileType,
             'size' => $this->whenAppended('size'),
             'properties' => $this->whenAppended('properties'),
             'created_at' => $this->created_at,

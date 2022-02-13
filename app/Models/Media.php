@@ -32,6 +32,13 @@ class Media extends BaseMedia
         'type',
     ];
 
+    public function fileType(): Attribute
+    {
+        return new Attribute(
+            get: fn () => strtok($this->mime_type, '/'),
+        );
+    }
+
     public function kind(): Attribute
     {
         return new Attribute(
@@ -43,13 +50,6 @@ class Media extends BaseMedia
     {
         return new Attribute(
             get: fn () => Arr::only($this->custom_properties, config('api.media.visible_properties')),
-        );
-    }
-
-    public function type(): Attribute
-    {
-        return new Attribute(
-            get: fn () => strtok($this->mime_type, '/'),
         );
     }
 
