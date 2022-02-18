@@ -22,7 +22,7 @@ class IndexRequest extends FormRequest
         return [
             'page' => 'nullable|numeric|min:1|max:48',
             'size' => 'nullable|numeric|min:1|max:24',
-            'features' => 'nullable|string|in:4k,hd,vr,3d,hdr',
+            'features' => 'nullable|string|in:4k,hd,cc,vr,3d,hdr',
             'tags' => ['nullable', $tagRule],
             'type' => 'nullable|string|in:favorites,following,viewed',
             'query' => 'nullable|string|min:1|max:255',
