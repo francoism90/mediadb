@@ -71,6 +71,7 @@ class Video extends BaseModel
             'season_number' => $this->season_number,
             'episode_number' => $this->episode_number,
             'duration' => $this->duration,
+            'features' => $this->features,
             'resolution' => $this->resolution,
             'views' => $this->views,
             'overview' => $this->extractTranslations('overview'),
@@ -119,10 +120,24 @@ class Video extends BaseModel
         );
     }
 
+    public function captions(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->hasCaptions() ? 'cc' : '',
+        );
+    }
+
     public function duration(): Attribute
     {
         return new Attribute(
             get: fn () => $this->getClip()?->getCustomProperty('duration'),
+        );
+    }
+
+    public function features(): Attribute
+    {
+        return new Attribute(
+            get: fn () => array_filter([$this->resolution, $this->captions]),
         );
     }
 
@@ -185,9 +200,10 @@ class Video extends BaseModel
     {
         return $query
             ->join('interactions', 'videos.id', '=', 'interactions.subject_id')
-            ->withCount(['viewers' => fn (Builder $builder) => $builder
-                ->where('interactions.relation', 'view')
-                ->where('interactions.created_at', '>=', Carbon::now()->subDays($days)),
+            ->withCount([
+                'viewers' => fn (Builder $builder) => $builder
+                    ->where('interactions.relation', 'view')
+                    ->where('interactions.created_at', '>=', Carbon::now()->subDays($days)),
             ])
             ->orderByDesc('viewers_count');
     }

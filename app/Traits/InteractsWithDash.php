@@ -83,6 +83,16 @@ trait InteractsWithDash
         return $this->getMedia('captions');
     }
 
+    public function hasClips(): bool
+    {
+        return $this->hasMedia('clips');
+    }
+
+    public function hasCaptions(): bool
+    {
+        return $this->hasMedia('captions');
+    }
+
     public function getVideoResolution(?Media $media): ?string
     {
         $collect = collect(config('api.video.resolutions'));

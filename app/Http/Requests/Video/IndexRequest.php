@@ -22,7 +22,8 @@ class IndexRequest extends FormRequest
         return [
             'page' => 'nullable|numeric|min:1|max:48',
             'size' => 'nullable|numeric|min:1|max:24',
-            'tags' => [$tagRule],
+            'features' => 'nullable|string|in:4k,hd,vr,3d,hdr',
+            'tags' => ['nullable', $tagRule],
             'type' => 'nullable|string|in:favorites,following,viewed',
             'query' => 'nullable|string|min:1|max:255',
             'sort' => 'nullable|string|in:name:asc,duration:asc,duration:desc,created:desc,created:asc,views:asc,views:desc',

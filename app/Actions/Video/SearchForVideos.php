@@ -19,9 +19,11 @@ class SearchForVideos
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
 
                 return $meilisearch->search($query, $options);
-            })
-        ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
-        ->when($params['tags'], fn ($builder, $tags) => $builder->whereIn('tags', $tags));
+            }
+        )
+            ->when($params['id'], fn ($builder, $ids) => $builder->whereIn('id', $ids))
+            ->when($params['features'], fn ($builder, $features) => $builder->whereIn('features', $features))
+            ->when($params['tags'], fn ($builder, $tags) => $builder->whereIn('tags', $tags));
     }
 
     protected function getSearchOptions(array $data): array
@@ -33,6 +35,7 @@ class SearchForVideos
 
         return [
             'id' => $this->getIds($id, $type),
+            'features' => Arr::wrap($option('features')),
             'tags' => Arr::wrap($option('tags')),
             'sort' => Arr::wrap($option('sort')),
             'query' => (string) $option('query', '*'),
