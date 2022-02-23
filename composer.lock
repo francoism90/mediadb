@@ -803,6 +803,77 @@
             "time": "2022-01-03T14:53:04+00:00"
         },
         {
+            "name": "fruitcake/php-cors",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fruitcake/php-cors.git",
+                "reference": "58571acbaa5f9f462c9c77e911700ac66f446d4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fruitcake/php-cors/zipball/58571acbaa5f9f462c9c77e911700ac66f446d4e",
+                "reference": "58571acbaa5f9f462c9c77e911700ac66f446d4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "symfony/http-foundation": "^4.4|^5.4|^6"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^9",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fruitcake\\Cors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fruitcake",
+                    "homepage": "https://fruitcake.nl"
+                },
+                {
+                    "name": "Barryvdh",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Cross-origin resource sharing library for the Symfony HttpFoundation",
+            "homepage": "https://github.com/fruitcake/php-cors",
+            "keywords": [
+                "cors",
+                "laravel",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/fruitcake/php-cors/issues",
+                "source": "https://github.com/fruitcake/php-cors/tree/v1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-20T15:07:15+00:00"
+        },
+        {
             "name": "graham-campbell/manager",
             "version": "v4.7.0",
             "source": {
@@ -1570,16 +1641,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.1.0",
+            "version": "v9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ca7ddd4782f120ae50569d04eb9e40e52f67a9d9"
+                "reference": "13372872bed31ae75df8709b9de5cde01d50646e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ca7ddd4782f120ae50569d04eb9e40e52f67a9d9",
-                "reference": "ca7ddd4782f120ae50569d04eb9e40e52f67a9d9",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/13372872bed31ae75df8709b9de5cde01d50646e",
+                "reference": "13372872bed31ae75df8709b9de5cde01d50646e",
                 "shasum": ""
             },
             "require": {
@@ -1588,6 +1659,7 @@
                 "egulias/email-validator": "^3.1",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
+                "fruitcake/php-cors": "^1.2",
                 "laravel/serializable-closure": "^1.0",
                 "league/commonmark": "^2.2",
                 "league/flysystem": "^3.0",
@@ -1662,7 +1734,7 @@
                 "league/flysystem-ftp": "^3.0",
                 "league/flysystem-sftp-v3": "^3.0",
                 "mockery/mockery": "^1.4.4",
-                "orchestra/testbench-core": "^7.0",
+                "orchestra/testbench-core": "^7.1",
                 "pda/pheanstalk": "^4.0",
                 "phpstan/phpstan": "^1.0",
                 "phpunit/phpunit": "^9.5.8",
@@ -1744,7 +1816,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-02-15T15:06:44+00:00"
+            "time": "2022-02-22T15:30:23+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2417,16 +2489,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.8",
+            "version": "3.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "30f2c7069b2625da5b126ac66cbea7618a3db8b6"
+                "reference": "fb0801a60b7f9ea4188f01c25cb48aed26db7fb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/30f2c7069b2625da5b126ac66cbea7618a3db8b6",
-                "reference": "30f2c7069b2625da5b126ac66cbea7618a3db8b6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/fb0801a60b7f9ea4188f01c25cb48aed26db7fb6",
+                "reference": "fb0801a60b7f9ea4188f01c25cb48aed26db7fb6",
                 "shasum": ""
             },
             "require": {
@@ -2486,7 +2558,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.8"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.9"
             },
             "funding": [
                 {
@@ -2502,7 +2574,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-16T18:51:54+00:00"
+            "time": "2022-02-22T07:37:40+00:00"
         },
         {
             "name": "league/glide",
