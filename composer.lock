@@ -3576,16 +3576,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "f8086d70037097ecd969f6d46e81c452d702b9e1"
+                "reference": "bda300b69acecf791d2934cd5ed43a8ba24febf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/f8086d70037097ecd969f6d46e81c452d702b9e1",
-                "reference": "f8086d70037097ecd969f6d46e81c452d702b9e1",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/bda300b69acecf791d2934cd5ed43a8ba24febf6",
+                "reference": "bda300b69acecf791d2934cd5ed43a8ba24febf6",
                 "shasum": ""
             },
             "require": {
@@ -3597,6 +3597,7 @@
                 "symfony/process": "^5.4 || ^6.0"
             },
             "require-dev": {
+                "mockery/mockery": "^1.5",
                 "phpunit/phpunit": "^9.5.10"
             },
             "suggest": {
@@ -3658,9 +3659,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
-                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.0.0"
+                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.0.1"
             },
-            "time": "2022-02-09T13:36:26+00:00"
+            "time": "2022-02-22T15:54:06+00:00"
         },
         {
             "name": "php-http/client-common",
