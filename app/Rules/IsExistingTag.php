@@ -10,17 +10,12 @@ class IsExistingTag implements Rule
     /**
      * @param string $attribute
      * @param mixed  $value
-     *
-     * @return bool
      */
     public function passes($attribute, $value): bool
     {
         return Tag::findByHashid($value ?? null)->exists();
     }
 
-    /**
-     * @return string
-     */
     public function message(): string
     {
         return 'The given tag(s) does not exists.';

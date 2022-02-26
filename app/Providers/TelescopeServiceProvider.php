@@ -8,35 +8,25 @@ use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return mixed
-     */
-    public function register()
+    public function register(): void
     {
         Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(function (IncomingEntry $entry) {
+        Telescope::filter(function (IncomingEntry $entry): bool {
             if ($this->app->environment('local')) {
                 return true;
             }
 
             return $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+                $entry->isFailedRequest() ||
+                $entry->isFailedJob() ||
+                $entry->isScheduledTask() ||
+                $entry->hasMonitoredTag();
         });
     }
 
-    /**
-     * Prevent sensitive request details from being logged by Telescope.
-     *
-     * @return void
-     */
     protected function hideSensitiveRequestDetails(): void
     {
         if ($this->app->environment('local')) {
@@ -53,12 +43,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         ]);
     }
 
-    /**
-     * Configure the Telescope authorization services.
-     *
-     * @return void
-     */
-    protected function authorization()
+    protected function authorization(): void
     {
         Telescope::auth(function ($request) {
             return $request->user()->hasRole('super-admin');

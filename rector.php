@@ -11,15 +11,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     $parameters->set(Option::PATHS, [
-        __DIR__.'/app',
+        __DIR__ . '/app',
         // __DIR__.'/config',
         // __DIR__.'/database',
-        __DIR__.'/resources',
-        __DIR__.'/routes',
-        __DIR__.'/tests',
+        __DIR__ . '/resources',
+        __DIR__ . '/routes',
+        __DIR__ . '/tests',
     ]);
 
-    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_80);
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_81);
 
     $containerConfigurator->import(SetList::CODE_QUALITY);
     $containerConfigurator->import(SetList::CODING_STYLE);

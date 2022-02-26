@@ -7,12 +7,7 @@ use Laravel\Horizon\HorizonApplicationServiceProvider;
 
 class HorizonServiceProvider extends HorizonApplicationServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
@@ -23,13 +18,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
         // Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
     }
 
-    /**
-     * Overload authorization method from \Laravel\Horizon\HorizonApplicationServiceProvider
-     * to allow access to Horizon without having a logged in user.
-     *
-     * @return void
-     */
-    protected function authorization()
+    protected function authorization(): void
     {
         Horizon::auth(function ($request) {
             return $request->user()->hasRole('super-admin');

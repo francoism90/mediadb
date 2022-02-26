@@ -95,6 +95,11 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         ];
     }
 
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with($this->with);
+    }
+
     public function preferredLocale(): string
     {
         return $this->extra_attributes->get('locale', config('app.fallback_locale'));
@@ -134,10 +139,5 @@ class User extends Authenticatable implements HasLocalePreference, HasMedia
         return new Attribute(
             get: fn () => $this->getFirstMediaUrl('avatar'),
         );
-    }
-
-    protected function makeAllSearchableUsing(Builder $query): Builder
-    {
-        return $query->with($this->with);
     }
 }
