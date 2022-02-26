@@ -11,14 +11,16 @@ Storage: [mergerfs](https://github.com/trapexit/mergerfs)
 
 ### Packages
 
+- [mariadb](https://wiki.archlinux.org/title/MariaDB)
 - [meilisearch](https://wiki.archlinux.org/title/MeiliSearch)
-- [nginx](https://wiki.archlinux.org/title/Nginx)
 - [nginx-mainline-mod-brotli-git](https://aur.archlinux.org/packages/nginx-mainline-mod-brotli-git/) (optional)
 - [nginx-mainline-mod-secure-token-git](https://aur.archlinux.org/packages/nginx-mainline-mod-secure-token-git/)
 - [nginx-mainline-mod-vod-git](https://aur.archlinux.org/packages/nginx-mainline-mod-vod-git/)
+- [nginx](https://wiki.archlinux.org/title/Nginx)
+- [php](https://wiki.archlinux.org/title/PHP) including [php-swoole](https://aur.archlinux.org/packages/php-swoole)
 - [redis](https://wiki.archlinux.org/title/Redis)
 - [soketi](https://aur.archlinux.org/packages/soketi/)
-- [supervisor](https://archlinux.org/packages/community/any/supervisor/)
+- [supervisor](https://archlinux.org/packages/supervisor/)
 
 ### Configuration
 
