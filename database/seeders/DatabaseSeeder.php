@@ -11,7 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(TagsTableSeeder::class);
+        $this->callOnce([
+            PermissionsTableSeeder::class,
+            TagsTableSeeder::class,
+        ]);
     }
 }
