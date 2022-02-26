@@ -1,10 +1,12 @@
 # Server Setup
 
+See [documentation](https://francoism90.github.io/mediadb-docs) for details.
+
 ## Current Environment
 
-OS: [Arch Linux](https://archlinux.org/)
-CPU: AMD Ryzen 5 3400G
-Memory: 16GB DDR4
+OS: [Arch Linux](https://archlinux.org/)  
+CPU: AMD Ryzen 5 3400G  
+Memory: 16GB DDR4  
 Storage: [mergerfs](https://github.com/trapexit/mergerfs)
 
 ### Packages
@@ -20,9 +22,9 @@ Storage: [mergerfs](https://github.com/trapexit/mergerfs)
 
 ### Configuration
 
-- os: `doc/crontab`, `doc/hosts`
-- nginx: `doc/nginx`
-- supervisor: `doc/supervisor`
+- OS: `crontab`, `hosts`
+- Nginx: `nginx`
+- Supervisor: `supervisor`
 
 ### Recommendations
 
