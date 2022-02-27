@@ -41,7 +41,7 @@ class DefaultUrlGenerator extends BaseUrlGenerator
 
     public function getPath(): string
     {
-        return $this->getRootOfDisk().$this->getPathRelativeToRoot();
+        return $this->getRootOfDisk() . $this->getPathRelativeToRoot();
     }
 
     public function getResponsiveImagesDirectoryUrl(): string
@@ -50,11 +50,11 @@ class DefaultUrlGenerator extends BaseUrlGenerator
 
         $path = $this->pathGenerator->getPathForResponsiveImages($this->media);
 
-        return Str::finish(url($base.$path), '/');
+        return Str::finish(url($base . $path), '/');
     }
 
     protected function getRootOfDisk(): string
     {
-        return config("filesystems.disks.{$this->getDiskName()}.root").'/';
+        return config("filesystems.disks.{$this->getDiskName()}.root") . '/';
     }
 }
