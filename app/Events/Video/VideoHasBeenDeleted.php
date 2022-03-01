@@ -28,13 +28,13 @@ class VideoHasBeenDeleted implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
-        return (new VideoResource($this->video))->resolve();
+        return ['data' => (new VideoResource($this->video))->resolve()];
     }
 
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
-            'video.'.$this->video->getRouteKey()
+            'video.' . $this->video->getRouteKey()
         );
     }
 }
