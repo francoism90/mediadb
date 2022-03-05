@@ -34,9 +34,6 @@ class Video extends BaseModel
         'tags',
     ];
 
-    /**
-     * @var array
-     */
     public array $translatable = [
         'name',
         'slug',

@@ -13,8 +13,6 @@ class BroadcastServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(BroadcastManager $broadcastManager): void
     {
@@ -26,8 +24,10 @@ class BroadcastServiceProvider extends ServiceProvider
         // @doc https://github.com/soketi/soketi/issues/191#issuecomment-1028877964
         $broadcastManager->extend('pusher', function ($app, $config) {
             $pusher = new Pusher(
-                $config['key'], $config['secret'],
-                $config['app_id'], $config['options'] ?? [],
+                $config['key'],
+                $config['secret'],
+                $config['app_id'],
+                $config['options'] ?? [],
                 new \GuzzleHttp\Client($config['client_options']) ?? []
             );
 

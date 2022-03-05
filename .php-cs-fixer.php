@@ -12,7 +12,7 @@ $config = new PhpCsFixer\Config();
 
 return $config->setRules([
         '@Symfony' => true,
-        'no_superfluous_phpdoc_tags' => false,
+        '@PHP81Migration' => true,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder);

@@ -34,7 +34,7 @@ class VideoHasBeenUpdated implements ShouldBroadcastNow
     public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel(
-            'video.' . $this->video->getRouteKey()
+            'video.'.$this->video->getRouteKey()
         );
     }
 }

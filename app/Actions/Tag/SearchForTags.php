@@ -19,7 +19,8 @@ class SearchForTags
                 $options = array_merge($options, Arr::only($params, ['limit', 'sort']));
 
                 return $meilisearch->search($query, $options);
-            })
+            }
+        )
         ->when($params['id'], fn ($engine, $ids) => $engine->whereIn('id', $ids))
         ->when($params['type'], fn ($engine, $types) => $engine->whereIn('type', $types));
     }

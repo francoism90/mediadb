@@ -50,9 +50,6 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * @return void
-     */
     protected function configureModelBinding(): void
     {
         Route::bind('media', fn ($value) => Media::findByHashidOrFail($value));
@@ -63,8 +60,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Configure the rate limiters for the application.
-     *
-     * @return void
      */
     protected function configureRateLimiting(): void
     {
