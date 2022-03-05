@@ -12,13 +12,9 @@ class CreateMediaThumbnail
 {
     public function __invoke(Media $media, string $path): void
     {
-        $conversion = match ($media->fileType) {
+        match ($media->fileType) {
             'video' => $this->videoFrame($media, $path)
         };
-
-        if ($conversion) {
-            $this->optimize($path);
-        }
     }
 
     protected function videoFrame(Media $media, string $path): void
@@ -38,6 +34,8 @@ class CreateMediaThumbnail
         $video
             ->frame(TimeCode::fromSeconds($timeCode))
             ->save($path);
+
+        $this->optimize($path);
     }
 
     protected function optimize(string $path): void

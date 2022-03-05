@@ -13,8 +13,10 @@ class UpdateMediaDetails
 
         $media
             ->setAttribute('name', $value('name', $media->name))
-            ->setCustomProperty('thumbnail', $value('thumbnail', $media->thumbnail))
-            ->saveOrFail();
+            ->setAttribute('collection_name', $value('collection_name', $media->collection_name))
+            ->setCustomProperty('thumbnail', $value('thumbnail', $media->thumbnail));
+
+        $media->saveOrFail();
 
         MediaHasBeenUpdated::dispatch($media);
 

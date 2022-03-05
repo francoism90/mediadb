@@ -25,8 +25,7 @@ class ImportMediaToLibrary
 
         // Force WebVTT
         if ('vtt' === $extension) {
-            $media->mime_type = 'text/vtt';
-            $media->saveOrFail();
+            $media->update(['mimetype' => 'text/vtt']);
         }
 
         // Process media
