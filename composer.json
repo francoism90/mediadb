@@ -21,7 +21,7 @@
         "laravel/scout": "^9.4",
         "laravel/telescope": "^4.7",
         "laravel/tinker": "^2.7",
-        "meilisearch/meilisearch-php": "^0.22.0",
+        "meilisearch/meilisearch-php": "^0.23.0",
         "multicaret/laravel-acquaintances": "^3.5",
         "php-ffmpeg/php-ffmpeg": "^1.0",
         "pusher/pusher-php-server": "^7.0",

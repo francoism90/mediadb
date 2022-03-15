@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "501494252691cb98832ca9c319318992",
+    "content-hash": "e4bdf2b615bfa36749c8fa48d37103de",
     "packages": [
         {
             "name": "artisansdk/ratelimiter",
@@ -2768,16 +2768,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.22.0",
+            "version": "v0.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "0229ce11be0ac2ede91577bbcd6bdfe17af63e05"
+                "reference": "8a384938f0c75e9045305dac7da3eb265bdf0889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/0229ce11be0ac2ede91577bbcd6bdfe17af63e05",
-                "reference": "0229ce11be0ac2ede91577bbcd6bdfe17af63e05",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/8a384938f0c75e9045305dac7da3eb265bdf0889",
+                "reference": "8a384938f0c75e9045305dac7da3eb265bdf0889",
                 "shasum": ""
             },
             "require": {
@@ -2829,9 +2829,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.22.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.23.0"
             },
-            "time": "2022-02-14T16:00:33+00:00"
+            "time": "2022-03-14T15:06:53+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8013,16 +8013,16 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9"
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/57b712b08eddb97c762a8caa32c84e037892d2e9",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/4407588e0d3f1f52efb65fbe92babe41f37fe50c",
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c",
                 "shasum": ""
             },
             "require": {
@@ -8076,7 +8076,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -8092,7 +8092,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-13T13:58:33+00:00"
+            "time": "2022-03-04T08:16:47+00:00"
         },
         {
             "name": "symfony/polyfill-php81",
