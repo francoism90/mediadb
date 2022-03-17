@@ -55,6 +55,6 @@ class DefaultUrlGenerator extends BaseUrlGenerator
 
     protected function getRootOfDisk(): string
     {
-        return config("filesystems.disks.{$this->getDiskName()}.root").'/';
+        return $this->getDisk()->path('/');
     }
 }
